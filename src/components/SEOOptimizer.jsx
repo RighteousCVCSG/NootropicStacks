@@ -135,7 +135,7 @@ export function SEOOptimizer({ page = 'home', supplement = null, customTitle = n
   useEffect(() => {
     // Track page views for SEO analytics
     if (typeof gtag !== 'undefined') {
-      gtag('config', 'GA_MEASUREMENT_ID', {
+      gtag('config', 'G-FZEY2PKWFQ', {
         page_title: title,
         page_location: window.location.href
       });
