@@ -10,11 +10,11 @@ const AFFILIATE_LINKS = {
   'alpha-gpc': {
     amazon: 'https://amzn.to/3supplement-alpha-gpc',
     iherb: 'https://iherb.co/supplement-alpha-gpc',
-    nootropicsdepot: 'https://nootropicsdepot.com/alpha-gpc?ref=supplement-stacker',
+    nootropicsdepot: 'https://nootropicsdepot.com/alpha-gpc?ref=nootropicstacker',
     commission: 0.08 // 8% commission rate
   },
   'modafinil': {
-    buymodafinilonline: 'https://buymodafinilonline.com/?ref=supplement-stacker',
+    buymodafinilonline: 'https://buymodafinilonline.com/?ref=nootropicstacker',
     commission: 0.15 // 15% commission rate
   },
   'caffeine': {
@@ -25,46 +25,233 @@ const AFFILIATE_LINKS = {
   'fish-oil': {
     amazon: 'https://amzn.to/3supplement-fish-oil',
     iherb: 'https://iherb.co/supplement-fish-oil',
-    nordicnaturals: 'https://nordicnaturals.com/?ref=supplement-stacker',
+    nordicnaturals: 'https://nordicnaturals.com/?ref=nootropicstacker',
     commission: 0.10
   },
-  'bacopa-monnieri': {
+  'bacopa': {
     amazon: 'https://amzn.to/3supplement-bacopa',
     iherb: 'https://iherb.co/supplement-bacopa',
-    nootropicsdepot: 'https://nootropicsdepot.com/bacopa-monnieri?ref=supplement-stacker',
+    nootropicsdepot: 'https://nootropicsdepot.com/bacopa-monnieri?ref=nootropicstacker',
     commission: 0.08
   },
   'piracetam': {
-    nootropicsdepot: 'https://nootropicsdepot.com/piracetam?ref=supplement-stacker',
+    nootropicsdepot: 'https://nootropicsdepot.com/piracetam?ref=nootropicstacker',
     commission: 0.12
   },
   'phenylpiracetam': {
-    nootropicsdepot: 'https://nootropicsdepot.com/phenylpiracetam?ref=supplement-stacker',
+    nootropicsdepot: 'https://nootropicsdepot.com/phenylpiracetam?ref=nootropicstacker',
     commission: 0.12
   },
   'oxiracetam': {
-    nootropicsdepot: 'https://nootropicsdepot.com/oxiracetam?ref=supplement-stacker',
+    nootropicsdepot: 'https://nootropicsdepot.com/oxiracetam?ref=nootropicstacker',
     commission: 0.12
   },
   'aniracetam': {
-    nootropicsdepot: 'https://nootropicsdepot.com/aniracetam?ref=supplement-stacker',
+    nootropicsdepot: 'https://nootropicsdepot.com/aniracetam?ref=nootropicstacker',
     commission: 0.12
   },
   'l-theanine': {
     amazon: 'https://amzn.to/3supplement-theanine',
     iherb: 'https://iherb.co/supplement-theanine',
-    nootropicsdepot: 'https://nootropicsdepot.com/l-theanine?ref=supplement-stacker',
+    nootropicsdepot: 'https://nootropicsdepot.com/l-theanine?ref=nootropicstacker',
     commission: 0.08
   },
   'ashwagandha': {
     amazon: 'https://amzn.to/3supplement-ashwagandha',
     iherb: 'https://iherb.co/supplement-ashwagandha',
+    nootropicsdepot: 'https://nootropicsdepot.com/ashwagandha?ref=nootropicstacker',
+    commission: 0.08
+  },
+  // High-volume supplements
+  'creatine': {
+    amazon: 'https://amzn.to/3supplement-creatine',
+    iherb: 'https://iherb.co/supplement-creatine',
+    commission: 0.06
+  },
+  'magnesium': {
+    amazon: 'https://amzn.to/3supplement-magnesium',
+    iherb: 'https://iherb.co/supplement-magnesium',
+    nootropicsdepot: 'https://nootropicsdepot.com/magnesium-glycinate?ref=nootropicstacker',
+    commission: 0.08
+  },
+  'vitamin-d': {
+    amazon: 'https://amzn.to/3supplement-vitamin-d',
+    iherb: 'https://iherb.co/supplement-vitamin-d',
+    commission: 0.06
+  },
+  'omega3': {
+    amazon: 'https://amzn.to/3supplement-omega3',
+    iherb: 'https://iherb.co/supplement-omega3',
+    commission: 0.08
+  },
+  'lions-mane': {
+    amazon: 'https://amzn.to/3supplement-lions-mane',
+    iherb: 'https://iherb.co/supplement-lions-mane',
+    nootropicsdepot: 'https://nootropicsdepot.com/lions-mane?ref=nootropicstacker',
+    commission: 0.08
+  },
+  'rhodiola': {
+    amazon: 'https://amzn.to/3supplement-rhodiola',
+    iherb: 'https://iherb.co/supplement-rhodiola',
+    nootropicsdepot: 'https://nootropicsdepot.com/rhodiola-rosea?ref=nootropicstacker',
+    commission: 0.08
+  },
+  // Nootropics (high-value niche)
+  'citicoline': {
+    amazon: 'https://amzn.to/3supplement-citicoline',
+    iherb: 'https://iherb.co/supplement-citicoline',
+    nootropicsdepot: 'https://nootropicsdepot.com/citicoline?ref=nootropicstacker',
+    commission: 0.08
+  },
+  'noopept': {
+    nootropicsdepot: 'https://nootropicsdepot.com/noopept?ref=nootropicstacker',
+    commission: 0.12
+  },
+  'pramiracetam': {
+    nootropicsdepot: 'https://nootropicsdepot.com/pramiracetam?ref=nootropicstacker',
+    commission: 0.12
+  },
+  'coluracetam': {
+    nootropicsdepot: 'https://nootropicsdepot.com/coluracetam?ref=nootropicstacker',
+    commission: 0.12
+  },
+  'fasoracetam': {
+    nootropicsdepot: 'https://nootropicsdepot.com/fasoracetam?ref=nootropicstacker',
+    commission: 0.12
+  },
+  // Adaptogens & popular supplements
+  'cordyceps': {
+    amazon: 'https://amzn.to/3supplement-cordyceps',
+    iherb: 'https://iherb.co/supplement-cordyceps',
+    nootropicsdepot: 'https://nootropicsdepot.com/cordyceps?ref=nootropicstacker',
+    commission: 0.08
+  },
+  'reishi': {
+    amazon: 'https://amzn.to/3supplement-reishi',
+    iherb: 'https://iherb.co/supplement-reishi',
+    commission: 0.08
+  },
+  'panax-ginseng': {
+    amazon: 'https://amzn.to/3supplement-ginseng',
+    iherb: 'https://iherb.co/supplement-ginseng',
+    nootropicsdepot: 'https://nootropicsdepot.com/panax-ginseng?ref=nootropicstacker',
+    commission: 0.08
+  },
+  'mucuna-pruriens': {
+    amazon: 'https://amzn.to/3supplement-mucuna',
+    iherb: 'https://iherb.co/supplement-mucuna',
+    nootropicsdepot: 'https://nootropicsdepot.com/mucuna-pruriens?ref=nootropicstacker',
+    commission: 0.08
+  },
+  'curcumin': {
+    amazon: 'https://amzn.to/3supplement-curcumin',
+    iherb: 'https://iherb.co/supplement-curcumin',
+    commission: 0.08
+  },
+  'zinc': {
+    amazon: 'https://amzn.to/3supplement-zinc',
+    iherb: 'https://iherb.co/supplement-zinc',
+    commission: 0.06
+  },
+  'b-complex': {
+    amazon: 'https://amzn.to/3supplement-b-complex',
+    iherb: 'https://iherb.co/supplement-b-complex',
+    commission: 0.06
+  },
+  'tyrosine': {
+    amazon: 'https://amzn.to/3supplement-tyrosine',
+    iherb: 'https://iherb.co/supplement-tyrosine',
+    nootropicsdepot: 'https://nootropicsdepot.com/l-tyrosine?ref=nootropicstacker',
+    commission: 0.08
+  },
+  'phosphatidylserine': {
+    amazon: 'https://amzn.to/3supplement-ps',
+    iherb: 'https://iherb.co/supplement-ps',
+    nootropicsdepot: 'https://nootropicsdepot.com/phosphatidylserine?ref=nootropicstacker',
+    commission: 0.08
+  },
+  'huperzine-a': {
+    amazon: 'https://amzn.to/3supplement-huperzine',
+    nootropicsdepot: 'https://nootropicsdepot.com/huperzine-a?ref=nootropicstacker',
+    commission: 0.12
+  },
+  'taurine': {
+    amazon: 'https://amzn.to/3supplement-taurine',
+    iherb: 'https://iherb.co/supplement-taurine',
+    commission: 0.06
+  },
+  'melatonin': {
+    amazon: 'https://amzn.to/3supplement-melatonin',
+    iherb: 'https://iherb.co/supplement-melatonin',
+    commission: 0.06
+  },
+  'coq10': {
+    amazon: 'https://amzn.to/3supplement-coq10',
+    iherb: 'https://iherb.co/supplement-coq10',
+    commission: 0.08
+  },
+  'collagen': {
+    amazon: 'https://amzn.to/3supplement-collagen',
+    iherb: 'https://iherb.co/supplement-collagen',
+    commission: 0.08
+  },
+  'probiotics': {
+    amazon: 'https://amzn.to/3supplement-probiotics',
+    iherb: 'https://iherb.co/supplement-probiotics',
+    commission: 0.08
+  },
+  'green-tea-extract': {
+    amazon: 'https://amzn.to/3supplement-green-tea',
+    iherb: 'https://iherb.co/supplement-green-tea',
+    commission: 0.06
+  },
+  'berberine': {
+    amazon: 'https://amzn.to/3supplement-berberine',
+    iherb: 'https://iherb.co/supplement-berberine',
+    commission: 0.08
+  },
+  'alpha-lipoic-acid': {
+    amazon: 'https://amzn.to/3supplement-ala',
+    iherb: 'https://iherb.co/supplement-ala',
+    commission: 0.08
+  },
+  'kanna': {
+    nootropicsdepot: 'https://nootropicsdepot.com/kanna?ref=nootropicstacker',
+    commission: 0.12
+  },
+  'armodafinil': {
+    buymodafinilonline: 'https://buymodafinilonline.com/armodafinil?ref=nootropicstacker',
+    commission: 0.15
+  },
+  'ginkgo': {
+    amazon: 'https://amzn.to/3supplement-ginkgo',
+    iherb: 'https://iherb.co/supplement-ginkgo',
+    commission: 0.06
+  },
+  'vitamin-c': {
+    amazon: 'https://amzn.to/3supplement-vitamin-c',
+    iherb: 'https://iherb.co/supplement-vitamin-c',
+    commission: 0.06
+  },
+  'mct-oil': {
+    amazon: 'https://amzn.to/3supplement-mct-oil',
+    iherb: 'https://iherb.co/supplement-mct-oil',
+    commission: 0.08
+  },
+  'spirulina': {
+    amazon: 'https://amzn.to/3supplement-spirulina',
+    iherb: 'https://iherb.co/supplement-spirulina',
+    commission: 0.06
+  },
+  'resveratrol': {
+    amazon: 'https://amzn.to/3supplement-resveratrol',
+    iherb: 'https://iherb.co/supplement-resveratrol',
     commission: 0.08
   }
 };
 
 // Revenue tracking (in a real app, this would be stored in a database)
-const REVENUE_STORAGE_KEY = 'supplement-stacker-revenue';
+const REVENUE_STORAGE_KEY = 'nootropicstacker-revenue';
 
 export function MonetizationManager() {
   const [revenueData, setRevenueData] = useState({

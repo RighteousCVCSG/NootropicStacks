@@ -4,22 +4,22 @@ import { Helmet } from 'react-helmet-async';
 // SEO data for different pages and supplements
 const SEO_DATA = {
   home: {
-    title: 'Supplement Stacker - Smart Biohacker Stack Builder | Nootropics & Supplements',
+    title: 'Nootropic Stacker - Smart Biohacker Stack Builder | Nootropics & Supplements',
     description: 'Build optimal supplement stacks with AI-powered recommendations. Track 70+ nootropics, adaptogens, and biohacking supplements. Safety monitoring and interaction warnings included.',
     keywords: 'supplement stacker, nootropics, biohacking, supplement stack, racetams, modafinil, cognitive enhancement, smart drugs, supplement interactions, biohacker tools',
-    canonical: 'https://supplement-stacker.com'
+    canonical: 'https://nootropicstacker.com'
   },
   nootropics: {
-    title: 'Best Nootropics Guide 2024 - Racetams, Modafinil & Cognitive Enhancers',
+    title: 'Best Nootropics Guide 2026 - Racetams, Modafinil & Cognitive Enhancers',
     description: 'Complete guide to the most effective nootropics including racetams, modafinil, armodafinil, and natural cognitive enhancers. Dosage, effects, and safety information.',
     keywords: 'nootropics, racetams, modafinil, armodafinil, piracetam, phenylpiracetam, cognitive enhancement, smart drugs, memory enhancement',
-    canonical: 'https://supplement-stacker.com/nootropics'
+    canonical: 'https://nootropicstacker.com/nootropics'
   },
   supplements: {
     title: 'Supplement Database - 70+ Biohacking Supplements with Effects & Dosages',
     description: 'Comprehensive database of biohacking supplements including nootropics, adaptogens, vitamins, and performance enhancers. Complete with dosage recommendations and safety warnings.',
     keywords: 'supplement database, biohacking supplements, supplement effects, dosage guide, supplement interactions, health supplements',
-    canonical: 'https://supplement-stacker.com/supplements'
+    canonical: 'https://nootropicstacker.com/supplements'
   }
 };
 
@@ -109,9 +109,9 @@ const generateOrganizationStructuredData = () => {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "Supplement Stacker",
-    "url": "https://supplement-stacker.com",
-    "logo": "https://supplement-stacker.com/logo.png",
+    "name": "Nootropic Stacker",
+    "url": "https://nootropicstacker.com",
+    "logo": "https://nootropicstacker.com/logo.png",
     "description": "AI-powered supplement stack builder for biohackers and health enthusiasts",
     "sameAs": [
       "https://twitter.com/supplementstacker",
@@ -128,7 +128,7 @@ export function SEOOptimizer({ page = 'home', supplement = null, customTitle = n
   let description = customDescription || seoData.description;
   
   if (supplement) {
-    title = `${supplement.name} - Effects, Dosage & Safety | Supplement Stacker`;
+    title = `${supplement.name} - Effects, Dosage & Safety | Nootropic Stacker`;
     description = `Complete guide to ${supplement.name}: ${supplement.description} Learn about effects, optimal dosage (${supplement.dosage.min}-${supplement.dosage.max} ${supplement.dosage.unit}), and safety considerations.`;
   }
 
@@ -155,18 +155,18 @@ export function SEOOptimizer({ page = 'home', supplement = null, customTitle = n
       <meta property="og:description" content={description} />
       <meta property="og:type" content="website" />
       <meta property="og:url" content={seoData.canonical} />
-      <meta property="og:image" content="https://supplement-stacker.com/og-image.jpg" />
-      <meta property="og:site_name" content="Supplement Stacker" />
+      <meta property="og:image" content="https://nootropicstacker.com/og-image.jpg" />
+      <meta property="og:site_name" content="Nootropic Stacker" />
       
       {/* Twitter Card Tags */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content="https://supplement-stacker.com/twitter-image.jpg" />
+      <meta name="twitter:image" content="https://nootropicstacker.com/twitter-image.jpg" />
       
       {/* Additional SEO Tags */}
       <meta name="robots" content="index, follow" />
-      <meta name="author" content="Supplement Stacker Team" />
+      <meta name="author" content="Nootropic Stacker Team" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       
       {/* Structured Data */}
@@ -199,52 +199,47 @@ export function SEOOptimizer({ page = 'home', supplement = null, customTitle = n
   );
 }
 
-// SEO-optimized content components
+// SEO-friendly visible content section for the homepage
 export function SEOContent() {
   return (
-    <div className="hidden">
-      {/* Hidden content for SEO - search engines can index this */}
-      <h1>Best Supplement Stacker Tool for Biohackers 2024</h1>
-      <h2>Top Nootropics and Cognitive Enhancers</h2>
-      <p>
-        Discover the most effective nootropics including racetams (piracetam, oxiracetam, aniracetam, phenylpiracetam), 
-        modafinil, armodafinil, and natural cognitive enhancers. Our AI-powered supplement stacker helps you build 
-        optimal stacks while monitoring for dangerous interactions.
+    <section className="mt-12 px-4 py-8 bg-muted/30 rounded-lg">
+      <h2 className="text-2xl font-bold mb-4">About NootropicStacker</h2>
+      <p className="text-muted-foreground mb-6">
+        NootropicStacker is the most comprehensive nootropic stack builder for biohackers and cognitive optimizers.
+        Build optimal supplement stacks from our database of 70+ nootropics, adaptogens, and performance supplements
+        with real-time safety monitoring and interaction warnings.
       </p>
-      
-      <h2>Popular Supplement Categories</h2>
-      <ul>
-        <li>Racetam Nootropics - Piracetam, Oxiracetam, Aniracetam, Phenylpiracetam</li>
-        <li>Wakefulness Agents - Modafinil, Armodafinil</li>
-        <li>Natural Nootropics - Bacopa Monnieri, Lion's Mane, Ginkgo Biloba</li>
-        <li>Adaptogens - Ashwagandha, Rhodiola, Panax Ginseng</li>
-        <li>Essential Supplements - Fish Oil, Vitamin D, Magnesium</li>
-        <li>Performance Enhancers - Creatine, Beta-Alanine, Caffeine</li>
-      </ul>
-      
-      <h2>Safety and Interactions</h2>
-      <p>
-        Our supplement stacker includes comprehensive safety monitoring with warnings for dangerous combinations. 
-        We track over 70 supplements and their interactions to help you avoid adverse effects while maximizing benefits.
-      </p>
-      
-      <h2>Biohacking Goals Supported</h2>
-      <ul>
-        <li>Energy and Physical Performance</li>
-        <li>Cognitive Enhancement and Focus</li>
-        <li>Mood and Stress Management</li>
-        <li>Learning and Memory</li>
-        <li>Creativity and Innovation</li>
-        <li>Social Confidence</li>
-        <li>Longevity and Anti-Aging</li>
-      </ul>
-    </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div>
+          <h3 className="font-semibold mb-2">Nootropics &amp; Cognitive Enhancers</h3>
+          <p className="text-sm text-muted-foreground">
+            Explore racetams, modafinil alternatives, and natural cognitive enhancers like Bacopa Monnieri,
+            Lion's Mane, and Alpha-GPC with detailed dosage and safety information.
+          </p>
+        </div>
+        <div>
+          <h3 className="font-semibold mb-2">Smart Stack Building</h3>
+          <p className="text-sm text-muted-foreground">
+            Our stack builder calculates synergistic effects, warns about dangerous interactions,
+            and recommends supplements based on your goals — energy, focus, mood, or creativity.
+          </p>
+        </div>
+        <div>
+          <h3 className="font-semibold mb-2">Safety First</h3>
+          <p className="text-sm text-muted-foreground">
+            Every stack is analyzed for potential interactions, overdose risks, and contraindications.
+            We track over 70 supplements to help you stack safely and effectively.
+          </p>
+        </div>
+      </div>
+    </section>
   );
 }
 
 // Generate sitemap data
 export const generateSitemapData = () => {
-  const baseUrl = 'https://supplement-stacker.com';
+  const baseUrl = 'https://nootropicstacker.com';
   const pages = [
     { url: baseUrl, priority: 1.0, changefreq: 'daily' },
     { url: `${baseUrl}/nootropics`, priority: 0.9, changefreq: 'weekly' },

@@ -60,8 +60,8 @@ function App() {
                     <Pill className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <h1 className="text-xl font-bold text-gray-900">Supplement Stacker</h1>
-                    <p className="text-sm text-gray-600">Biohacker's Stack Builder</p>
+                    <h1 className="text-xl font-bold text-gray-900">NootropicStacker</h1>
+                    <p className="text-sm text-gray-600">Build Your Perfect Nootropic Stack</p>
                   </div>
                 </div>
                 
@@ -205,7 +205,7 @@ function App() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
               <div className="text-center text-sm text-gray-600">
                 <p className="mb-2">
-                  <strong>Supplement Stacker</strong> - Built for biohackers who want to optimize their supplement stacks safely
+                  <strong>NootropicStacker</strong> - Built for biohackers who want to optimize their supplement stacks safely
                 </p>
                 <p className="mb-4">
                   This tool provides educational information only. Always consult healthcare professionals for medical advice.

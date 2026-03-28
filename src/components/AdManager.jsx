@@ -10,7 +10,7 @@ const CONTEXTUAL_ADS = {
       id: 'nootropics-depot-1',
       title: 'Premium Nootropics - Lab Tested',
       description: 'Third-party tested racetams, modafinil alternatives, and cognitive enhancers. Free shipping over $50.',
-      url: 'https://nootropicsdepot.com/?ref=supplement-stacker',
+      url: 'https://nootropicsdepot.com/?ref=nootropicstacker',
       image: '/ads/nootropics-depot.jpg',
       cpc: 2.50,
       category: 'nootropic'
@@ -19,7 +19,7 @@ const CONTEXTUAL_ADS = {
       id: 'mind-nutrition-1',
       title: 'Natural Cognitive Enhancers',
       description: 'Bacopa, Lion\'s Mane, and other natural nootropics. Organic and sustainably sourced.',
-      url: 'https://mindnutrition.com/?ref=supplement-stacker',
+      url: 'https://mindnutrition.com/?ref=nootropicstacker',
       image: '/ads/mind-nutrition.jpg',
       cpc: 1.80,
       category: 'nootropic'
@@ -30,7 +30,7 @@ const CONTEXTUAL_ADS = {
       id: 'athletic-greens-1',
       title: 'AG1 - All-in-One Nutrition',
       description: 'Comprehensive daily nutrition with 75 vitamins, minerals, and whole food ingredients.',
-      url: 'https://athleticgreens.com/?ref=supplement-stacker',
+      url: 'https://athleticgreens.com/?ref=nootropicstacker',
       image: '/ads/athletic-greens.jpg',
       cpc: 3.20,
       category: 'energy'
@@ -39,7 +39,7 @@ const CONTEXTUAL_ADS = {
       id: 'four-sigmatic-1',
       title: 'Mushroom Coffee & Adaptogens',
       description: 'Lion\'s Mane coffee, Cordyceps elixirs, and adaptogenic blends for sustained energy.',
-      url: 'https://foursigmatic.com/?ref=supplement-stacker',
+      url: 'https://foursigmatic.com/?ref=nootropicstacker',
       image: '/ads/four-sigmatic.jpg',
       cpc: 2.10,
       category: 'adaptogen'
@@ -50,7 +50,7 @@ const CONTEXTUAL_ADS = {
       id: 'thorne-1',
       title: 'Thorne Health - Practitioner Grade',
       description: 'NSF certified supplements trusted by healthcare professionals. Personalized recommendations.',
-      url: 'https://thorne.com/?ref=supplement-stacker',
+      url: 'https://thorne.com/?ref=nootropicstacker',
       image: '/ads/thorne.jpg',
       cpc: 2.80,
       category: 'health'
@@ -59,7 +59,7 @@ const CONTEXTUAL_ADS = {
       id: 'life-extension-1',
       title: 'Life Extension - Science-Based',
       description: 'Research-backed longevity supplements. Over 40 years of innovation in healthy aging.',
-      url: 'https://lifeextension.com/?ref=supplement-stacker',
+      url: 'https://lifeextension.com/?ref=nootropicstacker',
       image: '/ads/life-extension.jpg',
       cpc: 2.40,
       category: 'longevity'
