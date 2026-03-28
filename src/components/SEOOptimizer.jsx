@@ -6,7 +6,7 @@ const SEO_DATA = {
   home: {
     title: 'Nootropic Stacker - Smart Biohacker Stack Builder | Nootropics & Supplements',
     description: 'Build optimal supplement stacks with AI-powered recommendations. Track 70+ nootropics, adaptogens, and biohacking supplements. Safety monitoring and interaction warnings included.',
-    keywords: 'supplement stacker, nootropics, biohacking, supplement stack, racetams, modafinil, cognitive enhancement, smart drugs, supplement interactions, biohacker tools',
+    keywords: 'nootropic stacker, nootropics, biohacking, supplement stack, racetams, modafinil, cognitive enhancement, smart drugs, supplement interactions, biohacker tools',
     canonical: 'https://nootropicstacker.com'
   },
   nootropics: {
@@ -89,7 +89,7 @@ const generateFAQStructuredData = () => {
         "name": "How do I choose the right supplements for my goals?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Start by identifying your specific goals (energy, focus, mood, etc.), research supplements that target those areas, consider potential interactions, and start with lower doses to assess tolerance. Our supplement stacker tool can help guide these decisions."
+          "text": "Start by identifying your specific goals (energy, focus, mood, etc.), research supplements that target those areas, consider potential interactions, and start with lower doses to assess tolerance. Our NootropicStacker tool can help guide these decisions."
         }
       },
       {
@@ -114,8 +114,8 @@ const generateOrganizationStructuredData = () => {
     "logo": "https://nootropicstacker.com/logo.png",
     "description": "AI-powered supplement stack builder for biohackers and health enthusiasts",
     "sameAs": [
-      "https://twitter.com/supplementstacker",
-      "https://facebook.com/supplementstacker"
+      "https://twitter.com/nootropicstacker",
+      "https://facebook.com/nootropicstacker"
     ]
   };
 };
@@ -255,7 +255,7 @@ export const generateSitemapData = () => {
 // Keywords for content optimization
 export const TARGET_KEYWORDS = {
   primary: [
-    'supplement stacker',
+    'nootropic stacker',
     'nootropics',
     'biohacking supplements',
     'racetams',
