@@ -67,7 +67,11 @@ const CONTEXTUAL_ADS = {
   ]
 };
 
-// Google AdSense placeholder component
+// ============================================================
+// GOOGLE ADSENSE — Replace YOUR-ADSENSE-ID with real pub ID
+// Sign up at: https://www.google.com/adsense/
+// After approval, replace "ca-pub-YOUR-ADSENSE-ID" below
+// ============================================================
 export function GoogleAdSense({ slot, format = 'auto', responsive = true }) {
   useEffect(() => {
     try {

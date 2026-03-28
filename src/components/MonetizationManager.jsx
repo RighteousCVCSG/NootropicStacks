@@ -5,7 +5,23 @@ import { Badge } from '@/components/ui/badge.jsx';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
 import { ExternalLink, DollarSign, TrendingUp, Users, Eye } from 'lucide-react';
 
-// Affiliate links and revenue tracking
+// ============================================================
+// AFFILIATE CONFIGURATION — UPDATE THESE WITH REAL AFFILIATE IDs
+// ============================================================
+// After signing up for affiliate programs, replace the placeholder
+// URLs below with your real affiliate links:
+//
+// 1. Nootropics Depot (15% commission): https://nootropicsdepot.com/affiliate-program/
+// 2. Amazon Associates (1-6%): https://affiliate-program.amazon.com/signup
+// 3. iHerb (5-10%): https://www.iherb.com/info/affiliates
+// 4. Thorne (10-20%): https://www.thorne.com/affiliate
+// 5. Life Extension (6-12%): https://www.lifeextension.com/aff
+//
+// URL format examples:
+//   amazon: 'https://amzn.to/YOUR_REAL_SHORT_LINK'
+//   iherb: 'https://www.iherb.com/pr/product-name/12345?rcode=YOUR_CODE'
+//   nootropicsdepot: 'https://nootropicsdepot.com/product/?ref=YOUR_REF_ID'
+// ============================================================
 const AFFILIATE_LINKS = {
   'alpha-gpc': {
     amazon: 'https://amzn.to/3supplement-alpha-gpc',

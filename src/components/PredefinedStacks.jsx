@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.jsx';
 import { Button } from '@/components/ui/button.jsx';
 import { Badge } from '@/components/ui/badge.jsx';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.jsx';
-import { Star, Zap, Brain, Heart, Target, AlertTriangle, Plus } from 'lucide-react';
+import { Star, Zap, Brain, Heart, Target, AlertTriangle, Plus, ShoppingCart } from 'lucide-react';
 import { predefinedStacks } from '../data/predefinedStacks.js';
 import { supplements } from '../data/supplements.js';
 import { useStack } from '../contexts/StackContext.jsx';
 import { analyzeStackSafety } from '../utils/stackAnalyzer.js';
+import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
 
 export function PredefinedStacks() {
   const { loadStack, stack } = useStack();
@@ -230,14 +232,32 @@ export function PredefinedStacks() {
                 <div className="space-y-3">
                   {stackData.supplements.map(item => {
                     const supplement = supplements.find(s => s.id === item.id);
+                    const hasAffiliate = AFFILIATE_LINKS[item.id];
                     return (
                       <div key={item.id} className="p-3 bg-gray-50 rounded-lg">
                         <div className="flex justify-between items-start mb-2">
-                          <h4 className="font-medium">{supplement?.name || item.id}</h4>
+                          <Link to={`/supplements/${item.id}`} className="font-medium hover:text-blue-600">
+                            {supplement?.name || item.id}
+                          </Link>
                           <span className="text-sm text-gray-600">{item.dosage}mg</span>
                         </div>
                         {supplement && (
                           <p className="text-sm text-gray-600">{supplement.description}</p>
+                        )}
+                        {hasAffiliate && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="mt-2 text-green-700 border-green-300 hover:bg-green-50"
+                            onClick={() => {
+                              const links = AFFILIATE_LINKS[item.id];
+                              const url = links.nootropicsdepot || links.amazon || links.iherb || Object.values(links).find(v => typeof v === 'string');
+                              if (url) window.open(url, '_blank');
+                            }}
+                          >
+                            <ShoppingCart className="w-3 h-3 mr-1" />
+                            Buy {supplement?.name.split(' ')[0]}
+                          </Button>
                         )}
                       </div>
                     );

@@ -1,9 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button.jsx';
 import { Badge } from '@/components/ui/badge.jsx';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card.jsx';
-import { Plus, Info } from 'lucide-react';
+import { Plus, Info, ShoppingCart } from 'lucide-react';
 import { useStack } from '../contexts/StackContext.jsx';
+import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
 
 export function SupplementCard({ supplement, onViewDetails }) {
   const { addSupplement, stack } = useStack();
@@ -96,25 +98,39 @@ export function SupplementCard({ supplement, onViewDetails }) {
         </div>
       </CardContent>
       
-      <CardFooter className="pt-3 flex gap-2">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => onViewDetails(supplement)}
-          className="flex-1"
-        >
-          <Info className="w-4 h-4 mr-1" />
-          Details
-        </Button>
-        <Button
-          size="sm"
-          onClick={handleAddToStack}
-          disabled={isInStack}
-          className="flex-1"
-        >
-          <Plus className="w-4 h-4 mr-1" />
-          {isInStack ? 'In Stack' : 'Add'}
-        </Button>
+      <CardFooter className="pt-3 flex flex-col gap-2">
+        <div className="flex gap-2 w-full">
+          <Link to={`/supplements/${supplement.id}`} className="flex-1">
+            <Button variant="outline" size="sm" className="w-full">
+              <Info className="w-4 h-4 mr-1" />
+              Details
+            </Button>
+          </Link>
+          <Button
+            size="sm"
+            onClick={handleAddToStack}
+            disabled={isInStack}
+            className="flex-1"
+          >
+            <Plus className="w-4 h-4 mr-1" />
+            {isInStack ? 'In Stack' : 'Add'}
+          </Button>
+        </div>
+        {AFFILIATE_LINKS[supplement.id] && (
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-full text-green-700 border-green-300 hover:bg-green-50"
+            onClick={() => {
+              const links = AFFILIATE_LINKS[supplement.id];
+              const url = links.nootropicsdepot || links.amazon || links.iherb || Object.values(links).find(v => typeof v === 'string');
+              if (url) window.open(url, '_blank');
+            }}
+          >
+            <ShoppingCart className="w-4 h-4 mr-1" />
+            Buy {supplement.name.split(' ')[0]}
+          </Button>
+        )}
       </CardFooter>
     </Card>
   );
