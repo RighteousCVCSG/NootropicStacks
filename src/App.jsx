@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
+import { getLoginUrl, isLoggedIn, logout, isOAuthConfigured } from './lib/auth.js';
 import { StackProvider } from './contexts/StackContext.jsx';
 import { GoalSelector } from './components/GoalSelector.jsx';
 import { StackPanel } from './components/StackPanel.jsx';
@@ -17,7 +18,7 @@ import { SupplementFamilyGuide } from './components/SupplementFamilyGuide.jsx';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
 import { Button } from '@/components/ui/button.jsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.jsx';
-import { AlertTriangle, Pill, Target, Sparkles, Layers, Library, Newspaper, BookOpen, Home, HelpCircle } from 'lucide-react';
+import { AlertTriangle, Pill, Target, Sparkles, Layers, Library, Newspaper, BookOpen, Home, HelpCircle, LogIn, LogOut, User } from 'lucide-react';
 import './App.css';
 
 // Scroll to top on route changes
@@ -179,12 +180,29 @@ function App() {
                 <NavLink to="/news" icon={Newspaper}>News</NavLink>
               </nav>
 
-              <div className="hidden lg:flex items-center gap-2 text-sm text-gray-600">
-                <Target className="w-4 h-4" />
-                <span>Smart Recommendations</span>
-                <span className="mx-2">•</span>
-                <Sparkles className="w-4 h-4" />
-                <span>Safety Monitoring</span>
+              <div className="flex items-center gap-3">
+                <div className="hidden lg:flex items-center gap-2 text-sm text-gray-600">
+                  <Target className="w-4 h-4" />
+                  <span>Smart Recommendations</span>
+                  <span className="mx-2">•</span>
+                  <Sparkles className="w-4 h-4" />
+                  <span>Safety Monitoring</span>
+                </div>
+                {isOAuthConfigured() && (
+                  isLoggedIn() ? (
+                    <Button variant="ghost" size="sm" onClick={logout}>
+                      <LogOut className="w-4 h-4 mr-1" />
+                      Logout
+                    </Button>
+                  ) : (
+                    <a href={getLoginUrl()}>
+                      <Button variant="outline" size="sm">
+                        <LogIn className="w-4 h-4 mr-1" />
+                        Sign In
+                      </Button>
+                    </a>
+                  )
+                )}
               </div>
             </div>
           </div>
