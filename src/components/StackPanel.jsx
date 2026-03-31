@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.jsx';
 import { Button } from '@/components/ui/button.jsx';
 import { Badge } from '@/components/ui/badge.jsx';
 import { Progress } from '@/components/ui/progress.jsx';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
-import { Trash2, AlertTriangle, CheckCircle, XCircle } from 'lucide-react';
+import { Trash2, AlertTriangle, CheckCircle, XCircle, Save } from 'lucide-react';
 import { useStack } from '../contexts/StackContext.jsx';
+import { useAuth } from '../contexts/AuthContext.jsx';
 import { supplements } from '../data/supplements.js';
+import { SaveStackDialog } from './SaveStackDialog.jsx';
+import { SavedStacksList } from './SavedStacksList.jsx';
 
 export function StackPanel() {
   const { stack, safetyAnalysis, removeSupplement, updateDosage } = useStack();
+  const { user } = useAuth();
+  const [showSaveDialog, setShowSaveDialog] = useState(false);
 
   if (stack.length === 0) {
     return (
@@ -77,6 +82,11 @@ export function StackPanel() {
               My Stack ({stack.length} supplements)
             </div>
             <div className="flex items-center gap-2">
+              {user && stack.length > 0 && (
+                <Button variant="outline" size="sm" onClick={() => setShowSaveDialog(true)} className="text-xs">
+                  <Save className="w-3.5 h-3.5 mr-1" />Save
+                </Button>
+              )}
               {getSafetyIcon()}
               <span className={`text-sm font-medium ${getSafetyColor()}`}>
                 Safety: {safetyAnalysis?.safetyScore || 100}/100
@@ -176,6 +186,12 @@ export function StackPanel() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Saved stacks (when logged in) */}
+      {user && <SavedStacksList />}
+
+      {/* Save dialog */}
+      <SaveStackDialog open={showSaveDialog} onOpenChange={setShowSaveDialog} />
     </div>
   );
 }

@@ -4,9 +4,9 @@ import { Helmet } from 'react-helmet-async';
 // SEO data for different pages and supplements
 const SEO_DATA = {
   home: {
-    title: 'Nootropic Stacker - Smart Biohacker Stack Builder | Nootropics & Supplements',
-    description: 'Build optimal supplement stacks with AI-powered recommendations. Track 70+ nootropics, adaptogens, and biohacking supplements. Safety monitoring and interaction warnings included.',
-    keywords: 'nootropic stacker, nootropics, biohacking, supplement stack, racetams, modafinil, cognitive enhancement, smart drugs, supplement interactions, biohacker tools',
+    title: 'NootropicStacker — Build Your Perfect Nootropic Stack | 195 Supplements',
+    description: 'Build and optimize nootropic supplement stacks with 195+ compounds. Stack Score rates synergy, coverage, balance, and efficiency. Free quiz, comparisons, and interaction warnings for biohackers.',
+    keywords: 'nootropic stacker, nootropics, biohacking, supplement stack, racetams, modafinil, cognitive enhancement, smart drugs, supplement interactions, biohacker tools, stack score',
     canonical: 'https://nootropicstacker.com'
   },
   nootropics: {
@@ -16,8 +16,8 @@ const SEO_DATA = {
     canonical: 'https://nootropicstacker.com/nootropics'
   },
   supplements: {
-    title: 'Supplement Database - 70+ Biohacking Supplements with Effects & Dosages',
-    description: 'Comprehensive database of biohacking supplements including nootropics, adaptogens, vitamins, and performance enhancers. Complete with dosage recommendations and safety warnings.',
+    title: 'Supplement Database — 195 Biohacking Supplements with Effects & Dosages',
+    description: 'Comprehensive database of 195 biohacking supplements including nootropics, adaptogens, vitamins, and performance enhancers. Complete with dosage recommendations and safety warnings.',
     keywords: 'supplement database, biohacking supplements, supplement effects, dosage guide, supplement interactions, health supplements',
     canonical: 'https://nootropicstacker.com/supplements'
   }
@@ -202,36 +202,63 @@ export function SEOOptimizer({ page = 'home', supplement = null, customTitle = n
 // SEO-friendly visible content section for the homepage
 export function SEOContent() {
   return (
-    <section className="mt-12 px-4 py-8 bg-muted/30 rounded-lg">
-      <h2 className="text-2xl font-bold mb-4">About NootropicStacker</h2>
-      <p className="text-muted-foreground mb-6">
-        NootropicStacker is the most comprehensive nootropic stack builder for biohackers and cognitive optimizers.
-        Build optimal supplement stacks from our database of 70+ nootropics, adaptogens, and performance supplements
-        with real-time safety monitoring and interaction warnings.
-      </p>
+    <section className="mt-12 px-4 py-8 bg-muted/30 rounded-lg space-y-8">
+      <div>
+        <h2 className="text-2xl font-bold mb-4">The Nootropic Stack Builder for Biohackers</h2>
+        <p className="text-muted-foreground mb-4">
+          NootropicStacker is a free tool for building, analyzing, and optimizing nootropic supplement stacks. Our database
+          covers 195 supplements — including racetams, adaptogens, cholinergics, vitamins, and performance compounds — with
+          detailed effect profiles, dosage ranges, and interaction data sourced from research literature and biohacking communities.
+        </p>
+        <p className="text-muted-foreground mb-4">
+          Unlike simple supplement databases, NootropicStacker evaluates how your chosen compounds work <em>together</em>.
+          The Stack Score system rates your combination across four dimensions: Synergy (do these supplements enhance each other?),
+          Coverage (does the stack address your goals?), Balance (is there unnecessary overlap?), and Efficiency (is the stack
+          lean and purposeful?). Each dimension scores 0-25, combining into an overall 0-100 rating with a letter grade.
+        </p>
+        <p className="text-muted-foreground">
+          Whether you're a first-time stacker looking for a focus and energy combo or an experienced biohacker fine-tuning a
+          complex protocol, the tools here help you make informed decisions. Set your goals, add supplements, and let the
+          scoring system show you where your stack is strong and where it can improve.
+        </p>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div>
-          <h3 className="font-semibold mb-2">Nootropics &amp; Cognitive Enhancers</h3>
+          <h3 className="font-semibold mb-2">195 Supplements with Effect Profiles</h3>
           <p className="text-sm text-muted-foreground">
-            Explore racetams, modafinil alternatives, and natural cognitive enhancers like Bacopa Monnieri,
-            Lion's Mane, and Alpha-GPC with detailed dosage and safety information.
+            Explore racetams, modafinil alternatives, adaptogens like ashwagandha and rhodiola, and natural cognitive
+            enhancers like Bacopa Monnieri, Lion's Mane, and Alpha-GPC. Each supplement includes effect ratings across
+            seven categories, dosage recommendations, interaction warnings, and mechanism of action.
           </p>
         </div>
         <div>
-          <h3 className="font-semibold mb-2">Smart Stack Building</h3>
+          <h3 className="font-semibold mb-2">Stack Score &amp; Interaction Analysis</h3>
           <p className="text-sm text-muted-foreground">
-            Our stack builder calculates synergistic effects, warns about dangerous interactions,
-            and recommends supplements based on your goals — energy, focus, mood, or creativity.
+            Our Stack Score system analyzes 60+ pairwise supplement interactions and detects mechanism overlap across
+            9 categories — stimulants, GABAergics, cholinergics, adaptogens, racetams, and more. Get real-time feedback
+            as you build, with specific optimization tips to improve your stack's effectiveness.
           </p>
         </div>
         <div>
-          <h3 className="font-semibold mb-2">Safety First</h3>
+          <h3 className="font-semibold mb-2">Personalized Recommendations</h3>
           <p className="text-sm text-muted-foreground">
-            Every stack is analyzed for potential interactions, overdose risks, and contraindications.
-            We track over 70 supplements to help you stack safely and effectively.
+            Take the 5-question Stack Quiz for a personalized starting point, or set your goals directly in the Stack Builder.
+            The recommendation engine suggests supplements that fill gaps in your stack while avoiding redundancy and diminishing
+            returns. Compare supplements side-by-side to choose between similar options.
           </p>
         </div>
+      </div>
+
+      <div>
+        <h3 className="font-semibold mb-2">Built for Biohackers Who Want Signal, Not Noise</h3>
+        <p className="text-sm text-muted-foreground">
+          NootropicStacker takes an optimization-first approach. The Stack Score acts like an audio mixer — telling you when
+          your bass is too heavy or your coverage is thin — rather than a medical tool that warns you away from every decision.
+          We track synergistic pairs (caffeine + L-theanine, racetams + choline sources, curcumin + piperine), flag redundant
+          combinations (two choline sources, multiple racetams), and identify conflicting compounds (stimulants + sleep aids).
+          The goal is to help you build smarter stacks, not to gatekeep supplement choices.
+        </p>
       </div>
     </section>
   );

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
-import { getLoginUrl, isLoggedIn, logout, isOAuthConfigured } from './lib/auth.js';
+import { AuthProvider, useAuth } from './contexts/AuthContext.jsx';
+import { AuthDialog } from './components/AuthDialog.jsx';
 import { StackProvider } from './contexts/StackContext.jsx';
 import { GoalSelector } from './components/GoalSelector.jsx';
 import { StackPanel } from './components/StackPanel.jsx';
@@ -15,10 +16,15 @@ import { ContextualAd, SmartAdPlacement, AdRevenueTracker } from './components/A
 import { PredefinedStacks } from './components/PredefinedStacks.jsx';
 import { NewsSection } from './components/NewsSection.jsx';
 import { SupplementFamilyGuide } from './components/SupplementFamilyGuide.jsx';
+import { StackScoreWidget } from './components/StackScoreWidget.jsx';
+import { BlogSection } from './components/BlogSection.jsx';
+import { BlogArticlePage } from './components/BlogArticlePage.jsx';
+import { FAQPage } from './components/FAQPage.jsx';
+import { GlossaryPage } from './components/GlossaryPage.jsx';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
 import { Button } from '@/components/ui/button.jsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.jsx';
-import { AlertTriangle, Pill, Target, Sparkles, Layers, Library, Newspaper, BookOpen, Home, HelpCircle, LogIn, LogOut, User } from 'lucide-react';
+import { AlertTriangle, Pill, Layers, Library, Newspaper, BookOpen, Home, HelpCircle, LogIn, LogOut, User, PenLine } from 'lucide-react';
 import './App.css';
 
 // Scroll to top on route changes
@@ -46,6 +52,39 @@ function NavLink({ to, icon: Icon, children }) {
   );
 }
 
+// Header auth section
+function HeaderAuth() {
+  const { user, logout, loading } = useAuth();
+  const [showAuth, setShowAuth] = useState(false);
+
+  if (loading) return null;
+
+  if (user) {
+    return (
+      <div className="flex items-center gap-2">
+        <span className="hidden sm:inline text-sm text-gray-600">
+          <User className="w-3.5 h-3.5 inline mr-1" />
+          {user.name || user.email}
+        </span>
+        <Button variant="ghost" size="sm" onClick={logout}>
+          <LogOut className="w-4 h-4 mr-1" />
+          <span className="hidden sm:inline">Logout</span>
+        </Button>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <Button variant="outline" size="sm" onClick={() => setShowAuth(true)}>
+        <LogIn className="w-4 h-4 mr-1" />
+        Sign In
+      </Button>
+      <AuthDialog open={showAuth} onOpenChange={setShowAuth} />
+    </>
+  );
+}
+
 // Home page with stack builder
 function HomePage() {
   const [selectedSupplement, setSelectedSupplement] = useState(null);
@@ -66,6 +105,37 @@ function HomePage() {
   return (
     <>
       <SEOOptimizer page="home" />
+
+      {/* How It Works */}
+      <div className="mb-8 bg-white rounded-lg border p-6">
+        <h1 className="text-2xl font-bold text-gray-900 text-center mb-2">Build Your Perfect Nootropic Stack</h1>
+        <p className="text-gray-500 text-center mb-6 text-sm">Free to use. No account required.</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="text-center">
+            <div className="w-10 h-10 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center mx-auto mb-3">1</div>
+            <h3 className="font-semibold text-sm mb-1">Set Your Goals</h3>
+            <p className="text-xs text-gray-500">Pick what you want to optimize — focus, energy, mood, memory, or creativity.</p>
+          </div>
+          <div className="text-center">
+            <div className="w-10 h-10 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center mx-auto mb-3">2</div>
+            <h3 className="font-semibold text-sm mb-1">Build Your Stack</h3>
+            <p className="text-xs text-gray-500">Add supplements from 195 compounds. Get real-time synergy analysis and recommendations.</p>
+          </div>
+          <div className="text-center">
+            <div className="w-10 h-10 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center mx-auto mb-3">3</div>
+            <h3 className="font-semibold text-sm mb-1">Optimize with Stack Score</h3>
+            <p className="text-xs text-gray-500">Your stack gets a 0-100 score across synergy, coverage, balance, and efficiency.</p>
+          </div>
+        </div>
+        <div className="flex justify-center gap-6 mt-6 text-xs text-gray-400">
+          <span>195 supplements</span>
+          <span>&middot;</span>
+          <span>60+ interactions mapped</span>
+          <span>&middot;</span>
+          <span>9 mechanism groups</span>
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column - Goals and Stack */}
         <div className="lg:col-span-1 space-y-6">
@@ -154,6 +224,7 @@ function App() {
   }, []);
 
   return (
+    <AuthProvider>
     <StackProvider>
       <ScrollToTop />
       <div className="min-h-screen bg-gray-50">
@@ -178,32 +249,10 @@ function App() {
                 <NavLink to="/supplements" icon={Library}>Library</NavLink>
                 <NavLink to="/families" icon={BookOpen}>Families</NavLink>
                 <NavLink to="/news" icon={Newspaper}>News</NavLink>
+                <NavLink to="/blog" icon={PenLine}>Blog</NavLink>
               </nav>
 
-              <div className="flex items-center gap-3">
-                <div className="hidden lg:flex items-center gap-2 text-sm text-gray-600">
-                  <Target className="w-4 h-4" />
-                  <span>Smart Recommendations</span>
-                  <span className="mx-2">•</span>
-                  <Sparkles className="w-4 h-4" />
-                  <span>Safety Monitoring</span>
-                </div>
-                {isOAuthConfigured() && (
-                  isLoggedIn() ? (
-                    <Button variant="ghost" size="sm" onClick={logout}>
-                      <LogOut className="w-4 h-4 mr-1" />
-                      Logout
-                    </Button>
-                  ) : (
-                    <a href={getLoginUrl()}>
-                      <Button variant="outline" size="sm">
-                        <LogIn className="w-4 h-4 mr-1" />
-                        Sign In
-                      </Button>
-                    </a>
-                  )
-                )}
-              </div>
+              <HeaderAuth />
             </div>
           </div>
         </header>
@@ -216,6 +265,7 @@ function App() {
             <NavLink to="/supplements" icon={Library}>Library</NavLink>
             <NavLink to="/families" icon={BookOpen}>Families</NavLink>
             <NavLink to="/news" icon={Newspaper}>News</NavLink>
+            <NavLink to="/blog" icon={PenLine}>Blog</NavLink>
           </div>
         </nav>
 
@@ -243,10 +293,29 @@ function App() {
                 <SupplementFamilyGuide />
               </>
             } />
+            <Route path="/blog" element={
+              <>
+                <SEOOptimizer page="home" customTitle="Nootropic Blog — Research, Stacks & Trends | NootropicStacker" customDescription="Deep dives into nootropic research, stack guides, and what's trending in the biohacking world." />
+                <BlogSection />
+              </>
+            } />
+            <Route path="/blog/:slug" element={<BlogArticlePage />} />
             <Route path="/news" element={
               <>
                 <SEOOptimizer page="home" customTitle="Nootropic News & Research | NootropicStacker" customDescription="Latest nootropic supplement news, research updates, and industry trends." />
                 <NewsSection />
+              </>
+            } />
+            <Route path="/faq" element={
+              <>
+                <SEOOptimizer page="home" customTitle="FAQ — Nootropic Stacking Questions Answered | NootropicStacker" customDescription="Answers to common questions about nootropic stacking, supplement safety, cycling, and how to use NootropicStacker." />
+                <FAQPage />
+              </>
+            } />
+            <Route path="/glossary" element={
+              <>
+                <SEOOptimizer page="home" customTitle="Nootropics Glossary — Key Terms & Concepts | NootropicStacker" customDescription="Plain-English definitions of nootropic terms, compounds, and concepts. From acetylcholine to withanolides." />
+                <GlossaryPage />
               </>
             } />
             <Route path="*" element={
@@ -262,6 +331,9 @@ function App() {
           </Routes>
         </main>
 
+        {/* Stack Score Floating Widget */}
+        <StackScoreWidget />
+
         {/* Footer */}
         <footer className="bg-white border-t mt-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -273,11 +345,15 @@ function App() {
                 This tool provides educational information only. Always consult healthcare professionals for medical advice.
               </p>
               <div className="flex justify-center items-center gap-4 text-xs mb-4">
-                <Link to="/supplements" className="hover:text-gray-900">70+ Supplements</Link>
+                <Link to="/supplements" className="hover:text-gray-900">195 Supplements</Link>
                 <span>•</span>
-                <Link to="/" className="hover:text-gray-900">Smart Recommendations</Link>
+                <Link to="/blog" className="hover:text-gray-900">Blog</Link>
                 <span>•</span>
                 <Link to="/families" className="hover:text-gray-900">Family Guides</Link>
+                <span>•</span>
+                <Link to="/faq" className="hover:text-gray-900">FAQ</Link>
+                <span>•</span>
+                <Link to="/glossary" className="hover:text-gray-900">Glossary</Link>
                 <span>•</span>
                 <Link to="/news" className="hover:text-gray-900">Latest News</Link>
               </div>
@@ -290,6 +366,7 @@ function App() {
         </footer>
       </div>
     </StackProvider>
+    </AuthProvider>
   );
 }
 

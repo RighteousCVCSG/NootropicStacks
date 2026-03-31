@@ -1,5 +1,7 @@
 // Stack analysis and recommendation system
 import { supplements, goals } from "../data/supplements.js";
+import { INTERACTION_TYPES, getInteraction, getStackInteractions } from "../data/interactions.js";
+import { MECHANISM_GROUPS, countByMechanismGroup } from "../data/mechanismGroups.js";
 
 // Define diminishing returns curve parameters
 const DIMINISHING_RETURNS_THRESHOLD = 6.0; // Point where effects start to diminish significantly
@@ -338,5 +340,244 @@ export function calculateOptimalDosage(supplement, userGoals, currentStack) {
   }
   
   return Math.round(optimalDosage);
+}
+
+// ============================================================
+// STACK SCORE SYSTEM
+// ============================================================
+
+const GRADE_MAP = [
+  { min: 90, grade: 'A', label: 'Optimized' },
+  { min: 80, grade: 'B', label: 'Strong' },
+  { min: 70, grade: 'C', label: 'Good' },
+  { min: 60, grade: 'D', label: 'Needs Work' },
+  { min: 0, grade: 'F', label: 'Unbalanced' },
+];
+
+function getGrade(score) {
+  for (const entry of GRADE_MAP) {
+    if (score >= entry.min) return entry;
+  }
+  return GRADE_MAP[GRADE_MAP.length - 1];
+}
+
+// --- Synergy sub-score (0-25) ---
+function calculateSynergyScore(supplementIds) {
+  if (supplementIds.length < 2) return { score: 0, interactions: [], details: 'Add at least 2 supplements to see synergy' };
+
+  const interactions = getStackInteractions(supplementIds);
+  let rawScore = 0;
+  interactions.forEach(({ type }) => {
+    const t = INTERACTION_TYPES[type.toUpperCase()];
+    if (t) rawScore += t.score;
+  });
+
+  // Normalize: max possible score scales with pair count, but cap at 25
+  const pairCount = (supplementIds.length * (supplementIds.length - 1)) / 2;
+  // Best case: all pairs synergistic (+3 each)
+  const maxPossible = pairCount * 3;
+  const normalized = maxPossible > 0 ? Math.max(0, Math.min(25, (rawScore / maxPossible) * 25)) : 0;
+
+  return {
+    score: Math.round(normalized * 10) / 10,
+    interactions,
+    rawScore,
+    details: interactions.length === 0
+      ? 'No known interactions between these supplements'
+      : `${interactions.filter(i => i.type === 'synergistic').length} synergistic, ${interactions.filter(i => i.type === 'redundant' || i.type === 'conflicting').length} problematic`
+  };
+}
+
+// --- Coverage sub-score (0-25) ---
+function calculateCoverageScore(stack, userGoals) {
+  if (userGoals.length === 0 || stack.length === 0) return { score: 0, goalCoverage: {}, details: 'Set goals and add supplements' };
+
+  const effects = calculateStackEffects(stack);
+  const goalCoverage = {};
+  let goalsMet = 0;
+  let strongCoverage = 0;
+
+  userGoals.forEach(goal => {
+    const value = effects[goal] || 0;
+    goalCoverage[goal] = value;
+    if (value > 4) {
+      goalsMet++;
+      if (value > 6) strongCoverage++;
+    }
+  });
+
+  let score = (goalsMet / userGoals.length) * 25;
+  // Bonus for strong coverage across all goals
+  if (strongCoverage === userGoals.length && userGoals.length > 0) {
+    score = Math.min(25, score + 2);
+  }
+
+  return {
+    score: Math.round(score * 10) / 10,
+    goalCoverage,
+    goalsMet,
+    totalGoals: userGoals.length,
+    details: `${goalsMet}/${userGoals.length} goals covered`
+  };
+}
+
+// --- Balance sub-score (0-25) ---
+function calculateBalanceScore(supplementIds, stack) {
+  if (supplementIds.length === 0) return { score: 0, penalties: [], details: 'Add supplements' };
+
+  let score = 25;
+  const penalties = [];
+  const effects = calculateStackEffects(stack);
+
+  // Category stacking penalty
+  const groupCounts = countByMechanismGroup(supplementIds);
+  for (const [groupId, { label, count }] of Object.entries(groupCounts)) {
+    if (count >= 4) {
+      score -= 6;
+      penalties.push(`${count} ${label} — significant overlap`);
+    } else if (count === 3) {
+      score -= 3;
+      penalties.push(`3 ${label} — some redundancy`);
+    }
+  }
+
+  // Effect ceiling penalty
+  Object.entries(effects).forEach(([effect, value]) => {
+    if (value > 9.0) {
+      score -= 4;
+      penalties.push(`${effect} at ${value.toFixed(1)} — overkill`);
+    } else if (value > 8.0) {
+      score -= 2;
+      penalties.push(`${effect} at ${value.toFixed(1)} — running hot`);
+    }
+  });
+
+  // Opposing force penalty
+  if (effects.energy > 7) {
+    const sleepIds = MECHANISM_GROUPS.sleepAids.supplements;
+    const hasSleepSupps = supplementIds.some(id => sleepIds.includes(id));
+    if (hasSleepSupps) {
+      score -= 4;
+      penalties.push('High energy + sleep aids — working against each other');
+    }
+  }
+
+  return {
+    score: Math.max(0, Math.round(score * 10) / 10),
+    penalties,
+    groupCounts,
+    details: penalties.length === 0 ? 'Well-balanced stack' : `${penalties.length} balance issue${penalties.length > 1 ? 's' : ''}`
+  };
+}
+
+// --- Efficiency sub-score (0-25) ---
+function calculateEfficiencyScore(supplementIds, stack, userGoals) {
+  if (supplementIds.length === 0) return { score: 0, details: 'Add supplements' };
+
+  const count = supplementIds.length;
+  let score;
+  if (count <= 3) score = 25;
+  else if (count <= 6) score = 20;
+  else if (count <= 9) score = 15;
+  else if (count <= 12) score = 10;
+  else score = 5;
+
+  // Check if each supplement contributes to at least one goal
+  let deadWeight = 0;
+  if (userGoals.length > 0) {
+    supplementIds.forEach(id => {
+      const supp = supplements.find(s => s.id === id);
+      if (supp) {
+        const contributesToGoal = userGoals.some(goal => (supp.effects[goal] || 0) > 2);
+        if (!contributesToGoal) deadWeight++;
+      }
+    });
+
+    if (deadWeight === 0 && count > 0) {
+      score = Math.min(25, score + 5);
+    } else {
+      score -= deadWeight * 3;
+    }
+  }
+
+  return {
+    score: Math.max(0, Math.round(score * 10) / 10),
+    deadWeight,
+    supplementCount: count,
+    details: deadWeight > 0 ? `${deadWeight} supplement${deadWeight > 1 ? 's' : ''} not aligned with your goals` : 'Every supplement earns its spot'
+  };
+}
+
+// --- Optimization tips ---
+function generateTip(synergy, coverage, balance, efficiency, supplementIds, userGoals) {
+  // Find the weakest sub-score and give a targeted tip
+  const scores = [
+    { name: 'synergy', score: synergy.score, max: 25 },
+    { name: 'coverage', score: coverage.score, max: 25 },
+    { name: 'balance', score: balance.score, max: 25 },
+    { name: 'efficiency', score: efficiency.score, max: 25 },
+  ];
+  scores.sort((a, b) => (a.score / a.max) - (b.score / b.max));
+  const weakest = scores[0];
+
+  if (supplementIds.length === 0) return 'Add supplements to start building your stack score';
+  if (supplementIds.length === 1) return 'Add a second supplement to unlock synergy scoring';
+
+  // Check for specific actionable tips
+  const hasRacetam = supplementIds.some(id => MECHANISM_GROUPS.racetams.supplements.includes(id));
+  const hasCholine = supplementIds.some(id => MECHANISM_GROUPS.cholinergics.supplements.includes(id));
+  if (hasRacetam && !hasCholine) {
+    return 'Adding a choline source (Alpha-GPC or Citicoline) would boost synergy with your racetam';
+  }
+
+  if (weakest.name === 'balance' && balance.penalties.length > 0) {
+    return balance.penalties[0];
+  }
+  if (weakest.name === 'coverage' && coverage.goalsMet < coverage.totalGoals) {
+    const uncovered = userGoals.filter(g => (coverage.goalCoverage[g] || 0) <= 4);
+    if (uncovered.length > 0) return `Your ${uncovered[0]} goal needs more support`;
+  }
+  if (weakest.name === 'efficiency' && efficiency.deadWeight > 0) {
+    return `${efficiency.deadWeight} supplement${efficiency.deadWeight > 1 ? 's' : ''} not contributing to your goals — consider swapping`;
+  }
+  if (weakest.name === 'synergy') {
+    const conflicts = synergy.interactions.filter(i => i.type === 'conflicting');
+    if (conflicts.length > 0) return `${conflicts[0].supplements.join(' + ')} are working against each other`;
+    const redundant = synergy.interactions.filter(i => i.type === 'redundant');
+    if (redundant.length > 0) return `${redundant[0].supplements.join(' + ')} overlap — one would do`;
+  }
+
+  // Generic positive feedback
+  const total = synergy.score + coverage.score + balance.score + efficiency.score;
+  if (total >= 80) return 'Solid stack — well-balanced across your goals';
+  if (total >= 60) return 'Good foundation — check sub-scores for optimization ideas';
+  return 'Keep refining — small changes can make a big difference';
+}
+
+// === MAIN: Calculate full Stack Score ===
+export function calculateStackScore(stack, userGoals) {
+  const supplementIds = stack.map(item => item.supplementId);
+
+  const synergy = calculateSynergyScore(supplementIds);
+  const coverage = calculateCoverageScore(stack, userGoals);
+  const balance = calculateBalanceScore(supplementIds, stack);
+  const efficiency = calculateEfficiencyScore(supplementIds, stack, userGoals);
+
+  const total = Math.round(synergy.score + coverage.score + balance.score + efficiency.score);
+  const gradeInfo = getGrade(total);
+  const tip = generateTip(synergy, coverage, balance, efficiency, supplementIds, userGoals);
+
+  return {
+    total,
+    grade: gradeInfo.grade,
+    gradeLabel: gradeInfo.label,
+    synergy,
+    coverage,
+    balance,
+    efficiency,
+    tip,
+    supplementCount: supplementIds.length,
+    goalCount: userGoals.length,
+  };
 }
 

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import { analyzeStackSafety, recommendSupplements } from '../utils/stackAnalyzer.js';
+import { analyzeStackSafety, recommendSupplements, calculateStackScore } from '../utils/stackAnalyzer.js';
 
 const StackContext = createContext();
 
@@ -8,7 +8,8 @@ const initialState = {
   stack: [],
   userGoals: ['energy', 'focus'], // Default goals
   safetyAnalysis: null,
-  recommendations: []
+  recommendations: [],
+  stackScore: null
 };
 
 // Action types
@@ -57,7 +58,8 @@ function stackReducer(state, action) {
       return {
         ...state,
         safetyAnalysis: action.payload.safetyAnalysis,
-        recommendations: action.payload.recommendations
+        recommendations: action.payload.recommendations,
+        stackScore: action.payload.stackScore
       };
     
     case ACTIONS.LOAD_STACK:
@@ -79,10 +81,11 @@ export function StackProvider({ children }) {
   useEffect(() => {
     const safetyAnalysis = analyzeStackSafety(state.stack);
     const recommendations = recommendSupplements(state.stack, state.userGoals);
-    
+    const stackScore = calculateStackScore(state.stack, state.userGoals);
+
     dispatch({
       type: ACTIONS.UPDATE_ANALYSIS,
-      payload: { safetyAnalysis, recommendations }
+      payload: { safetyAnalysis, recommendations, stackScore }
     });
   }, [state.stack, state.userGoals]);
 
@@ -150,6 +153,7 @@ export function StackProvider({ children }) {
     userGoals: state.userGoals,
     safetyAnalysis: state.safetyAnalysis,
     recommendations: state.recommendations,
+    stackScore: state.stackScore,
     addSupplement,
     removeSupplement,
     updateDosage,
