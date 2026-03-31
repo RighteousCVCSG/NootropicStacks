@@ -212,7 +212,7 @@ app.delete('/api/stacks/:id', verifyToken, async (req, res) => {
 // ============================================================
 // SPA FALLBACK — must be last
 // ============================================================
-app.get('*', (req, res) => {
+app.get('/{*path}', (req, res) => {
   res.sendFile(join(__dirname, 'dist', 'index.html'));
 });
 
