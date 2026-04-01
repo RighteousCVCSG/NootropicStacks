@@ -4,8 +4,8 @@ import { Helmet } from 'react-helmet-async';
 // SEO data for different pages and supplements
 const SEO_DATA = {
   home: {
-    title: 'NootropicStacker — Build Your Perfect Nootropic Stack | 195 Supplements',
-    description: 'Build and optimize nootropic supplement stacks with 195+ compounds. Stack Score rates synergy, coverage, balance, and efficiency. Free quiz, comparisons, and interaction warnings for biohackers.',
+    title: 'NootropicStacker — Build Your Perfect Nootropic Stack Builder',
+    description: 'Build nootropic supplement stacks with 195+ compounds. Stack Score rates synergy, coverage, and balance. Free quiz and interaction warnings.',
     keywords: 'nootropic stacker, nootropics, biohacking, supplement stack, racetams, modafinil, cognitive enhancement, smart drugs, supplement interactions, biohacker tools, stack score',
     canonical: 'https://nootropicstacker.com'
   },

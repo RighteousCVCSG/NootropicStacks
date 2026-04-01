@@ -109,7 +109,7 @@ function HomePage() {
       {/* How It Works */}
       <div className="mb-8 bg-white rounded-lg border p-6">
         <h1 className="text-2xl font-bold text-gray-900 text-center mb-2">Build Your Perfect Nootropic Stack</h1>
-        <p className="text-gray-500 text-center mb-6 text-sm">Free to use. No account required.</p>
+        <p className="text-gray-500 text-center mb-6 text-sm">The free nootropic stack builder — 195 supplements, real-time synergy analysis, no account required.</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="text-center">
             <div className="w-10 h-10 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center mx-auto mb-3">1</div>
@@ -237,7 +237,7 @@ function App() {
                   <Pill className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-xl font-bold text-gray-900">NootropicStacker</h1>
+                  <span className="text-xl font-bold text-gray-900">NootropicStacker</span>
                   <p className="text-sm text-gray-600">Build Your Perfect Nootropic Stack</p>
                 </div>
               </Link>

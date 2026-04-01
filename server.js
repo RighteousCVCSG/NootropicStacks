@@ -23,6 +23,15 @@ const COOKIE_MAX_AGE = 30 * 24 * 60 * 60 * 1000; // 30 days
 app.use(express.json());
 app.use(cookieParser());
 
+// Force lowercase URLs for SEO consistency (redirect mixed-case paths)
+app.use((req, res, next) => {
+  if (req.path !== req.path.toLowerCase() && req.method === 'GET') {
+    const lowercaseUrl = req.path.toLowerCase() + (req.url.includes('?') ? '?' + req.url.split('?')[1] : '');
+    return res.redirect(301, lowercaseUrl);
+  }
+  next();
+});
+
 // --- Database connection pool ---
 const DATABASE_URL = process.env.DATABASE_URL || process.env.MYSQL_PUBLIC_URL;
 let pool = null;
