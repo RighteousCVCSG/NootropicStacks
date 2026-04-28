@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
+import { Routes, Route, Link, useLocation, Navigate, useParams } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext.jsx';
 import { AuthDialog } from './components/AuthDialog.jsx';
 import { StackProvider } from './contexts/StackContext.jsx';
@@ -85,6 +85,11 @@ function HeaderAuth() {
       <AuthDialog open={showAuth} onOpenChange={setShowAuth} />
     </>
   );
+}
+
+function GuideRedirect() {
+  const { slug } = useParams();
+  return <Navigate to={`/blog/${slug}`} replace />;
 }
 
 // Home page with stack builder
@@ -321,6 +326,7 @@ function App() {
               </>
             } />
             <Route path="/contact" element={<><SEOOptimizer page="home" customTitle="Contact NootropicStacker" customDescription="Get in touch with the NootropicStacker team." /><ContactPage /></>} />
+            <Route path="/guides/:slug" element={<GuideRedirect />} />
             <Route path="*" element={
               <div className="text-center py-20">
                 <h2 className="text-4xl font-bold mb-4">404</h2>
