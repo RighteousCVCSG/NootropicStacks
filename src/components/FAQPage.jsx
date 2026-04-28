@@ -149,6 +149,21 @@ const faqData = [
 export function FAQPage() {
   return (
     <div className="max-w-3xl mx-auto space-y-8">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": faqData.flatMap(category =>
+          category.questions.map(q => ({
+            "@type": "Question",
+            "name": q.q,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": q.a
+            }
+          }))
+        )
+      }) }} />
+
       <div>
         <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
           <HelpCircle className="w-6 h-6" />
@@ -178,24 +193,6 @@ export function FAQPage() {
           </CardContent>
         </Card>
       ))}
-
-      {/* FAQ Schema for SEO */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'FAQPage',
-            mainEntity: faqData.flatMap(cat =>
-              cat.questions.map(q => ({
-                '@type': 'Question',
-                name: q.q,
-                acceptedAnswer: { '@type': 'Answer', text: q.a }
-              }))
-            )
-          })
-        }}
-      />
     </div>
   );
 }
