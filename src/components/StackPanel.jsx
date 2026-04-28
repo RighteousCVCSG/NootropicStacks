@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button.jsx';
 import { Badge } from '@/components/ui/badge.jsx';
 import { Progress } from '@/components/ui/progress.jsx';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
-import { Trash2, AlertTriangle, CheckCircle, XCircle, Save, ShoppingCart, ExternalLink } from 'lucide-react';
+import { Trash2, AlertTriangle, CheckCircle, XCircle, Save, ShoppingCart, ExternalLink, Share2 } from 'lucide-react';
 import { useStack } from '../contexts/StackContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { supplements } from '../data/supplements.js';
@@ -45,6 +45,16 @@ export function StackPanel() {
   const { stack, safetyAnalysis, removeSupplement, updateDosage } = useStack();
   const { user } = useAuth();
   const [showSaveDialog, setShowSaveDialog] = useState(false);
+  const [shareCopied, setShareCopied] = useState(false);
+
+  const handleShare = () => {
+    const ids = stack.map(s => s.supplementId).join(',');
+    const url = `${window.location.origin}/?stack=${encodeURIComponent(ids)}`;
+    navigator.clipboard.writeText(url).then(() => {
+      setShareCopied(true);
+      setTimeout(() => setShareCopied(false), 2000);
+    });
+  };
 
   if (stack.length === 0) {
     return (
@@ -112,6 +122,14 @@ export function StackPanel() {
               My Stack ({stack.length} supplements)
             </div>
             <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1">
+                <Button variant="outline" size="sm" onClick={handleShare} className="text-xs">
+                  <Share2 className="w-3.5 h-3.5 mr-1" />Share
+                </Button>
+                {shareCopied && (
+                  <span className="text-xs text-green-600 font-medium">Link copied!</span>
+                )}
+              </div>
               {user && stack.length > 0 && (
                 <Button variant="outline" size="sm" onClick={() => setShowSaveDialog(true)} className="text-xs">
                   <Save className="w-3.5 h-3.5 mr-1" />Save

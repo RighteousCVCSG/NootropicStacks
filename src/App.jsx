@@ -2,7 +2,7 @@ import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { Routes, Route, Link, useLocation, Navigate, useParams } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext.jsx';
 import { AuthDialog } from './components/AuthDialog.jsx';
-import { StackProvider } from './contexts/StackContext.jsx';
+import { StackProvider, useStack } from './contexts/StackContext.jsx';
 import { GoalSelector } from './components/GoalSelector.jsx';
 import { StackPanel } from './components/StackPanel.jsx';
 import { RecommendationPanel } from './components/RecommendationPanel.jsx';
@@ -26,6 +26,7 @@ const BlogArticlePage = lazy(() => import('./components/BlogArticlePage.jsx').th
 const FAQPage = lazy(() => import('./components/FAQPage.jsx').then(m => ({ default: m.FAQPage })));
 const GlossaryPage = lazy(() => import('./components/GlossaryPage.jsx').then(m => ({ default: m.GlossaryPage })));
 const ContactPage = lazy(() => import('./components/ContactPage.jsx').then(m => ({ default: m.ContactPage })));
+import { supplements } from './data/supplements.js';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
 import { Button } from '@/components/ui/button.jsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.jsx';
@@ -101,6 +102,26 @@ function HomePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userGoals, setUserGoals] = useState(['energy']);
   const [stackSize, setStackSize] = useState(0);
+  const { stack, loadStack } = useStack();
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const stackParam = params.get('stack');
+    if (stackParam && stack.length === 0) {
+      const ids = stackParam.split(',');
+      const itemsToLoad = ids
+        .map(id => supplements.find(s => s.id === id))
+        .filter(Boolean)
+        .map(s => ({
+          supplementId: s.id,
+          dosage: (s.dosage.min + s.dosage.max) / 2,
+          timing: s.dosage.timing,
+        }));
+      if (itemsToLoad.length > 0) {
+        loadStack(itemsToLoad);
+      }
+    }
+  }, []);
 
   const handleViewDetails = (supplement) => {
     setSelectedSupplement(supplement);
