@@ -1,6 +1,7 @@
 import express from 'express';
 import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import { basename, dirname, join, resolve } from 'path';
+import { existsSync } from 'fs';
 import mysql from 'mysql2/promise';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
@@ -9,6 +10,18 @@ import crypto from 'crypto';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const isDirectRun = process.argv[1] ? basename(resolve(process.argv[1])) === basename(__filename) : false;
+
+export function resolveStaticDir(baseDir) {
+  const hasBuiltIndex = existsSync(join(baseDir, 'index.html'));
+  const hasBuiltAssets = existsSync(join(baseDir, 'assets'));
+  if (hasBuiltIndex && hasBuiltAssets) {
+    return baseDir;
+  }
+  return join(baseDir, 'dist');
+}
+
+const staticDir = resolveStaticDir(__dirname);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -130,7 +143,7 @@ function setCookieAndRespond(res, userId, user) {
 }
 
 // --- Serve static files ---
-app.use(express.static(join(__dirname, 'dist'), {
+app.use(express.static(staticDir, {
   maxAge: '1d',
   etag: true
 }));
@@ -356,10 +369,12 @@ app.post('/api/track/click', async (req, res) => {
 // SPA FALLBACK — must be last
 // ============================================================
 app.get('/{*path}', (req, res) => {
-  res.sendFile(join(__dirname, 'dist', 'index.html'));
+  res.sendFile(join(staticDir, 'index.html'));
 });
 
-app.listen(PORT, async () => {
-  console.log(`NootropicStacker running on port ${PORT}`);
-  await runMigrations();
-});
+if (isDirectRun) {
+  app.listen(PORT, async () => {
+    console.log(`NootropicStacker running on port ${PORT}`);
+    await runMigrations();
+  });
+}
