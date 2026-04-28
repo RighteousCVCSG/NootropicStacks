@@ -109,6 +109,31 @@ export function BlogArticlePage() {
     url: `https://nootropicstacker.com/blog/${article.slug}`
   });
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://nootropicstacker.com"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Blog",
+        "item": "https://nootropicstacker.com/blog"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": article.title,
+        "item": `https://nootropicstacker.com/blog/${article.slug}`
+      }
+    ]
+  };
+
   const articleSupplements = [...new Set(
     (article.tags || [])
       .map(tag => TAG_TO_SUPPLEMENT[tag.toLowerCase()])
@@ -127,6 +152,7 @@ export function BlogArticlePage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <SEOOptimizer
         page="home"
         customTitle={`${article.title} | NootropicStacker Blog`}

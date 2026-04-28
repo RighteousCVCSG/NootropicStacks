@@ -2,27 +2,45 @@
 
 > The free nootropic supplement stack builder. 195 compounds, real-time synergy analysis, Stack Score rating, interaction warnings.
 
-NootropicStacker is a free tool for biohackers and cognitive optimizers to build, analyze, and score nootropic supplement stacks. It covers 195 supplements including racetams, adaptogens, mushrooms, vitamins, and amino acids.
+NootropicStacker is a free tool for biohackers and cognitive optimizers to build, analyze, and score nootropic supplement stacks. It covers 195 supplements including racetams, adaptogens, mushrooms, vitamins, and amino acids. The Stack Score system rates combinations across Synergy, Coverage, Balance, and Efficiency (0–25 each, 0–100 total).
 
 ## Core Features
 - Stack Builder: Add supplements, get real-time synergy analysis and interaction warnings
 - Stack Score: 0-100 rating across synergy, coverage, balance, and efficiency
 - Supplement Library: 195 compounds with dosage ranges, effects, mechanisms
+- Supplement Comparison: Head-to-head side-by-side comparison of any two supplements
 - Personalized Quiz: Find your optimal stack based on goals
-- Guides: Blog posts and family guides covering nootropic categories
+- Curated Stacks: Pre-built stacks for focus, memory, energy, anxiety, sleep, longevity
+- 93+ research-backed blog articles covering supplements, stacks, and protocols
 
 ## Key URLs
 - https://nootropicstacker.com/ — Stack Builder
-- https://nootropicstacker.com/supplements — Full supplement library
+- https://nootropicstacker.com/supplements — Full supplement library (195 compounds)
 - https://nootropicstacker.com/quiz — Personalized stack quiz
-- https://nootropicstacker.com/blog — Research and guides
+- https://nootropicstacker.com/start-here — Beginner's guide to nootropics
+- https://nootropicstacker.com/best-nootropics — Top nootropics ranked by evidence
+- https://nootropicstacker.com/best-stacks — 8 curated stacks by goal
+- https://nootropicstacker.com/nootropics-for-focus — Best nootropics for focus
+- https://nootropicstacker.com/compare-supplements — Side-by-side supplement comparison
+- https://nootropicstacker.com/blog — Research articles and guides
 - https://nootropicstacker.com/families — Supplement family guides
+- https://nootropicstacker.com/faq — Frequently asked questions
+- https://nootropicstacker.com/glossary — Nootropic terms and definitions
 
 ## Popular Supplements Covered
-Lion's Mane, Bacopa Monnieri, Ashwagandha (KSM-66), L-Theanine, Alpha-GPC, Citicoline, Rhodiola Rosea, Phosphatidylserine, Creatine, Omega-3/DHA, Magnesium Glycinate, Vitamin D3, CoQ10, Piracetam, Aniracetam, Noopept, Modafinil, Caffeine, Cordyceps, Reishi
+Lion's Mane, Bacopa Monnieri, Ashwagandha (KSM-66), L-Theanine, Alpha-GPC, Citicoline, Rhodiola Rosea, Phosphatidylserine, Creatine, Omega-3/DHA, Magnesium L-Threonate, Magnesium Glycinate, Vitamin D3, CoQ10/Ubiquinol, Piracetam, Aniracetam, Oxiracetam, Phenylpiracetam, Noopept, Caffeine, Huperzine A, L-Tyrosine, NALT, NMN, NAD+, Sulbutiamine, Pterostilbene, Curcumin, Ginkgo Biloba, Cordyceps, Reishi, SAMe, Omega-3 DHA
 
 ## Supplement Categories
-Nootropics, Adaptogens, Mushrooms, Racetams, Vitamins, Minerals, Amino Acids, Antioxidants, Sleep Support, Performance
+Nootropics, Adaptogens, Mushrooms (functional), Racetams, Vitamins, Minerals, Amino Acids, Antioxidants/Longevity, Sleep Support, Stimulants, Cholinergics, GABAergics
+
+## Stack Score System
+- Synergy (0-25): Detects 60+ known beneficial pairings (caffeine+L-theanine, racetams+choline, curcumin+piperine)
+- Coverage (0-25): Does the stack address the user's stated goals?
+- Balance (0-25): Penalizes redundant mechanisms (two cholinergics, multiple stimulants)
+- Efficiency (0-25): Rewards lean, purposeful stacks
+
+## Medical Disclaimer
+Informational only. Not medical advice. Consult a healthcare professional before starting supplements.
 
 ## Contact
 info@nootropicstacker.com
