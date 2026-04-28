@@ -26,11 +26,12 @@ const BlogArticlePage = lazy(() => import('./components/BlogArticlePage.jsx').th
 const FAQPage = lazy(() => import('./components/FAQPage.jsx').then(m => ({ default: m.FAQPage })));
 const GlossaryPage = lazy(() => import('./components/GlossaryPage.jsx').then(m => ({ default: m.GlossaryPage })));
 const ContactPage = lazy(() => import('./components/ContactPage.jsx').then(m => ({ default: m.ContactPage })));
+const BestNootropicsPage = lazy(() => import('./components/BestNootropicsPage.jsx').then(m => ({ default: m.BestNootropicsPage })));
 import { supplements } from './data/supplements.js';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
 import { Button } from '@/components/ui/button.jsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.jsx';
-import { AlertTriangle, Pill, Layers, Library, Newspaper, BookOpen, Home, HelpCircle, LogIn, LogOut, User, PenLine } from 'lucide-react';
+import { AlertTriangle, Pill, Layers, Library, Newspaper, BookOpen, Home, HelpCircle, LogIn, LogOut, User, PenLine, Award } from 'lucide-react';
 import './App.css';
 
 // Scroll to top on route changes
@@ -308,6 +309,7 @@ function App() {
                 <NavLink to="/families" icon={BookOpen}>Families</NavLink>
                 <NavLink to="/news" icon={Newspaper}>News</NavLink>
                 <NavLink to="/blog" icon={PenLine}>Blog</NavLink>
+                <NavLink to="/best-nootropics" icon={Award}>Best Nootropics</NavLink>
               </nav>
 
               <HeaderAuth />
@@ -324,6 +326,7 @@ function App() {
             <NavLink to="/families" icon={BookOpen}>Families</NavLink>
             <NavLink to="/news" icon={Newspaper}>News</NavLink>
             <NavLink to="/blog" icon={PenLine}>Blog</NavLink>
+            <NavLink to="/best-nootropics" icon={Award}>Best</NavLink>
           </div>
         </nav>
 
@@ -378,6 +381,7 @@ function App() {
               </>
             } />
             <Route path="/contact" element={<><SEOOptimizer page="home" customTitle="Contact NootropicStacker" customDescription="Get in touch with the NootropicStacker team." /><ContactPage /></>} />
+            <Route path="/best-nootropics" element={<BestNootropicsPage />} />
             <Route path="/guides/:slug" element={<GuideRedirect />} />
             <Route path="*" element={
               <div className="text-center py-20">

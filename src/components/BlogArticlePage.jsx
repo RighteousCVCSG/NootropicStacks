@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button.jsx';
 import { Separator } from '@/components/ui/separator.jsx';
 import { Calendar, Clock, ArrowLeft, BookOpen, Share2, ShoppingCart, ExternalLink, Beaker } from 'lucide-react';
 import { getArticleBySlug, getRecentArticles } from '../data/blogArticles.js';
-import { SEOOptimizer } from './SEOOptimizer.jsx';
+import { SEOOptimizer, generateArticleStructuredData } from './SEOOptimizer.jsx';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
 
 const TAG_TO_SUPPLEMENT = {
@@ -101,6 +101,14 @@ export function BlogArticlePage() {
 
   const recentArticles = getRecentArticles(4).filter(a => a.slug !== slug).slice(0, 3);
 
+  const articleSchema = generateArticleStructuredData({
+    title: article.title,
+    description: article.excerpt || article.description || '',
+    datePublished: article.publishedDate,
+    dateModified: article.publishedDate,
+    url: `https://nootropicstacker.com/blog/${article.slug}`
+  });
+
   const articleSupplements = [...new Set(
     (article.tags || [])
       .map(tag => TAG_TO_SUPPLEMENT[tag.toLowerCase()])
@@ -118,6 +126,7 @@ export function BlogArticlePage() {
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <SEOOptimizer
         page="home"
         customTitle={`${article.title} | NootropicStacker Blog`}

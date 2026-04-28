@@ -154,7 +154,7 @@ const generateFAQStructuredData = () => {
 };
 
 // Generate article structured data for blog posts
-const generateArticleStructuredData = ({ title, description, datePublished, dateModified, url }) => {
+export const generateArticleStructuredData = ({ title, description, datePublished, dateModified, url }) => {
   const now = new Date().toISOString();
   return {
     "@context": "https://schema.org",
