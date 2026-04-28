@@ -29,6 +29,7 @@ const ContactPage = lazy(() => import('./components/ContactPage.jsx').then(m => 
 const BestNootropicsPage = lazy(() => import('./components/BestNootropicsPage.jsx').then(m => ({ default: m.BestNootropicsPage })));
 const BestStacksPage = lazy(() => import('./components/BestStacksPage.jsx').then(m => ({ default: m.BestStacksPage })));
 import { supplements } from './data/supplements.js';
+import { blogArticles } from './data/blogArticles.js';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
 import { Button } from '@/components/ui/button.jsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.jsx';
@@ -106,6 +107,16 @@ function HomePage() {
   const [stackSize, setStackSize] = useState(0);
   const { stack, loadStack } = useStack();
 
+  const articleCount = blogArticles.length;
+  const featuredArticles = [
+    blogArticles.find(a => a.slug === 'caffeine-l-theanine-stack-the-ultimate-guide'),
+    blogArticles.find(a => a.slug === 'best-nootropic-stack-for-focus-2026'),
+    blogArticles.find(a => a.slug === 'lions-mane-mushroom-benefits-dosage-complete-guide'),
+    blogArticles.find(a => a.slug === 'beginners-guide-to-nootropics-2026'),
+    blogArticles.find(a => a.slug === 'ashwagandha-benefits-dosage-complete-guide'),
+    blogArticles.find(a => a.slug === 'best-nootropics-for-students-study-stack-2026'),
+  ].filter(Boolean);
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const stackParam = params.get('stack');
@@ -169,6 +180,22 @@ function HomePage() {
         </div>
       </div>
 
+      {/* Trust signals */}
+      <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-500 mb-8 py-4 border-y border-gray-100">
+        {[
+          { stat: '195', label: 'Supplements' },
+          { stat: '58+', label: 'Research Articles' },
+          { stat: '60+', label: 'Interactions Mapped' },
+          { stat: '8', label: 'Curated Stacks' },
+          { stat: 'Free', label: 'No Account Required' },
+        ].map(({ stat, label }) => (
+          <div key={label} className="text-center">
+            <div className="font-bold text-gray-900 text-lg">{stat}</div>
+            <div className="text-xs text-gray-500">{label}</div>
+          </div>
+        ))}
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column - Goals and Stack */}
         <div className="lg:col-span-1 space-y-6">
@@ -230,6 +257,32 @@ function HomePage() {
               <span className="text-sm font-medium text-gray-800 group-hover:text-blue-700">{resource.name}</span>
               <span className="text-xs text-gray-500">{resource.desc}</span>
             </a>
+          ))}
+        </div>
+      </div>
+
+      {/* Popular Articles */}
+      <div className="mt-8">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+            <BookOpen className="w-5 h-5 text-blue-600" />
+            Popular Nootropic Guides
+          </h2>
+          <Link to="/blog" className="text-sm text-blue-600 hover:underline">View all {articleCount} articles →</Link>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {featuredArticles.map(article => (
+            <Link key={article.slug} to={`/blog/${article.slug}`}>
+              <div className="p-4 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-sm transition-all bg-white">
+                <div className="flex flex-wrap gap-1 mb-2">
+                  {article.tags.slice(0, 2).map(tag => (
+                    <span key={tag} className="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded">{tag}</span>
+                  ))}
+                </div>
+                <p className="text-sm font-medium text-gray-900 hover:text-blue-700 leading-snug">{article.title}</p>
+                <p className="text-xs text-gray-400 mt-1">{article.readTime} min read</p>
+              </div>
+            </Link>
           ))}
         </div>
       </div>
