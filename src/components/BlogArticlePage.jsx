@@ -4,9 +4,35 @@ import { Card, CardContent } from '@/components/ui/card.jsx';
 import { Badge } from '@/components/ui/badge.jsx';
 import { Button } from '@/components/ui/button.jsx';
 import { Separator } from '@/components/ui/separator.jsx';
-import { Calendar, Clock, ArrowLeft, BookOpen, Share2 } from 'lucide-react';
+import { Calendar, Clock, ArrowLeft, BookOpen, Share2, ShoppingCart, ExternalLink, Beaker } from 'lucide-react';
 import { getArticleBySlug, getRecentArticles } from '../data/blogArticles.js';
 import { SEOOptimizer } from './SEOOptimizer.jsx';
+import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
+
+const TAG_TO_SUPPLEMENT = {
+  'lions-mane': 'lions-mane-mushroom',
+  'bacopa': 'bacopa-monnieri',
+  'ashwagandha': 'ashwagandha',
+  'rhodiola': 'rhodiola-rosea',
+  'l-theanine': 'l-theanine',
+  'theanine': 'l-theanine',
+  'alpha-gpc': 'alpha-gpc',
+  'phosphatidylserine': 'phosphatidylserine',
+  'omega-3': 'omega-3-dha',
+  'dha': 'omega-3-dha',
+  'magnesium': 'magnesium-glycinate',
+  'creatine': 'creatine',
+  'caffeine': 'caffeine',
+  'melatonin': 'melatonin',
+  'vitamin-d': 'vitamin-d3',
+  'ginkgo': 'ginkgo-biloba',
+  'ginseng': 'panax-ginseng',
+  'noopept': 'noopept',
+  'piracetam': 'piracetam',
+  'nmn': 'nmn',
+  'coq10': 'coq10',
+  'huperzine': 'huperzine-a',
+};
 
 function ArticleContent({ sections }) {
   return (
@@ -34,6 +60,13 @@ export function BlogArticlePage() {
   }
 
   const recentArticles = getRecentArticles(4).filter(a => a.slug !== slug).slice(0, 3);
+
+  const articleSupplements = [...new Set(
+    (article.tags || [])
+      .map(tag => TAG_TO_SUPPLEMENT[tag.toLowerCase()])
+      .filter(Boolean)
+      .filter(id => AFFILIATE_LINKS[id])
+  )].slice(0, 6);
 
   const handleShare = () => {
     if (navigator.share) {
@@ -98,6 +131,54 @@ export function BlogArticlePage() {
             </Card>
           )}
         </article>
+
+        {articleSupplements.length > 0 && (
+          <div className="mt-8 p-6 bg-green-50 border border-green-200 rounded-xl">
+            <h3 className="font-bold text-green-900 mb-1 flex items-center gap-2">
+              <ShoppingCart className="w-5 h-5" />
+              Shop Supplements in This Article
+            </h3>
+            <p className="text-sm text-green-700 mb-4">Quality-verified sources for the supplements discussed above.</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {articleSupplements.map(id => {
+                const links = AFFILIATE_LINKS[id];
+                if (!links) return null;
+                const name = id.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+                return (
+                  <div key={id} className="bg-white rounded-lg p-3 border border-green-100">
+                    <p className="font-medium text-gray-800 text-sm mb-2">{name}</p>
+                    <div className="flex gap-2">
+                      {links.amazon && (
+                        <a href={links.amazon} target="_blank" rel="noopener noreferrer sponsored"
+                           onClick={() => fetch('/api/track/click', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ supplementId: id, vendor: 'amazon', page: 'blog' }) })}
+                           className="flex items-center gap-1 text-xs bg-orange-500 hover:bg-orange-600 text-white px-3 py-1.5 rounded font-medium transition-colors">
+                          <ExternalLink className="w-3 h-3" /> Amazon
+                        </a>
+                      )}
+                      {links.iherb && (
+                        <a href={links.iherb} target="_blank" rel="noopener noreferrer sponsored"
+                           onClick={() => fetch('/api/track/click', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ supplementId: id, vendor: 'iherb', page: 'blog' }) })}
+                           className="flex items-center gap-1 text-xs bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded font-medium transition-colors">
+                          <ExternalLink className="w-3 h-3" /> iHerb
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <p className="text-xs text-green-600 mt-3">* Affiliate links — we earn a small commission at no extra cost to you.</p>
+          </div>
+        )}
+
+        <div className="mt-6 p-6 bg-blue-600 rounded-xl text-white text-center">
+          <Beaker className="w-8 h-8 mx-auto mb-2 opacity-90" />
+          <h3 className="text-xl font-bold mb-2">Build Your Personalized Stack</h3>
+          <p className="text-blue-100 text-sm mb-4">Use our free Stack Builder to combine these supplements, check interactions, and get a Stack Score rating.</p>
+          <Link to="/" className="inline-block bg-white text-blue-700 font-semibold px-6 py-2.5 rounded-lg hover:bg-blue-50 transition-colors">
+            Open Stack Builder →
+          </Link>
+        </div>
 
         <Separator className="my-8" />
 
