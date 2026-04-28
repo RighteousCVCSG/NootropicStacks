@@ -1203,6 +1203,86 @@ export const blogArticlesIndex = [
     ],
     "category": "",
     "bottomLine": "The executive performance stack is built on stress resilience first (Ashwagandha, Rhodiola), decision-making support second (Phosphatidylserine, Creatine), communication and presence third (Alpha-GPC, L-Theanine), and long-term brain health fourth (Lion's Mane, Omega-3, NMN). None of this substitutes for adequate sleep, exercise, and recovery — which are the true fundamentals of sustained high performance. The stack amplifies a well-maintained system; it cannot rescue a neglected one."
+  },
+  {
+    "slug": "nootropics-for-long-covid-brain-fog-recovery",
+    "title": "Nootropics for Long COVID Brain Fog: What the Research Shows",
+    "excerpt": "Long COVID brain fog is not ordinary fatigue — it involves post-viral neuroinflammation, mitochondrial dysfunction, and microclotting that don't respond to rest. Here's what the emerging research says about targeted nutritional support.",
+    "publishedDate": "2026-04-20",
+    "readTime": 11,
+    "tags": [
+      "long-covid",
+      "brain-fog",
+      "recovery",
+      "neuroinflammation",
+      "post-viral"
+    ],
+    "category": "",
+    "bottomLine": "Long COVID brain fog has multiple documented biological mechanisms — neuroinflammation, mitochondrial dysfunction, microclotting, and vagus nerve disruption — that distinguish it from ordinary fatigue. Compounds with the strongest mechanistic rationale include Omega-3 EPA, CoQ10 Ubiquinol, NAC, Lion's Mane, Magnesium, and Vitamin D3. None are cures, and none replace medical care, but targeted nutritional support alongside the pacing principle represents the most evidence-informed self-management approach currently available. Always work with a physician — this is a serious medical condition."
+  },
+  {
+    "slug": "same-supplement-guide-mood-joints-liver-complete-review",
+    "title": "SAMe Supplement Guide: Mood, Joints, and Liver Health",
+    "excerpt": "SAMe is one of the most researched mood supplements available — used as a prescription drug in Europe for decades. Here's what the evidence actually shows for depression, osteoarthritis, and liver support.",
+    "publishedDate": "2026-04-18",
+    "readTime": 10,
+    "tags": [
+      "same",
+      "mood",
+      "depression",
+      "methyl-donor",
+      "liver"
+    ],
+    "category": "",
+    "bottomLine": "SAMe is genuinely underrated in the English-speaking nootropics community. Decades of clinical research support its use for depression (sometimes comparable to tricyclics), osteoarthritis pain (comparable to NSAIDs in multiple trials), and liver conditions. Its main limitations are cost, instability requiring enteric coating, and real contraindications in bipolar disorder and with serotonergic medications. For the right person — someone with low mood, joint pain, or liver stress who doesn't have bipolar disorder and isn't on MAOIs or SSRIs — SAMe is worth serious consideration."
+  },
+  {
+    "slug": "nootropics-vs-coffee-complete-comparison",
+    "title": "Nootropics vs Coffee: Can Anything Replace Your Morning Cup?",
+    "excerpt": "Coffee is the most widely used nootropic on the planet. Can anything else actually replace it? We compare caffeine's mechanisms against the best alternatives and explain the smarter strategy.",
+    "publishedDate": "2026-04-15",
+    "readTime": 9,
+    "tags": [
+      "coffee",
+      "caffeine",
+      "comparison",
+      "energy",
+      "morning"
+    ],
+    "category": "",
+    "bottomLine": "Nothing replaces coffee for acute alertness — caffeine is extremely well-researched and its adenosine-blocking mechanism is uniquely effective for wakefulness. But nootropics do things coffee can't: neuroplasticity, evening cognitive support, cortisol management, and memory consolidation. The smartest approach is coffee as a base plus strategic nootropics layered on top — not coffee versus nootropics."
+  },
+  {
+    "slug": "pterostilbene-vs-resveratrol-which-is-better",
+    "title": "Pterostilbene vs Resveratrol: Which Longevity Compound Is Worth Taking?",
+    "excerpt": "Resveratrol generated enormous hype as the \"red wine longevity molecule.\" Pterostilbene is its lesser-known cousin with 80x better bioavailability. Here's what the research actually shows.",
+    "publishedDate": "2026-04-12",
+    "readTime": 9,
+    "tags": [
+      "pterostilbene",
+      "resveratrol",
+      "longevity",
+      "sirtuins",
+      "anti-aging"
+    ],
+    "category": "",
+    "bottomLine": "Pterostilbene wins the bioavailability comparison decisively — 80% absorption versus resveratrol's 1% means that most resveratrol research, conducted in animals or at doses impossible to achieve orally, doesn't translate to human supplementation. Pterostilbene is absorbed, crosses the blood-brain barrier, and has specific cognitive and longevity evidence in addition to the sirtuin pathway support. For practical supplementation, pterostilbene is the better buy despite its higher cost per milligram."
+  },
+  {
+    "slug": "nootropics-safety-guide-who-should-avoid-what",
+    "title": "Nootropics Safety Guide: Who Should Avoid What",
+    "excerpt": "Most nootropic content focuses on benefits. This guide covers the other side: specific populations, conditions, and medications where certain supplements range from inadvisable to dangerous.",
+    "publishedDate": "2026-04-10",
+    "readTime": 10,
+    "tags": [
+      "safety",
+      "contraindications",
+      "pregnancy",
+      "medication",
+      "warnings"
+    ],
+    "category": "",
+    "bottomLine": "Nootropic safety is not one-size-fits-all. Pregnancy, bipolar disorder, seizure disorders, and several medication classes create absolute or strong cautions for specific compounds. The universal principles — start with one supplement at a time, start at a low dose, and involve a pharmacist or physician when on medications — are not just conservative advice. They are the difference between a beneficial intervention and a harmful one."
   }
 ];
 

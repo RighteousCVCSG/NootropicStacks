@@ -28,11 +28,13 @@ const GlossaryPage = lazy(() => import('./components/GlossaryPage.jsx').then(m =
 const ContactPage = lazy(() => import('./components/ContactPage.jsx').then(m => ({ default: m.ContactPage })));
 const BestNootropicsPage = lazy(() => import('./components/BestNootropicsPage.jsx').then(m => ({ default: m.BestNootropicsPage })));
 const BestStacksPage = lazy(() => import('./components/BestStacksPage.jsx').then(m => ({ default: m.BestStacksPage })));
+const StartHerePage = lazy(() => import('./components/StartHerePage.jsx').then(m => ({ default: m.StartHerePage })));
+const ComparisonPage = lazy(() => import('./components/ComparisonPage.jsx').then(m => ({ default: m.ComparisonPage })));
 import { supplements } from './data/supplements.js';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
 import { Button } from '@/components/ui/button.jsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.jsx';
-import { AlertTriangle, Pill, Layers, Library, Newspaper, BookOpen, Home, HelpCircle, LogIn, LogOut, User, PenLine, Award } from 'lucide-react';
+import { AlertTriangle, Pill, Layers, Library, Newspaper, BookOpen, Home, HelpCircle, LogIn, LogOut, User, PenLine, Award, GitCompare } from 'lucide-react';
 import './App.css';
 
 // Scroll to top on route changes
@@ -364,6 +366,7 @@ function App() {
                 <NavLink to="/blog" icon={PenLine}>Blog</NavLink>
                 <NavLink to="/best-nootropics" icon={Award}>Best Nootropics</NavLink>
                 <NavLink to="/best-stacks" icon={Layers}>Best Stacks</NavLink>
+                <NavLink to="/compare-supplements" icon={GitCompare}>Compare</NavLink>
               </nav>
 
               <HeaderAuth />
@@ -382,6 +385,7 @@ function App() {
             <NavLink to="/blog" icon={PenLine}>Blog</NavLink>
             <NavLink to="/best-nootropics" icon={Award}>Best</NavLink>
             <NavLink to="/best-stacks" icon={Layers}>Stacks</NavLink>
+            <NavLink to="/compare-supplements" icon={GitCompare}>Compare</NavLink>
           </div>
         </nav>
 
@@ -438,6 +442,8 @@ function App() {
             <Route path="/contact" element={<><SEOOptimizer page="home" customTitle="Contact NootropicStacker" customDescription="Get in touch with the NootropicStacker team." /><ContactPage /></>} />
             <Route path="/best-nootropics" element={<BestNootropicsPage />} />
             <Route path="/best-stacks" element={<BestStacksPage />} />
+            <Route path="/compare-supplements" element={<ComparisonPage />} />
+            <Route path="/start-here" element={<Suspense fallback={<div className="flex items-center justify-center py-16"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div></div>}><StartHerePage /></Suspense>} />
             <Route path="/guides/:slug" element={<GuideRedirect />} />
             <Route path="*" element={
               <div className="text-center py-20">
