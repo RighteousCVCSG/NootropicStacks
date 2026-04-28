@@ -24,8 +24,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Force lowercase URLs for SEO consistency (redirect mixed-case paths)
+// Exclude /assets/ — Vite generates mixed-case hashes that must be served as-is
 app.use((req, res, next) => {
-  if (req.path !== req.path.toLowerCase() && req.method === 'GET') {
+  if (!req.path.startsWith('/assets/') && req.path !== req.path.toLowerCase() && req.method === 'GET') {
     const lowercaseUrl = req.path.toLowerCase() + (req.url.includes('?') ? '?' + req.url.split('?')[1] : '');
     return res.redirect(301, lowercaseUrl);
   }
