@@ -4,12 +4,13 @@ import { Button } from '@/components/ui/button.jsx';
 import { Badge } from '@/components/ui/badge.jsx';
 import { Progress } from '@/components/ui/progress.jsx';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
-import { Trash2, AlertTriangle, CheckCircle, XCircle, Save } from 'lucide-react';
+import { Trash2, AlertTriangle, CheckCircle, XCircle, Save, ShoppingCart, ExternalLink } from 'lucide-react';
 import { useStack } from '../contexts/StackContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { supplements } from '../data/supplements.js';
 import { SaveStackDialog } from './SaveStackDialog.jsx';
 import { SavedStacksList } from './SavedStacksList.jsx';
+import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
 
 export function StackPanel() {
   const { stack, safetyAnalysis, removeSupplement, updateDosage } = useStack();
@@ -184,6 +185,45 @@ export function StackPanel() {
               );
             })}
           </div>
+
+          {/* Shop Your Stack */}
+          {(() => {
+            const stackWithLinks = stack.filter(item => AFFILIATE_LINKS[item.supplementId]);
+            if (stackWithLinks.length === 0) return null;
+            return (
+              <div className="mt-4 pt-4 border-t">
+                <h4 className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-1">
+                  <ShoppingCart className="w-4 h-4" />
+                  Shop Your Stack
+                </h4>
+                <div className="space-y-1">
+                  {stackWithLinks.slice(0, 5).map(item => {
+                    const links = AFFILIATE_LINKS[item.supplementId];
+                    const supplement = supplements.find(s => s.id === item.supplementId);
+                    const buyUrl = links.amazon || links.iherb || links.nootropicsdepot || Object.values(links).find(v => typeof v === 'string');
+                    if (!supplement || !buyUrl) return null;
+                    return (
+                      <a
+                        key={item.supplementId}
+                        href={buyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-between p-2 rounded hover:bg-green-50 text-sm group"
+                      >
+                        <span className="text-gray-700 group-hover:text-green-800 truncate mr-2">{supplement.name}</span>
+                        <span className="text-green-600 text-xs font-medium shrink-0 flex items-center gap-1">
+                          Buy <ExternalLink className="w-3 h-3" />
+                        </span>
+                      </a>
+                    );
+                  })}
+                </div>
+                {stackWithLinks.length > 5 && (
+                  <p className="text-xs text-gray-500 mt-1">+{stackWithLinks.length - 5} more in your stack</p>
+                )}
+              </div>
+            );
+          })()}
         </CardContent>
       </Card>
 

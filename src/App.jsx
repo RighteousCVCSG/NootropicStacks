@@ -21,6 +21,8 @@ import { BlogSection } from './components/BlogSection.jsx';
 import { BlogArticlePage } from './components/BlogArticlePage.jsx';
 import { FAQPage } from './components/FAQPage.jsx';
 import { GlossaryPage } from './components/GlossaryPage.jsx';
+import { NewsletterCapture } from './components/NewsletterCapture.jsx';
+import { ContactPage } from './components/ContactPage.jsx';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
 import { Button } from '@/components/ui/button.jsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.jsx';
@@ -107,22 +109,22 @@ function HomePage() {
       <SEOOptimizer page="home" />
 
       {/* How It Works */}
-      <div className="mb-8 bg-white rounded-lg border p-6">
+      <div className="mb-8 bg-gradient-to-br from-blue-50 via-white to-indigo-50 rounded-xl border border-blue-100 p-6 shadow-sm">
         <h1 className="text-2xl font-bold text-gray-900 text-center mb-2">Build Your Perfect Nootropic Stack</h1>
         <p className="text-gray-500 text-center mb-6 text-sm">The free nootropic stack builder — 195 supplements, real-time synergy analysis, no account required.</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="text-center">
-            <div className="w-10 h-10 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center mx-auto mb-3">1</div>
+            <div className="w-10 h-10 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center mx-auto mb-3">1</div>
             <h3 className="font-semibold text-sm mb-1">Set Your Goals</h3>
             <p className="text-xs text-gray-500">Pick what you want to optimize — focus, energy, mood, memory, or creativity.</p>
           </div>
           <div className="text-center">
-            <div className="w-10 h-10 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center mx-auto mb-3">2</div>
+            <div className="w-10 h-10 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center mx-auto mb-3">2</div>
             <h3 className="font-semibold text-sm mb-1">Build Your Stack</h3>
             <p className="text-xs text-gray-500">Add supplements from 195 compounds. Get real-time synergy analysis and recommendations.</p>
           </div>
           <div className="text-center">
-            <div className="w-10 h-10 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center mx-auto mb-3">3</div>
+            <div className="w-10 h-10 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center mx-auto mb-3">3</div>
             <h3 className="font-semibold text-sm mb-1">Optimize with Stack Score</h3>
             <p className="text-xs text-gray-500">Your stack gets a 0-100 score across synergy, coverage, balance, and efficiency.</p>
           </div>
@@ -318,6 +320,7 @@ function App() {
                 <GlossaryPage />
               </>
             } />
+            <Route path="/contact" element={<><SEOOptimizer page="home" customTitle="Contact NootropicStacker" customDescription="Get in touch with the NootropicStacker team." /><ContactPage /></>} />
             <Route path="*" element={
               <div className="text-center py-20">
                 <h2 className="text-4xl font-bold mb-4">404</h2>
@@ -337,6 +340,9 @@ function App() {
         {/* Footer */}
         <footer className="bg-white border-t mt-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="mb-8 max-w-2xl mx-auto">
+              <NewsletterCapture />
+            </div>
             <div className="text-center text-sm text-gray-600">
               <p className="mb-2">
                 <strong>NootropicStacker</strong> - Built for biohackers who want to optimize their supplement stacks safely
@@ -356,6 +362,8 @@ function App() {
                 <Link to="/glossary" className="hover:text-gray-900">Glossary</Link>
                 <span>•</span>
                 <Link to="/news" className="hover:text-gray-900">Latest News</Link>
+                <span>•</span>
+                <Link to="/contact" className="hover:text-gray-900">Contact</Link>
               </div>
 
               <div className="text-xs text-gray-500 mt-2">

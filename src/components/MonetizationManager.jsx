@@ -6,26 +6,30 @@ import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
 import { ExternalLink, DollarSign, TrendingUp, Users, Eye } from 'lucide-react';
 
 // ============================================================
-// AFFILIATE CONFIGURATION — UPDATE THESE WITH REAL AFFILIATE IDs
+// AFFILIATE CONFIGURATION
 // ============================================================
-// After signing up for affiliate programs, replace the placeholder
-// URLs below with your real affiliate links:
+// URLs below are real search/product pages. Before earning commissions,
+// register for each program and update the tracking IDs:
 //
-// 1. Nootropics Depot (15% commission): https://nootropicsdepot.com/affiliate-program/
-// 2. Amazon Associates (1-6%): https://affiliate-program.amazon.com/signup
-// 3. iHerb (5-10%): https://www.iherb.com/info/affiliates
-// 4. Thorne (10-20%): https://www.thorne.com/affiliate
-// 5. Life Extension (6-12%): https://www.lifeextension.com/aff
+// 1. Amazon Associates: https://affiliate-program.amazon.com
+//    - The tag "nootropicstk-20" must be registered under your account.
+//    - Replace "nootropicstk-20" in all amazon URLs with your approved tag.
 //
-// URL format examples:
-//   amazon: 'https://amzn.to/YOUR_REAL_SHORT_LINK'
-//   iherb: 'https://www.iherb.com/pr/product-name/12345?rcode=YOUR_CODE'
-//   nootropicsdepot: 'https://nootropicsdepot.com/product/?ref=YOUR_REF_ID'
+// 2. iHerb Affiliates: https://www.iherb.com/info/affiliates
+//    - After approval, append "&rcode=YOURCODE" to every iherb URL.
+//    - Example: https://www.iherb.com/search#query=alpha+gpc&rcode=YOURCODE
+//
+// 3. Nootropics Depot: https://nootropicsdepot.com/affiliate
+//    - The ref "nootropicstacker" must be registered under your account.
+//    - Replace "ref=nootropicstacker" with your approved ref ID if different.
+//
+// All Amazon URLs use format: https://www.amazon.com/s?k=TERM&tag=nootropicstk-20
+// All iHerb URLs use format:  https://www.iherb.com/search#query=TERM
 // ============================================================
 const AFFILIATE_LINKS = {
   'alpha-gpc': {
-    amazon: 'https://amzn.to/3supplement-alpha-gpc',
-    iherb: 'https://iherb.co/supplement-alpha-gpc',
+    amazon: 'https://www.amazon.com/s?k=alpha+gpc+choline+supplement&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=alpha+gpc',
     nootropicsdepot: 'https://nootropicsdepot.com/alpha-gpc?ref=nootropicstacker',
     commission: 0.08 // 8% commission rate
   },
@@ -34,19 +38,19 @@ const AFFILIATE_LINKS = {
     commission: 0.15 // 15% commission rate
   },
   'caffeine': {
-    amazon: 'https://amzn.to/3supplement-caffeine',
-    iherb: 'https://iherb.co/supplement-caffeine',
+    amazon: 'https://www.amazon.com/s?k=caffeine+l-theanine+supplement&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=caffeine+supplement',
     commission: 0.06
   },
   'fish-oil': {
-    amazon: 'https://amzn.to/3supplement-fish-oil',
-    iherb: 'https://iherb.co/supplement-fish-oil',
-    nordicnaturals: 'https://nordicnaturals.com/?ref=nootropicstacker',
+    amazon: 'https://www.amazon.com/s?k=omega+3+fish+oil+supplement&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=fish+oil+omega+3',
+    nordicnaturals: 'https://www.nordicnaturals.com/consumers/ultimate-omega',
     commission: 0.10
   },
   'bacopa': {
-    amazon: 'https://amzn.to/3supplement-bacopa',
-    iherb: 'https://iherb.co/supplement-bacopa',
+    amazon: 'https://www.amazon.com/s?k=bacopa+monnieri+supplement&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=bacopa+monnieri',
     nootropicsdepot: 'https://nootropicsdepot.com/bacopa-monnieri?ref=nootropicstacker',
     commission: 0.08
   },
@@ -67,55 +71,55 @@ const AFFILIATE_LINKS = {
     commission: 0.12
   },
   'l-theanine': {
-    amazon: 'https://amzn.to/3supplement-theanine',
-    iherb: 'https://iherb.co/supplement-theanine',
+    amazon: 'https://www.amazon.com/s?k=l-theanine+supplement+200mg&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=l-theanine',
     nootropicsdepot: 'https://nootropicsdepot.com/l-theanine?ref=nootropicstacker',
     commission: 0.08
   },
   'ashwagandha': {
-    amazon: 'https://amzn.to/3supplement-ashwagandha',
-    iherb: 'https://iherb.co/supplement-ashwagandha',
+    amazon: 'https://www.amazon.com/s?k=ashwagandha+ksm-66+supplement&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=ashwagandha+ksm66',
     nootropicsdepot: 'https://nootropicsdepot.com/ashwagandha?ref=nootropicstacker',
     commission: 0.08
   },
   // High-volume supplements
   'creatine': {
-    amazon: 'https://amzn.to/3supplement-creatine',
-    iherb: 'https://iherb.co/supplement-creatine',
+    amazon: 'https://www.amazon.com/s?k=creatine+monohydrate+powder&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=creatine+monohydrate',
     commission: 0.06
   },
   'magnesium': {
-    amazon: 'https://amzn.to/3supplement-magnesium',
-    iherb: 'https://iherb.co/supplement-magnesium',
+    amazon: 'https://www.amazon.com/s?k=magnesium+glycinate+supplement&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=magnesium+glycinate',
     nootropicsdepot: 'https://nootropicsdepot.com/magnesium-glycinate?ref=nootropicstacker',
     commission: 0.08
   },
   'vitamin-d': {
-    amazon: 'https://amzn.to/3supplement-vitamin-d',
-    iherb: 'https://iherb.co/supplement-vitamin-d',
+    amazon: 'https://www.amazon.com/s?k=vitamin+d3+k2+supplement&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=vitamin+d3+k2',
     commission: 0.06
   },
   'omega3': {
-    amazon: 'https://amzn.to/3supplement-omega3',
-    iherb: 'https://iherb.co/supplement-omega3',
+    amazon: 'https://www.amazon.com/s?k=omega+3+fish+oil+dha+epa&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=omega+3+dha+epa',
     commission: 0.08
   },
   'lions-mane': {
-    amazon: 'https://amzn.to/3supplement-lions-mane',
-    iherb: 'https://iherb.co/supplement-lions-mane',
+    amazon: 'https://www.amazon.com/s?k=lions+mane+mushroom+supplement&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=lions+mane+mushroom',
     nootropicsdepot: 'https://nootropicsdepot.com/lions-mane?ref=nootropicstacker',
     commission: 0.08
   },
   'rhodiola': {
-    amazon: 'https://amzn.to/3supplement-rhodiola',
-    iherb: 'https://iherb.co/supplement-rhodiola',
+    amazon: 'https://www.amazon.com/s?k=rhodiola+rosea+supplement&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=rhodiola+rosea',
     nootropicsdepot: 'https://nootropicsdepot.com/rhodiola-rosea?ref=nootropicstacker',
     commission: 0.08
   },
   // Nootropics (high-value niche)
   'citicoline': {
-    amazon: 'https://amzn.to/3supplement-citicoline',
-    iherb: 'https://iherb.co/supplement-citicoline',
+    amazon: 'https://www.amazon.com/s?k=citicoline+cdp+choline+supplement&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=citicoline',
     nootropicsdepot: 'https://nootropicsdepot.com/citicoline?ref=nootropicstacker',
     commission: 0.08
   },
@@ -137,98 +141,98 @@ const AFFILIATE_LINKS = {
   },
   // Adaptogens & popular supplements
   'cordyceps': {
-    amazon: 'https://amzn.to/3supplement-cordyceps',
-    iherb: 'https://iherb.co/supplement-cordyceps',
+    amazon: 'https://www.amazon.com/s?k=cordyceps+mushroom+supplement&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=cordyceps+mushroom',
     nootropicsdepot: 'https://nootropicsdepot.com/cordyceps?ref=nootropicstacker',
     commission: 0.08
   },
   'reishi': {
-    amazon: 'https://amzn.to/3supplement-reishi',
-    iherb: 'https://iherb.co/supplement-reishi',
+    amazon: 'https://www.amazon.com/s?k=reishi+mushroom+supplement&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=reishi+mushroom',
     commission: 0.08
   },
   'panax-ginseng': {
-    amazon: 'https://amzn.to/3supplement-ginseng',
-    iherb: 'https://iherb.co/supplement-ginseng',
+    amazon: 'https://www.amazon.com/s?k=panax+ginseng+supplement&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=panax+ginseng',
     nootropicsdepot: 'https://nootropicsdepot.com/panax-ginseng?ref=nootropicstacker',
     commission: 0.08
   },
   'mucuna-pruriens': {
-    amazon: 'https://amzn.to/3supplement-mucuna',
-    iherb: 'https://iherb.co/supplement-mucuna',
+    amazon: 'https://www.amazon.com/s?k=mucuna+pruriens+l-dopa+supplement&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=mucuna+pruriens',
     nootropicsdepot: 'https://nootropicsdepot.com/mucuna-pruriens?ref=nootropicstacker',
     commission: 0.08
   },
   'curcumin': {
-    amazon: 'https://amzn.to/3supplement-curcumin',
-    iherb: 'https://iherb.co/supplement-curcumin',
+    amazon: 'https://www.amazon.com/s?k=curcumin+turmeric+bioperine+supplement&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=curcumin+turmeric',
     commission: 0.08
   },
   'zinc': {
-    amazon: 'https://amzn.to/3supplement-zinc',
-    iherb: 'https://iherb.co/supplement-zinc',
+    amazon: 'https://www.amazon.com/s?k=zinc+supplement+bisglycinate&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=zinc+supplement',
     commission: 0.06
   },
   'b-complex': {
-    amazon: 'https://amzn.to/3supplement-b-complex',
-    iherb: 'https://iherb.co/supplement-b-complex',
+    amazon: 'https://www.amazon.com/s?k=b+complex+vitamin+supplement&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=b+complex+vitamins',
     commission: 0.06
   },
   'tyrosine': {
-    amazon: 'https://amzn.to/3supplement-tyrosine',
-    iherb: 'https://iherb.co/supplement-tyrosine',
+    amazon: 'https://www.amazon.com/s?k=l-tyrosine+supplement&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=l-tyrosine',
     nootropicsdepot: 'https://nootropicsdepot.com/l-tyrosine?ref=nootropicstacker',
     commission: 0.08
   },
   'phosphatidylserine': {
-    amazon: 'https://amzn.to/3supplement-ps',
-    iherb: 'https://iherb.co/supplement-ps',
+    amazon: 'https://www.amazon.com/s?k=phosphatidylserine+supplement&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=phosphatidylserine',
     nootropicsdepot: 'https://nootropicsdepot.com/phosphatidylserine?ref=nootropicstacker',
     commission: 0.08
   },
   'huperzine-a': {
-    amazon: 'https://amzn.to/3supplement-huperzine',
+    amazon: 'https://www.amazon.com/s?k=huperzine+a+supplement&tag=nootropicstk-20',
     nootropicsdepot: 'https://nootropicsdepot.com/huperzine-a?ref=nootropicstacker',
     commission: 0.12
   },
   'taurine': {
-    amazon: 'https://amzn.to/3supplement-taurine',
-    iherb: 'https://iherb.co/supplement-taurine',
+    amazon: 'https://www.amazon.com/s?k=taurine+supplement&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=taurine+supplement',
     commission: 0.06
   },
   'melatonin': {
-    amazon: 'https://amzn.to/3supplement-melatonin',
-    iherb: 'https://iherb.co/supplement-melatonin',
+    amazon: 'https://www.amazon.com/s?k=melatonin+supplement+0.5mg&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=melatonin+supplement',
     commission: 0.06
   },
   'coq10': {
-    amazon: 'https://amzn.to/3supplement-coq10',
-    iherb: 'https://iherb.co/supplement-coq10',
+    amazon: 'https://www.amazon.com/s?k=coq10+ubiquinol+supplement&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=coq10+ubiquinol',
     commission: 0.08
   },
   'collagen': {
-    amazon: 'https://amzn.to/3supplement-collagen',
-    iherb: 'https://iherb.co/supplement-collagen',
+    amazon: 'https://www.amazon.com/s?k=collagen+peptides+supplement&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=collagen+peptides',
     commission: 0.08
   },
   'probiotics': {
-    amazon: 'https://amzn.to/3supplement-probiotics',
-    iherb: 'https://iherb.co/supplement-probiotics',
+    amazon: 'https://www.amazon.com/s?k=probiotic+supplement+capsules&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=probiotic+supplement',
     commission: 0.08
   },
   'green-tea-extract': {
-    amazon: 'https://amzn.to/3supplement-green-tea',
-    iherb: 'https://iherb.co/supplement-green-tea',
+    amazon: 'https://www.amazon.com/s?k=green+tea+extract+supplement&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=green+tea+extract',
     commission: 0.06
   },
   'berberine': {
-    amazon: 'https://amzn.to/3supplement-berberine',
-    iherb: 'https://iherb.co/supplement-berberine',
+    amazon: 'https://www.amazon.com/s?k=berberine+supplement+500mg&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=berberine+supplement',
     commission: 0.08
   },
   'alpha-lipoic-acid': {
-    amazon: 'https://amzn.to/3supplement-ala',
-    iherb: 'https://iherb.co/supplement-ala',
+    amazon: 'https://www.amazon.com/s?k=alpha+lipoic+acid+supplement&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=alpha+lipoic+acid',
     commission: 0.08
   },
   'kanna': {
@@ -240,28 +244,28 @@ const AFFILIATE_LINKS = {
     commission: 0.15
   },
   'ginkgo': {
-    amazon: 'https://amzn.to/3supplement-ginkgo',
-    iherb: 'https://iherb.co/supplement-ginkgo',
+    amazon: 'https://www.amazon.com/s?k=ginkgo+biloba+supplement&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=ginkgo+biloba',
     commission: 0.06
   },
   'vitamin-c': {
-    amazon: 'https://amzn.to/3supplement-vitamin-c',
-    iherb: 'https://iherb.co/supplement-vitamin-c',
+    amazon: 'https://www.amazon.com/s?k=vitamin+c+supplement+1000mg&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=vitamin+c+supplement',
     commission: 0.06
   },
   'mct-oil': {
-    amazon: 'https://amzn.to/3supplement-mct-oil',
-    iherb: 'https://iherb.co/supplement-mct-oil',
+    amazon: 'https://www.amazon.com/s?k=mct+oil+supplement&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=mct+oil',
     commission: 0.08
   },
   'spirulina': {
-    amazon: 'https://amzn.to/3supplement-spirulina',
-    iherb: 'https://iherb.co/supplement-spirulina',
+    amazon: 'https://www.amazon.com/s?k=spirulina+powder+supplement&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=spirulina',
     commission: 0.06
   },
   'resveratrol': {
-    amazon: 'https://amzn.to/3supplement-resveratrol',
-    iherb: 'https://iherb.co/supplement-resveratrol',
+    amazon: 'https://www.amazon.com/s?k=resveratrol+supplement&tag=nootropicstk-20',
+    iherb: 'https://www.iherb.com/search#query=resveratrol+supplement',
     commission: 0.08
   }
 };

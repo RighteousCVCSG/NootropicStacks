@@ -73,6 +73,11 @@ const CONTEXTUAL_ADS = {
 // After approval, replace "ca-pub-YOUR-ADSENSE-ID" below
 // ============================================================
 export function GoogleAdSense({ slot, format = 'auto', responsive = true }) {
+  // Disabled until real AdSense pub ID is configured
+  // Sign up at https://www.google.com/adsense/ then replace ca-pub-YOUR-ADSENSE-ID
+  const ADSENSE_ID = 'ca-pub-YOUR-ADSENSE-ID';
+  if (ADSENSE_ID.includes('YOUR')) return null;
+
   useEffect(() => {
     try {
       if (window.adsbygoogle) {
@@ -96,6 +101,11 @@ export function GoogleAdSense({ slot, format = 'auto', responsive = true }) {
     </div>
   );
 }
+
+const getCategoryIcon = (category) => {
+  const icons = { nootropic: '🧠', energy: '⚡', adaptogen: '🌿', health: '💊', longevity: '🔬' };
+  return icons[category] || '💊';
+};
 
 // Contextual ad component
 export function ContextualAd({ category, userGoals = [], position = 'sidebar' }) {
@@ -208,11 +218,9 @@ export function ContextualAd({ category, userGoals = [], position = 'sidebar' })
           onClick={handleAdClick}
         >
           <div className={`flex ${isCompact ? 'flex-row gap-4' : 'flex-col'}`}>
-            {currentAd.image && (
-              <div className={`${isCompact ? 'w-16 h-16' : 'w-full h-32'} bg-gray-200 rounded-lg mb-3 flex items-center justify-center`}>
-                <span className="text-gray-500 text-sm">Ad Image</span>
-              </div>
-            )}
+            <div className={`${isCompact ? 'w-10 h-10 text-2xl' : 'w-12 h-12 text-3xl'} flex items-center justify-center mb-3`}>
+              {getCategoryIcon(currentAd.category)}
+            </div>
             
             <div className="flex-1">
               <h3 className={`font-semibold text-blue-900 mb-2 ${isCompact ? 'text-sm' : 'text-lg'}`}>

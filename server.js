@@ -48,6 +48,59 @@ if (DATABASE_URL) {
   console.warn('WARNING: DATABASE_URL not set. Auth and stack saving will not work.');
 }
 
+// Auto-run migrations on startup to create any missing tables
+async function runMigrations() {
+  if (!pool) return;
+  try {
+    await pool.execute(`
+      CREATE TABLE IF NOT EXISTS users (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        email VARCHAR(255) NOT NULL UNIQUE,
+        password_hash VARCHAR(255) NOT NULL,
+        name VARCHAR(100),
+        is_premium TINYINT(1) DEFAULT 0,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        INDEX idx_email (email)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+    `);
+    await pool.execute(`
+      CREATE TABLE IF NOT EXISTS saved_stacks (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL,
+        name VARCHAR(255) NOT NULL,
+        supplements JSON NOT NULL,
+        user_goals JSON,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+        INDEX idx_user_id (user_id)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+    `);
+    await pool.execute(`
+      CREATE TABLE IF NOT EXISTS newsletter_subscribers (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        email VARCHAR(255) NOT NULL UNIQUE,
+        source VARCHAR(50) DEFAULT 'homepage_banner',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        INDEX idx_email (email)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+    `);
+    await pool.execute(`
+      CREATE TABLE IF NOT EXISTS contact_messages (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        email VARCHAR(255) NOT NULL,
+        message TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        INDEX idx_email (email)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+    `);
+    console.log('Migrations complete.');
+  } catch (err) {
+    console.error('Migration error (non-fatal):', err.message);
+  }
+}
+
 // --- Auth middleware ---
 function verifyToken(req, res, next) {
   const token = req.cookies[COOKIE_NAME];
@@ -219,12 +272,65 @@ app.delete('/api/stacks/:id', verifyToken, async (req, res) => {
 });
 
 // ============================================================
+// NEWSLETTER ROUTES
+// ============================================================
+
+app.post('/api/newsletter', async (req, res) => {
+  const { email, source = 'homepage_banner' } = req.body;
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({ error: 'Valid email required' });
+  }
+  if (!pool) {
+    // No DB — still return success (don't block UX)
+    return res.json({ ok: true, message: 'Subscribed!' });
+  }
+  try {
+    await pool.execute(
+      'INSERT IGNORE INTO newsletter_subscribers (email, source) VALUES (?, ?)',
+      [email.toLowerCase().trim(), source]
+    );
+    res.json({ ok: true, message: 'Subscribed!' });
+  } catch (err) {
+    console.error('Newsletter error:', err);
+    res.status(500).json({ error: 'Failed to subscribe' });
+  }
+});
+
+// ============================================================
+// CONTACT ROUTES
+// ============================================================
+
+app.post('/api/contact', async (req, res) => {
+  const { name, email, message } = req.body;
+  if (!name || !email || !message) {
+    return res.status(400).json({ error: 'Name, email, and message are required' });
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({ error: 'Invalid email' });
+  }
+  if (!pool) {
+    return res.json({ ok: true });
+  }
+  try {
+    await pool.execute(
+      'INSERT INTO contact_messages (name, email, message) VALUES (?, ?, ?)',
+      [name.slice(0, 100), email.toLowerCase().trim(), message.slice(0, 2000)]
+    );
+    res.json({ ok: true });
+  } catch (err) {
+    console.error('Contact error:', err);
+    res.status(500).json({ error: 'Failed to save message' });
+  }
+});
+
+// ============================================================
 // SPA FALLBACK — must be last
 // ============================================================
 app.get('/{*path}', (req, res) => {
   res.sendFile(join(__dirname, 'dist', 'index.html'));
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`NootropicStacker running on port ${PORT}`);
+  await runMigrations();
 });
