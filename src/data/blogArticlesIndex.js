@@ -1123,6 +1123,86 @@ export const blogArticlesIndex = [
     ],
     "category": "",
     "bottomLine": "Start with a high-quality B-complex or standalone B1 (50-100mg) for two weeks before considering Sulbutiamine. Many people find the basic thiamine repletion resolves their fatigue and fog. For those who don't, Sulbutiamine at 200-400mg (strictly cycled 2-3 days per week maximum) adds dopaminergic motivation and focus benefits that regular B1 cannot deliver. Both compounds are underutilized relative to their evidence base."
+  },
+  {
+    "slug": "nootropics-for-adhd-adults-complete-guide-2026",
+    "title": "Nootropics for ADHD in Adults: What Actually Works in 2026",
+    "excerpt": "ADHD in adults is underdiagnosed and looks different than childhood presentations — it shows up as executive dysfunction, chronic disorganization, and emotional dysregulation. Here's what the evidence says about natural support options.",
+    "publishedDate": "2026-04-21",
+    "readTime": 12,
+    "tags": [
+      "adhd",
+      "adults",
+      "focus",
+      "dopamine",
+      "executive-function"
+    ],
+    "category": "",
+    "bottomLine": "Natural nootropics can provide meaningful support for ADHD-related symptoms — particularly L-Tyrosine, Phosphatidylserine, Omega-3 EPA, and Bacopa — but they are supportive tools, not substitutes for proper diagnosis and treatment. If ADHD is significantly affecting your life, work with a clinician. These compounds work best as complements to a treatment plan, not replacements for one."
+  },
+  {
+    "slug": "nootropics-and-gut-health-the-gut-brain-axis-stack",
+    "title": "Nootropics and Gut Health: The Gut-Brain Axis Stack",
+    "excerpt": "Ninety percent of your serotonin is made in your gut, not your brain. If your nootropic stack isn't addressing gut health, you may be optimizing the wrong system.",
+    "publishedDate": "2026-04-18",
+    "readTime": 11,
+    "tags": [
+      "gut-brain",
+      "gut-health",
+      "probiotics",
+      "microbiome",
+      "mood"
+    ],
+    "category": "",
+    "bottomLine": "The gut-brain axis is a legitimate and increasingly well-supported mechanism for cognitive and mood optimization. Probiotics (particularly L. reuteri, L. helveticus, and Bifidobacterium strains), prebiotics, L-Glutamine, and Lion's Mane each address different aspects of the gut-brain connection. If your brain fog is worse after meals, accompanied by GI symptoms, or resistant to standard nootropics, the gut deserves serious investigation before adding more cognitive compounds."
+  },
+  {
+    "slug": "the-nootropic-stack-for-public-speaking-and-presentations",
+    "title": "The Nootropic Stack for Public Speaking and High-Stakes Presentations",
+    "excerpt": "Public speaking ranks among the most common human fears. It's also one of the situations where nootropics have the clearest and most practically useful application.",
+    "publishedDate": "2026-04-15",
+    "readTime": 10,
+    "tags": [
+      "public-speaking",
+      "performance-anxiety",
+      "social",
+      "confidence",
+      "focus"
+    ],
+    "category": "",
+    "bottomLine": "For public speaking, L-Theanine is the single most useful acute intervention — reducing anxiety without impairing performance. Pair it with a small caffeine dose for energy, Alpha-GPC for verbal fluency, and make sure Ashwagandha and Magnesium are in your daily baseline. Never introduce anything new on the day of a high-stakes presentation. Test every component of your stack in advance."
+  },
+  {
+    "slug": "nootropics-for-chronic-fatigue-and-brain-fog",
+    "title": "Nootropics for Chronic Fatigue and Brain Fog: What Helps and What Doesn't",
+    "excerpt": "Chronic fatigue is not the same as being tired. Standard energy supplements make it worse. Here's what the evidence actually supports for mitochondrial dysfunction, neuroinflammation, and HPA dysregulation.",
+    "publishedDate": "2026-04-12",
+    "readTime": 11,
+    "tags": [
+      "chronic-fatigue",
+      "brain-fog",
+      "energy",
+      "mitochondria",
+      "fatigue"
+    ],
+    "category": "",
+    "bottomLine": "Chronic fatigue requires a fundamentally different approach than ordinary tiredness. Stimulants and high-dose B vitamins often make it worse. The evidence-based approach focuses on mitochondrial support (CoQ10 Ubiquinol, D-Ribose, Magnesium), neuroinflammation reduction (Omega-3 EPA, Curcumin, Lion's Mane), and HPA axis recovery (Ashwagandha). Rule out thyroid dysfunction, sleep apnea, and depression before attributing persistent fatigue to anything nootropics can address."
+  },
+  {
+    "slug": "nootropics-for-high-achievers-the-executive-performance-stack",
+    "title": "The Executive Performance Stack: Nootropics for High Achievers",
+    "excerpt": "The cognitive demands on C-suite leaders are neurologically distinct — sustained cortisol elevation, sleep debt, and high-stakes decision-making create a specific failure profile. Here's what evidence-based supplementation looks like for high-level performance.",
+    "publishedDate": "2026-04-09",
+    "readTime": 12,
+    "tags": [
+      "executive",
+      "performance",
+      "leadership",
+      "decision-making",
+      "cognitive-performance"
+    ],
+    "category": "",
+    "bottomLine": "The executive performance stack is built on stress resilience first (Ashwagandha, Rhodiola), decision-making support second (Phosphatidylserine, Creatine), communication and presence third (Alpha-GPC, L-Theanine), and long-term brain health fourth (Lion's Mane, Omega-3, NMN). None of this substitutes for adequate sleep, exercise, and recovery — which are the true fundamentals of sustained high performance. The stack amplifies a well-maintained system; it cannot rescue a neglected one."
   }
 ];
 

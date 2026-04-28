@@ -106,7 +106,7 @@ function HomePage() {
   const [stackSize, setStackSize] = useState(0);
   const { stack, loadStack } = useStack();
 
-  const articleCount = 63;
+  const articleCount = 73;
   const featuredArticles = [
     { slug: 'caffeine-l-theanine-stack-the-ultimate-guide', title: 'Caffeine + L-Theanine: The Ultimate Stack Guide', tags: ['caffeine', 'theanine'], readTime: 8 },
     { slug: 'best-nootropic-stack-for-focus-2026', title: 'Best Nootropic Stack for Focus 2026', tags: ['focus', 'stack'], readTime: 10 },
@@ -183,7 +183,7 @@ function HomePage() {
       <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-500 mb-8 py-4 border-y border-gray-100">
         {[
           { stat: '195', label: 'Supplements' },
-          { stat: '58+', label: 'Research Articles' },
+          { stat: '73+', label: 'Research Articles' },
           { stat: '60+', label: 'Interactions Mapped' },
           { stat: '8', label: 'Curated Stacks' },
           { stat: 'Free', label: 'No Account Required' },
