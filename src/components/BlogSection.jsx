@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge.jsx';
 import { Button } from '@/components/ui/button.jsx';
 import { Input } from '@/components/ui/input.jsx';
 import { Calendar, Clock, Search, ArrowRight, BookOpen, Tag } from 'lucide-react';
-import { blogArticles, getRecentArticles } from '../data/blogArticles.js';
+import { blogArticlesIndex as blogArticles, getRecentArticlesMeta } from '../data/blogArticlesIndex.js';
 
 function ArticleCard({ article }) {
   return (
@@ -48,7 +48,7 @@ function ArticleCard({ article }) {
 export function BlogSection() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const articles = [...blogArticles].sort((a, b) => new Date(b.publishedDate) - new Date(a.publishedDate));
+  const articles = getRecentArticlesMeta(200);
 
   const categories = ['All', ...new Set(articles.map(a => a.category).filter(Boolean))];
 
