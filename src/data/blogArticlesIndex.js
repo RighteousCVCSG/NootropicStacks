@@ -1042,6 +1042,87 @@ export const blogArticlesIndex = [
     ],
     "category": "",
     "bottomLine": "Safe stacking starts with one supplement at a time, minimum two-week evaluation windows, and the minimum effective dose principle. The most common problems — overstimulation, cholinergic excess, serotonin syndrome risk — are entirely preventable with basic protocol discipline. When building a stack, introduce compounds sequentially, respect category boundaries, and use synergistic combinations that complement rather than duplicate mechanisms. When something goes wrong, a structured washout resolves most issues within days."
+  },
+  {
+    "slug": "best-nootropics-for-gaming-esports-performance",
+    "title": "Best Nootropics for Gaming and Esports: Reaction Time and Focus",
+    "excerpt": "Gaming demands a specific cognitive profile — fast reactions, sustained attention, pattern recognition, and emotional control under pressure. Here's what actually helps and what's actively harmful to in-game performance.",
+    "publishedDate": "2026-04-07",
+    "readTime": 9,
+    "tags": [
+      "gaming",
+      "esports",
+      "reaction-time",
+      "focus",
+      "performance"
+    ],
+    "category": "",
+    "bottomLine": "The optimal gaming stack is lighter than most people expect: Caffeine + L-Theanine at a 1:2 ratio handles the core needs without the hand tremor that ruins precision. Add Alpha-GPC for hand-eye coordination, L-Tyrosine for ranked sessions, and Rhodiola for marathon play. Bacopa pays off over months for pattern recognition. Avoid high-stim pre-workouts — they are the most common performance-degrading mistake in esports."
+  },
+  {
+    "slug": "nootropics-for-menopause-brain-fog-and-cognitive-support",
+    "title": "Nootropics for Menopause: Managing Brain Fog and Cognitive Changes",
+    "excerpt": "Estrogen decline affects serotonin, dopamine, and acetylcholine — three of the four major cognitive neurotransmitters. Here's what's actually happening neurologically during menopause, and which supplements have genuine evidence for managing the cognitive symptoms.",
+    "publishedDate": "2026-04-10",
+    "readTime": 10,
+    "tags": [
+      "menopause",
+      "women",
+      "hormones",
+      "brain-fog",
+      "mood"
+    ],
+    "category": "",
+    "bottomLine": "Menopause brain fog is neurologically real, not imagined. The most impactful interventions are: fixing sleep first (Magnesium Glycinate + L-Theanine), managing cortisol (Ashwagandha KSM-66), supporting acetylcholine (Bacopa), and providing NGF support during a neuroplasticity-challenged period (Lion's Mane). These don't replace HRT for those who qualify — they complement it."
+  },
+  {
+    "slug": "nootropics-for-parkinson-prevention-neuroprotection-guide",
+    "title": "Neuroprotection: Supplements That Support Brain Health Long-Term",
+    "excerpt": "Neuroprotection isn't about preventing specific diseases — it's about reducing the modifiable risk factors for neurodegeneration: oxidative stress, neuroinflammation, mitochondrial dysfunction, and protein aggregation. Here's what the evidence actually supports.",
+    "publishedDate": "2026-04-14",
+    "readTime": 10,
+    "tags": [
+      "neuroprotection",
+      "longevity",
+      "parkinson",
+      "alzheimer",
+      "aging"
+    ],
+    "category": "",
+    "bottomLine": "Neuroprotection is a long-term strategy built on lifestyle first (exercise, sleep, metabolic health) and targeted supplementation second. The strongest supplement evidence sits with Lion's Mane, Curcumin/Longvida, Omega-3 DHA, Bacopa, and Phosphatidylserine. CoQ10 Ubiquinol has specific relevance for mitochondrial protection. None of these prevent or treat neurodegenerative disease — they support the biological systems that resist it."
+  },
+  {
+    "slug": "nootropics-stack-for-parents-and-caregivers",
+    "title": "The Caregiver Stack: Nootropics for Parents and Those Under Chronic Stress",
+    "excerpt": "Standard productivity stacks assume stable sleep and manageable stress. Caregivers and parents have neither. This guide is built around the actual constraints of chronic sleep disruption and sustained background stress.",
+    "publishedDate": "2026-04-18",
+    "readTime": 8,
+    "tags": [
+      "parents",
+      "caregivers",
+      "stress",
+      "sleep-deprivation",
+      "energy"
+    ],
+    "category": "",
+    "bottomLine": "The caregiver stack inverts the typical nootropics priority order: sleep repair first (Magnesium Glycinate), stress floor lowering second (Ashwagandha KSM-66), then and only then cognitive support (Creatine, L-Theanine). Creatine is the standout supplement here — it's the one compound with direct evidence for performance benefits despite sleep deprivation, which is the defining condition of caregiving."
+  },
+  {
+    "slug": "sulbutiamine-and-thiamine-b1-guide-energy-and-fatigue",
+    "title": "Sulbutiamine and B1 (Thiamine): The Energy Nootropics You Might Be Missing",
+    "excerpt": "Thiamine deficiency is more common than most people realize, and its symptoms — fatigue, brain fog, poor concentration — are easily misattributed. Sulbutiamine takes B1 further, crossing the blood-brain barrier to hit dopaminergic circuits for motivation and focus. Here's what you need to know about both.",
+    "publishedDate": "2026-04-21",
+    "readTime": 9,
+    "tags": [
+      "sulbutiamine",
+      "thiamine",
+      "b-vitamins",
+      "energy",
+      "fatigue",
+      "motivation"
+    ],
+    "category": "",
+    "bottomLine": "Start with a high-quality B-complex or standalone B1 (50-100mg) for two weeks before considering Sulbutiamine. Many people find the basic thiamine repletion resolves their fatigue and fog. For those who don't, Sulbutiamine at 200-400mg (strictly cycled 2-3 days per week maximum) adds dopaminergic motivation and focus benefits that regular B1 cannot deliver. Both compounds are underutilized relative to their evidence base."
   }
 ];
 
