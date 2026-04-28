@@ -1,4 +1,15 @@
 User-agent: *
 Allow: /
 
+# Sitemaps
 Sitemap: https://nootropicstacker.com/sitemap.xml
+
+# AI training opt-out (optional - remove if you want AI training)
+User-agent: GPTBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /

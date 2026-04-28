@@ -1,0 +1,28 @@
+# NootropicStacker
+
+> The free nootropic supplement stack builder. 195 compounds, real-time synergy analysis, Stack Score rating, interaction warnings.
+
+NootropicStacker is a free tool for biohackers and cognitive optimizers to build, analyze, and score nootropic supplement stacks. It covers 195 supplements including racetams, adaptogens, mushrooms, vitamins, and amino acids.
+
+## Core Features
+- Stack Builder: Add supplements, get real-time synergy analysis and interaction warnings
+- Stack Score: 0-100 rating across synergy, coverage, balance, and efficiency
+- Supplement Library: 195 compounds with dosage ranges, effects, mechanisms
+- Personalized Quiz: Find your optimal stack based on goals
+- Guides: Blog posts and family guides covering nootropic categories
+
+## Key URLs
+- https://nootropicstacker.com/ — Stack Builder
+- https://nootropicstacker.com/supplements — Full supplement library
+- https://nootropicstacker.com/quiz — Personalized stack quiz
+- https://nootropicstacker.com/blog — Research and guides
+- https://nootropicstacker.com/families — Supplement family guides
+
+## Popular Supplements Covered
+Lion's Mane, Bacopa Monnieri, Ashwagandha (KSM-66), L-Theanine, Alpha-GPC, Citicoline, Rhodiola Rosea, Phosphatidylserine, Creatine, Omega-3/DHA, Magnesium Glycinate, Vitamin D3, CoQ10, Piracetam, Aniracetam, Noopept, Modafinil, Caffeine, Cordyceps, Reishi
+
+## Supplement Categories
+Nootropics, Adaptogens, Mushrooms, Racetams, Vitamins, Minerals, Amino Acids, Antioxidants, Sleep Support, Performance
+
+## Contact
+info@nootropicstacker.com

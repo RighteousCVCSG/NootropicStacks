@@ -25,7 +25,7 @@ const SEO_DATA = {
 
 // Generate structured data for supplements
 const generateSupplementStructuredData = (supplement) => {
-  return {
+  const productSchema = {
     "@context": "https://schema.org",
     "@type": "Product",
     "name": supplement.name,
@@ -60,6 +60,55 @@ const generateSupplementStructuredData = (supplement) => {
       }
     ]
   };
+
+  const medicalWebPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "MedicalWebPage",
+    "name": `${supplement.name} — Effects, Dosage & Safety`,
+    "description": supplement.description,
+    "url": `https://nootropicstacker.com/supplements/${encodeURIComponent(supplement.name.toLowerCase().replace(/\s+/g, '-'))}`,
+    "about": {
+      "@type": "DietarySupplement",
+      "name": supplement.name,
+      "description": supplement.description,
+      "maximumIntake": `${supplement.dosage.max} ${supplement.dosage.unit}`,
+      "recommendedIntake": {
+        "@type": "RecommendedDoseSchedule",
+        "doseUnit": supplement.dosage.unit,
+        "doseValue": `${supplement.dosage.min}-${supplement.dosage.max}`
+      }
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "NootropicStacker",
+      "url": "https://nootropicstacker.com"
+    },
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://nootropicstacker.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Supplements",
+          "item": "https://nootropicstacker.com/supplements"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": supplement.name,
+          "item": `https://nootropicstacker.com/supplements/${encodeURIComponent(supplement.name.toLowerCase().replace(/\s+/g, '-'))}`
+        }
+      ]
+    }
+  };
+
+  return [productSchema, medicalWebPageSchema];
 };
 
 // Generate FAQ structured data
@@ -104,15 +153,52 @@ const generateFAQStructuredData = () => {
   };
 };
 
+// Generate article structured data for blog posts
+const generateArticleStructuredData = ({ title, description, datePublished, dateModified, url }) => {
+  const now = new Date().toISOString();
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": title,
+    "description": description,
+    "datePublished": datePublished || now,
+    "dateModified": dateModified || datePublished || now,
+    "author": {
+      "@type": "Organization",
+      "name": "NootropicStacker Team",
+      "url": "https://nootropicstacker.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "NootropicStacker",
+      "url": "https://nootropicstacker.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://nootropicstacker.com/logo.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": url || "https://nootropicstacker.com/blog"
+    },
+    "image": "https://nootropicstacker.com/og-image.png"
+  };
+};
+
 // Generate organization structured data
 const generateOrganizationStructuredData = () => {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "Nootropic Stacker",
+    "name": "NootropicStacker",
     "url": "https://nootropicstacker.com",
     "logo": "https://nootropicstacker.com/logo.png",
-    "description": "AI-powered supplement stack builder for biohackers and health enthusiasts",
+    "description": "Free nootropic supplement stack builder for biohackers and cognitive optimizers",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "info@nootropicstacker.com",
+      "contactType": "customer support"
+    },
     "sameAs": [
       "https://twitter.com/nootropicstacker",
       "https://facebook.com/nootropicstacker"
@@ -120,16 +206,32 @@ const generateOrganizationStructuredData = () => {
   };
 };
 
-export function SEOOptimizer({ page = 'home', supplement = null, customTitle = null, customDescription = null }) {
+export function SEOOptimizer({
+  page = 'home',
+  supplement = null,
+  article = null,
+  customTitle = null,
+  customDescription = null
+}) {
   const seoData = SEO_DATA[page] || SEO_DATA.home;
-  
-  // Generate dynamic title and description for supplement pages
+
+  // Generate dynamic title and description for supplement and article pages
   let title = customTitle || seoData.title;
   let description = customDescription || seoData.description;
-  
+  let canonical = seoData.canonical;
+  let ogType = 'website';
+
   if (supplement) {
-    title = `${supplement.name} - Effects, Dosage & Safety | Nootropic Stacker`;
+    title = `${supplement.name} - Effects, Dosage & Safety | NootropicStacker`;
     description = `Complete guide to ${supplement.name}: ${supplement.description} Learn about effects, optimal dosage (${supplement.dosage.min}-${supplement.dosage.max} ${supplement.dosage.unit}), and safety considerations.`;
+    canonical = `https://nootropicstacker.com/supplements/${encodeURIComponent(supplement.name.toLowerCase().replace(/\s+/g, '-'))}`;
+  }
+
+  if (article) {
+    title = article.title || title;
+    description = article.description || description;
+    canonical = article.url || canonical;
+    ogType = 'article';
   }
 
   useEffect(() => {
@@ -142,55 +244,66 @@ export function SEOOptimizer({ page = 'home', supplement = null, customTitle = n
     }
   }, [title]);
 
+  const supplementSchemas = supplement ? generateSupplementStructuredData(supplement) : null;
+
   return (
     <Helmet>
       {/* Basic Meta Tags */}
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={seoData.keywords} />
-      <link rel="canonical" href={seoData.canonical} />
-      
+      <link rel="canonical" href={canonical} />
+
       {/* Open Graph Tags */}
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:type" content="website" />
-      <meta property="og:url" content={seoData.canonical} />
-      <meta property="og:image" content="https://nootropicstacker.com/og-image.jpg" />
-      <meta property="og:site_name" content="Nootropic Stacker" />
-      
+      <meta property="og:type" content={ogType} />
+      <meta property="og:url" content={canonical} />
+      <meta property="og:image" content="https://nootropicstacker.com/og-image.png" />
+      <meta property="og:site_name" content="NootropicStacker" />
+
       {/* Twitter Card Tags */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content="https://nootropicstacker.com/twitter-image.jpg" />
-      
+      <meta name="twitter:image" content="https://nootropicstacker.com/og-image.png" />
+
       {/* Additional SEO Tags */}
       <meta name="robots" content="index, follow" />
-      <meta name="author" content="Nootropic Stacker Team" />
+      <meta name="author" content="NootropicStacker Team" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      
-      {/* Structured Data */}
+
+      {/* Structured Data — Organization (always present) */}
       <script type="application/ld+json">
         {JSON.stringify(generateOrganizationStructuredData())}
       </script>
-      
+
+      {/* Structured Data — FAQ (home page only) */}
       {page === 'home' && (
         <script type="application/ld+json">
           {JSON.stringify(generateFAQStructuredData())}
         </script>
       )}
-      
-      {supplement && (
+
+      {/* Structured Data — Supplement Product + MedicalWebPage */}
+      {supplementSchemas && supplementSchemas.map((schema, i) => (
+        <script key={i} type="application/ld+json">
+          {JSON.stringify(schema)}
+        </script>
+      ))}
+
+      {/* Structured Data — Article (blog posts) */}
+      {article && (
         <script type="application/ld+json">
-          {JSON.stringify(generateSupplementStructuredData(supplement))}
+          {JSON.stringify(generateArticleStructuredData(article))}
         </script>
       )}
-      
+
       {/* Preconnect to external domains for performance */}
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://www.google-analytics.com" />
       <link rel="preconnect" href="https://www.googletagmanager.com" />
-      
+
       {/* DNS Prefetch for affiliate links */}
       <link rel="dns-prefetch" href="//amazon.com" />
       <link rel="dns-prefetch" href="//iherb.com" />

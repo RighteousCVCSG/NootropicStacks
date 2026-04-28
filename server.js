@@ -324,6 +324,34 @@ app.post('/api/contact', async (req, res) => {
 });
 
 // ============================================================
+// CLICK TRACKING (privacy-friendly, no PII stored)
+// ============================================================
+
+app.post('/api/track/click', async (req, res) => {
+  const { supplementId, vendor, page } = req.body;
+  if (!supplementId || !vendor) return res.json({ ok: true }); // fail silently
+  if (!pool) return res.json({ ok: true });
+  try {
+    await pool.execute(`
+      CREATE TABLE IF NOT EXISTS affiliate_clicks (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        supplement_id VARCHAR(100) NOT NULL,
+        vendor VARCHAR(50) NOT NULL,
+        page VARCHAR(100),
+        clicked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        INDEX idx_supplement (supplement_id),
+        INDEX idx_vendor (vendor)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+    `);
+    await pool.execute(
+      'INSERT INTO affiliate_clicks (supplement_id, vendor, page) VALUES (?, ?, ?)',
+      [supplementId.slice(0, 100), vendor.slice(0, 50), (page || 'unknown').slice(0, 100)]
+    );
+  } catch { /* non-fatal */ }
+  res.json({ ok: true });
+});
+
+// ============================================================
 // SPA FALLBACK — must be last
 // ============================================================
 app.get('/{*path}', (req, res) => {

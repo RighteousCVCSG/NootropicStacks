@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.j
 import { Button } from '@/components/ui/button.jsx';
 import { Badge } from '@/components/ui/badge.jsx';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
-import { ExternalLink, DollarSign, TrendingUp, Users, Eye } from 'lucide-react';
+import { ExternalLink, DollarSign, TrendingUp, Users, Eye, ShoppingCart } from 'lucide-react';
 
 // ============================================================
 // AFFILIATE CONFIGURATION
@@ -569,7 +569,14 @@ export function AffiliateLinks({ supplementId, supplementName }) {
   if (!links) return null;
 
   const handleClick = (vendor, estimatedPrice = 25) => {
-    // Track the click
+    // Track server-side
+    fetch('/api/track/click', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ supplementId, vendor, page: window.location.pathname })
+    }).catch(() => {});
+
+    // Existing client-side tracking
     const event = new CustomEvent('affiliateClick', {
       detail: { supplementId, vendor, estimatedPrice }
     });
@@ -577,34 +584,42 @@ export function AffiliateLinks({ supplementId, supplementName }) {
   };
 
   return (
-    <div className="mt-4 p-4 bg-blue-50 rounded-lg">
-      <h4 className="font-semibold mb-2 flex items-center gap-2">
-        <ExternalLink className="w-4 h-4" />
-        Where to Buy {supplementName}
+    <div className="mt-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg">
+      <h4 className="font-semibold mb-3 flex items-center gap-2 text-green-900">
+        <ShoppingCart className="w-4 h-4" />
+        Buy {supplementName}
       </h4>
-      <div className="flex flex-wrap gap-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
         {Object.entries(links).map(([vendor, url]) => {
           if (vendor === 'commission') return null;
-          
+          const vendorLabels = {
+            amazon: { label: '🛒 Amazon', desc: 'Fast shipping' },
+            iherb: { label: '🌿 iHerb', desc: 'Often cheapest' },
+            nootropicsdepot: { label: '🔬 Nootropics Depot', desc: 'Lab tested' },
+            nordicnaturals: { label: '🐟 Nordic Naturals', desc: 'Premium quality' },
+            buymodafinilonline: { label: '💊 Buy Modafinil Online', desc: 'Trusted vendor' },
+          };
+          const info = vendorLabels[vendor] || { label: vendor, desc: '' };
           return (
-            <Button
+            <a
               key={vendor}
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                handleClick(vendor);
-                window.open(url, '_blank');
-              }}
-              className="capitalize"
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => handleClick(vendor)}
+              className="flex items-center justify-between p-3 bg-white border border-green-200 rounded-lg hover:border-green-400 hover:shadow-sm transition-all group"
             >
-              {vendor === 'nootropicsdepot' ? 'Nootropics Depot' : vendor}
-              <ExternalLink className="w-3 h-3 ml-1" />
-            </Button>
+              <div>
+                <div className="text-sm font-medium text-gray-800 group-hover:text-green-700">{info.label}</div>
+                {info.desc && <div className="text-xs text-gray-500">{info.desc}</div>}
+              </div>
+              <ExternalLink className="w-3.5 h-3.5 text-gray-400 group-hover:text-green-600" />
+            </a>
           );
         })}
       </div>
-      <p className="text-xs text-gray-600 mt-2">
-        * These are affiliate links. We earn a small commission at no extra cost to you.
+      <p className="text-xs text-gray-500 mt-3">
+        * Affiliate links — we earn a small commission at no extra cost to you. Helps keep this tool free.
       </p>
     </div>
   );
