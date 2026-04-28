@@ -106,7 +106,7 @@ function HomePage() {
   const [stackSize, setStackSize] = useState(0);
   const { stack, loadStack } = useStack();
 
-  const articleCount = 73;
+  const articleCount = 83;
   const featuredArticles = [
     { slug: 'caffeine-l-theanine-stack-the-ultimate-guide', title: 'Caffeine + L-Theanine: The Ultimate Stack Guide', tags: ['caffeine', 'theanine'], readTime: 8 },
     { slug: 'best-nootropic-stack-for-focus-2026', title: 'Best Nootropic Stack for Focus 2026', tags: ['focus', 'stack'], readTime: 10 },
@@ -183,7 +183,7 @@ function HomePage() {
       <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-500 mb-8 py-4 border-y border-gray-100">
         {[
           { stat: '195', label: 'Supplements' },
-          { stat: '73+', label: 'Research Articles' },
+          { stat: '83+', label: 'Research Articles' },
           { stat: '60+', label: 'Interactions Mapped' },
           { stat: '8', label: 'Curated Stacks' },
           { stat: 'Free', label: 'No Account Required' },
@@ -345,12 +345,12 @@ function App() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
               <Link to="/" className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
                   <Pill className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <span className="text-xl font-bold text-gray-900">NootropicStacker</span>
-                  <p className="text-sm text-gray-600">Build Your Perfect Nootropic Stack</p>
+                  <span className="text-lg sm:text-xl font-bold text-gray-900">NootropicStacker</span>
+                  <p className="hidden sm:block text-sm text-gray-600">Build Your Perfect Nootropic Stack</p>
                 </div>
               </Link>
 
