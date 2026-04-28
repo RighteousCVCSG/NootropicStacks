@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card.jsx';
 import { Badge } from '@/components/ui/badge.jsx';
 import { Button } from '@/components/ui/button.jsx';
 import { Separator } from '@/components/ui/separator.jsx';
 import { Calendar, Clock, ArrowLeft, BookOpen, Share2, ShoppingCart, ExternalLink, Beaker } from 'lucide-react';
-import { getArticleBySlug, getRecentArticles } from '../data/blogArticles.js';
+import { getRecentArticlesMeta } from '../data/blogArticlesIndex.js';
 import { SEOOptimizer, generateArticleStructuredData } from './SEOOptimizer.jsx';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
 
@@ -93,13 +93,28 @@ function ArticleContent({ sections, showNewsletter = false }) {
 
 export function BlogArticlePage() {
   const { slug } = useParams();
-  const article = getArticleBySlug(slug);
+  const [article, setArticle] = useState(null);
+  const [notFound, setNotFound] = useState(false);
 
+  useEffect(() => {
+    setArticle(null);
+    setNotFound(false);
+    fetch(`/articles/${slug}.json`)
+      .then(r => { if (!r.ok) throw new Error('not found'); return r.json(); })
+      .then(setArticle)
+      .catch(() => setNotFound(true));
+  }, [slug]);
+
+  if (notFound) return <Navigate to="/blog" replace />;
   if (!article) {
-    return <Navigate to="/blog" replace />;
+    return (
+      <div className="flex items-center justify-center py-24">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
+      </div>
+    );
   }
 
-  const recentArticles = getRecentArticles(4).filter(a => a.slug !== slug).slice(0, 3);
+  const recentArticles = getRecentArticlesMeta(4).filter(a => a.slug !== slug).slice(0, 3);
 
   const articleSchema = generateArticleStructuredData({
     title: article.title,
