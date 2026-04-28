@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card.jsx';
 import { Badge } from '@/components/ui/badge.jsx';
@@ -34,18 +34,58 @@ const TAG_TO_SUPPLEMENT = {
   'huperzine': 'huperzine-a',
 };
 
-function ArticleContent({ sections }) {
+function ArticleContent({ sections, showNewsletter = false }) {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState('idle');
+
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    setStatus('loading');
+    try {
+      await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ email, source: 'blog_inline' })
+      });
+      setStatus('success');
+    } catch { setStatus('error'); }
+  };
+
   return (
     <div className="prose prose-gray max-w-none">
       {sections.map((section, i) => (
-        <div key={i} className="mb-8">
-          {section.heading && (
-            <h2 className="text-xl font-bold text-gray-900 mb-3">{section.heading}</h2>
+        <React.Fragment key={i}>
+          <div className="mb-8">
+            {section.heading && <h2 className="text-xl font-bold text-gray-900 mb-3">{section.heading}</h2>}
+            {section.paragraphs.map((p, j) => (
+              <p key={j} className="text-gray-700 leading-relaxed mb-4">{p}</p>
+            ))}
+          </div>
+          {showNewsletter && i === 3 && status !== 'success' && (
+            <div className="my-8 p-5 bg-indigo-50 border border-indigo-200 rounded-xl not-prose">
+              <p className="font-semibold text-indigo-900 mb-1">📬 Get the NootropicStacker Weekly</p>
+              <p className="text-sm text-indigo-700 mb-3">New stack guides, research summaries, and supplement deals — free.</p>
+              {status === 'success' ? (
+                <p className="text-green-700 font-medium text-sm">✓ You're in!</p>
+              ) : (
+                <form onSubmit={handleSubscribe} className="flex gap-2">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    placeholder="your@email.com"
+                    required
+                    className="flex-1 px-3 py-2 text-sm border border-indigo-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  />
+                  <button type="submit" disabled={status === 'loading'}
+                    className="px-4 py-2 text-sm bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors disabled:opacity-50">
+                    {status === 'loading' ? '...' : 'Subscribe'}
+                  </button>
+                </form>
+              )}
+            </div>
           )}
-          {section.paragraphs.map((p, j) => (
-            <p key={j} className="text-gray-700 leading-relaxed mb-4">{p}</p>
-          ))}
-        </div>
+        </React.Fragment>
       ))}
     </div>
   );
@@ -119,7 +159,7 @@ export function BlogArticlePage() {
           <Separator className="mb-8" />
 
           {/* Article body */}
-          <ArticleContent sections={article.sections} />
+          <ArticleContent sections={article.sections} showNewsletter={true} />
 
           {/* Bottom line */}
           {article.bottomLine && (

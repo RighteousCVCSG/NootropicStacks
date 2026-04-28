@@ -244,21 +244,34 @@ export function PredefinedStacks() {
                         {supplement && (
                           <p className="text-sm text-gray-600">{supplement.description}</p>
                         )}
-                        {hasAffiliate && (
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="mt-2 text-green-700 border-green-300 hover:bg-green-50"
-                            onClick={() => {
-                              const links = AFFILIATE_LINKS[item.id];
-                              const url = links.nootropicsdepot || links.amazon || links.iherb || Object.values(links).find(v => typeof v === 'string');
-                              if (url) window.open(url, '_blank');
-                            }}
-                          >
-                            <ShoppingCart className="w-3 h-3 mr-1" />
-                            Buy {supplement?.name.split(' ')[0]}
-                          </Button>
-                        )}
+                        {hasAffiliate && (() => {
+                          const links = AFFILIATE_LINKS[item.id];
+                          const trackClick = (vendor) => {
+                            fetch('/api/track/click', {
+                              method: 'POST',
+                              headers: {'Content-Type':'application/json'},
+                              body: JSON.stringify({ supplementId: item.id, vendor, page: 'stacks' })
+                            }).catch(() => {});
+                          };
+                          return (
+                            <div className="flex gap-2 mt-2">
+                              {links.amazon && (
+                                <a href={links.amazon} target="_blank" rel="noopener noreferrer sponsored"
+                                   onClick={() => trackClick('amazon')}
+                                   className="flex items-center gap-1 text-xs bg-orange-500 hover:bg-orange-600 text-white px-3 py-1.5 rounded font-medium transition-colors">
+                                  <ShoppingCart className="w-3 h-3" /> Amazon
+                                </a>
+                              )}
+                              {links.iherb && (
+                                <a href={links.iherb} target="_blank" rel="noopener noreferrer sponsored"
+                                   onClick={() => trackClick('iherb')}
+                                   className="flex items-center gap-1 text-xs bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded font-medium transition-colors">
+                                  <ShoppingCart className="w-3 h-3" /> iHerb
+                                </a>
+                              )}
+                            </div>
+                          );
+                        })()}
                       </div>
                     );
                   })}
