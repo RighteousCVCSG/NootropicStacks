@@ -27,6 +27,7 @@ const FAQPage = lazy(() => import('./components/FAQPage.jsx').then(m => ({ defau
 const GlossaryPage = lazy(() => import('./components/GlossaryPage.jsx').then(m => ({ default: m.GlossaryPage })));
 const ContactPage = lazy(() => import('./components/ContactPage.jsx').then(m => ({ default: m.ContactPage })));
 const BestNootropicsPage = lazy(() => import('./components/BestNootropicsPage.jsx').then(m => ({ default: m.BestNootropicsPage })));
+const BestStacksPage = lazy(() => import('./components/BestStacksPage.jsx').then(m => ({ default: m.BestStacksPage })));
 import { supplements } from './data/supplements.js';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
 import { Button } from '@/components/ui/button.jsx';
@@ -310,6 +311,7 @@ function App() {
                 <NavLink to="/news" icon={Newspaper}>News</NavLink>
                 <NavLink to="/blog" icon={PenLine}>Blog</NavLink>
                 <NavLink to="/best-nootropics" icon={Award}>Best Nootropics</NavLink>
+                <NavLink to="/best-stacks" icon={Layers}>Best Stacks</NavLink>
               </nav>
 
               <HeaderAuth />
@@ -327,6 +329,7 @@ function App() {
             <NavLink to="/news" icon={Newspaper}>News</NavLink>
             <NavLink to="/blog" icon={PenLine}>Blog</NavLink>
             <NavLink to="/best-nootropics" icon={Award}>Best</NavLink>
+            <NavLink to="/best-stacks" icon={Layers}>Stacks</NavLink>
           </div>
         </nav>
 
@@ -382,6 +385,7 @@ function App() {
             } />
             <Route path="/contact" element={<><SEOOptimizer page="home" customTitle="Contact NootropicStacker" customDescription="Get in touch with the NootropicStacker team." /><ContactPage /></>} />
             <Route path="/best-nootropics" element={<BestNootropicsPage />} />
+            <Route path="/best-stacks" element={<BestStacksPage />} />
             <Route path="/guides/:slug" element={<GuideRedirect />} />
             <Route path="*" element={
               <div className="text-center py-20">

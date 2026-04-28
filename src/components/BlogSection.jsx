@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge.jsx';
 import { Button } from '@/components/ui/button.jsx';
 import { Input } from '@/components/ui/input.jsx';
 import { Calendar, Clock, Search, ArrowRight, BookOpen, Tag } from 'lucide-react';
-import { getRecentArticles } from '../data/blogArticles.js';
+import { blogArticles, getRecentArticles } from '../data/blogArticles.js';
 
 function ArticleCard({ article }) {
   return (
@@ -47,15 +47,20 @@ function ArticleCard({ article }) {
 
 export function BlogSection() {
   const [searchQuery, setSearchQuery] = useState('');
-  const articles = getRecentArticles(20);
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const articles = [...blogArticles].sort((a, b) => new Date(b.publishedDate) - new Date(a.publishedDate));
 
-  const filtered = searchQuery
-    ? articles.filter(a =>
-        a.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        a.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        a.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()))
-      )
-    : articles;
+  const categories = ['All', ...new Set(articles.map(a => a.category).filter(Boolean))];
+
+  const filtered = (selectedCategory !== 'All'
+    ? articles.filter(a => a.category === selectedCategory)
+    : articles
+  ).filter(a => searchQuery
+    ? a.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (a.excerpt || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+      a.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()))
+    : true
+  );
 
   // Collect all unique tags
   const allTags = [...new Set(articles.flatMap(a => a.tags))].sort();
@@ -69,6 +74,7 @@ export function BlogSection() {
             NootropicStacker Blog
           </h2>
           <p className="text-gray-600 mt-1">Research breakdowns, stack guides, and what's actually happening in nootropics.</p>
+          <p className="text-sm text-gray-400 mt-1">{articles.length} articles</p>
         </div>
       </div>
 
@@ -82,6 +88,25 @@ export function BlogSection() {
           className="pl-10"
         />
       </div>
+
+      {/* Category filters */}
+      {categories.length > 1 && (
+        <div className="flex flex-wrap gap-2">
+          {categories.map(cat => (
+            <button
+              key={cat}
+              onClick={() => setSelectedCategory(cat)}
+              className={`text-sm px-3 py-1.5 rounded-lg font-medium transition-colors ${
+                selectedCategory === cat
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Tags */}
       {allTags.length > 0 && (
