@@ -12,6 +12,35 @@ import { SaveStackDialog } from './SaveStackDialog.jsx';
 import { SavedStacksList } from './SavedStacksList.jsx';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
 
+// Estimated monthly costs in USD (based on typical market prices for quality products)
+const MONTHLY_COSTS = {
+  'coq10': 22, 'ashwagandha': 18, 'l-theanine': 12, 'caffeine': 6,
+  'lions-mane': 28, 'lion-mane': 28, 'lions-mane-mushroom': 28,
+  'bacopa': 18, 'alpha-gpc': 25, 'alpha-gpc-choline': 25,
+  'creatine': 14, 'magnesium': 16, 'magnesium-glycinate': 16,
+  'vitamin-d': 8, 'vitamin-d3': 8, 'omega3': 22, 'fish-oil': 20,
+  'rhodiola': 20, 'rhodiola-rosea': 20, 'citicoline': 24,
+  'phosphatidylserine': 28, 'huperzine-a': 16, 'noopept': 18,
+  'piracetam': 20, 'aniracetam': 24, 'phenylpiracetam': 28,
+  'oxiracetam': 26, 'modafinil': 80, 'armodafinil': 90,
+  'nad-precursors': 45, 'nmn': 45, 'nr': 40, 'resveratrol': 20,
+  'curcumin': 18, 'turmeric': 12, 'zinc': 8, 'melatonin': 8,
+  'b-complex': 10, 'tyrosine': 14, 'l-tyrosine': 14, 'taurine': 10,
+  'cordyceps': 24, 'reishi': 20, 'lions-mane-extract': 28,
+  'panax-ginseng': 18, 'mucuna-pruriens': 16, 'ginkgo': 12,
+  'bacopa-monnieri': 18, 'collagen': 22, 'probiotics': 26,
+  'vitamin-c': 8, 'mct-oil': 18, 'spirulina': 16,
+  'green-tea-extract': 12, 'berberine': 18, 'alpha-lipoic-acid': 16,
+  'kanna': 22, 'pramiracetam': 30, 'coluracetam': 32, 'fasoracetam': 28,
+};
+
+function getMonthlyStackCost(stack) {
+  return stack.reduce((total, item) => {
+    const cost = MONTHLY_COSTS[item.supplementId] || 20; // default $20 if unknown
+    return total + cost;
+  }, 0);
+}
+
 export function StackPanel() {
   const { stack, safetyAnalysis, removeSupplement, updateDosage } = useStack();
   const { user } = useAuth();
@@ -224,6 +253,20 @@ export function StackPanel() {
               </div>
             );
           })()}
+
+          {/* Monthly Cost Estimate */}
+          {stack.length > 0 && (
+            <div className="mt-3 pt-3 border-t flex items-center justify-between">
+              <div>
+                <p className="text-xs text-gray-500">Estimated monthly cost</p>
+                <p className="text-lg font-bold text-gray-800">${getMonthlyStackCost(stack)}/mo</p>
+              </div>
+              <div className="text-right">
+                <p className="text-xs text-gray-500">{stack.length} supplement{stack.length !== 1 ? 's' : ''}</p>
+                <p className="text-xs text-gray-400">~${Math.round(getMonthlyStackCost(stack)/30)}/day</p>
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
 

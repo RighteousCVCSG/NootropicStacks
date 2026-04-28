@@ -20,6 +20,7 @@ import { StackScoreWidget } from './components/StackScoreWidget.jsx';
 import { BlogSection } from './components/BlogSection.jsx';
 import { BlogArticlePage } from './components/BlogArticlePage.jsx';
 import { FAQPage } from './components/FAQPage.jsx';
+import { StackProtocolBuilder } from './components/StackProtocolBuilder.jsx';
 import { GlossaryPage } from './components/GlossaryPage.jsx';
 import { NewsletterCapture } from './components/NewsletterCapture.jsx';
 import { ContactPage } from './components/ContactPage.jsx';
@@ -148,6 +149,7 @@ function HomePage() {
         <div className="lg:col-span-1 space-y-6">
           <GoalSelector />
           <StackPanel />
+          <StackProtocolBuilder />
           <ContextualAd category="nootropics" userGoals={userGoals} position="sidebar" />
         </div>
 
@@ -180,6 +182,32 @@ function HomePage() {
       </div>
 
       <SEOContent />
+
+      {/* Trusted Resources */}
+      <div className="mt-8 p-6 bg-white rounded-xl border">
+        <h2 className="text-lg font-semibold text-gray-900 mb-1">Research & References</h2>
+        <p className="text-sm text-gray-500 mb-4">Supplement data cross-referenced with peer-reviewed sources and trusted industry resources.</p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {[
+            { name: 'Examine.com', desc: 'Supplement research database', url: 'https://examine.com', icon: '🔬' },
+            { name: 'PubMed', desc: 'Clinical research studies', url: 'https://pubmed.ncbi.nlm.nih.gov', icon: '📚' },
+            { name: 'Nootropics Depot', desc: 'Third-party lab tested', url: 'https://nootropicsdepot.com', icon: '🧪' },
+            { name: 'Labdoor', desc: 'Supplement quality rankings', url: 'https://labdoor.com', icon: '⭐' },
+          ].map(resource => (
+            <a
+              key={resource.name}
+              href={resource.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col p-3 rounded-lg border hover:border-blue-300 hover:bg-blue-50 transition-all group"
+            >
+              <span className="text-2xl mb-1">{resource.icon}</span>
+              <span className="text-sm font-medium text-gray-800 group-hover:text-blue-700">{resource.name}</span>
+              <span className="text-xs text-gray-500">{resource.desc}</span>
+            </a>
+          ))}
+        </div>
+      </div>
 
       <SupplementModal
         supplement={selectedSupplement}
