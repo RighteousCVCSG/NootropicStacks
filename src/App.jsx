@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { Routes, Route, Link, useLocation, Navigate, useParams } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext.jsx';
 import { AuthDialog } from './components/AuthDialog.jsx';
@@ -8,22 +8,24 @@ import { StackPanel } from './components/StackPanel.jsx';
 import { RecommendationPanel } from './components/RecommendationPanel.jsx';
 import { SupplementLibrary } from './components/SupplementLibrary.jsx';
 import { SupplementModal } from './components/SupplementModal.jsx';
-import { SupplementPage } from './components/SupplementPage.jsx';
-import { SupplementCompare } from './components/SupplementCompare.jsx';
-import { StackQuiz } from './components/StackQuiz.jsx';
 import { SEOOptimizer, SEOContent } from './components/SEOOptimizer.jsx';
 import { ContextualAd, SmartAdPlacement, AdRevenueTracker } from './components/AdManager.jsx';
-import { PredefinedStacks } from './components/PredefinedStacks.jsx';
-import { NewsSection } from './components/NewsSection.jsx';
-import { SupplementFamilyGuide } from './components/SupplementFamilyGuide.jsx';
 import { StackScoreWidget } from './components/StackScoreWidget.jsx';
-import { BlogSection } from './components/BlogSection.jsx';
-import { BlogArticlePage } from './components/BlogArticlePage.jsx';
-import { FAQPage } from './components/FAQPage.jsx';
 import { StackProtocolBuilder } from './components/StackProtocolBuilder.jsx';
-import { GlossaryPage } from './components/GlossaryPage.jsx';
 import { NewsletterCapture } from './components/NewsletterCapture.jsx';
-import { ContactPage } from './components/ContactPage.jsx';
+
+// Lazy-loaded route-level components
+const SupplementPage = lazy(() => import('./components/SupplementPage.jsx').then(m => ({ default: m.SupplementPage })));
+const SupplementCompare = lazy(() => import('./components/SupplementCompare.jsx').then(m => ({ default: m.SupplementCompare })));
+const StackQuiz = lazy(() => import('./components/StackQuiz.jsx').then(m => ({ default: m.StackQuiz })));
+const PredefinedStacks = lazy(() => import('./components/PredefinedStacks.jsx').then(m => ({ default: m.PredefinedStacks })));
+const NewsSection = lazy(() => import('./components/NewsSection.jsx').then(m => ({ default: m.NewsSection })));
+const SupplementFamilyGuide = lazy(() => import('./components/SupplementFamilyGuide.jsx').then(m => ({ default: m.SupplementFamilyGuide })));
+const BlogSection = lazy(() => import('./components/BlogSection.jsx').then(m => ({ default: m.BlogSection })));
+const BlogArticlePage = lazy(() => import('./components/BlogArticlePage.jsx').then(m => ({ default: m.BlogArticlePage })));
+const FAQPage = lazy(() => import('./components/FAQPage.jsx').then(m => ({ default: m.FAQPage })));
+const GlossaryPage = lazy(() => import('./components/GlossaryPage.jsx').then(m => ({ default: m.GlossaryPage })));
+const ContactPage = lazy(() => import('./components/ContactPage.jsx').then(m => ({ default: m.ContactPage })));
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
 import { Button } from '@/components/ui/button.jsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.jsx';
@@ -315,6 +317,7 @@ function App() {
           </Alert>
 
           {/* Routes */}
+          <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="text-gray-500 text-sm">Loading...</div></div>}>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/quiz" element={<StackQuiz />} />
@@ -366,6 +369,7 @@ function App() {
               </div>
             } />
           </Routes>
+          </Suspense>
         </main>
 
         {/* Stack Score Floating Widget */}
