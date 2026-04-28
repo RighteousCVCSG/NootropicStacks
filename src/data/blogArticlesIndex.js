@@ -1283,6 +1283,180 @@ export const blogArticlesIndex = [
     ],
     "category": "",
     "bottomLine": "Nootropic safety is not one-size-fits-all. Pregnancy, bipolar disorder, seizure disorders, and several medication classes create absolute or strong cautions for specific compounds. The universal principles — start with one supplement at a time, start at a low dose, and involve a pharmacist or physician when on medications — are not just conservative advice. They are the difference between a beneficial intervention and a harmful one."
+  },
+  {
+    "slug": "best-nootropics-for-focus-and-concentration-2026",
+    "title": "Best Nootropics for Focus and Concentration in 2026",
+    "excerpt": "Cutting through the noise on cognitive enhancers that actually work for sustained attention and mental clarity. This guide ranks the top compounds by evidence quality, mechanism, and real-world effectiveness — with specific dosing protocols.",
+    "publishedDate": "2026-04-28",
+    "readTime": 14,
+    "tags": [
+      "focus",
+      "concentration",
+      "caffeine",
+      "citicoline",
+      "bacopa",
+      "stack",
+      "buying-guide"
+    ],
+    "category": "Buying Guides",
+    "bottomLine": "The most evidence-backed focus stack for most people is caffeine + L-theanine as the foundation, citicoline for cholinergic support, and Bacopa Monnieri for long-term consolidation — but the right combination depends on whether your attention deficit is driven by low arousal, poor working memory, or anxiety."
+  },
+  {
+    "slug": "modafinil-alternatives-over-the-counter-2026",
+    "title": "Best Modafinil Alternatives Available Over the Counter in 2026",
+    "excerpt": "Modafinil is a prescription wakefulness agent with potent cognitive effects. These OTC alternatives replicate portions of its mechanism through legal, accessible compounds — and some of them come surprisingly close for specific use cases.",
+    "publishedDate": "2026-04-28",
+    "readTime": 13,
+    "tags": [
+      "modafinil",
+      "alternatives",
+      "wakefulness",
+      "focus",
+      "adrafinil",
+      "citicoline",
+      "stack"
+    ],
+    "category": "Comparisons",
+    "bottomLine": "No OTC compound exactly replicates modafinil, but a stack of adrafinil or flmodafinil (where legal) plus citicoline, tyrosine, and caffeine/theanine achieves meaningfully similar wakefulness and focus enhancement for most use cases."
+  },
+  {
+    "slug": "phenylpiracetam-complete-guide-effects-dosage",
+    "title": "Phenylpiracetam: Complete Guide to Effects, Dosage, and Protocols",
+    "excerpt": "Phenylpiracetam is the most potent and stimulating compound in the racetam family. This guide covers its mechanism, what it actually feels like, dosing protocols, and how to use it without burning out its effects.",
+    "publishedDate": "2026-04-28",
+    "readTime": 12,
+    "tags": [
+      "phenylpiracetam",
+      "racetams",
+      "focus",
+      "stimulant",
+      "dosage",
+      "protocol"
+    ],
+    "category": "Compound Guides",
+    "bottomLine": "Phenylpiracetam is one of the most effective acute cognitive and physical performance enhancers available without a prescription, but its rapid tolerance development means it must be used sparingly — no more than twice per week — to preserve its effects."
+  },
+  {
+    "slug": "n-acetyl-l-tyrosine-nalt-vs-l-tyrosine-which-is-better",
+    "title": "NALT vs. L-Tyrosine: Which Form Is Actually Better?",
+    "excerpt": "N-Acetyl L-Tyrosine and L-Tyrosine are both widely used as dopamine precursors, but they have meaningfully different pharmacokinetics and effective doses. Here's what the research actually shows.",
+    "publishedDate": "2026-04-28",
+    "readTime": 9,
+    "tags": [
+      "tyrosine",
+      "NALT",
+      "dopamine",
+      "focus",
+      "stress",
+      "comparison"
+    ],
+    "category": "Comparisons",
+    "bottomLine": "L-Tyrosine is better studied and more cost-effective; NALT is more bioavailable but converts at a lower rate, meaning higher-priced products aren't necessarily more effective — and for most use cases, plain L-Tyrosine at 500–2000mg outperforms NALT gram-for-gram."
+  },
+  {
+    "slug": "best-choline-supplement-guide-2026",
+    "title": "Best Choline Supplement Guide: Citicoline vs. Alpha-GPC vs. Choline Bitartrate",
+    "excerpt": "Not all choline supplements are equal — they have different bioavailability, brain-to-blood conversion ratios, and secondary benefits beyond choline delivery. This guide cuts through the marketing to show which form is actually best for your goals.",
+    "publishedDate": "2026-04-28",
+    "readTime": 11,
+    "tags": [
+      "choline",
+      "citicoline",
+      "alpha-gpc",
+      "acetylcholine",
+      "memory",
+      "buying-guide"
+    ],
+    "category": "Buying Guides",
+    "bottomLine": "For cognitive enhancement, citicoline is the best overall choline source due to its dual benefit of choline delivery plus cytidine (a uridine precursor). Alpha-GPC is superior for physical performance and slightly higher peak acetylcholine elevation. Choline bitartrate is cheap but largely ineffective as a brain-targeted choline source."
+  },
+  {
+    "slug": "nootropics-for-motivation-dopamine-stack-guide",
+    "title": "Nootropics for Motivation: The Dopamine Stack Guide",
+    "excerpt": "Motivation is primarily a dopamine phenomenon. This guide covers the compounds that actually move the dopamine needle — from direct precursors to receptor modulators — and how to stack them without burning out your reward system.",
+    "publishedDate": "2026-04-28",
+    "readTime": 12,
+    "tags": [
+      "motivation",
+      "dopamine",
+      "tyrosine",
+      "mucuna",
+      "rhodiola",
+      "stack",
+      "dopamine"
+    ],
+    "category": "Stack Guides",
+    "bottomLine": "The most sustainable dopamine support stack combines tyrosine (precursor), Rhodiola (reuptake inhibition), and Mucuna pruriens (direct L-DOPA) as needed — avoiding receptor downregulation by supporting the system rather than overwhelming it."
+  },
+  {
+    "slug": "lions-mane-daily-dosage-how-much-to-take",
+    "title": "Lion's Mane Dosage: How Much to Take and When",
+    "excerpt": "Lion's Mane has become one of the most popular functional mushrooms, but dosing guidance varies wildly from 500mg to 5,000mg daily. This guide explains what the research actually supports and why extract quality matters more than dose.",
+    "publishedDate": "2026-04-28",
+    "readTime": 10,
+    "tags": [
+      "lions-mane",
+      "mushrooms",
+      "NGF",
+      "dosage",
+      "neuroprotection",
+      "cognitive-health"
+    ],
+    "category": "Dosage Guides",
+    "bottomLine": "Research supports 1,000–3,000mg daily of a quality Lion's Mane extract for cognitive benefits, but extract quality and beta-glucan content matter more than dose — low-quality mycelium-on-grain products can require 10x the dose to match the effect of a potent fruiting body extract."
+  },
+  {
+    "slug": "best-nootropics-for-test-anxiety-exam-performance",
+    "title": "Best Nootropics for Test Anxiety and Exam Performance",
+    "excerpt": "Test anxiety is a specific cognitive pattern — high arousal disrupting working memory access — that responds to a targeted, evidence-backed supplement approach. This guide covers what works before an exam, during the exam period, and for long-term academic performance.",
+    "publishedDate": "2026-04-28",
+    "readTime": 11,
+    "tags": [
+      "test-anxiety",
+      "students",
+      "exam",
+      "ashwagandha",
+      "L-theanine",
+      "bacopa",
+      "performance"
+    ],
+    "category": "Use Case Guides",
+    "bottomLine": "For test anxiety, L-Theanine is the fastest-acting and safest option for acute exam-day use; Ashwagandha and Bacopa are the most evidence-backed for reducing chronic test anxiety over a supplementation period; Citicoline supports the working memory access that anxiety impairs."
+  },
+  {
+    "slug": "citicoline-complete-guide-brain-health-benefits",
+    "title": "Citicoline Complete Guide: Brain Health Benefits, Dosage, and Why It's One of the Best Nootropics",
+    "excerpt": "Citicoline (CDP-Choline) is one of the most clinically studied nootropics in existence, with evidence ranging from age-related cognitive decline to stroke recovery to healthy adult attention. This guide covers everything you need to know.",
+    "publishedDate": "2026-04-28",
+    "readTime": 13,
+    "tags": [
+      "citicoline",
+      "CDP-choline",
+      "acetylcholine",
+      "brain-health",
+      "memory",
+      "attention"
+    ],
+    "category": "Compound Guides",
+    "bottomLine": "Citicoline at 250–500mg daily is one of the safest, most evidence-backed, and versatile cognitive enhancers available — delivering choline for acetylcholine synthesis, cytidine for uridine and phospholipid synthesis, and direct dopaminergic effects that improve motivation alongside memory."
+  },
+  {
+    "slug": "caffeine-pills-vs-coffee-nootropic-comparison",
+    "title": "Caffeine Pills vs. Coffee: Which Is Actually Better for Cognitive Enhancement?",
+    "excerpt": "Coffee and caffeine pills both deliver caffeine, but they're not equivalent cognitively. Coffee's bioactive compounds beyond caffeine add complexity that pills lack — and pills offer precision that coffee can't match. Here's the complete breakdown.",
+    "publishedDate": "2026-04-28",
+    "readTime": 10,
+    "tags": [
+      "caffeine",
+      "coffee",
+      "comparison",
+      "focus",
+      "adenosine",
+      "nootropics"
+    ],
+    "category": "Comparisons",
+    "bottomLine": "Caffeine pills win for precision, stackability, and cost-per-dose; coffee wins for the chlorogenic acid and antioxidant profile that may add neuroprotective benefit — but the cognitive enhancement difference at equivalent caffeine doses is small, and the right answer depends on your primary goal."
   }
 ];
 

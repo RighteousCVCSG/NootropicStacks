@@ -30,6 +30,7 @@ const BestNootropicsPage = lazy(() => import('./components/BestNootropicsPage.js
 const BestStacksPage = lazy(() => import('./components/BestStacksPage.jsx').then(m => ({ default: m.BestStacksPage })));
 const StartHerePage = lazy(() => import('./components/StartHerePage.jsx').then(m => ({ default: m.StartHerePage })));
 const ComparisonPage = lazy(() => import('./components/ComparisonPage.jsx').then(m => ({ default: m.ComparisonPage })));
+const NootropicsForFocusPage = lazy(() => import('./components/NootropicsForFocusPage.jsx').then(m => ({ default: m.NootropicsForFocusPage })));
 import { supplements } from './data/supplements.js';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
 import { Button } from '@/components/ui/button.jsx';
@@ -108,7 +109,7 @@ function HomePage() {
   const [stackSize, setStackSize] = useState(0);
   const { stack, loadStack } = useStack();
 
-  const articleCount = 83;
+  const articleCount = 93;
   const featuredArticles = [
     { slug: 'caffeine-l-theanine-stack-the-ultimate-guide', title: 'Caffeine + L-Theanine: The Ultimate Stack Guide', tags: ['caffeine', 'theanine'], readTime: 8 },
     { slug: 'best-nootropic-stack-for-focus-2026', title: 'Best Nootropic Stack for Focus 2026', tags: ['focus', 'stack'], readTime: 10 },
@@ -185,7 +186,7 @@ function HomePage() {
       <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-500 mb-8 py-4 border-y border-gray-100">
         {[
           { stat: '195', label: 'Supplements' },
-          { stat: '83+', label: 'Research Articles' },
+          { stat: '93+', label: 'Research Articles' },
           { stat: '60+', label: 'Interactions Mapped' },
           { stat: '8', label: 'Curated Stacks' },
           { stat: 'Free', label: 'No Account Required' },
@@ -489,10 +490,14 @@ function App() {
                 <Link to="/news" className="hover:text-gray-900">Latest News</Link>
                 <span>•</span>
                 <Link to="/contact" className="hover:text-gray-900">Contact</Link>
+                <span>•</span>
+                <Link to="/start-here" className="hover:text-gray-900">Start Here</Link>
+                <span>•</span>
+                <Link to="/reviews" className="hover:text-gray-900">Reviews</Link>
               </div>
 
               <div className="text-xs text-gray-500 mt-2">
-                <p>Affiliate Disclosure: We earn commissions from qualifying purchases through our affiliate links.</p>
+                <p>Affiliate Disclosure: NootropicStacker participates in the Amazon Associates program and other affiliate programs. We earn commissions from qualifying purchases at no extra cost to you.</p>
               </div>
             </div>
           </div>
