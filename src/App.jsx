@@ -29,7 +29,6 @@ const ContactPage = lazy(() => import('./components/ContactPage.jsx').then(m => 
 const BestNootropicsPage = lazy(() => import('./components/BestNootropicsPage.jsx').then(m => ({ default: m.BestNootropicsPage })));
 const BestStacksPage = lazy(() => import('./components/BestStacksPage.jsx').then(m => ({ default: m.BestStacksPage })));
 import { supplements } from './data/supplements.js';
-import { blogArticles } from './data/blogArticles.js';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
 import { Button } from '@/components/ui/button.jsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.jsx';
@@ -107,15 +106,15 @@ function HomePage() {
   const [stackSize, setStackSize] = useState(0);
   const { stack, loadStack } = useStack();
 
-  const articleCount = blogArticles.length;
+  const articleCount = 63;
   const featuredArticles = [
-    blogArticles.find(a => a.slug === 'caffeine-l-theanine-stack-the-ultimate-guide'),
-    blogArticles.find(a => a.slug === 'best-nootropic-stack-for-focus-2026'),
-    blogArticles.find(a => a.slug === 'lions-mane-mushroom-benefits-dosage-complete-guide'),
-    blogArticles.find(a => a.slug === 'beginners-guide-to-nootropics-2026'),
-    blogArticles.find(a => a.slug === 'ashwagandha-benefits-dosage-complete-guide'),
-    blogArticles.find(a => a.slug === 'best-nootropics-for-students-study-stack-2026'),
-  ].filter(Boolean);
+    { slug: 'caffeine-l-theanine-stack-the-ultimate-guide', title: 'Caffeine + L-Theanine: The Ultimate Stack Guide', tags: ['caffeine', 'theanine'], readTime: 8 },
+    { slug: 'best-nootropic-stack-for-focus-2026', title: 'Best Nootropic Stack for Focus 2026', tags: ['focus', 'stack'], readTime: 10 },
+    { slug: 'lions-mane-mushroom-benefits-dosage-complete-guide', title: "Lion's Mane: Benefits, Dosage & Complete Guide", tags: ['lions-mane', 'mushroom'], readTime: 11 },
+    { slug: 'beginners-guide-to-nootropics-2026', title: 'Beginner\'s Guide to Nootropics 2026', tags: ['beginner', 'basics'], readTime: 12 },
+    { slug: 'ashwagandha-benefits-dosage-complete-guide', title: 'Ashwagandha: Benefits & Dosage Guide', tags: ['ashwagandha', 'adaptogen'], readTime: 10 },
+    { slug: 'best-nootropics-for-students-study-stack-2026', title: 'Best Nootropics for Students 2026', tags: ['students', 'studying'], readTime: 11 },
+  ];
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
