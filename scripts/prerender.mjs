@@ -5,6 +5,8 @@ import { createServer } from 'http';
 import { createReadStream, statSync } from 'fs';
 import { extname } from 'path';
 import { execSync } from 'child_process';
+import { mkdtempSync } from 'fs';
+import { tmpdir } from 'os';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -155,9 +157,29 @@ async function prerender() {
   }
 
   if (!executablePath) {
-    console.warn('WARNING: Chrome/Chromium not found. Skipping prerender.');
-    console.warn('Set CHROME_PATH env var or install Chrome for prerender support.');
-    process.exit(0);
+    console.log('Chrome/Chromium not found — attempting to download via @puppeteer/browsers...');
+    try {
+      const { install } = await import('@puppeteer/browsers');
+      const cacheDir = join(ROOT, '.browser-cache');
+      mkdirSync(cacheDir, { recursive: true });
+      const installed = await install({
+        browser: 'chrome',
+        buildId: 'latest',
+        cacheDir,
+        detectDownloadHost: (product) => {
+          if (process.env.PUPPETEER_DOWNLOAD_HOST) return process.env.PUPPETEER_DOWNLOAD_HOST;
+          if (process.env.npm_config_https_proxy) return 'https://storage.googleapis.com';
+          if (process.env.npm_config_proxy) return 'https://storage.googleapis.com';
+          return 'https://storage.googleapis.com';
+        },
+      });
+      executablePath = installed.executablePath;
+      console.log(`  Downloaded Chrome to: ${executablePath}`);
+    } catch (downloadErr) {
+      console.warn(`WARNING: Could not download Chrome (${downloadErr.message}). Skipping prerender.`);
+      console.warn('The site will serve SPA shell for all routes. Set CHROME_PATH env var for prerender.');
+      process.exit(0);
+    }
   }
 
   const routes = buildRoutes();
