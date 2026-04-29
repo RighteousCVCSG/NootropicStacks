@@ -171,23 +171,21 @@ async function prerender() {
         detectDownloadHost: () => DOWNLOAD_HOST,
       });
       executablePath = installed.executablePath;
-      console.log(`  Downloaded Chrome to: ${executablePath}`);
+    console.log(`  Downloaded Chrome to: ${executablePath}`);
     } catch (downloadErr) {
-      console.warn(`WARNING: Could not download Chrome (${downloadErr.message}). Skipping prerender.`);
+      console.warn(`WARNING: Could not download Chrome (${downloadErr.message}).`);
       process.exit(0);
     }
   }
 
-  // Install missing system libraries needed by downloaded Chrome
+  console.log('  [HB] Checking system libraries for Chrome...');
   try {
-    const { execSync } = await import('child_process');
-    execSync(
-      'apt-get update -qq 2>/dev/null; apt-get install -y -qq --no-install-recommends libglib2.0-0 libnss3 libnspr4 libdbus-1-3 libatk1.0-0 libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1 libpango-1.0-0 libcairo2 libasound2 > /dev/null 2>&1',
-      { timeout: 120000 }
-    );
-    console.log('  System libraries installed for Chrome.');
-  } catch (libErr) {
-    console.warn(`Warning: could not install system libs (${libErr.message}) — Chrome may fail to launch.`);
+    const cp = await import('child_process');
+    cp.execSync('apt-get update -qq 2>/dev/null', { timeout: 30000, stdio: 'inherit' });
+    cp.execSync('dpkg -l libglib2.0-0 2>/dev/null || apt-get install -y -qq libglib2.0-0 libnss3 libnspr4 2>&1', { timeout: 120000, stdio: 'inherit' });
+    console.log('  [HB] Core system libraries installed.');
+  } catch (e) {
+    console.warn('  [HB] Lib install warning: ' + e.message);
   }
 
   const routes = buildRoutes();
