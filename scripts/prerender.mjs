@@ -92,7 +92,12 @@ const STATIC_ROUTES = [
   '/nootropics-for-anxiety',
   '/start-here',
   '/downloads/10-stacks',
+  '/downloads/10-stacks-v1',
   '/stacks',
+  '/celebrity-stacks',
+  '/videos',
+  '/research-library',
+  '/brand-kit',
 ];
 
 function buildRoutes() {
