@@ -294,20 +294,38 @@ app.post('/api/newsletter', async (req, res) => {
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return res.status(400).json({ error: 'Valid email required' });
   }
-  if (!pool) {
-    // No DB — still return success (don't block UX)
-    return res.json({ ok: true, message: 'Subscribed!' });
+  // Try Beehiiv first if configured
+  if (BEEHIIV_API_KEY && BEEHIIV_PUBLICATION_ID) {
+    const result = await subscribeToBeehiiv({
+      email, source, leadMagnet: '', articleSlug: '',
+      referringSite: req.headers['referer'] || 'https://nootropicstacker.com',
+      utmParams: { utm_source: 'website', utm_medium: 'newsletter', utm_campaign: 'footer' },
+    });
+    if (result.success) {
+      if (pool) {
+        try {
+          await pool.execute(
+            'INSERT IGNORE INTO newsletter_subscribers (email, source) VALUES (?, ?)',
+            [email.toLowerCase().trim(), source]
+          );
+        } catch { /* non-fatal */ }
+      }
+      return res.json({ ok: true, message: 'Subscribed!' });
+    }
   }
-  try {
-    await pool.execute(
-      'INSERT IGNORE INTO newsletter_subscribers (email, source) VALUES (?, ?)',
-      [email.toLowerCase().trim(), source]
-    );
-    res.json({ ok: true, message: 'Subscribed!' });
-  } catch (err) {
-    console.error('Newsletter error:', err);
-    res.status(500).json({ error: 'Failed to subscribe' });
+  // Fallback: MySQL-only
+  if (pool) {
+    try {
+      await pool.execute(
+        'INSERT IGNORE INTO newsletter_subscribers (email, source) VALUES (?, ?)',
+        [email.toLowerCase().trim(), source]
+      );
+    } catch (err) {
+      console.error('Newsletter error:', err);
+      return res.status(500).json({ error: 'Failed to subscribe' });
+    }
   }
+  res.json({ ok: true, message: 'Subscribed!' });
 });
 
 // ============================================================
@@ -319,6 +337,12 @@ const BEEHIIV_PUBLICATION_ID = process.env.BEEHIIV_PUBLICATION_ID;
 const BEEHIIV_DOUBLE_OPT_IN = process.env.BEEHIIV_DOUBLE_OPT_IN !== 'false';
 const BEEHIIV_API_BASE = process.env.BEEHIIV_API_BASE || 'https://api.beehiiv.com/v2';
 const LEAD_MAGNET_PDF_PATH = '/downloads/10-stacks-v1.pdf';
+
+if (BEEHIIV_API_KEY && BEEHIIV_PUBLICATION_ID) {
+  console.log(`Beehiiv configured (pub: ${BEEHIIV_PUBLICATION_ID}, double-opt-in: ${BEEHIIV_DOUBLE_OPT_IN})`);
+} else {
+  console.warn('Beehiiv NOT configured — set BEEHIIV_API_KEY and BEEHIIV_PUBLICATION_ID for email capture.');
+}
 
 // Simple in-memory rate limiter (per IP)
 const rateLimitMap = new Map();

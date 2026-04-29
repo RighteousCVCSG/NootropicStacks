@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import { analyzeStackSafety, recommendSupplements, calculateStackScore } from '../utils/stackAnalyzer.js';
+import { track } from '../lib/analytics.js';
 
 const StackContext = createContext();
 
@@ -106,6 +107,7 @@ export function StackProvider({ children }) {
         addedAt: new Date().toISOString()
       }
     });
+    track('stack_add', { supplement_id: supplement.id });
     return true;
   };
 

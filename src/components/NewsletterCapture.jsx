@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button.jsx';
 import { Input } from '@/components/ui/input.jsx';
 import { Mail, CheckCircle } from 'lucide-react';
+import { track } from '../lib/analytics.js';
 
 export function NewsletterCapture({ source = 'homepage_banner' }) {
   const [email, setEmail] = useState('');
@@ -13,15 +14,16 @@ export function NewsletterCapture({ source = 'homepage_banner' }) {
     if (!email) return;
     setStatus('loading');
     try {
-      const res = await fetch('/api/newsletter', {
+      const res = await fetch('/api/email/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, source }),
+        body: JSON.stringify({ email, source, hp_field: '' }),
       });
       const data = await res.json();
       if (res.ok) {
         setStatus('success');
         setMessage('You\'re in! We\'ll send the best nootropic research your way.');
+        track('email_signup', { source });
       } else {
         setStatus('error');
         setMessage(data.error || 'Something went wrong.');

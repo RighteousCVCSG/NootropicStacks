@@ -4,6 +4,7 @@ import { Routes, Route, Link, useLocation, Navigate, useParams } from 'react-rou
 import { AuthProvider, useAuth } from './contexts/AuthContext.jsx';
 import { AuthDialog } from './components/AuthDialog.jsx';
 import { StackProvider, useStack } from './contexts/StackContext.jsx';
+import { trackPageview } from './lib/analytics.js';
 import { GoalSelector } from './components/GoalSelector.jsx';
 import { StackPanel } from './components/StackPanel.jsx';
 import { RecommendationPanel } from './components/RecommendationPanel.jsx';
@@ -43,10 +44,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.j
 import { AlertTriangle, Pill, Layers, Library, Newspaper, BookOpen, Home, HelpCircle, LogIn, LogOut, User, PenLine, Award, GitCompare, Star } from 'lucide-react';
 import './App.css';
 
-// Scroll to top on route changes
+// Scroll to top + fire pageview on route changes
 function ScrollToTop() {
   const { pathname } = useLocation();
-  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    trackPageview(pathname);
+  }, [pathname]);
   return null;
 }
 
