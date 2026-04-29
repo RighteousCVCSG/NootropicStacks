@@ -2,7 +2,7 @@ import React from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog.jsx';
 import { Badge } from '@/components/ui/badge.jsx';
 import { Separator } from '@/components/ui/separator.jsx';
-import { Zap, Target, Scale, Gauge, ArrowRight } from 'lucide-react';
+import { Moon, Zap, Brain, Activity, Zap as ZapIcon, Target, Scale, Gauge, ArrowRight } from 'lucide-react';
 import { INTERACTION_TYPES } from '../data/interactions.js';
 import { supplements } from '../data/supplements.js';
 
@@ -18,7 +18,51 @@ const INTERACTION_BADGE_COLORS = {
   conflicting: 'bg-red-100 text-red-800',
 };
 
-function ScoreCircle({ value, max, label, icon: Icon, color }) {
+const QUAL_COLORS = {
+  Low: 'bg-gray-100 text-gray-600 border-gray-200',
+  Moderate: 'bg-blue-50 text-blue-700 border-blue-200',
+  Strong: 'bg-green-50 text-green-700 border-green-200',
+  Maxed: 'bg-amber-50 text-amber-700 border-amber-300',
+};
+
+const DIMENSION_DETAILS = [
+  { key: 'sleep', label: 'Sleep', icon: Moon, color: '#2a6b96', desc: 'Rest, recovery & sleep readiness' },
+  { key: 'energy', label: 'Energy', icon: Zap, color: '#2e7d5b', desc: 'Physical & mental drive' },
+  { key: 'mind', label: 'Mind', icon: Brain, color: '#0f4c46', desc: 'Cognition, focus & mood' },
+];
+
+function DimensionCircle({ value, qual, config }) {
+  const pct = (value / 9.5) * 100;
+  return (
+    <div className="flex flex-col items-center gap-1">
+      <div className="relative w-16 h-16">
+        <svg className="w-16 h-16 -rotate-90" viewBox="0 0 36 36">
+          <circle cx="18" cy="18" r="15.5" fill="none" stroke="#e5e7eb" strokeWidth="2.5" />
+          <circle
+            cx="18" cy="18" r="15.5" fill="none"
+            stroke={config.color}
+            strokeWidth="2.5"
+            strokeDasharray={`${(pct / 100) * 97.4} 97.4`}
+            strokeLinecap="round"
+            className="transition-all duration-700"
+          />
+        </svg>
+        <span className="absolute inset-0 flex items-center justify-center text-sm font-bold text-gray-800">
+          {value.toFixed(1)}
+        </span>
+      </div>
+      <div className="flex items-center gap-1 text-xs font-medium text-gray-600">
+        <config.icon className="w-3 h-3" />
+        {config.label}
+      </div>
+      <span className={`inline-flex items-center px-1.5 py-0.5 text-[10px] font-medium rounded-full border ${QUAL_COLORS[qual] || QUAL_COLORS.Low}`}>
+        {qual}
+      </span>
+    </div>
+  );
+}
+
+function SubScoreCircle({ value, max, label, icon: Icon, color }) {
   const pct = max > 0 ? (value / max) * 100 : 0;
   return (
     <div className="flex flex-col items-center gap-1">
@@ -63,10 +107,21 @@ function InteractionRow({ interaction }) {
   );
 }
 
+function MaxedDetailCallout({ dimension, message }) {
+  return (
+    <div className="flex items-start gap-2 p-3 bg-amber-50 border-l-2 border-amber-500 rounded-r-md text-xs text-amber-800">
+      <span className="font-semibold text-amber-700 shrink-0">{dimension}:</span>
+      <span>{message}</span>
+    </div>
+  );
+}
+
 export function StackScoreDetails({ open, onClose, stackScore }) {
   if (!stackScore) return null;
 
-  const { total, grade, gradeLabel, synergy, coverage, balance, efficiency } = stackScore;
+  const { total, grade, gradeLabel, headlineScores, dimensionTips, synergy, coverage, balance, efficiency } = stackScore;
+  const { overall, dimensionQuals } = headlineScores;
+  const maxedTips = dimensionTips || [];
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
@@ -74,19 +129,52 @@ export function StackScoreDetails({ open, onClose, stackScore }) {
         <DialogHeader>
           <DialogTitle className="flex items-center justify-between">
             <span>Stack Score Breakdown</span>
-            <span className="text-2xl font-bold">
-              {total}/100
-              <span className="ml-2 text-base font-medium text-gray-500">{grade}</span>
+            <span className="flex items-center gap-2">
+              <span className="text-2xl font-bold text-gray-800">{overall.toFixed(1)}</span>
+              <span className="text-sm font-medium text-gray-500">{dimensionQuals.overall.label}</span>
             </span>
           </DialogTitle>
         </DialogHeader>
 
-        {/* Sub-score circles */}
+        {/* Headline dimension circles */}
         <div className="flex justify-around py-4">
-          <ScoreCircle value={synergy.score} max={25} label="Synergy" icon={Zap} color="#a855f7" />
-          <ScoreCircle value={coverage.score} max={25} label="Coverage" icon={Target} color="#3b82f6" />
-          <ScoreCircle value={balance.score} max={25} label="Balance" icon={Scale} color="#22c55e" />
-          <ScoreCircle value={efficiency.score} max={25} label="Efficiency" icon={Gauge} color="#f97316" />
+          <DimensionCircle
+            value={headlineScores.sleep}
+            qual={dimensionQuals.sleep.label}
+            config={DIMENSION_DETAILS[0]}
+          />
+          <DimensionCircle
+            value={headlineScores.energy}
+            qual={dimensionQuals.energy.label}
+            config={DIMENSION_DETAILS[1]}
+          />
+          <DimensionCircle
+            value={headlineScores.mind}
+            qual={dimensionQuals.mind.label}
+            config={DIMENSION_DETAILS[2]}
+          />
+        </div>
+
+        {/* Maxed callouts */}
+        {maxedTips.length > 0 && (
+          <div className="space-y-2 mb-3">
+            {maxedTips.map((tip, i) => (
+              <MaxedDetailCallout
+                key={i}
+                dimension={tip.dimension.charAt(0).toUpperCase() + tip.dimension.slice(1)}
+                message={tip.message}
+              />
+            ))}
+          </div>
+        )}
+
+        {/* Original sub-score circles */}
+        <Separator />
+        <div className="flex justify-around py-4">
+          <SubScoreCircle value={synergy.score} max={25} label="Synergy" icon={ZapIcon} color="#a855f7" />
+          <SubScoreCircle value={coverage.score} max={25} label="Coverage" icon={Target} color="#3b82f6" />
+          <SubScoreCircle value={balance.score} max={25} label="Balance" icon={Scale} color="#22c55e" />
+          <SubScoreCircle value={efficiency.score} max={25} label="Efficiency" icon={Gauge} color="#f97316" />
         </div>
 
         <Separator />
@@ -94,7 +182,7 @@ export function StackScoreDetails({ open, onClose, stackScore }) {
         {/* Synergy details */}
         <div className="space-y-2">
           <h3 className="text-sm font-semibold flex items-center gap-2">
-            <Zap className="w-4 h-4 text-purple-500" />
+            <ZapIcon className="w-4 h-4 text-purple-500" />
             Synergy — {synergy.details}
           </h3>
           {synergy.interactions && synergy.interactions.length > 0 ? (

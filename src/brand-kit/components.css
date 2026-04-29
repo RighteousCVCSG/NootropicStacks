@@ -1,0 +1,482 @@
+/* =============================================================
+ * NootropicStacker Brand Components v1
+ * Class-name contract from NOO-41 brand kit, §5 + §7.
+ * Depends on tokens.css.
+ *
+ * Class contract (do not rename without a NOO-41 system change):
+ *   .btn (.btn--primary | .btn--secondary | .btn--tertiary)
+ *        (.btn--lg | .btn--sm)
+ *   .cite
+ *   .tier-badge (.tier-badge--1 | .tier-badge--2 | .tier-badge--3)
+ *   .hedge
+ *   .disclosure (.disclosure--inline)
+ *   .callout (.callout--warn | .callout--danger)
+ *   .cmp-table  .cmp-dose
+ *   .cert-badge
+ *   .attribution
+ *   .empty
+ *   .footer
+ * ============================================================= */
+
+/* ---------- Brand prose root ---------- */
+/* Wrap any surface that should adopt the brand prose treatment in
+ * .brand-prose. The site's existing Tailwind utility surfaces are
+ * untouched — this scope keeps the brand kit additive instead of
+ * stomping on the live stack-builder UI. */
+.brand-prose {
+  background: var(--color-surface-page);
+  color: var(--color-ink-900);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--text-base-lh);
+  font-feature-settings: "ss01", "cv05", "cv11";
+}
+
+.brand-prose h1,
+.brand-prose h2,
+.brand-prose h3,
+.brand-prose h4 {
+  font-family: var(--font-display);
+  color: var(--color-ink-900);
+  letter-spacing: var(--tracking-snug);
+  font-weight: var(--weight-semibold);
+  line-height: var(--display-sm-lh);
+  margin: 0 0 var(--space-4);
+}
+
+.brand-prose h1 { font-size: var(--display-md); line-height: var(--display-md-lh); letter-spacing: var(--tracking-tight); }
+.brand-prose h2 { font-size: var(--display-sm); line-height: var(--display-sm-lh); }
+.brand-prose h3 { font-size: var(--text-xl);    line-height: var(--text-xl-lh); }
+.brand-prose h4 { font-size: var(--text-lg);    line-height: var(--text-lg-lh); }
+
+.brand-prose p,
+.brand-prose li {
+  font-size: var(--text-md);
+  line-height: var(--text-md-lh);
+  color: var(--color-ink-900);
+}
+
+.brand-prose a {
+  color: var(--color-primary-800);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+.brand-prose a:hover { color: var(--color-primary-700); }
+
+.brand-prose .eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-ink-500);
+}
+
+.brand-prose .num,
+.brand-prose code {
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum", "ss01";
+}
+
+/* ---------- Button ---------- */
+.btn {
+  --btn-h: 44px;
+  --btn-px: var(--space-5);
+  --btn-fs: var(--text-base);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  height: var(--btn-h);
+  padding: 0 var(--btn-px);
+  font-family: var(--font-body);
+  font-size: var(--btn-fs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-snug);
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background var(--duration-base) var(--easing-standard),
+              color var(--duration-base) var(--easing-standard),
+              border-color var(--duration-base) var(--easing-standard),
+              box-shadow var(--duration-base) var(--easing-standard);
+  text-decoration: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.btn:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.btn--lg { --btn-h: 52px; --btn-px: var(--space-6); --btn-fs: var(--text-md); }
+.btn--sm { --btn-h: 36px; --btn-px: var(--space-4); --btn-fs: var(--text-sm); }
+
+.btn--primary {
+  background: var(--color-primary-800);
+  color: var(--color-ink-on-dark);
+  border-color: var(--color-primary-800);
+}
+.btn--primary:hover { background: var(--color-primary-700); border-color: var(--color-primary-700); }
+.btn--primary:active { background: var(--color-primary-900); border-color: var(--color-primary-900); }
+
+.btn--secondary {
+  background: var(--color-surface-card);
+  color: var(--color-primary-800);
+  border-color: var(--color-primary-800);
+}
+.btn--secondary:hover {
+  background: var(--color-primary-050);
+  border-color: var(--color-primary-700);
+  color: var(--color-primary-700);
+}
+
+.btn--tertiary {
+  background: transparent;
+  color: var(--color-primary-800);
+  border-color: transparent;
+  padding-left: var(--space-2);
+  padding-right: var(--space-2);
+}
+.btn--tertiary:hover {
+  color: var(--color-primary-700);
+  background: var(--color-primary-050);
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  background: var(--color-ink-100);
+  color: var(--color-ink-400);
+  border-color: var(--color-ink-100);
+  cursor: not-allowed;
+}
+
+/* ---------- Inline citation: .cite ---------- */
+/* Pill, primary-teal foreground, primary-100 background. Sits at the
+ * end of the claim. CEO-approved YMYL rule (NOO-41): the .cite color
+ * MUST be --color-primary-800. Do not tone it down to gray. */
+.cite {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  padding: 0 var(--space-2);
+  margin-left: var(--space-1);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: var(--weight-semibold);
+  font-feature-settings: "tnum";
+  color: var(--color-primary-800);
+  background: var(--color-primary-100);
+  border: 1px solid var(--color-primary-300);
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  vertical-align: super;
+  line-height: 1;
+  cursor: help;
+}
+.cite:hover {
+  background: var(--color-primary-300);
+  color: var(--color-primary-900);
+}
+
+/* ---------- Study-tier badge: .tier-badge ---------- */
+/* Always paired with a label string. Color alone never carries
+ * meaning (WCAG, color-blind readers). */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.tier-badge--1 {
+  background: var(--color-tier-1-bg);
+  color: var(--color-tier-1-fg);
+  border-color: var(--color-tier-1-rule);
+}
+.tier-badge--2 {
+  background: var(--color-tier-2-bg);
+  color: var(--color-tier-2-fg);
+  border-color: var(--color-tier-2-rule);
+}
+.tier-badge--3 {
+  background: var(--color-tier-3-bg);
+  color: var(--color-tier-3-fg);
+  border-color: var(--color-tier-3-rule);
+}
+
+/* ---------- Hedge block: .hedge ---------- */
+/* Tier-3 only. Italic body, amber rule, "Preliminary evidence" eyebrow.
+ * Single most load-bearing visual choice in the kit (NOO-41 §7). */
+.hedge {
+  border-left: 3px solid var(--color-tier-3-rule);
+  background: var(--color-tier-3-bg);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-md);
+  margin: var(--space-5) 0;
+}
+.hedge .hedge__eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-tier-3-fg);
+  margin-bottom: var(--space-2);
+}
+.hedge .hedge__body,
+.hedge p {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--text-md);
+  line-height: var(--text-md-lh);
+  color: var(--color-ink-900);
+  margin: 0;
+}
+
+/* ---------- Affiliate disclosure: .disclosure / .disclosure--inline ---------- */
+/* Above-the-fold variant uses .disclosure--inline (amber-tinted).
+ * NOO-46 invariant: any page route with an affiliate link MUST render
+ * .disclosure--inline before the link in the DOM, never via a JS
+ * hydration that could fail. */
+.disclosure {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-sunk);
+  border: 1px solid var(--color-ink-200);
+  font-size: var(--text-sm);
+  line-height: var(--text-sm-lh);
+  color: var(--color-ink-700);
+}
+.disclosure__icon {
+  flex-shrink: 0;
+  width: 1.125rem;
+  height: 1.125rem;
+  color: var(--color-ink-500);
+}
+.disclosure__body { margin: 0; }
+.disclosure__body strong {
+  font-weight: var(--weight-semibold);
+  color: var(--color-ink-900);
+}
+
+.disclosure--inline {
+  background: var(--color-accent-100);
+  border-color: var(--color-accent-300);
+  color: var(--color-accent-700);
+}
+.disclosure--inline .disclosure__icon { color: var(--color-accent-600); }
+.disclosure--inline .disclosure__body strong { color: var(--color-accent-700); }
+
+/* ---------- Callout: .callout ---------- */
+.callout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-5);
+  border-radius: var(--radius-md);
+  background: var(--color-info-100);
+  border-left: 3px solid var(--color-info-500);
+  color: var(--color-ink-900);
+}
+.callout__title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  color: var(--color-info-700);
+  margin: 0;
+}
+.callout__body { margin: 0; font-size: var(--text-base); line-height: var(--text-base-lh); }
+
+.callout--warn {
+  background: var(--color-warn-100);
+  border-left-color: var(--color-warn-500);
+}
+.callout--warn .callout__title { color: var(--color-warn-700); }
+
+.callout--danger {
+  background: var(--color-danger-100);
+  border-left-color: var(--color-danger-500);
+}
+.callout--danger .callout__title { color: var(--color-danger-700); }
+
+/* ---------- Comparison table: .cmp-table / .cmp-dose ---------- */
+.cmp-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-ink-100);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  font-size: var(--text-sm);
+  line-height: var(--text-sm-lh);
+}
+.cmp-table thead th {
+  background: var(--color-surface-sunk);
+  font-family: var(--font-body);
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-ink-500);
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-ink-200);
+}
+.cmp-table tbody tr + tr { border-top: 1px solid var(--color-ink-100); }
+.cmp-table td {
+  padding: var(--space-3) var(--space-4);
+  vertical-align: top;
+  color: var(--color-ink-900);
+}
+.cmp-table .cmp-name {
+  font-family: var(--font-display);
+  font-weight: var(--weight-semibold);
+  color: var(--color-ink-900);
+}
+.cmp-dose {
+  font-family: var(--font-mono);
+  color: var(--color-primary-800);
+  font-feature-settings: "tnum";
+  white-space: nowrap;
+}
+
+/* ---------- Certification badge: .cert-badge ---------- */
+.cert-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-ink-200);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-card);
+  font-size: var(--text-xs);
+  color: var(--color-ink-700);
+  text-decoration: none;
+  font-weight: var(--weight-medium);
+  transition: border-color var(--duration-base) var(--easing-standard);
+}
+.cert-badge:hover { border-color: var(--color-primary-500); color: var(--color-primary-800); }
+.cert-badge .cert-badge__authority { font-weight: var(--weight-semibold); color: var(--color-ink-900); }
+.cert-badge .cert-badge__verify { color: var(--color-primary-800); }
+
+/* ---------- Attribution: .attribution ---------- */
+.attribution {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-top: var(--border-rule);
+  border-bottom: var(--border-rule);
+  font-size: var(--text-sm);
+  color: var(--color-ink-700);
+}
+.attribution__avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-100);
+  color: var(--color-primary-800);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-md);
+  flex-shrink: 0;
+}
+.attribution__name { color: var(--color-ink-900); font-weight: var(--weight-semibold); }
+.attribution__role { color: var(--color-ink-500); font-size: var(--text-xs); }
+.attribution__dates { margin-left: auto; color: var(--color-ink-500); font-size: var(--text-xs); }
+.attribution__dates a { color: var(--color-primary-800); }
+
+/* ---------- Empty state: .empty ---------- */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-7) var(--space-5);
+  border: 1px dashed var(--color-ink-200);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-card);
+  gap: var(--space-3);
+  color: var(--color-ink-700);
+}
+.empty__title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semibold);
+  color: var(--color-ink-900);
+  margin: 0;
+}
+.empty__body { margin: 0; max-width: var(--measure-narrow); }
+
+/* ---------- Footer: .footer ---------- */
+.footer {
+  background: var(--color-surface-ink);
+  color: var(--color-ink-on-dark);
+  padding: var(--space-7) var(--gutter-page);
+  font-size: var(--text-sm);
+  line-height: var(--text-sm-lh);
+}
+.footer__inner {
+  max-width: var(--measure-wide);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.2fr repeat(3, 1fr);
+  gap: var(--space-6);
+}
+@media (max-width: 768px) {
+  .footer__inner { grid-template-columns: 1fr 1fr; }
+}
+.footer__brand {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  color: var(--color-ink-on-dark);
+}
+.footer__col h4 {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-ink-300);
+  margin: 0 0 var(--space-3);
+}
+.footer__col a {
+  color: var(--color-ink-on-dark);
+  text-decoration: none;
+  display: block;
+  padding: var(--space-1) 0;
+}
+.footer__col a:hover { color: var(--color-primary-300); }
+.footer__legal {
+  max-width: var(--measure-wide);
+  margin: var(--space-6) auto 0;
+  padding-top: var(--space-5);
+  border-top: 1px solid rgba(250, 247, 242, 0.12);
+  color: var(--color-ink-300);
+  font-size: var(--text-xs);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  justify-content: space-between;
+}

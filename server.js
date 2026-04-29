@@ -1,7 +1,7 @@
 import express from 'express';
 import { fileURLToPath } from 'url';
-import { basename, dirname, join, resolve } from 'path';
-import { existsSync } from 'fs';
+import { basename, dirname, extname, join, resolve } from 'path';
+import { existsSync, statSync } from 'fs';
 import mysql from 'mysql2/promise';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
@@ -336,7 +336,7 @@ const BEEHIIV_API_KEY = process.env.BEEHIIV_API_KEY;
 const BEEHIIV_PUBLICATION_ID = process.env.BEEHIIV_PUBLICATION_ID;
 const BEEHIIV_DOUBLE_OPT_IN = process.env.BEEHIIV_DOUBLE_OPT_IN !== 'false';
 const BEEHIIV_API_BASE = process.env.BEEHIIV_API_BASE || 'https://api.beehiiv.com/v2';
-const LEAD_MAGNET_PDF_PATH = '/downloads/10-stacks-v1.pdf';
+const LEAD_MAGNET_PDF_PATH = '/lead-magnet-v2.pdf';
 
 if (BEEHIIV_API_KEY && BEEHIIV_PUBLICATION_ID) {
   console.log(`Beehiiv configured (pub: ${BEEHIIV_PUBLICATION_ID}, double-opt-in: ${BEEHIIV_DOUBLE_OPT_IN})`);
@@ -646,10 +646,34 @@ app.get('/api/admin/clicks', verifyAdmin, async (_req, res) => {
   }
 });
 
+
+
 // ============================================================
-// SPA FALLBACK — must be last
+// PRERENDERED PAGE ROUTING — serve static HTML for SEO
 // ============================================================
+function findPrerenderedFile(cleanPath) {
+  const candidate = join(staticDir, cleanPath, 'index.html');
+  if (existsSync(candidate)) return candidate;
+
+  // Check without trailing index.html (direct file reference)
+  if (!cleanPath.endsWith('/index.html') && !extname(cleanPath)) {
+    const alt = join(staticDir, cleanPath);
+    if (existsSync(alt) && statSync(alt).isFile()) return alt;
+  }
+
+  return null;
+}
+
 app.get('/{*path}', (req, res) => {
+  const cleanPath = req.path === '/' ? '' : req.path.replace(/\/$/, '');
+
+  // Try prerendered HTML file for this path
+  const prerendered = findPrerenderedFile(cleanPath);
+  if (prerendered) {
+    return res.sendFile(prerendered);
+  }
+
+  // Fall back to SPA shell
   res.sendFile(join(staticDir, 'index.html'));
 });
 

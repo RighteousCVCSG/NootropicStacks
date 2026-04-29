@@ -1,0 +1,81 @@
+/* NootropicStacker Button Primitive v1
+ * Depends on tokens.css (CSS custom properties).
+ * Reusable across all surfaces — web, PDF (Chrome headless), email.
+ * Class: .btn
+ * Variants: .btn--primary (default), .btn--secondary, .btn--tertiary
+ * Sizes:   default, .btn--sm, .btn--lg
+ * States:  :disabled, [aria-disabled="true"], :focus-visible */
+
+.btn {
+  --_h: 44px;
+  --_px: var(--space-5);
+  --_fs: var(--text-base);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  height: var(--_h);
+  padding: 0 var(--_px);
+  font-family: var(--font-body);
+  font-size: var(--_fs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-snug);
+  line-height: 1;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition:
+    background var(--duration-base) var(--easing-standard),
+    color var(--duration-base) var(--easing-standard),
+    border-color var(--duration-base) var(--easing-standard),
+    box-shadow var(--duration-base) var(--easing-standard);
+  text-decoration: none;
+  -webkit-appearance: none;
+  appearance: none;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.btn--lg { --_h: 52px; --_px: var(--space-6); --_fs: var(--text-md); }
+.btn--sm { --_h: 36px; --_px: var(--space-4); --_fs: var(--text-sm); }
+
+.btn--primary {
+  background: var(--color-primary-800);
+  color: var(--color-ink-on-dark);
+  border-color: var(--color-primary-800);
+}
+.btn--primary:hover { background: var(--color-primary-700); border-color: var(--color-primary-700); }
+.btn--primary:active { background: var(--color-primary-900); border-color: var(--color-primary-900); }
+
+.btn--secondary {
+  background: var(--color-surface-card);
+  color: var(--color-primary-800);
+  border-color: var(--color-primary-800);
+}
+.btn--secondary:hover { background: var(--color-primary-050); color: var(--color-primary-700); border-color: var(--color-primary-700); }
+.btn--secondary:active { background: var(--color-primary-100); color: var(--color-primary-900); border-color: var(--color-primary-900); }
+
+.btn--tertiary {
+  background: transparent;
+  color: var(--color-primary-800);
+  border-color: transparent;
+  padding-left: var(--space-2);
+  padding-right: var(--space-2);
+}
+.btn--tertiary:hover { color: var(--color-primary-700); background: var(--color-primary-050); }
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  background: var(--color-ink-100);
+  color: var(--color-ink-400);
+  border-color: var(--color-ink-100);
+  cursor: not-allowed;
+  pointer-events: none;
+}

@@ -7042,6 +7042,280 @@ export const blogArticles = [
         ]
       }
     ]
+  },
+  {
+    slug: 'best-nootropics-for-adhd',
+    title: 'Best Nootropics for ADHD: What Actually Works in 2026',
+    excerpt: 'Evidence-based nootropics for ADHD focus and attention\u2014caffeine+L-theanine, citicoline, omega-3, bacopa, L-tyrosine\u2014with honest safety guidance.',
+    publishedDate: '2026-04-28',
+    readTime: 10,
+    tags: ['nootropics', 'adhd', 'focus', 'attention', 'evidence'],
+    bottomLine: 'The best nootropics for ADHD are omega-3, caffeine + L-theanine, citicoline, and bacopa\u2014in that rough order of evidence strength and practical accessibility. None of them are Adderall. None of them will produce the acute focus shift that stimulant medications deliver. What they offer is genuine, if modest, support for the underlying neurochemical environment\u2014and they\u2019re far safer for unsupervised use than stimulant analogs.',
+    sections: [
+      {
+        heading: null,
+        paragraphs: [
+          'If you\u2019re searching for the best nootropics for ADHD, the honest answer is that no supplement replaces a comprehensive treatment plan\u2014but several compounds have genuine evidence behind them for attention, working memory, and mental energy. This guide covers what the research actually says, where it falls short, and how to build a rational stack without falling for the overclaiming that dominates this space.',
+          'Medical note: ADHD is a clinical diagnosis. Nootropics are not a substitute for prescription treatment, therapy, or a proper evaluation. If you suspect ADHD, see a licensed clinician before optimizing supplement stacks. Everything here is informational, not medical advice.'
+        ]
+      },
+      {
+        heading: 'Why Most \u201CADHD Nootropics\u201D Content Is Noise',
+        paragraphs: [
+          'The supplement industry loves the ADHD audience. Attention problems affect an estimated 6\u20139% of children and 2\u20135% of adults globally, and those numbers may be higher among the knowledge-worker and student demographics most likely to be reading this. That creates a large, motivated buyer pool\u2014which means a lot of marketing dressed up as science.',
+          'The filtering rule used here is simple: if a compound has no randomized controlled trial (RCT) evidence in humans, it doesn\u2019t make the primary list. If the evidence exists only in people without attention deficits, that\u2019s noted. If dosing matters critically (and it almost always does), that\u2019s flagged too.'
+        ]
+      },
+      {
+        heading: 'Caffeine + L-Theanine: The Underrated ADHD Foundation',
+        paragraphs: [
+          'The most studied, most accessible, and most cost-effective attention stack is caffeine paired with L-theanine. Caffeine increases dopamine and norepinephrine signaling\u2014the same neurotransmitters targeted by Adderall and Ritalin, just via different and weaker mechanisms. L-theanine blunts the jitteriness and anxiety that caffeine alone can produce, particularly in people who are already wired toward hyperactivation.',
+          'A 2008 RCT published in Nutritional Neuroscience found that the combination improved accuracy on attention-switching tasks and reduced susceptibility to distraction compared to either compound alone (PubMed: 18681988). This isn\u2019t surprising mechanistically\u2014the two compounds genuinely complement each other.',
+          'For ADHD-adjacent use, the typical effective ratio is 1:2 caffeine to theanine (e.g., 100 mg caffeine / 200 mg theanine). This is where most people should start before adding anything else. The NootropicStacker builder lets you model this baseline stack and layer additions on top of it.',
+          'See the individual profiles for caffeine and L-theanine for dose ranges and timing notes.'
+        ]
+      },
+      {
+        heading: 'L-Tyrosine (as NALT): Dopamine Precursor Under Stress',
+        paragraphs: [
+          'ADHD is partly a dopamine deficit disorder\u2014or more precisely, a dopamine-signaling efficiency problem. L-tyrosine is a direct precursor to dopamine and norepinephrine, which makes it a logical candidate for supporting the same pathways that stimulant medications target.',
+          'The evidence is strongest in conditions of acute stress and sleep deprivation. A 1999 U.S. Army-funded study found that tyrosine supplementation significantly attenuated cognitive decline during demanding conditions. The effect in non-stressed populations is more modest.',
+          'The N-acetyl-L-tyrosine (NALT) form has better oral bioavailability than plain L-tyrosine, though some debate exists about conversion efficiency. The NALT supplement page covers the evidence and dose guidance in more detail. Consult your doctor before adding this to a regimen that includes any prescription stimulants\u2014combining catecholamine precursors with stimulants warrants medical oversight.'
+        ]
+      },
+      {
+        heading: 'Omega-3 (DHA/EPA): The Most Overlooked ADHD Intervention',
+        paragraphs: [
+          'If there\u2019s one supplement with consistent, replicated evidence across multiple pediatric and adult ADHD trials, it\u2019s omega-3 fatty acids\u2014specifically the EPA and DHA fractions. A 2011 meta-analysis in the Journal of Child Psychology and Psychiatry (PubMed: 21518265) found meaningful improvement in both inattention and hyperactivity with omega-3 supplementation in children with ADHD. Effect sizes are modest compared to stimulants, but the safety profile is excellent and the gap in dietary intake is enormous in most Western populations.',
+          'EPA appears to be the more behaviorally active fraction; DHA is critical for structural brain development. A combined EPA+DHA supplement at a minimum of 500 mg EPA per day is the evidence-informed baseline. See the omega-3 supplement page for product selection guidance.'
+        ]
+      },
+      {
+        heading: 'Citicoline: Choline, Attention, and Dopamine Receptor Support',
+        paragraphs: [
+          'Citicoline (CDP-choline) supplies choline\u2014a precursor to acetylcholine, the neurotransmitter central to attention and working memory\u2014and also releases cytidine, which converts to uridine and supports neuronal membrane synthesis. What makes citicoline particularly relevant for ADHD research is that it appears to modulate dopamine receptor sensitivity.',
+          'A 2014 pilot RCT in Journal of Attention Disorders found that citicoline supplementation improved attention in adolescents with ADHD. The effect was modest, but the mechanism is plausible and the safety profile is strong across dozens of studies. This is one of the better-supported choline sources for cognitive use generally.',
+          'The citicoline supplement page includes evidence detail and comparison with alpha-GPC. Both are solid; citicoline has the edge for ADHD-adjacent use based on the dopamine receptor data.'
+        ]
+      },
+      {
+        heading: 'Bacopa Monnieri: Long-Term Memory and Attention (Patience Required)',
+        paragraphs: [
+          'Bacopa is one of the most-studied Ayurvedic herbs with solid RCT evidence, but it demands patience. Its primary mechanisms\u2014promoting dendritic arborization (the growth of neural connections) and modulating acetylcholine and serotonin systems\u2014are slow. Benefits typically emerge after 8\u201312 weeks of consistent daily dosing.',
+          'Multiple human trials have found bacopa improves memory acquisition, retention, and speed of information processing. Its relevance to ADHD is more indirect than direct dopamine support, but for people whose primary complaint is forgetfulness and difficulty retaining what they study, bacopa is one of the best-evidenced options in this space.',
+          'Important caveat: bacopa commonly causes GI discomfort when taken fasted. Take it with food. See the bacopa supplement page for standardization notes (you want bacosides content \u226545%) and the timing guidance for avoiding the sedation that some users experience.'
+        ]
+      },
+      {
+        heading: 'What to Avoid: Overclaimed ADHD Supplements',
+        paragraphs: [
+          'Phosphatidylserine: Some early trials in children showed benefit, but replication is weak and the FDA has distanced itself from prior health claims. Not harmful, but probably not worth prioritizing for ADHD specifically.',
+          'Ginkgo biloba: Evidence for ADHD is inconsistent and largely negative in higher-quality trials. Not recommended as a primary intervention.',
+          'Noopept: Popular in online communities, but human evidence is thin. Most studies are in cognitively impaired elderly populations, not healthy adults or those with ADHD.',
+          'Proprietary blends: Products like Qualia Mind or Mind Lab Pro may contain solid ingredients but you can\u2019t verify effective doses are present. Building your own stack is almost always superior for this audience.'
+        ]
+      },
+      {
+        heading: 'When to See a Doctor (Non-Negotiable Section)',
+        paragraphs: [
+          'Nootropics are adjuncts, not treatments. The following situations require clinical evaluation before any supplement approach makes sense: symptoms severe enough to impair work, relationships, or daily function; co-occurring anxiety, depression, or sleep disorders; any history of cardiovascular issues (stimulant-class supplements can raise heart rate); pregnancy or nursing; current use of prescription medications (interactions matter).',
+          'The Mayo Clinic\u2019s ADHD overview is a solid starting point for understanding the diagnostic picture.'
+        ]
+      },
+      {
+        heading: 'Building a Rational ADHD-Support Stack',
+        paragraphs: [
+          'A sensible sequenced approach looks like this. Weeks 1\u20132: Add omega-3 (at least 500 mg EPA/day). This has the broadest evidence and zero interaction risk with anything else on this list. Weeks 3\u20134: Add caffeine + L-theanine at the 1:2 ratio, taken in the morning. Assess tolerance and effect on sleep before proceeding. Weeks 5\u20138: Add citicoline. Give it 4\u20136 weeks before judging. Week 9+: If working memory and retention are still the primary complaint, add bacopa. Expect 8\u201312 weeks before assessing whether it\u2019s contributing.',
+          'NALT is optional and best reserved for high-demand days rather than daily use if you\u2019re already on prescription stimulants. Talk to your prescriber before combining. Explore the full evidence database in the supplement library or research index.'
+        ]
+      },
+      {
+        heading: 'The Bottom Line',
+        paragraphs: [
+          'The best nootropics for ADHD are omega-3, caffeine + L-theanine, citicoline, and bacopa\u2014in that rough order of evidence strength and practical accessibility. None of them are Adderall. None of them will produce the acute focus shift that stimulant medications deliver. What they offer is genuine, if modest, support for the underlying neurochemical environment\u2014and they\u2019re far safer for unsupervised use than stimulant analogs or unscheduled research chemicals.',
+          'Stack intelligently, introduce one compound at a time, and don\u2019t expect overnight results from anything except caffeine.'
+        ]
+      }
+    ]
+  },
+  {
+    slug: 'best-nootropic-stack-for-studying',
+    title: 'The Best Nootropic Stack for Studying (Student Edition)',
+    excerpt: 'The best nootropic stack for studying isn\u2019t the most expensive or the most exotic. It\u2019s the one that actually works across a 4\u20138 hour study session without crashing you, disrupting your sleep, or requiring a pharmacy to acquire.',
+    publishedDate: '2026-04-28',
+    readTime: 10,
+    tags: ['nootropics', 'studying', 'students', 'focus', 'memory'],
+    bottomLine: 'The best nootropic stack for studying in 2026 is: sleep (not negotiable), caffeine + L-theanine (every session), citicoline (daily), and bacopa (for the semester, not the night before). Lion\u2019s mane is a reasonable optional addition for long-term brain health. Everything else\u2014complex proprietary blends, racetams, peptides, exotic herbs\u2014operates in a much lower-evidence tier.',
+    sections: [
+      {
+        heading: null,
+        paragraphs: [
+          'The best nootropic stack for studying isn\u2019t the most expensive or the most exotic. It\u2019s the one that actually works across a 4\u20138 hour study session without crashing you, disrupting your sleep, or requiring a pharmacy to acquire. This guide is built around that constraint, with honest evidence-weighting and zero affiliate-driven recommendations.',
+          'Before the supplements: sleep is the most powerful cognitive enhancer available to students. Any stack built on a foundation of 5-hour nights will underperform the same compounds taken by someone sleeping well. That\u2019s not a preamble\u2014it\u2019s load-bearing context.'
+        ]
+      },
+      {
+        heading: 'The Non-Negotiable Foundation: Sleep First',
+        paragraphs: [
+          'A single night of inadequate sleep (under 6 hours) produces cognitive impairment equivalent to 0.10% blood alcohol content across most cognitive domains, including working memory, attention, and processing speed (PubMed: 11382901). No supplement stack recovers this deficit\u2014not caffeine, not modafinil, not anything on this list.',
+          'If you\u2019re reading this to squeeze more out of a sleep-deprived exam week, the most important intervention is not on this page. Go to sleep.',
+          'If you\u2019re reading this to optimize cognition when you\u2019re already sleeping 7\u20139 hours consistently, then supplements can genuinely add value. Let\u2019s get to the stack.'
+        ]
+      },
+      {
+        heading: 'Tier 1: The Core Study Stack (Use Every Session)',
+        paragraphs: [
+          'Every well-designed study stack starts with caffeine + L-theanine. Caffeine improves alertness, reaction time, and sustained attention. L-theanine smooths out the anxiety and jitteriness that caffeine alone produces, and independently supports alpha brain wave activity associated with relaxed focus.',
+          'The evidence for this combination at a 1:2 ratio (100 mg caffeine / 200 mg L-theanine) is as strong as nootropic evidence gets\u2014multiple human RCTs showing improved accuracy on attention-switching and distraction-resistance tasks. This is the baseline. Everything else is built on top of it.',
+          'Timing note: take this 30\u201345 minutes before your study session starts. For evening sessions, be careful\u2014caffeine\u2019s half-life is 5\u20137 hours, and this will interfere with sleep if taken too late. A 200 mg caffeine dose at 6 PM can still have 50 mg active in your system at midnight.',
+          'See the profiles for caffeine and L-theanine for complete dose ranges.'
+        ]
+      },
+      {
+        heading: 'Tier 1 Continued: Citicoline for Working Memory',
+        paragraphs: [
+          'Citicoline (CDP-choline) is the best-supported choline source for cognitive enhancement. It delivers choline (acetylcholine precursor, central to working memory and attention) and cytidine (a uridine precursor supporting neuronal membrane health). The dopamine receptor modulation noted in some studies is a secondary benefit relevant to motivation and focus.',
+          'For studying specifically, citicoline\u2019s acetylcholine support is the relevant mechanism\u2014acetylcholine is critical for encoding new information, which is what studying actually is. Daily dosing produces cumulative benefit; this isn\u2019t an acute compound like caffeine.',
+          'Visit the citicoline supplement page for dose guidance and comparison with alpha-GPC, which is a reasonable alternative.'
+        ]
+      },
+      {
+        heading: 'Tier 2: Long-Term Stack (Add After 4\u20136 Weeks)',
+        paragraphs: [
+          'If you want one supplement that is specifically designed\u2014by the evidence, not by marketing\u2014to improve memory acquisition and retention over time, bacopa monnieri is the answer. The mechanism involves promotion of dendritic branching, modulation of acetylcholine and serotonin, and antioxidant protection of hippocampal neurons. Multiple RCTs in healthy adults have found improvements in memory recall and learning speed after 8\u201312 weeks of consistent use (Examine.com: Bacopa Monnieri).',
+          'The critical point: bacopa doesn\u2019t work acutely. Taking it the week before finals does nothing. It needs to be taken daily for 2\u20133 months before the benefit manifests. This makes it a semester-long investment rather than an exam-week tool.',
+          'Take it with food to minimize GI side effects. Some users report mild sedation, which makes evening dosing preferable for those who notice this.'
+        ]
+      },
+      {
+        heading: 'Lion\u2019s Mane Mushroom: The Optional Long-Term Addition',
+        paragraphs: [
+          'Lion\u2019s mane (Hericium erinaceus) stimulates nerve growth factor (NGF) synthesis, which supports neuronal maintenance and potentially neuroplasticity. The human evidence is early but consistent enough to take seriously. A 2009 Japanese RCT found significant cognitive improvements in older adults with mild cognitive impairment after 16 weeks.',
+          'For healthy students, the evidence is thinner\u2014most positive trials are in older populations or animal models. Lion\u2019s mane makes this list as an optional addition for those who want to support long-term brain health alongside their studying, not as an acute focus tool.',
+          'If you add lion\u2019s mane, use a fruiting body extract (not mycelium) and give it 2\u20133 months before assessing.'
+        ]
+      },
+      {
+        heading: 'What Not to Include in a Study Stack',
+        paragraphs: [
+          'High-dose stimulants: Anything that pushes your sympathetic nervous system hard (high-dose caffeine, racetams at high doses, prescription stimulants taken without diagnosis) tends to produce short-term narrowing of attention at the cost of creative and associative thinking. Useful for rote tasks; counterproductive for conceptual learning.',
+          'Adaptogens during active study sessions: Ashwagandha and rhodiola are genuinely useful for stress management and recovery, but they\u2019re best taken outside study sessions. Ashwagandha in particular has mild sedative properties that work against alert focus.',
+          'Melatonin during the day: It disrupts circadian rhythm signaling when taken at the wrong time.',
+          'Noopept: Extremely limited human evidence. Popular on Reddit; not supported by the trial literature in healthy adults.'
+        ]
+      },
+      {
+        heading: 'The 8-Hour Study Session Protocol',
+        paragraphs: [
+          'Here\u2019s how the stack maps to an actual long session. Before session: Citicoline (if using, daily dose). Good breakfast with protein and fat. Session start (T+0): 100 mg caffeine + 200 mg L-theanine. 3\u20134 hours in: Optional second dose of caffeine + theanine if needed. Skip if within 6\u20138 hours of sleep. Midpoint break: 10\u201320 minutes. Movement, food, water. Not optional\u2014diffuse thinking during breaks is part of how memory consolidation works. End of session: No caffeine. If using bacopa, evening dose with dinner. Evening: Prioritize 7\u20139 hours of sleep. This is when the material consolidates.',
+          'A study session without follow-up sleep is a session that won\u2019t stick.'
+        ]
+      },
+      {
+        heading: 'Budget Reality Check',
+        paragraphs: [
+          'The full tier-1 + tier-2 stack costs approximately $25\u201340/month if you buy individual compounds rather than branded stacks. Caffeine + L-theanine combo (or separate): $8\u201312/month. Citicoline: $15\u201320/month at typical doses. Bacopa (if adding): $8\u201312/month. Lion\u2019s mane (optional): $15\u201325/month depending on form.',
+          'Branded \u201Cstudent\u201D stacks typically charge $60\u201390/month for similar (or lower) doses of the same ingredients. Build your own using the stack builder and check against the evidence in the supplement library.'
+        ]
+      },
+      {
+        heading: 'The Bottom Line',
+        paragraphs: [
+          'The best nootropic stack for studying in 2026 is: sleep (not negotiable), caffeine + L-theanine (every session), citicoline (daily), and bacopa (for the semester, not the night before). Lion\u2019s mane is a reasonable optional addition for long-term brain health.',
+          'Everything else\u2014complex proprietary blends, racetams, peptides, exotic herbs\u2014operates in a much lower-evidence tier and introduces risk without proportionate benefit for a healthy student. Start with the foundation. Give it a month. Then decide if anything else is warranted.'
+        ]
+      }
+    ]
+  },
+  {
+    slug: 'caffeine-vs-adderall',
+    title: 'Caffeine vs Adderall: An Honest Comparison',
+    excerpt: 'Caffeine vs Adderall\u2014mechanism, evidence, side effects, and when each is appropriate. Honest harm reduction guide focused on what the research actually says about both compounds.',
+    publishedDate: '2026-04-28',
+    readTime: 9,
+    tags: ['nootropics', 'caffeine', 'adderall', 'comparison', 'focus', 'stimulants'],
+    bottomLine: 'Caffeine is not Adderall. It doesn\u2019t produce anywhere near the dopamine amplification of amphetamine salts, and it won\u2019t replicate the acute focus shift that Adderall provides for people with ADHD. What caffeine\u2014especially paired with L-theanine\u2014does offer is genuine, well-evidenced, legal, safe, and accessible cognitive support for alertness, reaction time, and moderate attention tasks.',
+    sections: [
+      {
+        heading: null,
+        paragraphs: [
+          'The caffeine vs Adderall question comes up constantly in productivity and biohacking communities, usually framed as \u201Ccan caffeine replace Adderall?\u201D The honest answer is no\u2014but that framing misses the more useful question: what is each substance actually doing, when is each appropriate, and how do you use the accessible one intelligently while being clear-eyed about what it can and cannot do?',
+          'Medical note: Adderall is a Schedule II controlled substance prescribed for ADHD and narcolepsy. Nothing in this article constitutes medical advice or encourages obtaining Adderall without a prescription. If you believe you have ADHD, see a licensed clinician.'
+        ]
+      },
+      {
+        heading: 'How Caffeine Works: Adenosine Blockade and Catecholamine Release',
+        paragraphs: [
+          'Caffeine is an adenosine receptor antagonist. Adenosine is the brain\u2019s fatigue signal\u2014it accumulates throughout the day and, when it binds to adenosine receptors, makes you feel sleepy and reduces neural firing rates. Caffeine blocks those receptors without activating them, keeping the brain in a more alert state.',
+          'The secondary effect is indirect catecholamine release: by blocking adenosine, caffeine also disinhibits dopamine and norepinephrine signaling. This is why it improves mood and motivation slightly, not just wakefulness. But this effect is indirect, modest, and tolerance-prone. The dopamine effect of caffeine is real but nowhere near the magnitude of stimulant medications.',
+          'Half-life is 5\u20137 hours in most adults (longer in people who metabolize CYP1A2 slowly, shorter in fast metabolizers). See the caffeine supplement profile for dosing context.'
+        ]
+      },
+      {
+        heading: 'How Adderall Works: Direct Catecholamine Amplification',
+        paragraphs: [
+          'Adderall (mixed amphetamine salts) is a catecholamine releaser and reuptake inhibitor. It actively forces neurons to release dopamine, norepinephrine, and serotonin, while simultaneously blocking their reuptake transporters. The resulting dopamine flood in the prefrontal cortex and striatum is the mechanism behind its focus and attention effects.',
+          'This mechanism is powerful\u2014and that\u2019s precisely why it\u2019s a Schedule II controlled substance with abuse potential. The acute dopamine surge that makes Adderall effective for ADHD is also the mechanism behind its addictive properties and its potential to cause dependence with chronic use outside of prescribed conditions.',
+          'It also has a narrow therapeutic window. The dose that improves focus in someone with ADHD is not the same dose that improves focus in someone without ADHD. Neurotypical users taking Adderall for cognitive enhancement often report anxiety, cardiovascular strain, and mood crashes\u2014side effects that are less pronounced at therapeutic doses in people who actually have the dopamine dysregulation that Adderall corrects.'
+        ]
+      },
+      {
+        heading: 'Evidence Base: Caffeine',
+        paragraphs: [
+          'Alertness and reaction time: One of the most replicated findings in psychopharmacology. Even small doses (40\u201380 mg) measurably improve reaction time and vigilance, particularly when sleep-deprived (PubMed: 20888549).',
+          'Working memory and executive function: Effects are real but modest in well-rested people. The benefit is much larger when sleep-deprived or fatigued.',
+          'Physical performance: Strong evidence for endurance, power output, and time-to-exhaustion improvements.',
+          'Tolerance: Develops within days to weeks of daily use, substantially blunting cognitive effects.'
+        ]
+      },
+      {
+        heading: 'Evidence Base: Adderall',
+        paragraphs: [
+          'ADHD symptoms: Decades of RCT evidence support meaningful reduction in inattention, hyperactivity, and impulsivity in diagnosed individuals. Effect sizes are large.',
+          'Cognitive enhancement in neurotypicals: Evidence is much weaker and more mixed than popular perception suggests. A 2018 meta-analysis found that amphetamines provided modest benefits to some cognitive domains in healthy adults but impaired others, and most studies had methodological issues (PubMed: 29162060).',
+          'The confidence effect: Research suggests that people taking amphetamines often feel more confident about their performance without performing objectively better. This is a meaningful distinction for exam use.'
+        ]
+      },
+      {
+        heading: 'Side Effect Profiles Compared',
+        paragraphs: [
+          'Anxiety/jitteriness: Common with caffeine at higher doses; common with Adderall especially in neurotypicals. Cardiovascular effects: Mild elevation with caffeine; significant elevation with Adderall, contraindicated in some heart conditions. Sleep disruption: Dose and timing dependent with caffeine; severe with Adderall, insomnia is a primary complaint.',
+          'Appetite suppression: Mild with caffeine; significant with Adderall, can cause weight loss. Dependence potential: Low-to-moderate with caffeine (physical withdrawal is real but mild); high with Adderall, Schedule II for a reason. Mood crash/comedown: Mild with caffeine; can be severe with Adderall, especially with rebound dysphoria. Legal status: Unscheduled for caffeine; Schedule II for Adderall, illegal without prescription.'
+        ]
+      },
+      {
+        heading: 'Where Caffeine Is Often Underrated',
+        paragraphs: [
+          'The biohacking community often dismisses caffeine as \u201Ctoo basic\u201D\u2014the supplement world equivalent of saying breathing is basic. But the caffeine + L-theanine combination is one of the most rigorously studied cognitive stacks in existence, and it performs remarkably well against far more expensive and complex alternatives.',
+          'The 1:2 caffeine-to-theanine ratio (e.g., 100 mg caffeine / 200 mg L-theanine) demonstrably improves accuracy on attention tasks, reduces distraction susceptibility, and does so without the jitteriness or rebound that pure caffeine produces. For knowledge workers doing focused analytical work, this combination is often the rational first move\u2014before considering anything more complex.',
+          'See the L-theanine profile for the full mechanism and evidence on the combination effect. You can model this stack in the NootropicStacker builder.'
+        ]
+      },
+      {
+        heading: 'When Adderall Is Appropriate (and When It Isn\u2019t)',
+        paragraphs: [
+          'Adderall is appropriate when prescribed by a clinician following a proper ADHD evaluation. Full stop. It is not appropriate as a cognitive enhancer for neurotypical exam cramming, productivity hacking, or athletic performance\u2014not because it\u2019s ineffective in all cases, but because the risk-benefit ratio changes fundamentally when you remove the correction-of-deficit rationale.',
+          'People who take Adderall without a prescription and experience dramatic cognitive improvements should consider whether that response itself suggests underlying attentional deficits worth evaluating properly\u2014rather than continuing unsupervised use.'
+        ]
+      },
+      {
+        heading: 'Harm Reduction: If You\u2019re Using Caffeine as a Focus Tool',
+        paragraphs: [
+          'Cycle it: Take 1\u20132 days per week off caffeine to prevent tolerance from completely blunting the effect. A common approach is caffeine Monday\u2013Friday, off on weekends.',
+          'Time it: The standard advice is no caffeine within 8\u201310 hours of intended sleep. The 90-minute-after-waking rule (delaying first caffeine intake to let adenosine clear naturally) is debated but popular among those who track sleep quality.',
+          'Pair it: L-theanine at 2x the caffeine dose reduces anxiety side effects and improves the attention-accuracy profile.',
+          'Don\u2019t use it to mask sleep debt: Caffeine\u2019s alertness effect is borrowed time. It doesn\u2019t recover what sleep deprivation takes; it just masks the symptom while cognitive impairment accumulates.'
+        ]
+      },
+      {
+        heading: 'The Bottom Line',
+        paragraphs: [
+          'Caffeine is not Adderall. It doesn\u2019t produce anywhere near the dopamine amplification of amphetamine salts, and it won\u2019t replicate the acute focus shift that Adderall provides for people with ADHD. What caffeine\u2014especially paired with L-theanine\u2014does offer is genuine, well-evidenced, legal, safe, and accessible cognitive support for alertness, reaction time, and moderate attention tasks.',
+          'The comparison is most useful not as a substitution question but as a framing exercise: the fact that caffeine is considered trivial while Adderall is considered serious says more about cultural bias toward prescription status than about evidence-based risk assessment. Used intelligently, caffeine is a legitimate cognitive tool. Used recklessly, Adderall is a serious health risk.',
+          'Explore the full stack research in the supplement library or browse recommended stacks.'
+        ]
+      }
+    ]
   }
 ];
 

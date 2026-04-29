@@ -15,7 +15,6 @@ import { ContextualAd, SmartAdPlacement, AdRevenueTracker } from './components/A
 import { StackScoreWidget } from './components/StackScoreWidget.jsx';
 import { StackProtocolBuilder } from './components/StackProtocolBuilder.jsx';
 import { NewsletterCapture } from './components/NewsletterCapture.jsx';
-import { blogArticlesIndex, getRecentArticlesMeta } from './data/blogArticlesIndex.js';
 
 // Lazy-loaded route-level components
 const AdminPage = lazy(() => import('./components/AdminPage.jsx').then(m => ({ default: m.AdminPage })));
@@ -29,20 +28,26 @@ const BlogSection = lazy(() => import('./components/BlogSection.jsx').then(m => 
 const BlogArticlePage = lazy(() => import('./components/BlogArticlePage.jsx').then(m => ({ default: m.BlogArticlePage })));
 const FAQPage = lazy(() => import('./components/FAQPage.jsx').then(m => ({ default: m.FAQPage })));
 const GlossaryPage = lazy(() => import('./components/GlossaryPage.jsx').then(m => ({ default: m.GlossaryPage })));
+const ResearchLibraryPage = lazy(() => import('./components/ResearchLibraryPage.jsx').then(m => ({ default: m.ResearchLibraryPage })));
 const ContactPage = lazy(() => import('./components/ContactPage.jsx').then(m => ({ default: m.ContactPage })));
 const BestNootropicsPage = lazy(() => import('./components/BestNootropicsPage.jsx').then(m => ({ default: m.BestNootropicsPage })));
 const BestStacksPage = lazy(() => import('./components/BestStacksPage.jsx').then(m => ({ default: m.BestStacksPage })));
 const ReviewsPage = lazy(() => import('./components/ReviewsPage.jsx').then(m => ({ default: m.ReviewsPage })));
 const StartHerePage = lazy(() => import('./components/StartHerePage.jsx').then(m => ({ default: m.StartHerePage })));
+const LeadMagnetDownloadPage = lazy(() => import('./components/LeadMagnetDownloadPage.jsx').then(m => ({ default: m.LeadMagnetDownloadPage })));
 const ComparisonPage = lazy(() => import('./components/ComparisonPage.jsx').then(m => ({ default: m.ComparisonPage })));
 const NootropicsForFocusPage = lazy(() => import('./components/NootropicsForFocusPage.jsx').then(m => ({ default: m.NootropicsForFocusPage })));
 const NootropicsForAnxietyPage = lazy(() => import('./components/NootropicsForAnxietyPage.jsx').then(m => ({ default: m.NootropicsForAnxietyPage })));
-const LeadMagnetDownloadPage = lazy(() => import('./components/LeadMagnetDownloadPage.jsx').then(m => ({ default: m.LeadMagnetDownloadPage })));
+const BrandKitSmokeTest = lazy(() => import('./components/BrandKitSmokeTest.jsx').then(m => ({ default: m.BrandKitSmokeTest })));
+const CelebrityStacksPage = lazy(() => import('./components/CelebrityStacksPage.jsx').then(m => ({ default: m.CelebrityStacksPage })));
+const VideosPage = lazy(() => import('./components/VideosPage.jsx').then(m => ({ default: m.VideosPage })));
+const AffiliateDisclosurePage = lazy(() => import('./components/AffiliateDisclosurePage.jsx').then(m => ({ default: m.AffiliateDisclosurePage })));
 import { supplements } from './data/supplements.js';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
 import { Button } from '@/components/ui/button.jsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.jsx';
-import { AlertTriangle, Pill, Layers, Library, Newspaper, BookOpen, Home, HelpCircle, LogIn, LogOut, User, PenLine, Award, GitCompare, Star } from 'lucide-react';
+import { AlertTriangle, Pill, Layers, Library, Newspaper, BookOpen, Home, HelpCircle, LogIn, LogOut, User, PenLine, Award, GitCompare, Star, Users, FlaskConical, Play } from 'lucide-react';
+import AffiliateDisclosure from './components/AffiliateDisclosure.jsx';
 import './App.css';
 
 // Scroll to top + fire pageview on route changes
@@ -83,7 +88,7 @@ function HeaderAuth() {
   if (user) {
     return (
       <div className="flex items-center gap-2">
-        <span className="hidden sm:inline text-sm text-ink-500">
+        <span className="hidden sm:inline text-sm text-ink-700">
           <User className="w-3.5 h-3.5 inline mr-1" />
           {user.name || user.email}
         </span>
@@ -115,12 +120,17 @@ function GuideRedirect() {
 function HomePage() {
   const [selectedSupplement, setSelectedSupplement] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [userGoals, setUserGoals] = useState(['energy']);
-  const [stackSize, setStackSize] = useState(0);
-  const { stack, loadStack } = useStack();
+  const { stack, userGoals, loadStack } = useStack();
 
-  const articleCount = blogArticlesIndex.length;
-  const featuredArticles = getRecentArticlesMeta(6).map(({ slug, title, tags, readTime }) => ({ slug, title, tags, readTime }));
+  const articleCount = 93;
+  const featuredArticles = [
+    { slug: 'caffeine-l-theanine-stack-the-ultimate-guide', title: 'Caffeine + L-Theanine: The Ultimate Stack Guide', tags: ['caffeine', 'theanine'], readTime: 8 },
+    { slug: 'best-nootropic-stack-for-focus-2026', title: 'Best Nootropic Stack for Focus 2026', tags: ['focus', 'stack'], readTime: 10 },
+    { slug: 'lions-mane-mushroom-benefits-dosage-complete-guide', title: "Lion's Mane: Benefits, Dosage & Complete Guide", tags: ['lions-mane', 'mushroom'], readTime: 11 },
+    { slug: 'beginners-guide-to-nootropics-2026', title: 'Beginner\'s Guide to Nootropics 2026', tags: ['beginner', 'basics'], readTime: 12 },
+    { slug: 'ashwagandha-benefits-dosage-complete-guide', title: 'Ashwagandha: Benefits & Dosage Guide', tags: ['ashwagandha', 'adaptogen'], readTime: 10 },
+    { slug: 'best-nootropics-for-students-study-stack-2026', title: 'Best Nootropics for Students 2026', tags: ['students', 'studying'], readTime: 11 },
+  ];
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -157,22 +167,22 @@ function HomePage() {
       <SEOOptimizer page="home" />
 
       {/* How It Works */}
-      <div className="mb-8 bg-gradient-to-br from-blue-50 via-white to-indigo-50 rounded-xl border border-primary-100 p-6 shadow-sm">
+      <div className="mb-8 bg-gradient-to-br from-primary-050 via-surface-card to-primary-050 rounded-xl border border-primary-100 p-6 shadow-sm">
         <h1 className="text-2xl font-bold text-ink-900 text-center mb-2">Build Your Perfect Nootropic Stack</h1>
         <p className="text-ink-500 text-center mb-6 text-sm">The free nootropic stack builder — 195 supplements, real-time synergy analysis, no account required.</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="text-center">
-            <div className="w-10 h-10 rounded-full bg-primary-800 text-white font-bold flex items-center justify-center mx-auto mb-3">1</div>
+            <div className="w-10 h-10 rounded-full bg-primary-800 text-ink-on-dark font-bold flex items-center justify-center mx-auto mb-3">1</div>
             <h3 className="font-semibold text-sm mb-1">Set Your Goals</h3>
             <p className="text-xs text-ink-500">Pick what you want to optimize — focus, energy, mood, memory, or creativity.</p>
           </div>
           <div className="text-center">
-            <div className="w-10 h-10 rounded-full bg-primary-800 text-white font-bold flex items-center justify-center mx-auto mb-3">2</div>
+            <div className="w-10 h-10 rounded-full bg-primary-800 text-ink-on-dark font-bold flex items-center justify-center mx-auto mb-3">2</div>
             <h3 className="font-semibold text-sm mb-1">Build Your Stack</h3>
             <p className="text-xs text-ink-500">Add supplements from 195 compounds. Get real-time synergy analysis and recommendations.</p>
           </div>
           <div className="text-center">
-            <div className="w-10 h-10 rounded-full bg-primary-800 text-white font-bold flex items-center justify-center mx-auto mb-3">3</div>
+            <div className="w-10 h-10 rounded-full bg-primary-800 text-ink-on-dark font-bold flex items-center justify-center mx-auto mb-3">3</div>
             <h3 className="font-semibold text-sm mb-1">Optimize with Stack Score</h3>
             <p className="text-xs text-ink-500">Your stack gets a 0-100 score across synergy, coverage, balance, and efficiency.</p>
           </div>
@@ -214,7 +224,7 @@ function HomePage() {
         {/* Right Column - Recommendations and Library */}
         <div className="lg:col-span-2 space-y-6">
           <RecommendationPanel />
-          <SmartAdPlacement supplements={[]} userGoals={userGoals} stackSize={stackSize} />
+          <SmartAdPlacement supplements={[]} userGoals={userGoals} stackSize={stack.length} />
 
           <Tabs defaultValue="library" className="w-full">
             <TabsList className="grid w-full grid-cols-2">
@@ -242,7 +252,7 @@ function HomePage() {
       <SEOContent />
 
       {/* Trusted Resources */}
-      <div className="mt-8 p-6 bg-white rounded-xl border">
+      <div className="mt-8 p-6 bg-surface-card rounded-xl border border-ink-200">
         <h2 className="text-lg font-semibold text-ink-900 mb-1">Research & References</h2>
         <p className="text-sm text-ink-500 mb-4">Supplement data cross-referenced with peer-reviewed sources and trusted industry resources.</p>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -257,10 +267,10 @@ function HomePage() {
               href={resource.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col p-3 rounded-lg border hover:border-primary-300 hover:bg-primary-050 transition-all group"
+              className="flex flex-col p-3 rounded-lg border border-ink-200 hover:border-primary-300 hover:bg-primary-050 transition-all group"
             >
               <span className="text-2xl mb-1">{resource.icon}</span>
-              <span className="text-sm font-medium text-ink-700 group-hover:text-primary-700">{resource.name}</span>
+              <span className="text-sm font-medium text-ink-900 group-hover:text-primary-700">{resource.name}</span>
               <span className="text-xs text-ink-500">{resource.desc}</span>
             </a>
           ))}
@@ -279,10 +289,10 @@ function HomePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {featuredArticles.map(article => (
             <Link key={article.slug} to={`/blog/${article.slug}`}>
-              <div className="p-4 rounded-lg border border-ink-200 hover:border-primary-300 hover:shadow-sm transition-all bg-white">
+              <div className="p-4 rounded-lg border border-ink-200 hover:border-primary-300 hover:shadow-sm transition-all bg-surface-card">
                 <div className="flex flex-wrap gap-1 mb-2">
                   {article.tags.slice(0, 2).map(tag => (
-                    <span key={tag} className="text-xs bg-primary-050 text-primary-800 px-2 py-0.5 rounded">{tag}</span>
+                    <span key={tag} className="text-xs bg-primary-100 text-primary-800 px-2 py-0.5 rounded">{tag}</span>
                   ))}
                 </div>
                 <p className="text-sm font-medium text-ink-900 hover:text-primary-700 leading-snug">{article.title}</p>
@@ -348,16 +358,16 @@ function App() {
       <ScrollToTop />
       <div className="min-h-screen bg-surface-page">
         {/* Header */}
-        <header className="bg-white shadow-sm border-b">
+        <header className="bg-surface-card shadow-sm border-b border-ink-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
               <Link to="/" className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-primary-800 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Pill className="w-5 h-5 text-white" />
+                  <Pill className="w-5 h-5 text-ink-on-dark" />
                 </div>
                 <div>
                   <span className="text-lg sm:text-xl font-bold text-ink-900">NootropicStacker</span>
-                  <p className="hidden sm:block text-sm text-ink-500">Build Your Perfect Nootropic Stack</p>
+                  <p className="hidden sm:block text-sm text-ink-700">Build Your Perfect Nootropic Stack</p>
                 </div>
               </Link>
 
@@ -372,7 +382,10 @@ function App() {
                 <NavLink to="/best-nootropics" icon={Award}>Best Nootropics</NavLink>
                 <NavLink to="/best-stacks" icon={Layers}>Best Stacks</NavLink>
                 <NavLink to="/reviews" icon={Star}>Reviews</NavLink>
+                <NavLink to="/celebrity-stacks" icon={Users}>Celebrity Stacks</NavLink>
+                <NavLink to="/videos" icon={Play}>Videos</NavLink>
                 <NavLink to="/compare-supplements" icon={GitCompare}>Compare</NavLink>
+                <NavLink to="/research-library" icon={FlaskConical}>Research</NavLink>
               </nav>
 
               <HeaderAuth />
@@ -381,7 +394,7 @@ function App() {
         </header>
 
         {/* Mobile Navigation */}
-        <nav className="md:hidden bg-white border-b px-4 py-2">
+        <nav className="md:hidden bg-surface-card border-b border-ink-200 px-4 py-2">
           <div className="flex items-center gap-2 overflow-x-auto">
             <NavLink to="/" icon={Home}>Builder</NavLink>
             <NavLink to="/quiz" icon={HelpCircle}>Quiz</NavLink>
@@ -392,29 +405,23 @@ function App() {
             <NavLink to="/best-nootropics" icon={Award}>Best</NavLink>
             <NavLink to="/best-stacks" icon={Layers}>Stacks</NavLink>
             <NavLink to="/reviews" icon={Star}>Reviews</NavLink>
+            <NavLink to="/celebrity-stacks" icon={Users}>Stacks</NavLink>
+            <NavLink to="/videos" icon={Play}>Videos</NavLink>
             <NavLink to="/compare-supplements" icon={GitCompare}>Compare</NavLink>
+            <NavLink to="/research-library" icon={FlaskConical}>Research</NavLink>
           </div>
         </nav>
 
         {/* Main Content */}
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          {/* Amazon Associates affiliate disclosure — visible above the fold on every page (NOO-40) */}
-          <div
-            data-testid="affiliate-disclosure"
-            className="disclosure disclosure--inline mb-2"
-          >
-            <p className="disclosure__body">
-              <strong>Affiliate Disclosure:</strong> As an Amazon Associate we earn from qualifying purchases.
-            </p>
-          </div>
+          <AffiliateDisclosure variant="banner" />
 
           {/* Medical Disclaimer */}
-          <Alert className="mb-3 border-warn-100 bg-warn-100 py-2">
-            <AlertTriangle className="h-3 w-3 text-warn-500" />
-            <AlertDescription className="text-warn-700 text-sm">
+          <div className="callout callout--warn mb-3 py-2">
+            <p className="callout__body text-sm">
               <strong>Important:</strong> Educational purposes only. Consult healthcare professionals before starting supplements.
-            </AlertDescription>
-          </Alert>
+            </p>
+          </div>
 
           {/* Routes */}
           <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="text-ink-500 text-sm">Loading...</div></div>}>
@@ -450,6 +457,12 @@ function App() {
                 <FAQPage />
               </>
             } />
+            <Route path="/research-library" element={
+              <>
+                <SEOOptimizer page="home" customTitle="Nootropics Research Library — Peer-Reviewed Studies | NootropicStacker" customDescription="Plain-English summaries of peer-reviewed nootropic research. Every study includes PubMed links, evidence quality ratings, and actionable supplementation takeaways." />
+                <ResearchLibraryPage />
+              </>
+            } />
             <Route path="/glossary" element={
               <>
                 <SEOOptimizer page="home" customTitle="Nootropics Glossary — Key Terms & Concepts | NootropicStacker" customDescription="Plain-English definitions of nootropic terms, compounds, and concepts. From acetylcholine to withanolides." />
@@ -465,12 +478,36 @@ function App() {
             <Route path="/nootropics-for-focus" element={<NootropicsForFocusPage />} />
             <Route path="/nootropics-for-anxiety" element={<NootropicsForAnxietyPage />} />
             <Route path="/start-here" element={<Suspense fallback={<div className="flex items-center justify-center py-16"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-800"></div></div>}><StartHerePage /></Suspense>} />
-            <Route path="/downloads/10-stacks" element={<Suspense fallback={<div className="flex items-center justify-center py-16"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-800"></div></div>}><LeadMagnetDownloadPage /></Suspense>} />
+            <Route path="/downloads/10-stacks" element={
+              <>
+                <SEOOptimizer page="home" customTitle="10 Evidence-Backed Nootropic Stacks — Free PDF | NootropicStacker" customDescription="Download a free PDF guide to 10 nootropic stacks. Every claim cites PubMed. Written by Vera Huang, CMO." />
+                <LeadMagnetDownloadPage />
+              </>
+            } />
             <Route path="/guides/:slug" element={<GuideRedirect />} />
+            <Route path="/celebrity-stacks" element={
+              <>
+                <SEOOptimizer page="home" customTitle="Celebrity Supplement Stacks — What Experts Actually Take | NootropicStacker" customDescription="We traced every supplement Huberman, Bryan Johnson, Peter Attia, Rhonda Patrick, and 4 others actually take back to the exact podcast episode or book page." />
+                <CelebrityStacksPage />
+              </>
+            } />
+            <Route path="/brand-kit" element={<BrandKitSmokeTest />} />
+            <Route path="/videos" element={
+              <>
+                <SEOOptimizer page="home" customTitle="Nootropics Video Library — Curated Educational Videos | NootropicStacker" customDescription="Curated educational videos on supplements, stacking strategies, and the neuroscience behind cognitive enhancement — from top researchers and educators." />
+                <VideosPage />
+              </>
+            } />
+            <Route path="/affiliate-disclosure" element={
+              <>
+                <SEOOptimizer page="home" customTitle="Affiliate Disclosure Policy | NootropicStacker" customDescription="Learn about how NootropicStacker earns commissions through affiliate partnerships while maintaining editorial independence." />
+                <AffiliateDisclosurePage />
+              </>
+            } />
             <Route path="*" element={
               <div className="text-center py-20">
                 <h2 className="text-4xl font-bold mb-4">404</h2>
-                <p className="text-ink-500 mb-6">Page not found. Let's get you back on track.</p>
+                <p className="text-ink-700 mb-6">Page not found. Let's get you back on track.</p>
                 <div className="flex justify-center gap-4">
                   <Link to="/"><Button>Stack Builder</Button></Link>
                   <Link to="/supplements"><Button variant="outline">Supplement Library</Button></Link>
@@ -486,41 +523,42 @@ function App() {
 
         {/* Footer */}
         <footer className="footer mt-12">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div className="mb-8 max-w-2xl mx-auto">
-              <NewsletterCapture />
-            </div>
-            <div className="text-center text-sm">
-              <p className="mb-2">
-                <strong>NootropicStacker</strong> - Built for biohackers who want to optimize their supplement stacks safely
-              </p>
-              <p className="mb-4">
-                This tool provides educational information only. Always consult healthcare professionals for medical advice.
-              </p>
-              <div className="flex justify-center items-center gap-4 text-xs mb-4">
-                <Link to="/supplements" className="hover:text-primary-300">195 Supplements</Link>
-                <span className="text-ink-400">•</span>
-                <Link to="/blog" className="hover:text-primary-300">Blog</Link>
-                <span className="text-ink-400">•</span>
-                <Link to="/families" className="hover:text-primary-300">Family Guides</Link>
-                <span className="text-ink-400">•</span>
-                <Link to="/faq" className="hover:text-primary-300">FAQ</Link>
-                <span className="text-ink-400">•</span>
-                <Link to="/glossary" className="hover:text-primary-300">Glossary</Link>
-                <span className="text-ink-400">•</span>
-                <Link to="/news" className="hover:text-primary-300">Latest News</Link>
-                <span className="text-ink-400">•</span>
-                <Link to="/contact" className="hover:text-primary-300">Contact</Link>
-                <span className="text-ink-400">•</span>
-                <Link to="/start-here" className="hover:text-primary-300">Start Here</Link>
-                <span className="text-ink-400">•</span>
-                <Link to="/reviews" className="hover:text-primary-300">Reviews</Link>
-              </div>
-
-              <div className="text-xs text-ink-400 mt-2">
-                <p>Affiliate Disclosure: NootropicStacker participates in the Amazon Associates program and other affiliate programs. We earn commissions from qualifying purchases at no extra cost to you.</p>
+          <div className="footer__inner">
+            <div>
+              <div className="footer__brand">NootropicStacker</div>
+              <p className="text-sm opacity-70 mt-2">Built for biohackers who want to optimize their supplement stacks safely</p>
+              <div className="mt-4">
+                <NewsletterCapture />
               </div>
             </div>
+            <div className="footer__col">
+              <h4>Tools</h4>
+              <Link to="/">Stack Builder</Link>
+              <Link to="/quiz">Stack Quiz</Link>
+              <Link to="/supplements">Supplement Library</Link>
+              <Link to="/compare-supplements">Compare</Link>
+            </div>
+            <div className="footer__col">
+              <h4>Learn</h4>
+              <Link to="/blog">Blog</Link>
+              <Link to="/families">Family Guides</Link>
+              <Link to="/news">News & Research</Link>
+              <Link to="/videos">Video Library</Link>
+            </div>
+            <div className="footer__col">
+              <h4>Resources</h4>
+              <Link to="/start-here">Start Here</Link>
+              <Link to="/faq">FAQ</Link>
+              <Link to="/glossary">Glossary</Link>
+              <Link to="/reviews">Reviews</Link>
+              <Link to="/research-library">Research Library</Link>
+              <Link to="/celebrity-stacks">Celebrity Stacks</Link>
+              <Link to="/contact">Contact</Link>
+            </div>
+          </div>
+          <div className="footer__legal">
+            <span>Educational information only. Consult healthcare professionals for medical advice.</span>
+            <span>As an Amazon Associate we earn from qualifying purchases.</span>
           </div>
         </footer>
       </div>

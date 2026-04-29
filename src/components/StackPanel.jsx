@@ -4,7 +4,11 @@ import { Button } from '@/components/ui/button.jsx';
 import { Badge } from '@/components/ui/badge.jsx';
 import { Progress } from '@/components/ui/progress.jsx';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
-import { Trash2, AlertTriangle, CheckCircle, XCircle, Save, ShoppingCart, ExternalLink, Share2 } from 'lucide-react';
+import {
+  Trash2, AlertTriangle, CheckCircle, XCircle,
+  Save, ShoppingCart, ExternalLink, Share2,
+  Moon, Zap, Brain, Activity
+} from 'lucide-react';
 import { useStack } from '../contexts/StackContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { track } from '../lib/analytics.js';
@@ -43,8 +47,26 @@ function getMonthlyStackCost(stack) {
   }, 0);
 }
 
+function DimensionQuickCard({ icon: Icon, label, value, qual, color }) {
+  return (
+    <div className="p-3 rounded-lg bg-white border border-gray-200">
+      <div className="flex items-center gap-2 mb-2">
+        <Icon className="w-3.5 h-3.5" style={{ color }} />
+        <span className="text-xs font-medium text-gray-600">{label}</span>
+      </div>
+      <div className="flex items-baseline gap-1">
+        <span className="text-xl font-bold text-gray-900">{value.toFixed(1)}</span>
+        <span className="text-xs text-gray-500">/ 9.5</span>
+      </div>
+      <span className="inline-block mt-1 text-[10px] font-medium text-gray-500 uppercase tracking-wider">
+        {qual}
+      </span>
+    </div>
+  );
+}
+
 export function StackPanel() {
-  const { stack, safetyAnalysis, removeSupplement, updateDosage } = useStack();
+  const { stack, safetyAnalysis, stackScore, removeSupplement, updateDosage } = useStack();
   const { user } = useAuth();
   const [showSaveDialog, setShowSaveDialog] = useState(false);
   const [shareCopied, setShareCopied] = useState(false);
@@ -64,12 +86,12 @@ export function StackPanel() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-primary-800 rounded-full"></div>
+            <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
             My Stack
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-ink-500 text-center py-8">
+          <p className="text-gray-500 text-center py-8">
             No supplements in your stack yet. Add some from the library below!
           </p>
         </CardContent>
@@ -77,42 +99,26 @@ export function StackPanel() {
     );
   }
 
-  const getEffectColor = (value) => {
-    if (value >= 9.5) return 'bg-danger-500';
-    if (value >= 8) return 'bg-warn-500';
-    if (value >= 6) return 'bg-warn-500';
-    if (value >= 3) return 'bg-success-500';
-    return 'bg-ink-300';
-  };
-
-  const getEffectTextColor = (value) => {
-    if (value >= 9.5) return 'text-danger-700';
-    if (value >= 8) return 'text-warn-700';
-    if (value >= 6) return 'text-warn-700';
-    if (value >= 3) return 'text-success-700';
-    return 'text-ink-500';
-  };
-
   const getSafetyIcon = () => {
-    if (!safetyAnalysis) return <CheckCircle className="w-5 h-5 text-success-500" />;
+    if (!safetyAnalysis) return <CheckCircle className="w-5 h-5 text-green-500" />;
     
     const hasHighSeverity = safetyAnalysis.warnings.some(w => w.severity === 'high');
     const hasMediumSeverity = safetyAnalysis.warnings.some(w => w.severity === 'medium');
     
-    if (hasHighSeverity) return <XCircle className="w-5 h-5 text-danger-500" />;
-    if (hasMediumSeverity) return <AlertTriangle className="w-5 h-5 text-warn-500" />;
-    return <CheckCircle className="w-5 h-5 text-success-500" />;
+    if (hasHighSeverity) return <XCircle className="w-5 h-5 text-red-500" />;
+    if (hasMediumSeverity) return <AlertTriangle className="w-5 h-5 text-orange-500" />;
+    return <CheckCircle className="w-5 h-5 text-green-500" />;
   };
 
   const getSafetyColor = () => {
-    if (!safetyAnalysis) return 'text-success-500';
+    if (!safetyAnalysis) return 'text-green-600';
     
     const hasHighSeverity = safetyAnalysis.warnings.some(w => w.severity === 'high');
     const hasMediumSeverity = safetyAnalysis.warnings.some(w => w.severity === 'medium');
     
-    if (hasHighSeverity) return 'text-danger-500';
-    if (hasMediumSeverity) return 'text-warn-500';
-    return 'text-success-500';
+    if (hasHighSeverity) return 'text-red-600';
+    if (hasMediumSeverity) return 'text-orange-600';
+    return 'text-green-600';
   };
 
   return (
@@ -121,7 +127,7 @@ export function StackPanel() {
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-primary-800 rounded-full"></div>
+              <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
               My Stack ({stack.length} supplements)
             </div>
             <div className="flex items-center gap-2">
@@ -130,7 +136,7 @@ export function StackPanel() {
                   <Share2 className="w-3.5 h-3.5 mr-1" />Share
                 </Button>
                 {shareCopied && (
-                  <span className="text-xs text-success-500 font-medium">Link copied!</span>
+                  <span className="text-xs text-green-600 font-medium">Link copied!</span>
                 )}
               </div>
               {user && stack.length > 0 && (
@@ -146,26 +152,55 @@ export function StackPanel() {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          {/* Effect Meters */}
-          {safetyAnalysis && (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {Object.entries(safetyAnalysis.totalEffects).map(([effect, value]) => (
-                <div key={effect} className="space-y-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm font-medium capitalize">{effect}</span>
-                    <span className={`text-sm font-bold ${getEffectTextColor(value)}`}>
-                      {value.toFixed(1)}
-                    </span>
+          {/* Headline Dimension Scores */}
+          {stackScore?.headlineScores && (
+            <div>
+              <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">
+                Stack Rating
+              </h4>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {/* Overall */}
+                <div className="p-3 rounded-lg bg-white border border-gray-200">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Activity className="w-3.5 h-3.5 text-primary-700" />
+                    <span className="text-xs font-medium text-gray-600">Overall</span>
                   </div>
-                  <Progress 
-                    value={Math.min(value * 10, 100)} 
-                    className="h-2"
-                    style={{
-                      '--progress-background': getEffectColor(value)
-                    }}
-                  />
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-xl font-bold text-gray-900">{stackScore.headlineScores.overall.toFixed(1)}</span>
+                    <span className="text-xs text-gray-500">/ 9.5</span>
+                  </div>
+                  <span className="inline-block mt-1 text-[10px] font-medium text-gray-500 uppercase tracking-wider">
+                    {stackScore.headlineScores.dimensionQuals.overall.label}
+                  </span>
                 </div>
-              ))}
+
+                {/* Sleep */}
+                <DimensionQuickCard
+                  icon={Moon}
+                  label="Sleep"
+                  value={stackScore.headlineScores.sleep}
+                  qual={stackScore.headlineScores.dimensionQuals.sleep.label}
+                  color="#2a6b96"
+                />
+
+                {/* Energy */}
+                <DimensionQuickCard
+                  icon={Zap}
+                  label="Energy"
+                  value={stackScore.headlineScores.energy}
+                  qual={stackScore.headlineScores.dimensionQuals.energy.label}
+                  color="#2e7d5b"
+                />
+
+                {/* Mind */}
+                <DimensionQuickCard
+                  icon={Brain}
+                  label="Mind"
+                  value={stackScore.headlineScores.mind}
+                  qual={stackScore.headlineScores.dimensionQuals.mind.label}
+                  color="#0f4c46"
+                />
+              </div>
             </div>
           )}
 
@@ -176,20 +211,20 @@ export function StackPanel() {
                 <Alert 
                   key={index} 
                   className={`${
-                    warning.severity === 'high' ? 'border-danger-100 bg-danger-100' :
-                    warning.severity === 'medium' ? 'border-warn-100 bg-warn-100' :
-                    'border-warn-100 bg-warn-100'
+                    warning.severity === 'high' ? 'border-red-200 bg-red-50' :
+                    warning.severity === 'medium' ? 'border-orange-200 bg-orange-50' :
+                    'border-yellow-200 bg-yellow-50'
                   }`}
                 >
                   <AlertTriangle className={`h-4 w-4 ${
-                    warning.severity === 'high' ? 'text-danger-500' :
-                    warning.severity === 'medium' ? 'text-warn-500' :
-                    'text-warn-500'
+                    warning.severity === 'high' ? 'text-red-600' :
+                    warning.severity === 'medium' ? 'text-orange-600' :
+                    'text-yellow-600'
                   }`} />
                   <AlertDescription className={`${
-                    warning.severity === 'high' ? 'text-danger-700' :
-                    warning.severity === 'medium' ? 'text-warn-700' :
-                    'text-warn-700'
+                    warning.severity === 'high' ? 'text-red-800' :
+                    warning.severity === 'medium' ? 'text-orange-800' :
+                    'text-yellow-800'
                   }`}>
                     {warning.message}
                   </AlertDescription>
@@ -205,10 +240,10 @@ export function StackPanel() {
               if (!supplement) return null;
 
               return (
-                <div key={stackItem.supplementId} className="flex items-center justify-between p-3 bg-ink-050 rounded-lg">
+                <div key={stackItem.supplementId} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                   <div className="flex-1">
                     <div className="font-medium">{supplement.name}</div>
-                    <div className="text-sm text-ink-500">
+                    <div className="text-sm text-gray-600">
                       {stackItem.dosage} {supplement.dosage.unit} • {stackItem.timing}
                     </div>
                   </div>
@@ -220,13 +255,13 @@ export function StackPanel() {
                       min={supplement.dosage.min}
                       max={supplement.dosage.max}
                       step={supplement.dosage.unit === 'mcg' ? 10 : supplement.dosage.unit === 'mg' ? 50 : 1}
-                      className="w-20 px-2 py-1 text-sm border border-input rounded-md"
+                      className="w-20 px-2 py-1 text-sm border rounded"
                     />
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => removeSupplement(stackItem.supplementId)}
-                      className="text-danger-500 hover:text-danger-700 hover:bg-danger-100"
+                      className="text-red-600 hover:text-red-700 hover:bg-red-50"
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>
@@ -242,7 +277,7 @@ export function StackPanel() {
             if (stackWithLinks.length === 0) return null;
             return (
               <div className="mt-4 pt-4 border-t">
-                <h4 className="text-sm font-semibold text-ink-700 mb-2 flex items-center gap-1">
+                <h4 className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-1">
                   <ShoppingCart className="w-4 h-4" />
                   Shop Your Stack
                 </h4>
@@ -262,10 +297,10 @@ export function StackPanel() {
                         href={buyUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-between p-2 rounded hover:bg-success-100 text-sm group"
+                        className="flex items-center justify-between p-2 rounded hover:bg-green-50 text-sm group"
                       >
-                        <span className="text-ink-700 group-hover:text-success-700 truncate mr-2">{supplement.name}</span>
-                        <span className="text-success-500 text-xs font-medium shrink-0 flex items-center gap-1">
+                        <span className="text-gray-700 group-hover:text-green-800 truncate mr-2">{supplement.name}</span>
+                        <span className="text-green-600 text-xs font-medium shrink-0 flex items-center gap-1">
                           Buy <ExternalLink className="w-3 h-3" />
                         </span>
                       </a>
@@ -273,7 +308,7 @@ export function StackPanel() {
                   })}
                 </div>
                 {stackWithLinks.length > 5 && (
-                  <p className="text-xs text-ink-500 mt-1">+{stackWithLinks.length - 5} more in your stack</p>
+                  <p className="text-xs text-gray-500 mt-1">+{stackWithLinks.length - 5} more in your stack</p>
                 )}
               </div>
             );
@@ -283,12 +318,12 @@ export function StackPanel() {
           {stack.length > 0 && (
             <div className="mt-3 pt-3 border-t flex items-center justify-between">
               <div>
-                <p className="text-xs text-ink-500">Estimated monthly cost</p>
-                <p className="text-lg font-bold text-ink-700">${getMonthlyStackCost(stack)}/mo</p>
+                <p className="text-xs text-gray-500">Estimated monthly cost</p>
+                <p className="text-lg font-bold text-gray-800">${getMonthlyStackCost(stack)}/mo</p>
               </div>
               <div className="text-right">
-                  <p className="text-xs text-ink-500">{stack.length} supplement{stack.length !== 1 ? 's' : ''}</p>
-                  <p className="text-xs text-ink-400">~${Math.round(getMonthlyStackCost(stack)/30)}/day</p>
+                <p className="text-xs text-gray-500">{stack.length} supplement{stack.length !== 1 ? 's' : ''}</p>
+                <p className="text-xs text-gray-400">~${Math.round(getMonthlyStackCost(stack)/30)}/day</p>
               </div>
             </div>
           )}

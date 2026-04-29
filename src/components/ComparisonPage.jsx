@@ -8,6 +8,7 @@ import { Progress } from '@/components/ui/progress.jsx';
 import { SEOOptimizer } from './SEOOptimizer.jsx';
 import { supplements } from '../data/supplements.js';
 import { buildAmazonSearchLink, useAffiliateCampaign } from '@/lib/affiliate.js';
+import AffiliateDisclosure from './AffiliateDisclosure.jsx';
 
 // Effect labels with display names for the actual data schema
 const EFFECT_LABELS = {
@@ -630,10 +631,7 @@ export function ComparisonPage() {
               </Link>
             </div>
 
-            {/* Affiliate disclosure */}
-            <p className="text-xs text-gray-400 text-center">
-              * Affiliate links — we earn a small commission at no extra cost to you. We only link to quality-tested sources.
-            </p>
+            <AffiliateDisclosure variant="compare" />
           </>
         )}
 

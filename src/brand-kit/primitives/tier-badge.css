@@ -1,0 +1,40 @@
+/* NootropicStacker Tier Badge Primitive v1
+ * Depends on tokens.css (CSS custom properties).
+ * Evidence-tier trust signal for YMYL content (NOO-41 §7).
+ * Always paired with a label string — color alone never carries meaning (WCAG).
+ * Class: .tier-badge
+ * Variants: .tier-badge--1, .tier-badge--2, .tier-badge--3 */
+
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+.tier-badge--1 {
+  background: var(--color-tier-1-bg);
+  color: var(--color-tier-1-fg);
+  border-color: var(--color-tier-1-rule);
+}
+
+.tier-badge--2 {
+  background: var(--color-tier-2-bg);
+  color: var(--color-tier-2-fg);
+  border-color: var(--color-tier-2-rule);
+}
+
+.tier-badge--3 {
+  background: var(--color-tier-3-bg);
+  color: var(--color-tier-3-fg);
+  border-color: var(--color-tier-3-rule);
+}

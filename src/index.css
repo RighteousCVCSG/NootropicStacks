@@ -1,0 +1,27 @@
+/* =============================================================
+ * NootropicStacker — Global Entry CSS
+ *
+ * Order matters:
+ *   1. Tailwind v4 base (imports @layer base/components/utilities)
+ *   2. Brand tokens (CSS custom properties)
+ *   3. Brand primitives (hand-written components: btn, card, etc.)
+ *   4. App-level styles (layout overrides, callouts, legacy)
+ * ============================================================= */
+
+/* 1. Tailwind v4 — generates base + component + utility layers */
+@import "tailwindcss";
+
+/* 2. Brand tokens — CSS custom properties consumed by everything */
+@import "./brand-kit/tokens.css";
+
+/* 3. Brand-tailwind bridge — @theme inline block for Tailwind v4 */
+@import "./brand-kit/tailwind-theme.css";
+
+/* 4. Brand fonts */
+@import "./brand-kit/fonts.css";
+
+/* 5. Brand primitives (pure-CSS components) */
+@import "./brand-kit/primitives/index.css";
+
+/* 6. Brand components.css (scoped .brand-* components) */
+@import "./brand-kit/components.css";
