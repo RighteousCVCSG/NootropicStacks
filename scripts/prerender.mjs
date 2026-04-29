@@ -153,9 +153,41 @@ async function prerender() {
   }
 
   if (!executablePath) {
-    console.warn('WARNING: Chrome/Chromium not found. Skipping prerender.');
-    console.warn('Install chromium (apt-get install chromium) for prerender support.');
-    process.exit(0);
+    console.log('Chrome/Chromium not found — attempting to download via @puppeteer/browsers...');
+    try {
+      const { install, resolveBuildId, detectBrowserPlatform } = await import('@puppeteer/browsers');
+      const cacheDir = join(ROOT, '.browser-cache');
+      mkdirSync(cacheDir, { recursive: true });
+      const platform = detectBrowserPlatform();
+      if (!platform) throw new Error('Could not detect platform');
+      const buildId = await resolveBuildId('chrome', platform, 'latest');
+      console.log(`  Resolved Chrome build: ${buildId} (${platform})`);
+      const DOWNLOAD_HOST = process.env.CHROME_DOWNLOAD_HOST || 'https://storage.googleapis.com/chrome-for-testing-public';
+      const installed = await install({
+        browser: 'chrome',
+        buildId,
+        platform,
+        cacheDir,
+        detectDownloadHost: () => DOWNLOAD_HOST,
+      });
+      executablePath = installed.executablePath;
+      console.log(`  Downloaded Chrome to: ${executablePath}`);
+    } catch (downloadErr) {
+      console.warn(`WARNING: Could not download Chrome (${downloadErr.message}). Skipping prerender.`);
+      process.exit(0);
+    }
+  }
+
+  // Install missing system libraries needed by downloaded Chrome
+  try {
+    const { execSync } = await import('child_process');
+    execSync(
+      'apt-get update -qq 2>/dev/null; apt-get install -y -qq --no-install-recommends libglib2.0-0 libnss3 libnspr4 libdbus-1-3 libatk1.0-0 libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1 libpango-1.0-0 libcairo2 libasound2 > /dev/null 2>&1',
+      { timeout: 120000 }
+    );
+    console.log('  System libraries installed for Chrome.');
+  } catch (libErr) {
+    console.warn(`Warning: could not install system libs (${libErr.message}) — Chrome may fail to launch.`);
   }
 
   const routes = buildRoutes();
