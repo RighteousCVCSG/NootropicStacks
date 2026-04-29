@@ -366,6 +366,109 @@ app.post('/api/track/click', async (req, res) => {
 });
 
 // ============================================================
+// ADMIN AUTH — single-owner, no external OAuth dependency
+// Env var: ADMIN_SECRET (long random string set on Railway)
+// ============================================================
+
+const ADMIN_SECRET = process.env.ADMIN_SECRET;
+const ADMIN_COOKIE = 'ns_admin';
+
+function verifyAdmin(req, res, next) {
+  const token = req.cookies[ADMIN_COOKIE];
+  if (!token) return res.status(401).json({ error: 'Admin auth required' });
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    if (!decoded.admin) return res.status(401).json({ error: 'Not an admin session' });
+    next();
+  } catch {
+    res.clearCookie(ADMIN_COOKIE);
+    return res.status(401).json({ error: 'Invalid admin session' });
+  }
+}
+
+app.post('/api/admin/login', (req, res) => {
+  if (!ADMIN_SECRET) return res.status(503).json({ error: 'Admin auth not configured (ADMIN_SECRET missing)' });
+  const { secret } = req.body;
+  if (!secret || secret !== ADMIN_SECRET) {
+    return res.status(401).json({ error: 'Invalid secret' });
+  }
+  const token = jwt.sign({ admin: true }, JWT_SECRET, { expiresIn: '7d' });
+  res.cookie(ADMIN_COOKIE, token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    path: '/'
+  });
+  res.json({ ok: true });
+});
+
+app.post('/api/admin/logout', (_req, res) => {
+  res.clearCookie(ADMIN_COOKIE, { path: '/' });
+  res.json({ ok: true });
+});
+
+app.get('/api/admin/me', verifyAdmin, (_req, res) => {
+  res.json({ admin: true });
+});
+
+app.get('/api/admin/stats', verifyAdmin, async (_req, res) => {
+  if (!pool) return res.json({ subscribers: 0, users: 0, clicks: 0, messages: 0 });
+  try {
+    const [[{ subscribers }]] = await pool.execute('SELECT COUNT(*) AS subscribers FROM newsletter_subscribers');
+    const [[{ users }]] = await pool.execute('SELECT COUNT(*) AS users FROM users');
+    const [[{ messages }]] = await pool.execute('SELECT COUNT(*) AS messages FROM contact_messages');
+    let clicks = 0;
+    try {
+      const [[row]] = await pool.execute('SELECT COUNT(*) AS clicks FROM affiliate_clicks');
+      clicks = row.clicks;
+    } catch { /* table may not exist yet */ }
+    res.json({ subscribers, users, clicks, messages });
+  } catch (err) {
+    console.error('Admin stats error:', err);
+    res.status(500).json({ error: 'Failed to load stats' });
+  }
+});
+
+app.get('/api/admin/leads', verifyAdmin, async (_req, res) => {
+  if (!pool) return res.json({ leads: [] });
+  try {
+    const [rows] = await pool.execute(
+      'SELECT id, email, source, created_at FROM newsletter_subscribers ORDER BY created_at DESC LIMIT 1000'
+    );
+    res.json({ leads: rows });
+  } catch (err) {
+    console.error('Admin leads error:', err);
+    res.status(500).json({ error: 'Failed to load leads' });
+  }
+});
+
+app.get('/api/admin/users', verifyAdmin, async (_req, res) => {
+  if (!pool) return res.json({ users: [] });
+  try {
+    const [rows] = await pool.execute(
+      'SELECT id, email, name, is_premium, created_at FROM users ORDER BY created_at DESC LIMIT 1000'
+    );
+    res.json({ users: rows });
+  } catch (err) {
+    console.error('Admin users error:', err);
+    res.status(500).json({ error: 'Failed to load users' });
+  }
+});
+
+app.get('/api/admin/clicks', verifyAdmin, async (_req, res) => {
+  if (!pool) return res.json({ clicks: [] });
+  try {
+    const [rows] = await pool.execute(
+      'SELECT supplement_id, vendor, page, COUNT(*) AS count FROM affiliate_clicks GROUP BY supplement_id, vendor, page ORDER BY count DESC LIMIT 200'
+    ).catch(() => [[]]);
+    res.json({ clicks: rows });
+  } catch {
+    res.json({ clicks: [] });
+  }
+});
+
+// ============================================================
 // SPA FALLBACK — must be last
 // ============================================================
 app.get('/{*path}', (req, res) => {

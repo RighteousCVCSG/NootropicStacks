@@ -16,6 +16,7 @@ import { StackProtocolBuilder } from './components/StackProtocolBuilder.jsx';
 import { NewsletterCapture } from './components/NewsletterCapture.jsx';
 
 // Lazy-loaded route-level components
+const AdminPage = lazy(() => import('./components/AdminPage.jsx').then(m => ({ default: m.AdminPage })));
 const SupplementPage = lazy(() => import('./components/SupplementPage.jsx').then(m => ({ default: m.SupplementPage })));
 const SupplementCompare = lazy(() => import('./components/SupplementCompare.jsx').then(m => ({ default: m.SupplementCompare })));
 const StackQuiz = lazy(() => import('./components/StackQuiz.jsx').then(m => ({ default: m.StackQuiz })));
@@ -454,6 +455,7 @@ function App() {
               </>
             } />
             <Route path="/contact" element={<><SEOOptimizer page="home" customTitle="Contact NootropicStacker" customDescription="Get in touch with the NootropicStacker team." /><ContactPage /></>} />
+            <Route path="/admin" element={<AdminPage />} />
             <Route path="/best-nootropics" element={<BestNootropicsPage />} />
             <Route path="/best-stacks" element={<BestStacksPage />} />
             <Route path="/reviews" element={<ReviewsPage />} />
