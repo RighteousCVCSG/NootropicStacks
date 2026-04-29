@@ -155,30 +155,31 @@ async function prerender() {
   }
 
   if (!executablePath) {
-    console.log('Chrome/Chromium not found — attempting to download via @puppeteer/browsers...');
+    console.log('Chrome/Chromium not found — attempting to install via apt-get...');
     try {
-      const { install, resolveBuildId, detectBrowserPlatform } = await import('@puppeteer/browsers');
-      const cacheDir = join(ROOT, '.browser-cache');
-      mkdirSync(cacheDir, { recursive: true });
-      const platform = detectBrowserPlatform();
-      if (!platform) throw new Error('Could not detect platform');
-      const buildId = await resolveBuildId('chrome', platform, 'latest');
-      console.log(`  Resolved Chrome build: ${buildId} (${platform})`);
-      const DOWNLOAD_HOST = process.env.CHROME_DOWNLOAD_HOST || 'https://storage.googleapis.com/chrome-for-testing-public';
-      const installed = await install({
-        browser: 'chrome',
-        buildId,
-        platform,
-        cacheDir,
-        detectDownloadHost: () => DOWNLOAD_HOST,
+      execSync('apt-get update -qq && apt-get install -y -qq chromium > /dev/null 2>&1', {
+        stdio: 'inherit',
+        timeout: 120000,
       });
-      executablePath = installed.executablePath;
-      console.log(`  Downloaded Chrome to: ${executablePath}`);
-    } catch (downloadErr) {
-      console.warn(`WARNING: Could not download Chrome (${downloadErr.message}). Skipping prerender.`);
-      console.warn('The site will serve SPA shell for all routes. Set CHROME_PATH env var for prerender.');
-      process.exit(0);
+      // Re-check for chromium after apt install
+      for (const p of ['/usr/bin/chromium', '/usr/bin/chromium-browser', '/usr/bin/google-chrome-stable']) {
+        if (existsSync(p)) { executablePath = p; break; }
+      }
+      if (!executablePath) {
+        executablePath = execSync('which chromium chromium-browser google-chrome-stable google-chrome 2>/dev/null || true', { encoding: 'utf8' }).trim().split('\n')[0];
+      }
+      if (executablePath && existsSync(executablePath)) {
+        console.log(`  Found/installed Chrome at: ${executablePath}`);
+      }
+    } catch (aptErr) {
+      console.warn(`apt-get install failed: ${aptErr.message}`);
     }
+  }
+
+  if (!executablePath) {
+    console.warn('WARNING: No Chrome/Chromium available. Skipping prerender.');
+    console.warn('The site will serve SPA shell for all routes. Install Chromium for prerender support.');
+    process.exit(0);
   }
 
   const routes = buildRoutes();
