@@ -38,6 +38,15 @@ const REVISION_DATE = '2026-04-29';
 const md = await fs.readFile(SOURCE_MD, 'utf8');
 const css = await fs.readFile(STYLES_CSS, 'utf8');
 
+// Outbound-link UTMs for analytics (per CMO brand-voice bar on NOO-35).
+// Applied at render time so source.md stays in sync with NOO-30 verbatim.
+const UTM = 'utm_source=lead_magnet&utm_medium=pdf&utm_campaign=10_stacks_v1';
+function withUtm(url) {
+  if (!/amazon\.com/.test(url)) return url;
+  const sep = url.includes('?') ? '&' : '?';
+  return `${url}${sep}${UTM}`;
+}
+
 // Strip the H1 and the leading source-info paragraph before rendering body
 // — those become the cover instead. The preamble is two lines:
 //   **Source markdown for the Nootropicstacker lead-magnet PDF.**
@@ -79,6 +88,12 @@ function stackHTML(rawMd) {
   // "Who this is for / NOT for" pair into a 2-col grid, and
   // the **Buy:** line into a styled callout.
   let restHtml = marked.parse(restMd);
+
+  // Append UTMs to Amazon links (post-marked rewrite of href values).
+  restHtml = restHtml.replace(
+    /href="(https:\/\/www\.amazon\.com\/[^"]+)"/g,
+    (_m, url) => `href="${withUtm(url)}"`
+  );
 
   // Buy callout: a paragraph that begins with "Buy:" → wrap in stack-buy
   restHtml = restHtml.replace(
@@ -159,7 +174,7 @@ const cover = `
       <dl class="cover-meta">
         <div>
           <dt>Author</dt>
-          <dd>Vera Huang, CMO · Nootropicstacker</dd>
+          <dd>Vera Huang, CMO — UCSD neuroscience</dd>
         </div>
         <div>
           <dt>Revision</dt>
