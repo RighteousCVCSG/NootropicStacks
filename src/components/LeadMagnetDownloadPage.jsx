@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { EmailCaptureForm } from './EmailCaptureForm.jsx';
 import { SEOOptimizer } from './SEOOptimizer.jsx';
 import { Button } from '@/components/ui/button.jsx';
-import { Pill, BookOpen, Award, Users, Shield, ChevronRight, ExternalLink } from 'lucide-react';
+import { Pill, BookOpen, Award, ChevronRight } from 'lucide-react';
 
 const EVIDENCE_TIER_LEGEND = [
   { tier: 'T1', label: 'Multiple human RCTs / meta-analysis', color: 'bg-green-100 text-green-800' },

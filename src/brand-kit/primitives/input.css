@@ -1,0 +1,89 @@
+/* NootropicStacker Input Primitive v1
+ * Depends on tokens.css (CSS custom properties).
+ * Reusable across forms — text, email, password, select, textarea.
+ * Class: .input (for <input>, <select>)
+ *       .input--textarea (for <textarea>)
+ * States: .input--error, .input--disabled, :focus-visible
+ * Companion: .input__label, .input__hint, .input__error */
+
+.input {
+  width: 100%;
+  height: 44px;
+  padding: 0 var(--space-4);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-ink-900);
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-ink-200);
+  border-radius: var(--radius-md);
+  transition:
+    border-color var(--duration-base) var(--easing-standard),
+    box-shadow var(--duration-base) var(--easing-standard);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.input:focus-visible {
+  outline: none;
+  border-color: var(--color-primary-600);
+  box-shadow: 0 0 0 3px rgba(15, 76, 70, 0.15);
+}
+
+.input::placeholder {
+  color: var(--color-ink-400);
+}
+
+.input--textarea {
+  height: auto;
+  min-height: 100px;
+  padding: var(--space-3) var(--space-4);
+  resize: vertical;
+  line-height: var(--text-base-lh);
+}
+
+select.input {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236e6862' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-3) center;
+  padding-right: var(--space-7);
+  cursor: pointer;
+}
+
+.input--error {
+  border-color: var(--color-danger-500);
+}
+.input--error:focus-visible {
+  border-color: var(--color-danger-500);
+  box-shadow: 0 0 0 3px rgba(166, 53, 58, 0.15);
+}
+
+.input:disabled,
+.input[aria-disabled="true"] {
+  background: var(--color-ink-050);
+  color: var(--color-ink-400);
+  border-color: var(--color-ink-100);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.input__label {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-ink-900);
+  margin-bottom: var(--space-2);
+}
+
+.input__hint {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--color-ink-500);
+  margin-top: var(--space-1);
+}
+
+.input__error {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--color-danger-500);
+  margin-top: var(--space-1);
+}

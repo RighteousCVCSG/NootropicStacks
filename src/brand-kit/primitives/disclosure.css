@@ -1,0 +1,45 @@
+/* NootropicStacker Disclosure Primitive v1
+ * Depends on tokens.css (CSS custom properties).
+ * Affiliate disclosure block. Used above-the-fold on any page with affiliate links.
+ * Class: .disclosure
+ * Variants: .disclosure--inline (amber-tinted, affiliate-adjacent)
+ * Invariant: MUST render in DOM before first affiliate link, never via JS hydration (NOO-46). */
+
+.disclosure {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-sunk);
+  border: 1px solid var(--color-ink-200);
+  font-size: var(--text-sm);
+  line-height: var(--text-sm-lh);
+  color: var(--color-ink-700);
+}
+
+.disclosure__title {
+  font-weight: var(--weight-semibold);
+  color: var(--color-ink-900);
+  display: block;
+  margin-bottom: var(--space-1);
+}
+
+.disclosure__body {
+  margin: 0;
+  flex: 1;
+}
+
+.disclosure--inline {
+  background: var(--color-accent-100);
+  border-color: var(--color-accent-300);
+  color: var(--color-accent-700);
+}
+
+.disclosure--inline .disclosure__title {
+  color: var(--color-accent-700);
+}
+
+.disclosure--inline .disclosure__body strong {
+  color: var(--color-accent-700);
+}

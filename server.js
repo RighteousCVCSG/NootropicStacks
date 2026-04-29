@@ -1,7 +1,7 @@
 import express from 'express';
 import { fileURLToPath } from 'url';
-import { basename, dirname, join, resolve } from 'path';
-import { existsSync } from 'fs';
+import { basename, dirname, extname, join, resolve } from 'path';
+import { existsSync, statSync } from 'fs';
 import mysql from 'mysql2/promise';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
@@ -647,9 +647,122 @@ app.get('/api/admin/clicks', verifyAdmin, async (_req, res) => {
 });
 
 // ============================================================
-// SPA FALLBACK — must be last
+// EMAIL CAPTURE (Beehiiv proxy)
+// Falls back gracefully when env vars not configured (pending_provider status)
 // ============================================================
+
+const BEEHIIV_API_KEY = process.env.BEEHIIV_API_KEY;
+const BEEHIIV_PUBLICATION_ID = process.env.BEEHIIV_PUBLICATION_ID;
+const BEEHIIV_DOUBLE_OPT_IN = process.env.BEEHIIV_DOUBLE_OPT_IN !== 'false';
+const BEEHIIV_API_BASE = process.env.BEEHIIV_API_BASE || 'https://api.beehiiv.com/v2';
+
+const ALLOWED_SOURCES = new Set([
+  'inline_article',
+  'save_gate',
+  'lead_magnet',
+  'footer',
+  'manual'
+]);
+
+const recentSignups = new Map();
+function rateLimited(ip) {
+  const now = Date.now();
+  for (const [k, ts] of recentSignups) if (now - ts > 60_000) recentSignups.delete(k);
+  const last = recentSignups.get(ip);
+  if (last && now - last < 5_000) return true;
+  recentSignups.set(ip, now);
+  return false;
+}
+
+app.post('/api/email/subscribe', async (req, res) => {
+  const { email, source, leadMagnet, articleSlug, hp_field } = req.body || {};
+
+  if (hp_field) return res.json({ ok: true, status: 'accepted' });
+
+  const ip = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.ip;
+  if (rateLimited(ip)) return res.status(429).json({ error: 'Too many requests' });
+
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({ error: 'Valid email required' });
+  }
+  const cleanEmail = email.toLowerCase().trim();
+  const cleanSource = ALLOWED_SOURCES.has(source) ? source : 'manual';
+
+  if (!BEEHIIV_API_KEY || !BEEHIIV_PUBLICATION_ID) {
+    console.warn(`[email/subscribe] Beehiiv not configured. Logged signup: ${cleanEmail} (${cleanSource})`);
+    return res.json({ ok: true, status: 'pending_provider', source: cleanSource });
+  }
+
+  try {
+    const beehiivRes = await fetch(`${BEEHIIV_API_BASE}/publications/${BEEHIIV_PUBLICATION_ID}/subscriptions`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${BEEHIIV_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: cleanEmail,
+        reactivate_existing: true,
+        send_welcome_email: true,
+        utm_source: 'nootropicstacker.com',
+        utm_medium: cleanSource,
+        utm_campaign: leadMagnet || cleanSource,
+        referring_site: articleSlug ? `https://nootropicstacker.com/blog/${articleSlug}` : 'https://nootropicstacker.com',
+        double_opt_override: BEEHIIV_DOUBLE_OPT_IN ? 'on' : 'off',
+        custom_fields: [
+          { name: 'signup_source', value: cleanSource },
+          ...(leadMagnet ? [{ name: 'lead_magnet', value: leadMagnet }] : []),
+          ...(articleSlug ? [{ name: 'article_slug', value: articleSlug }] : [])
+        ]
+      })
+    });
+
+    const text = await beehiivRes.text();
+    let data; try { data = JSON.parse(text); } catch { data = { raw: text }; }
+
+    if (!beehiivRes.ok) {
+      console.error('[email/subscribe] Beehiiv error', beehiivRes.status, data);
+      return res.status(502).json({ error: 'Subscription provider error' });
+    }
+
+    return res.json({
+      ok: true,
+      status: data?.data?.status || 'subscribed',
+      source: cleanSource,
+      doubleOptIn: BEEHIIV_DOUBLE_OPT_IN
+    });
+  } catch (err) {
+    console.error('[email/subscribe] network error', err);
+    return res.status(502).json({ error: 'Subscription failed, please try again' });
+  }
+});
+
+// ============================================================
+// PRERENDERED PAGE ROUTING — serve static HTML for SEO
+// ============================================================
+function findPrerenderedFile(cleanPath) {
+  const candidate = join(staticDir, cleanPath, 'index.html');
+  if (existsSync(candidate)) return candidate;
+
+  // Check without trailing index.html (direct file reference)
+  if (!cleanPath.endsWith('/index.html') && !extname(cleanPath)) {
+    const alt = join(staticDir, cleanPath);
+    if (existsSync(alt) && statSync(alt).isFile()) return alt;
+  }
+
+  return null;
+}
+
 app.get('/{*path}', (req, res) => {
+  const cleanPath = req.path === '/' ? '' : req.path.replace(/\/$/, '');
+
+  // Try prerendered HTML file for this path
+  const prerendered = findPrerenderedFile(cleanPath);
+  if (prerendered) {
+    return res.sendFile(prerendered);
+  }
+
+  // Fall back to SPA shell
   res.sendFile(join(staticDir, 'index.html'));
 });
 

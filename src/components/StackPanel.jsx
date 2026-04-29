@@ -4,7 +4,11 @@ import { Button } from '@/components/ui/button.jsx';
 import { Badge } from '@/components/ui/badge.jsx';
 import { Progress } from '@/components/ui/progress.jsx';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
-import { Trash2, AlertTriangle, CheckCircle, XCircle, Save, ShoppingCart, ExternalLink, Share2 } from 'lucide-react';
+import {
+  Trash2, AlertTriangle, CheckCircle, XCircle,
+  Save, ShoppingCart, ExternalLink, Share2,
+  Moon, Zap, Brain, Activity
+} from 'lucide-react';
 import { useStack } from '../contexts/StackContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { supplements } from '../data/supplements.js';
@@ -42,8 +46,26 @@ function getMonthlyStackCost(stack) {
   }, 0);
 }
 
+function DimensionQuickCard({ icon: Icon, label, value, qual, color }) {
+  return (
+    <div className="p-3 rounded-lg bg-white border border-gray-200">
+      <div className="flex items-center gap-2 mb-2">
+        <Icon className="w-3.5 h-3.5" style={{ color }} />
+        <span className="text-xs font-medium text-gray-600">{label}</span>
+      </div>
+      <div className="flex items-baseline gap-1">
+        <span className="text-xl font-bold text-gray-900">{value.toFixed(1)}</span>
+        <span className="text-xs text-gray-500">/ 9.5</span>
+      </div>
+      <span className="inline-block mt-1 text-[10px] font-medium text-gray-500 uppercase tracking-wider">
+        {qual}
+      </span>
+    </div>
+  );
+}
+
 export function StackPanel() {
-  const { stack, safetyAnalysis, removeSupplement, updateDosage } = useStack();
+  const { stack, safetyAnalysis, stackScore, removeSupplement, updateDosage } = useStack();
   const { user } = useAuth();
   const [showSaveDialog, setShowSaveDialog] = useState(false);
   const [shareCopied, setShareCopied] = useState(false);
@@ -74,22 +96,6 @@ export function StackPanel() {
       </Card>
     );
   }
-
-  const getEffectColor = (value) => {
-    if (value >= 9.5) return 'bg-red-500';
-    if (value >= 8) return 'bg-orange-500';
-    if (value >= 6) return 'bg-yellow-500';
-    if (value >= 3) return 'bg-green-500';
-    return 'bg-gray-300';
-  };
-
-  const getEffectTextColor = (value) => {
-    if (value >= 9.5) return 'text-red-700';
-    if (value >= 8) return 'text-orange-700';
-    if (value >= 6) return 'text-yellow-700';
-    if (value >= 3) return 'text-green-700';
-    return 'text-gray-600';
-  };
 
   const getSafetyIcon = () => {
     if (!safetyAnalysis) return <CheckCircle className="w-5 h-5 text-green-500" />;
@@ -144,26 +150,55 @@ export function StackPanel() {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          {/* Effect Meters */}
-          {safetyAnalysis && (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {Object.entries(safetyAnalysis.totalEffects).map(([effect, value]) => (
-                <div key={effect} className="space-y-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm font-medium capitalize">{effect}</span>
-                    <span className={`text-sm font-bold ${getEffectTextColor(value)}`}>
-                      {value.toFixed(1)}
-                    </span>
+          {/* Headline Dimension Scores */}
+          {stackScore?.headlineScores && (
+            <div>
+              <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">
+                Stack Rating
+              </h4>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {/* Overall */}
+                <div className="p-3 rounded-lg bg-white border border-gray-200">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Activity className="w-3.5 h-3.5 text-primary-700" />
+                    <span className="text-xs font-medium text-gray-600">Overall</span>
                   </div>
-                  <Progress 
-                    value={Math.min(value * 10, 100)} 
-                    className="h-2"
-                    style={{
-                      '--progress-background': getEffectColor(value)
-                    }}
-                  />
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-xl font-bold text-gray-900">{stackScore.headlineScores.overall.toFixed(1)}</span>
+                    <span className="text-xs text-gray-500">/ 9.5</span>
+                  </div>
+                  <span className="inline-block mt-1 text-[10px] font-medium text-gray-500 uppercase tracking-wider">
+                    {stackScore.headlineScores.dimensionQuals.overall.label}
+                  </span>
                 </div>
-              ))}
+
+                {/* Sleep */}
+                <DimensionQuickCard
+                  icon={Moon}
+                  label="Sleep"
+                  value={stackScore.headlineScores.sleep}
+                  qual={stackScore.headlineScores.dimensionQuals.sleep.label}
+                  color="#2a6b96"
+                />
+
+                {/* Energy */}
+                <DimensionQuickCard
+                  icon={Zap}
+                  label="Energy"
+                  value={stackScore.headlineScores.energy}
+                  qual={stackScore.headlineScores.dimensionQuals.energy.label}
+                  color="#2e7d5b"
+                />
+
+                {/* Mind */}
+                <DimensionQuickCard
+                  icon={Brain}
+                  label="Mind"
+                  value={stackScore.headlineScores.mind}
+                  qual={stackScore.headlineScores.dimensionQuals.mind.label}
+                  color="#0f4c46"
+                />
+              </div>
             </div>
           )}
 

@@ -44,7 +44,7 @@ export function trackEvent(action, label, value) {
 
 export function EmailCaptureForm({ source = 'lead_magnet', variant = 'inline_article', leadMagnet, articleSlug }) {
   const [email, setEmail] = useState('');
-  const [status, setStatus] = useState('idle'); // idle | loading | success | error
+  const [status, setStatus] = useState('idle');
   const [message, setMessage] = useState('');
   const [downloadUrl, setDownloadUrl] = useState(null);
   const honeypotRef = useRef(null);
@@ -57,7 +57,6 @@ export function EmailCaptureForm({ source = 'lead_magnet', variant = 'inline_art
     e.preventDefault();
     if (!email) return;
 
-    // Honeypot check
     if (honeypotRef.current?.value) {
       return;
     }

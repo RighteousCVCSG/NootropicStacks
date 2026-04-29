@@ -1,0 +1,50 @@
+/* NootropicStacker Link Primitive v1
+ * Depends on tokens.css (CSS custom properties).
+ * Standalone link primitive — use outside .brand-prose context.
+ * Class: .link
+ * Variants: .link--default, .link--muted, .link--on-dark, .link--button */
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-family: var(--font-body);
+  font-size: inherit;
+  font-weight: var(--weight-medium);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  transition:
+    color var(--duration-fast) var(--easing-standard);
+}
+
+.link:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-sm);
+}
+
+.link--default {
+  color: var(--color-primary-800);
+}
+.link--default:hover { color: var(--color-primary-700); }
+
+.link--muted {
+  color: var(--color-ink-500);
+  text-decoration: none;
+}
+.link--muted:hover { color: var(--color-primary-800); text-decoration: underline; }
+
+.link--on-dark {
+  color: var(--color-ink-on-dark);
+  text-decoration: none;
+}
+.link--on-dark:hover { color: var(--color-primary-300); text-decoration: underline; }
+
+.link--button {
+  color: var(--color-primary-800);
+  text-decoration: none;
+  font-weight: var(--weight-semibold);
+}
+.link--button:hover { text-decoration: underline; }

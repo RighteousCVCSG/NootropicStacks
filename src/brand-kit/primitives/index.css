@@ -1,0 +1,21 @@
+/* NootropicStacker Brand Primitives — barrel import
+ * Depends on: brand-kit/tokens.css (must be loaded first)
+ *
+ * Usage:
+ *   @import "brand-kit/tokens.css";
+ *   @import "brand-kit/primitives/index.css";
+ *
+ * Each primitive is a standalone CSS file that uses only CSS custom
+ * properties from tokens.css. No Tailwind, no JS, no coupling to
+ * .brand-prose or any other scoping class — reusable everywhere. */
+
+@import "./button.css";
+@import "./card.css";
+@import "./citation.css";
+@import "./container.css";
+@import "./disclosure.css";
+@import "./heading.css";
+@import "./input.css";
+@import "./link.css";
+@import "./table.css";
+@import "./tier-badge.css";

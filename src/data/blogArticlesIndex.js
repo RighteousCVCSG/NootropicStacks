@@ -1457,6 +1457,55 @@ export const blogArticlesIndex = [
     ],
     "category": "Comparisons",
     "bottomLine": "Caffeine pills win for precision, stackability, and cost-per-dose; coffee wins for the chlorogenic acid and antioxidant profile that may add neuroprotective benefit — but the cognitive enhancement difference at equivalent caffeine doses is small, and the right answer depends on your primary goal."
+  },
+  {
+    "slug": "best-nootropics-for-adhd",
+    "title": "Best Nootropics for ADHD: What Actually Works in 2026",
+    "excerpt": "Evidence-based nootropics for ADHD focus and attention—caffeine+L-theanine, citicoline, omega-3, bacopa, L-tyrosine—with honest safety guidance.",
+    "publishedDate": "2026-04-28",
+    "readTime": 10,
+    "tags": [
+      "nootropics",
+      "adhd",
+      "focus",
+      "attention",
+      "evidence"
+    ],
+    "category": "",
+    "bottomLine": "The best nootropics for ADHD are omega-3, caffeine + L-theanine, citicoline, and bacopa—in that rough order of evidence strength and practical accessibility. None of them are Adderall. None of them will produce the acute focus shift that stimulant medications deliver. What they offer is genuine, if modest, support for the underlying neurochemical environment—and they’re far safer for unsupervised use than stimulant analogs."
+  },
+  {
+    "slug": "best-nootropic-stack-for-studying",
+    "title": "The Best Nootropic Stack for Studying (Student Edition)",
+    "excerpt": "The best nootropic stack for studying isn’t the most expensive or the most exotic. It’s the one that actually works across a 4–8 hour study session without crashing you, disrupting your sleep, or requiring a pharmacy to acquire.",
+    "publishedDate": "2026-04-28",
+    "readTime": 10,
+    "tags": [
+      "nootropics",
+      "studying",
+      "students",
+      "focus",
+      "memory"
+    ],
+    "category": "",
+    "bottomLine": "The best nootropic stack for studying in 2026 is: sleep (not negotiable), caffeine + L-theanine (every session), citicoline (daily), and bacopa (for the semester, not the night before). Lion’s mane is a reasonable optional addition for long-term brain health. Everything else—complex proprietary blends, racetams, peptides, exotic herbs—operates in a much lower-evidence tier."
+  },
+  {
+    "slug": "caffeine-vs-adderall",
+    "title": "Caffeine vs Adderall: An Honest Comparison",
+    "excerpt": "Caffeine vs Adderall—mechanism, evidence, side effects, and when each is appropriate. Honest harm reduction guide focused on what the research actually says about both compounds.",
+    "publishedDate": "2026-04-28",
+    "readTime": 9,
+    "tags": [
+      "nootropics",
+      "caffeine",
+      "adderall",
+      "comparison",
+      "focus",
+      "stimulants"
+    ],
+    "category": "",
+    "bottomLine": "Caffeine is not Adderall. It doesn’t produce anywhere near the dopamine amplification of amphetamine salts, and it won’t replicate the acute focus shift that Adderall provides for people with ADHD. What caffeine—especially paired with L-theanine—does offer is genuine, well-evidenced, legal, safe, and accessible cognitive support for alertness, reaction time, and moderate attention tasks."
   }
 ];
 

@@ -1,0 +1,28 @@
+/* NootropicStacker Container Primitive v1
+ * Depends on tokens.css (CSS custom properties).
+ * Max-width layout wrapper. Centers content with horizontal gutter.
+ * Class: .container
+ * Variants: .container--narrow, .container--base (default), .container--wide, .container--full */
+
+.container {
+  width: 100%;
+  max-width: var(--measure-base);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--gutter-page);
+  padding-right: var(--gutter-page);
+}
+
+.container--narrow {
+  max-width: var(--measure-narrow);
+}
+
+.container--wide {
+  max-width: var(--measure-wide);
+}
+
+.container--full {
+  max-width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}

@@ -554,6 +554,102 @@ function generateTip(synergy, coverage, balance, efficiency, supplementIds, user
   return 'Keep refining — small changes can make a big difference';
 }
 
+// ============================================================
+// HEADLINE DIMENSION SYSTEM (overall / sleep / energy / mind)
+// ============================================================
+
+const DIMENSION_QUAL_LABELS = [
+  { max: 3.9, label: 'Low', level: 1 },
+  { max: 6.9, label: 'Moderate', level: 2 },
+  { max: 9.4, label: 'Strong', level: 3 },
+  { max: 9.5, label: 'Maxed', level: 4 },
+];
+
+function getDimensionQual(value) {
+  for (const entry of DIMENSION_QUAL_LABELS) {
+    if (value <= entry.max) return entry;
+  }
+  return DIMENSION_QUAL_LABELS[DIMENSION_QUAL_LABELS.length - 1];
+}
+
+// Compute the four headline dimensions from raw stack effects.
+// Sleep is a derived dimension (not a direct supplement effect):
+//   balance (stress reduction) is the strongest predictor of sleep quality,
+//   mood contributes to relaxation, and low energy signals readiness for rest.
+// Energy maps directly to the existing energy effect.
+// Mind is a composite of cognitive and mood effects.
+// Overall is a weighted composite of the three primary dimensions.
+export function calculateHeadlineScores(effects) {
+  if (!effects || Object.keys(effects).length === 0) {
+    return { overall: 0, sleep: 0, energy: 0, mind: 0, dimensionQuals: {} };
+  }
+
+  const MAX = MAX_EFFECT_CAP;
+
+  const energy = effects.energy ?? 0;
+
+  const sleep =
+    (effects.balance ?? 0) * 0.45
+    + (effects.mood ?? 0) * 0.25
+    + Math.max(0, MAX - energy) * 0.30;
+
+  const mind =
+    (effects.learning ?? 0) * 0.25
+    + (effects.study ?? 0) * 0.25
+    + (effects.creativity ?? 0) * 0.15
+    + (effects.mood ?? 0) * 0.15
+    + (effects.socialness ?? 0) * 0.10
+    + (effects.balance ?? 0) * 0.10;
+
+  const cap = v => Math.max(0, Math.min(MAX, Math.round(v * 10) / 10));
+  const sleep2 = cap(sleep);
+  const energy2 = cap(energy);
+  const mind2 = cap(mind);
+
+  const overall = cap(sleep2 * 0.25 + energy2 * 0.35 + mind2 * 0.40);
+
+  return {
+    overall,
+    sleep: sleep2,
+    energy: energy2,
+    mind: mind2,
+    dimensionQuals: {
+      overall: getDimensionQual(overall),
+      sleep: getDimensionQual(sleep2),
+      energy: getDimensionQual(energy2),
+      mind: getDimensionQual(mind2),
+    },
+  };
+}
+
+// Generate maxed-dimension suggestions
+function generateDimensionTips(headlineScores) {
+  const tips = [];
+  const maxedDims = Object.entries(headlineScores)
+    .filter(([key, val]) => key !== 'dimensionQuals' && val >= MAX_EFFECT_CAP);
+
+  if (maxedDims.length === 0) return tips;
+
+  maxedDims.forEach(([dim, _]) => {
+    switch (dim) {
+      case 'energy':
+        tips.push({ dimension: dim, message: 'Energy is maxed. Adding more stimulants may cause jitters, anxiety, or sleep disruption — consider reducing or swapping for a non-stimulant focus aid.' });
+        break;
+      case 'sleep':
+        tips.push({ dimension: dim, message: 'Sleep support is maxed. High-dose sleep aids can cause morning grogginess — consider cycling or reducing dosage.' });
+        break;
+      case 'mind':
+        tips.push({ dimension: dim, message: 'Cognitive support is maxed. Adding more nootropics may produce diminishing returns — consider refining your stack for balance instead.' });
+        break;
+      case 'overall':
+        tips.push({ dimension: dim, message: 'Your overall stack score is maxed. Review individual dimensions to see if any area is over-optimized at the expense of another.' });
+        break;
+    }
+  });
+
+  return tips;
+}
+
 // === MAIN: Calculate full Stack Score ===
 export function calculateStackScore(stack, userGoals) {
   const supplementIds = stack.map(item => item.supplementId);
@@ -567,6 +663,11 @@ export function calculateStackScore(stack, userGoals) {
   const gradeInfo = getGrade(total);
   const tip = generateTip(synergy, coverage, balance, efficiency, supplementIds, userGoals);
 
+  // Compute headline dimensions from raw effects
+  const effects = calculateStackEffects(stack);
+  const headlineScores = calculateHeadlineScores(effects);
+  const dimensionTips = generateDimensionTips(headlineScores);
+
   return {
     total,
     grade: gradeInfo.grade,
@@ -578,6 +679,9 @@ export function calculateStackScore(stack, userGoals) {
     tip,
     supplementCount: supplementIds.length,
     goalCount: userGoals.length,
+    headlineScores,
+    dimensionTips,
+    effects,
   };
 }
 

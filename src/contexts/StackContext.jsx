@@ -1,12 +1,28 @@
-import React, { createContext, useContext, useReducer, useEffect } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, useMemo } from 'react';
 import { analyzeStackSafety, recommendSupplements, calculateStackScore } from '../utils/stackAnalyzer.js';
 import { track } from '../lib/analytics.js';
 
 const StackContext = createContext();
+const STORAGE_KEY = 'nootropicstacker-stack';
+
+function loadPersistedStack() {
+  if (typeof window === 'undefined') return [];
+  try {
+    const stored = window.localStorage.getItem(STORAGE_KEY);
+    if (!stored) return [];
+    const parsed = JSON.parse(stored);
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter(
+      entry => entry && typeof entry.supplementId === 'string' && typeof entry.dosage === 'number'
+    );
+  } catch {
+    return [];
+  }
+}
 
 // Initial state
 const initialState = {
-  stack: [],
+  stack: loadPersistedStack(),
   userGoals: ['energy', 'focus'], // Default goals
   safetyAnalysis: null,
   recommendations: [],
@@ -78,6 +94,16 @@ function stackReducer(state, action) {
 export function StackProvider({ children }) {
   const [state, dispatch] = useReducer(stackReducer, initialState);
 
+  // Persist stack to localStorage whenever it changes
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state.stack));
+    } catch {
+      // ignore quota errors
+    }
+  }, [state.stack]);
+
   // Update analysis whenever stack or goals change
   useEffect(() => {
     const safetyAnalysis = analyzeStackSafety(state.stack);
@@ -92,10 +118,9 @@ export function StackProvider({ children }) {
 
   // Actions
   const addSupplement = (supplement, dosage) => {
-    // Check if supplement is already in stack
     const existingItem = state.stack.find(item => item.supplementId === supplement.id);
     if (existingItem) {
-      return false; // Already in stack
+      return false;
     }
 
     dispatch({
@@ -150,6 +175,13 @@ export function StackProvider({ children }) {
     });
   };
 
+  const hasSupplement = useMemo(
+    () => (supplementId) => state.stack.some(item => item.supplementId === supplementId),
+    [state.stack]
+  );
+
+  const itemCount = state.stack.length;
+
   const value = {
     stack: state.stack,
     userGoals: state.userGoals,
@@ -161,7 +193,9 @@ export function StackProvider({ children }) {
     updateDosage,
     setUserGoals,
     clearStack,
-    loadStack
+    loadStack,
+    hasSupplement,
+    itemCount
   };
   return (
     <StackContext.Provider value={value}>
