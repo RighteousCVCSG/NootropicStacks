@@ -35,6 +35,7 @@ const StartHerePage = lazy(() => import('./components/StartHerePage.jsx').then(m
 const ComparisonPage = lazy(() => import('./components/ComparisonPage.jsx').then(m => ({ default: m.ComparisonPage })));
 const NootropicsForFocusPage = lazy(() => import('./components/NootropicsForFocusPage.jsx').then(m => ({ default: m.NootropicsForFocusPage })));
 const NootropicsForAnxietyPage = lazy(() => import('./components/NootropicsForAnxietyPage.jsx').then(m => ({ default: m.NootropicsForAnxietyPage })));
+const LeadMagnetDownloadPage = lazy(() => import('./components/LeadMagnetDownloadPage.jsx').then(m => ({ default: m.LeadMagnetDownloadPage })));
 import { supplements } from './data/supplements.js';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
 import { Button } from '@/components/ui/button.jsx';
@@ -463,6 +464,7 @@ function App() {
             <Route path="/nootropics-for-focus" element={<NootropicsForFocusPage />} />
             <Route path="/nootropics-for-anxiety" element={<NootropicsForAnxietyPage />} />
             <Route path="/start-here" element={<Suspense fallback={<div className="flex items-center justify-center py-16"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div></div>}><StartHerePage /></Suspense>} />
+            <Route path="/downloads/10-stacks" element={<Suspense fallback={<div className="flex items-center justify-center py-16"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div></div>}><LeadMagnetDownloadPage /></Suspense>} />
             <Route path="/guides/:slug" element={<GuideRedirect />} />
             <Route path="*" element={
               <div className="text-center py-20">

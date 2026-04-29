@@ -311,6 +311,160 @@ app.post('/api/newsletter', async (req, res) => {
 });
 
 // ============================================================
+// LEAD MAGNET EMAIL CAPTURE — Beehiiv + MySQL fallback
+// ============================================================
+
+const BEEHIIV_API_KEY = process.env.BEEHIIV_API_KEY;
+const BEEHIIV_PUBLICATION_ID = process.env.BEEHIIV_PUBLICATION_ID;
+const BEEHIIV_DOUBLE_OPT_IN = process.env.BEEHIIV_DOUBLE_OPT_IN !== 'false';
+const BEEHIIV_API_BASE = process.env.BEEHIIV_API_BASE || 'https://api.beehiiv.com/v2';
+const LEAD_MAGNET_PDF_PATH = '/downloads/10-stacks-v1.pdf';
+
+// Simple in-memory rate limiter (per IP)
+const rateLimitMap = new Map();
+const RATE_LIMIT_MS = 5000;
+
+function checkRateLimit(ip) {
+  const now = Date.now();
+  const last = rateLimitMap.get(ip);
+  if (last && now - last < RATE_LIMIT_MS) {
+    return false;
+  }
+  rateLimitMap.set(ip, now);
+  return true;
+}
+
+/**
+ * Subscribe an email via Beehiiv v2 API.
+ * Returns { success: boolean, message: string, beehiivId?: string }.
+ */
+async function subscribeToBeehiiv({ email, source, leadMagnet, articleSlug, referringSite, utmParams }) {
+  if (!BEEHIIV_API_KEY || !BEEHIIV_PUBLICATION_ID) {
+    return { success: false, message: 'Beehiiv not configured' };
+  }
+
+  const url = `${BEEHIIV_API_BASE}/publications/${BEEHIIV_PUBLICATION_ID}/subscriptions`;
+
+  const body = {
+    email: email.toLowerCase().trim(),
+    send_welcome_email: true,
+    utm_source: utmParams?.utm_source || 'nootropicstacker',
+    utm_medium: utmParams?.utm_medium || 'website',
+    utm_campaign: utmParams?.utm_campaign || 'lead_magnet',
+    referring_site: referringSite || 'https://nootropicstacker.com',
+    custom_fields: {
+      signup_source: source || 'website',
+      lead_magnet: leadMagnet || '',
+      article_slug: articleSlug || '',
+    },
+  };
+
+  if (!BEEHIIV_DOUBLE_OPT_IN) {
+    body.preferences = { double_opt_in: false };
+  }
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${BEEHIIV_API_KEY}`,
+      },
+      body: JSON.stringify(body),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      return { success: true, message: 'Check your inbox for the confirmation email!', beehiivId: data?.data?.id };
+    }
+
+    // Beehiiv returns 400 for duplicate — treat as success
+    if (response.status === 400 && data?.errors?.some(e => e?.includes?.('already'))) {
+      return { success: true, message: 'You\'re already subscribed! Check your inbox.' };
+    }
+
+    console.error('Beehiiv subscription error:', response.status, JSON.stringify(data));
+    return { success: false, message: 'Subscription failed. Please try again.' };
+  } catch (err) {
+    console.error('Beehiiv API error:', err.message);
+    return { success: false, message: 'Network error. Please try again.' };
+  }
+}
+
+app.post('/api/email/subscribe', async (req, res) => {
+  const { email, source = 'lead_magnet', leadMagnet, articleSlug, hp_field } = req.body;
+
+  // Honeypot: if robot filled hidden field, silently accept
+  if (hp_field) {
+    return res.json({ ok: true, message: 'Subscribed!' });
+  }
+
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({ error: 'Valid email required' });
+  }
+
+  // Rate limit
+  const clientIp = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.ip;
+  if (!checkRateLimit(clientIp)) {
+    return res.status(429).json({ error: 'Too fast. Please wait a moment.' });
+  }
+
+  const utmParams = {
+    utm_source: source === 'lead_magnet' ? 'lead_magnet' : 'website',
+    utm_medium: 'email_capture',
+    utm_campaign: leadMagnet || articleSlug || 'general',
+  };
+
+  // Try Beehiiv first
+  if (BEEHIIV_API_KEY && BEEHIIV_PUBLICATION_ID) {
+    const beehiivResult = await subscribeToBeehiiv({
+      email, source, leadMagnet, articleSlug,
+      referringSite: req.headers['referer'] || 'https://nootropicstacker.com',
+      utmParams,
+    });
+
+    if (beehiivResult.success) {
+      // Also save to MySQL as backup
+      if (pool) {
+        try {
+          await pool.execute(
+            'INSERT IGNORE INTO newsletter_subscribers (email, source) VALUES (?, ?)',
+            [email.toLowerCase().trim(), source]
+          );
+        } catch { /* non-fatal */ }
+      }
+
+      return res.json({
+        ok: true,
+        message: beehiivResult.message,
+        downloadUrl: leadMagnet ? LEAD_MAGNET_PDF_PATH : null,
+      });
+    }
+  }
+
+  // Fallback: MySQL-only (direct download if lead magnet)
+  if (pool) {
+    try {
+      await pool.execute(
+        'INSERT IGNORE INTO newsletter_subscribers (email, source) VALUES (?, ?)',
+        [email.toLowerCase().trim(), source]
+      );
+    } catch (err) {
+      console.error('Email subscribe MySQL error:', err.message);
+    }
+  }
+
+  res.json({
+    ok: true,
+    message: BEEHIIV_API_KEY
+      ? 'Subscribed! (Check your inbox.)'
+      : 'Subscribed! Download your guide below.',
+    downloadUrl: leadMagnet ? LEAD_MAGNET_PDF_PATH : null,
+  });
+});
+
+// ============================================================
 // CONTACT ROUTES
 // ============================================================
 
