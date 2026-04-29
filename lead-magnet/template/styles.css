@@ -1,0 +1,340 @@
+/* Lead-magnet PDF — v1 typography
+ * Brand voice: warm, precise, teaching. Editorial restraint, not vendor-y.
+ *
+ * Forking guide for v2 (UXDesigner):
+ *   1. Override --color-* tokens for palette shifts.
+ *   2. Replace font-family rules in body / h1-h4 to swap typefaces.
+ *   3. Cover hero lives in .cover; stack pages share .stack-page.
+ *   4. Print-only @page rules at the bottom control margins, footer, page nums.
+ */
+
+:root {
+  --color-paper:   #fdfbf7;   /* warm off-white */
+  --color-ink:     #2a2520;   /* warm near-black */
+  --color-muted:   #6b6357;   /* warm gray */
+  --color-rule:    #d9d0c2;   /* hairline */
+  --color-accent:  #2f6e63;   /* mature teal — restrained */
+  --color-accent-soft: #eaf1ee;
+  --color-callout: #fbf3e1;   /* parchment for blockquotes */
+
+  --font-serif: "Source Serif Pro", "Source Serif 4", "Charter", Georgia, "Times New Roman", serif;
+  --font-sans:  "Inter", "Source Sans Pro", system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+
+  --measure: 6.6in;            /* readable line length on Letter */
+  --base-size: 10.5pt;
+  --base-leading: 1.55;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-serif);
+  font-size: var(--base-size);
+  line-height: var(--base-leading);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+  font-feature-settings: "kern", "liga", "onum";
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-accent) 35%, transparent);
+}
+
+p { margin: 0 0 0.55em; }
+strong { font-weight: 600; }
+em { font-style: italic; }
+
+ul {
+  margin: 0 0 0.6em 0;
+  padding-left: 1.1em;
+}
+ul li { margin-bottom: 0.18em; }
+
+hr { display: none; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  line-height: 1.18;
+}
+
+h1 { font-size: 28pt; margin: 0 0 0.4em; }
+h2 { font-size: 18pt; margin: 0 0 0.55em; letter-spacing: -0.01em; }
+h3 { font-size: 12pt; margin: 1.1em 0 0.35em; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-accent); font-weight: 700; font-size: 9.5pt; }
+h4 { font-size: 11pt; margin: 1em 0 0.3em; }
+
+blockquote {
+  margin: 0.8em 0;
+  padding: 0.7em 0.9em;
+  background: var(--color-callout);
+  border-left: 3px solid var(--color-accent);
+  border-radius: 2px;
+  font-size: 9.8pt;
+}
+blockquote p:last-child { margin-bottom: 0; }
+blockquote strong { color: var(--color-ink); }
+
+/* === Page architecture === */
+
+.cover,
+.intro,
+.stack-page,
+.outro {
+  position: relative;
+  page-break-after: always;
+  break-after: page;
+}
+.outro:last-child {
+  page-break-after: auto;
+  break-after: auto;
+}
+
+.cover {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 9.4in;
+}
+
+.cover-badge {
+  font-family: var(--font-sans);
+  font-size: 8.5pt;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.cover-title {
+  font-family: var(--font-sans);
+  font-size: 42pt;
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: -0.022em;
+  margin: 0.55em 0 0.4em;
+  max-width: 6.4in;
+}
+
+.cover-subtitle {
+  font-size: 14pt;
+  line-height: 1.4;
+  color: var(--color-muted);
+  font-style: italic;
+  max-width: 6in;
+}
+
+.cover-meta {
+  margin-top: 1.4in;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.45in;
+  font-size: 9.5pt;
+  font-family: var(--font-sans);
+}
+.cover-meta dt {
+  font-size: 7.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-muted);
+  font-weight: 600;
+  margin-bottom: 0.2em;
+}
+.cover-meta dd {
+  margin: 0;
+  color: var(--color-ink);
+  font-size: 10pt;
+  font-weight: 500;
+}
+
+.cover-disclosure {
+  margin-top: 0.6in;
+  padding: 0.22in 0.28in;
+  background: var(--color-accent-soft);
+  border-radius: 4px;
+  font-size: 8.8pt;
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+.cover-disclosure strong {
+  font-family: var(--font-sans);
+  font-size: 8pt;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-accent);
+  display: block;
+  margin-bottom: 0.4em;
+}
+
+.cover-rule {
+  height: 4px;
+  width: 0.9in;
+  background: var(--color-accent);
+  margin-bottom: 0.18in;
+}
+
+/* === Intro / How we chose === */
+
+.intro h2,
+.outro h2 {
+  font-size: 22pt;
+  margin-bottom: 0.45em;
+  letter-spacing: -0.01em;
+}
+
+.intro ol {
+  padding-left: 1.2em;
+  margin: 0.5em 0 0.9em;
+}
+.intro ol li { margin-bottom: 0.45em; }
+
+/* === Stack pages === */
+
+.stack-page {
+  display: flex;
+  flex-direction: column;
+}
+.stack-num {
+  font-family: var(--font-sans);
+  font-size: 8pt;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--color-accent);
+  font-weight: 700;
+  margin-bottom: 0.18em;
+}
+.stack-title {
+  font-family: var(--font-sans);
+  font-size: 20pt;
+  font-weight: 700;
+  letter-spacing: -0.018em;
+  line-height: 1.15;
+  margin: 0 0 0.18em;
+  color: var(--color-ink);
+}
+.stack-target {
+  font-size: 11.5pt;
+  font-style: italic;
+  color: var(--color-muted);
+  margin-bottom: 0.55em;
+  max-width: 6in;
+}
+
+.stack-rule {
+  height: 2px;
+  width: 0.65in;
+  background: var(--color-accent);
+  margin: 0.05in 0 0.2in;
+}
+
+.stack-section h3 {
+  margin-top: 0.7em;
+  margin-bottom: 0.25em;
+}
+
+.stack-buy {
+  margin-top: auto;
+  padding: 0.18in 0.22in;
+  border: 1px solid var(--color-accent);
+  border-radius: 4px;
+  background: var(--color-paper);
+  font-size: 10pt;
+  line-height: 1.5;
+}
+.stack-buy::before {
+  content: "Where to buy ";
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 7.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-accent);
+  font-weight: 700;
+  margin-bottom: 0.25em;
+}
+
+/* Soft inline cards for the "Who this is for" / NOT for split */
+.audience-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.18in;
+  margin-top: 0.3em;
+  font-size: 9.7pt;
+}
+.audience-grid > div {
+  padding: 0.18in 0.2in;
+  background: #f6f1e8;
+  border-radius: 3px;
+}
+.audience-grid h4 {
+  margin: 0 0 0.25em;
+  font-size: 7.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-muted);
+  font-family: var(--font-sans);
+}
+.audience-grid .neg h4 { color: #8a4a3c; }
+
+/* Outro pages */
+.outro h3 {
+  margin-top: 0.9em;
+  font-size: 9pt;
+}
+
+/* === Print page setup === */
+
+@page {
+  size: letter;
+  margin: 0.55in 0.65in 0.85in;
+
+  @bottom-left {
+    content: "Nootropicstacker · 10 Evidence-Backed Nootropic Stacks · Rev. 2026-04-29";
+    font-family: "Inter", "Source Sans Pro", system-ui, sans-serif;
+    font-size: 7.5pt;
+    color: #6b6357;
+    letter-spacing: 0.04em;
+  }
+  @bottom-right {
+    content: counter(page);
+    font-family: "Inter", "Source Sans Pro", system-ui, sans-serif;
+    font-size: 8pt;
+    color: #6b6357;
+    font-weight: 600;
+  }
+  @bottom-center {
+    content: "Affiliate: nootropicstk-20 · Not medical advice";
+    font-family: "Inter", "Source Sans Pro", system-ui, sans-serif;
+    font-size: 7pt;
+    color: #8a8275;
+    letter-spacing: 0.04em;
+  }
+}
+
+/* No footer on cover */
+@page :first {
+  @bottom-left  { content: none; }
+  @bottom-right { content: none; }
+  @bottom-center { content: none; }
+}
+
+/* === Screen preview niceties (when opened in browser) === */
+@media screen {
+  body { padding: 0.4in 0; }
+  .cover, .intro, .stack-page, .outro {
+    margin: 0 auto 0.4in;
+    background: var(--color-paper);
+    box-shadow: 0 6px 28px rgba(0,0,0,0.10);
+    padding: 0.7in 0.7in 0.6in;
+    width: 8.5in;
+    min-height: 11in;
+  }
+  .stack-page { display: flex; flex-direction: column; }
+}
