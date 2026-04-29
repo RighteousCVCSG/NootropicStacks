@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import { createServer } from 'http';
 import { createReadStream, statSync } from 'fs';
 import { extname } from 'path';
+import { execSync } from 'child_process';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -142,6 +143,7 @@ async function prerender() {
     '/usr/bin/chromium',
     '/snap/bin/chromium',
     '/home/chris/.agent-browser/browsers/chrome-148.0.7778.56/chrome',
+    ...(() => { try { return execSync('which chromium-browser chromium google-chrome-stable google-chrome 2>/dev/null || true', {encoding:'utf8'}).trim().split('\n').filter(Boolean); } catch { return []; } })(),
   ].filter(Boolean);
 
   let executablePath = null;
