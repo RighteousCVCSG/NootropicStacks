@@ -397,6 +397,14 @@ function App() {
 
         {/* Main Content */}
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          {/* Amazon Associates affiliate disclosure — visible above the fold on every page (NOO-40) */}
+          <p
+            data-testid="affiliate-disclosure"
+            className="mb-2 rounded border border-gray-200 bg-gray-50 px-3 py-1.5 text-center text-xs leading-snug text-gray-700"
+          >
+            <strong className="font-semibold">Affiliate Disclosure:</strong> As an Amazon Associate we earn from qualifying purchases.
+          </p>
+
           {/* Medical Disclaimer */}
           <Alert className="mb-3 border-orange-200 bg-orange-50 py-2">
             <AlertTriangle className="h-3 w-3 text-orange-600" />
