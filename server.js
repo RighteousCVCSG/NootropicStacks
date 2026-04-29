@@ -336,7 +336,7 @@ const BEEHIIV_API_KEY = process.env.BEEHIIV_API_KEY;
 const BEEHIIV_PUBLICATION_ID = process.env.BEEHIIV_PUBLICATION_ID;
 const BEEHIIV_DOUBLE_OPT_IN = process.env.BEEHIIV_DOUBLE_OPT_IN !== 'false';
 const BEEHIIV_API_BASE = process.env.BEEHIIV_API_BASE || 'https://api.beehiiv.com/v2';
-const LEAD_MAGNET_PDF_PATH = '/downloads/10-stacks-v1.pdf';
+const LEAD_MAGNET_PDF_PATH = '/lead-magnet-v2.pdf';
 
 if (BEEHIIV_API_KEY && BEEHIIV_PUBLICATION_ID) {
   console.log(`Beehiiv configured (pub: ${BEEHIIV_PUBLICATION_ID}, double-opt-in: ${BEEHIIV_DOUBLE_OPT_IN})`);
