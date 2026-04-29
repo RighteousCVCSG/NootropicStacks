@@ -1,23 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button.jsx';
 import { Input } from '@/components/ui/input.jsx';
 import { Mail, CheckCircle } from 'lucide-react';
 import { track } from '../lib/analytics.js';
+import { useLocation } from 'react-router-dom';
 
-export function NewsletterCapture({ source = 'homepage_banner' }) {
+export function NewsletterCapture({ source = 'footer' }) {
   const [email, setEmail] = useState('');
-  const [status, setStatus] = useState('idle'); // idle | loading | success | error
+  const [status, setStatus] = useState('idle');
   const [message, setMessage] = useState('');
+  const honeypotRef = useRef(null);
+  const location = useLocation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email) return;
+    if (honeypotRef.current?.value) return;
     setStatus('loading');
     try {
       const res = await fetch('/api/email/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, source, hp_field: '' }),
+        body: JSON.stringify({
+          email,
+          source,
+          articleSlug: '',
+          hp_field: honeypotRef.current?.value || '',
+        }),
       });
       const data = await res.json();
       if (res.ok) {
@@ -54,6 +63,15 @@ export function NewsletterCapture({ source = 'homepage_banner' }) {
           </div>
         </div>
         <form onSubmit={handleSubmit} className="flex gap-2 w-full sm:w-auto">
+          <input
+            ref={honeypotRef}
+            type="text"
+            name="hp_field"
+            tabIndex={-1}
+            autoComplete="off"
+            className="absolute left-[-9999px]"
+            aria-hidden="true"
+          />
           <Input
             type="email"
             placeholder="your@email.com"
