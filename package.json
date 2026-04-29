@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build:index": "node scripts/build-article-index.mjs",
-    "build": "node scripts/build-article-index.mjs && vite build && node scripts/prerender.mjs && cp server.js dist/index.js",
+    "build": "node scripts/build-article-index.mjs && vite build && cp server.js dist/index.js",
+    "build:full": "node scripts/build-article-index.mjs && vite build && node scripts/prerender.mjs && cp server.js dist/index.js",
     "pdf": "node lead-magnet/build.mjs",
     "start": "node server.js",
     "migrate": "node server/migrate.js",
@@ -15,7 +16,6 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
-    "puppeteer-core": "^24.42.0",
     "react": "^19.1.0",
     "react-day-picker": "8.10.1",
     "react-dom": "^19.1.0",
