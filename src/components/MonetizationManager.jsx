@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button.jsx';
 import { Badge } from '@/components/ui/badge.jsx';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
 import { ExternalLink, DollarSign, TrendingUp, Users, Eye, ShoppingCart } from 'lucide-react';
+import { useAffiliateCampaign, withAffiliateUtms } from '@/lib/affiliate.js';
 
 // ============================================================
 // AFFILIATE CONFIGURATION
@@ -565,7 +566,8 @@ export function MonetizationManager() {
 // Affiliate link component for supplements
 export function AffiliateLinks({ supplementId, supplementName }) {
   const links = AFFILIATE_LINKS[supplementId];
-  
+  const campaign = useAffiliateCampaign();
+
   if (!links) return null;
 
   const handleClick = (vendor, estimatedPrice = 25) => {
@@ -600,10 +602,11 @@ export function AffiliateLinks({ supplementId, supplementName }) {
             buymodafinilonline: { label: '💊 Buy Modafinil Online', desc: 'Trusted vendor' },
           };
           const info = vendorLabels[vendor] || { label: vendor, desc: '' };
+          const href = vendor === 'amazon' ? withAffiliateUtms(url, { campaign }) : url;
           return (
             <a
               key={vendor}
-              href={url}
+              href={href}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => handleClick(vendor)}

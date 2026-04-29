@@ -4,6 +4,7 @@ import { ExternalLink, ShieldAlert, AlertTriangle, Brain, ChevronRight, BookOpen
 import { Card, CardContent } from '@/components/ui/card.jsx';
 import { Badge } from '@/components/ui/badge.jsx';
 import { SEOOptimizer } from './SEOOptimizer.jsx';
+import { buildAmazonSearchLink } from '@/lib/affiliate.js';
 
 const ANXIETY_SUPPLEMENTS = [
   {
@@ -155,7 +156,7 @@ function trackClick(name, vendor) {
 }
 
 function AffiliateButtons({ name }) {
-  const amazonUrl = `https://www.amazon.com/s?k=${encodeURIComponent(name)}+supplement&tag=nootropicstk-20`;
+  const amazonUrl = buildAmazonSearchLink(`${name} supplement`, { campaign: 'nootropics-for-anxiety' });
   const iherbUrl = `https://www.iherb.com/search?kw=${encodeURIComponent(name)}`;
 
   return (

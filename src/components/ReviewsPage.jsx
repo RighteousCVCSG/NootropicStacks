@@ -4,6 +4,7 @@ import { ExternalLink, Star, Brain, CheckCircle, XCircle, ShieldCheck } from 'lu
 import { Card, CardContent } from '@/components/ui/card.jsx';
 import { Badge } from '@/components/ui/badge.jsx';
 import { SEOOptimizer } from './SEOOptimizer.jsx';
+import { withAffiliateUtms } from '@/lib/affiliate.js';
 
 const REVIEWS = [
   {
@@ -296,7 +297,7 @@ export function ReviewsPage() {
                   <div className="flex gap-2 flex-shrink-0">
                     {product.links.amazon && (
                       <a
-                        href={product.links.amazon}
+                        href={withAffiliateUtms(product.links.amazon, { campaign: `reviews-${product.id}` })}
                         target="_blank"
                         rel="noopener noreferrer sponsored"
                         onClick={() => trackClick(product.name, 'amazon')}

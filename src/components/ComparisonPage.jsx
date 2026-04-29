@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button.jsx';
 import { Progress } from '@/components/ui/progress.jsx';
 import { SEOOptimizer } from './SEOOptimizer.jsx';
 import { supplements } from '../data/supplements.js';
+import { buildAmazonSearchLink, useAffiliateCampaign } from '@/lib/affiliate.js';
 
 // Effect labels with display names for the actual data schema
 const EFFECT_LABELS = {
@@ -62,7 +63,9 @@ function trackClick(name, vendor) {
 }
 
 function AffiliateButtons({ supplement }) {
-  const amazonUrl = `https://www.amazon.com/s?k=${encodeURIComponent(supplement.name)}+supplement&tag=nootropicstk-20`;
+  const baseCampaign = useAffiliateCampaign();
+  const campaign = `${baseCampaign}-${supplement.id}`;
+  const amazonUrl = buildAmazonSearchLink(`${supplement.name} supplement`, { campaign });
   const iherbUrl = `https://www.iherb.com/search?kw=${encodeURIComponent(supplement.name)}`;
 
   return (

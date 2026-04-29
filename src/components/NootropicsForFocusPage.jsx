@@ -4,6 +4,7 @@ import { ExternalLink, Star, Brain, Zap, Target, FlaskConical, ArrowRight, BookO
 import { Card, CardContent } from '@/components/ui/card.jsx';
 import { Badge } from '@/components/ui/badge.jsx';
 import { SEOOptimizer } from './SEOOptimizer.jsx';
+import { buildAmazonSearchLink } from '@/lib/affiliate.js';
 
 // Top 8 focus supplements — ranked by combined study+learning score from supplements.js
 // Mechanism text written to match evidence-based summaries already used in BestNootropicsPage
@@ -253,7 +254,7 @@ export function NootropicsForFocusPage() {
 
           <div className="space-y-6">
             {TOP_FOCUS_SUPPLEMENTS.map((s) => {
-              const amazonUrl = `https://www.amazon.com/s?k=${encodeURIComponent(s.name)}+supplement&tag=nootropicstk-20`;
+              const amazonUrl = buildAmazonSearchLink(`${s.name} supplement`, { campaign: 'nootropics-for-focus' });
               const iherbUrl = `https://www.iherb.com/search?kw=${encodeURIComponent(s.name)}`;
               const scoreBarWidth = `${s.focusScore}%`;
 
