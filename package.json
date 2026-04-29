@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build:index": "node scripts/build-article-index.mjs",
-    "build": "node scripts/build-article-index.mjs && vite build && cp server.js dist/index.js",
+    "build": "node scripts/build-article-index.mjs && vite build && cp public/sitemap.xml dist/sitemap.xml && node scripts/prerender.mjs && cp server.js dist/index.js",
+    "build:prerender": "node scripts/prerender.mjs",
     "start": "node server.js",
     "migrate": "node server/migrate.js",
     "lint": "eslint .",
