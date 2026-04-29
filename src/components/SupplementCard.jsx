@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Plus, Info, ShoppingCart } from 'lucide-react';
 import { useStack } from '../contexts/StackContext.jsx';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
+import { withAffiliateUtms } from '@/lib/affiliate.js';
 
 export function SupplementCard({ supplement, onViewDetails }) {
   const { addSupplement, stack } = useStack();
@@ -123,7 +124,11 @@ export function SupplementCard({ supplement, onViewDetails }) {
             className="w-full text-green-700 border-green-300 hover:bg-green-50"
             onClick={() => {
               const links = AFFILIATE_LINKS[supplement.id];
-              const url = links.nootropicsdepot || links.amazon || links.iherb || Object.values(links).find(v => typeof v === 'string');
+              const url = links.nootropicsdepot || (
+                links.amazon ? withAffiliateUtms(links.amazon, { campaign: `supplement-${supplement.id}` }) : (
+                  links.iherb || Object.values(links).find(v => typeof v === 'string')
+                )
+              );
               if (url) window.open(url, '_blank');
             }}
           >

@@ -11,6 +11,7 @@ import { supplements } from '../data/supplements.js';
 import { useStack } from '../contexts/StackContext.jsx';
 import { analyzeStackSafety } from '../utils/stackAnalyzer.js';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
+import { withAffiliateUtms } from '@/lib/affiliate.js';
 
 export function PredefinedStacks() {
   const { loadStack, stack } = useStack();
@@ -256,7 +257,7 @@ export function PredefinedStacks() {
                           return (
                             <div className="flex gap-2 mt-2">
                               {links.amazon && (
-                                <a href={links.amazon} target="_blank" rel="noopener noreferrer sponsored"
+                                <a href={withAffiliateUtms(links.amazon, { campaign: `stack-${stackData.id}` })} target="_blank" rel="noopener noreferrer sponsored"
                                    onClick={() => trackClick('amazon')}
                                    className="flex items-center gap-1 text-xs bg-orange-500 hover:bg-orange-600 text-white px-3 py-1.5 rounded font-medium transition-colors">
                                   <ShoppingCart className="w-3 h-3" /> Amazon

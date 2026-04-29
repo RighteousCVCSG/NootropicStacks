@@ -4,6 +4,7 @@ import { ExternalLink, Brain, Zap, Heart, BookOpen, Moon, Target } from 'lucide-
 import { Card, CardContent } from '@/components/ui/card.jsx';
 import { Badge } from '@/components/ui/badge.jsx';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
+import { withAffiliateUtms } from '@/lib/affiliate.js';
 import { SEOOptimizer } from './SEOOptimizer.jsx';
 
 const CURATED_STACKS = [
@@ -214,7 +215,7 @@ export function BestStacksPage() {
                             <div className="flex gap-2 flex-shrink-0">
                               {links.amazon && (
                                 <a
-                                  href={links.amazon}
+                                  href={withAffiliateUtms(links.amazon, { campaign: `stack-${stack.id}` })}
                                   target="_blank"
                                   rel="noopener noreferrer sponsored"
                                   onClick={() => trackClick(supp.id, 'amazon')}

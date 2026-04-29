@@ -9,6 +9,7 @@ import { ArrowRight, ArrowLeft, Sparkles, Brain, Zap, Heart, Moon, Shield, Plus,
 import { supplements } from '../data/supplements.js';
 import { useStack } from '../contexts/StackContext.jsx';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
+import { withAffiliateUtms } from '@/lib/affiliate.js';
 import { SEOOptimizer } from './SEOOptimizer.jsx';
 
 const QUESTIONS = [
@@ -275,7 +276,11 @@ export function StackQuiz() {
                           className="text-green-700 border-green-300"
                           onClick={() => {
                             const links = AFFILIATE_LINKS[rec.id];
-                            const url = links.nootropicsdepot || links.amazon || links.iherb || Object.values(links).find(v => typeof v === 'string');
+                            const url = links.nootropicsdepot || (
+                              links.amazon ? withAffiliateUtms(links.amazon, { campaign: `quiz-${rec.id}` }) : (
+                                links.iherb || Object.values(links).find(v => typeof v === 'string')
+                              )
+                            );
                             if (url) window.open(url, '_blank');
                           }}
                         >

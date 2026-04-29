@@ -8,6 +8,7 @@ import { Calendar, Clock, ArrowLeft, BookOpen, Share2, ShoppingCart, ExternalLin
 import { getRecentArticlesMeta } from '../data/blogArticlesIndex.js';
 import { SEOOptimizer, generateArticleStructuredData } from './SEOOptimizer.jsx';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
+import { withAffiliateUtms } from '@/lib/affiliate.js';
 
 const TAG_TO_SUPPLEMENT = {
   'lions-mane': 'lions-mane-mushroom',
@@ -239,7 +240,7 @@ export function BlogArticlePage() {
                     <p className="font-medium text-gray-800 text-sm mb-2">{name}</p>
                     <div className="flex gap-2">
                       {links.amazon && (
-                        <a href={links.amazon} target="_blank" rel="noopener noreferrer sponsored"
+                        <a href={withAffiliateUtms(links.amazon, { campaign: `blog-${slug}` })} target="_blank" rel="noopener noreferrer sponsored"
                            onClick={() => fetch('/api/track/click', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ supplementId: id, vendor: 'amazon', page: 'blog' }) })}
                            className="flex items-center gap-1 text-xs bg-orange-500 hover:bg-orange-600 text-white px-3 py-1.5 rounded font-medium transition-colors">
                           <ExternalLink className="w-3 h-3" /> Amazon

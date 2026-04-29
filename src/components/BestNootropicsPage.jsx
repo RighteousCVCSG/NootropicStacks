@@ -4,6 +4,7 @@ import { ExternalLink, Star, Award, Zap, Brain, Heart, ShoppingCart } from 'luci
 import { Card, CardContent } from '@/components/ui/card.jsx';
 import { Badge } from '@/components/ui/badge.jsx';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
+import { withAffiliateUtms } from '@/lib/affiliate.js';
 import { SEOOptimizer } from './SEOOptimizer.jsx';
 
 const TOP_NOOTROPICS = [
@@ -190,7 +191,7 @@ export function BestNootropicsPage() {
                           View full profile →
                         </Link>
                         {links?.amazon && (
-                          <a href={links.amazon} target="_blank" rel="noopener noreferrer sponsored"
+                          <a href={withAffiliateUtms(links.amazon, { campaign: `nootropic-${nootropic.id}` })} target="_blank" rel="noopener noreferrer sponsored"
                              onClick={() => trackClick(nootropic.id, 'amazon')}
                              className="flex items-center gap-1 text-xs bg-orange-500 hover:bg-orange-600 text-white px-3 py-1.5 rounded font-medium transition-colors">
                             <ExternalLink className="w-3 h-3" /> Amazon

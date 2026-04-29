@@ -11,6 +11,7 @@ import { supplements } from '../data/supplements.js';
 import { SaveStackDialog } from './SaveStackDialog.jsx';
 import { SavedStacksList } from './SavedStacksList.jsx';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
+import { withAffiliateUtms } from '@/lib/affiliate.js';
 
 // Estimated monthly costs in USD (based on typical market prices for quality products)
 const MONTHLY_COSTS = {
@@ -247,7 +248,11 @@ export function StackPanel() {
                   {stackWithLinks.slice(0, 5).map(item => {
                     const links = AFFILIATE_LINKS[item.supplementId];
                     const supplement = supplements.find(s => s.id === item.supplementId);
-                    const buyUrl = links.amazon || links.iherb || links.nootropicsdepot || Object.values(links).find(v => typeof v === 'string');
+                    const buyUrl = links.nootropicsdepot || (
+                      links.amazon ? withAffiliateUtms(links.amazon, { campaign: `stack-${item.supplementId}` }) : (
+                        links.iherb || Object.values(links).find(v => typeof v === 'string')
+                      )
+                    );
                     if (!supplement || !buyUrl) return null;
                     return (
                       <a
