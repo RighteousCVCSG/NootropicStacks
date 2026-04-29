@@ -7,6 +7,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
 import { Trash2, AlertTriangle, CheckCircle, XCircle, Save, ShoppingCart, ExternalLink, Share2 } from 'lucide-react';
 import { useStack } from '../contexts/StackContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
+import { track } from '../lib/analytics.js';
 import { supplements } from '../data/supplements.js';
 import { SaveStackDialog } from './SaveStackDialog.jsx';
 import { SavedStacksList } from './SavedStacksList.jsx';
@@ -55,6 +56,7 @@ export function StackPanel() {
       setShareCopied(true);
       setTimeout(() => setShareCopied(false), 2000);
     });
+    track('stack_share', { stack_size: stack.length, supplement_ids: ids });
   };
 
   if (stack.length === 0) {
@@ -62,12 +64,12 @@ export function StackPanel() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+            <div className="w-3 h-3 bg-primary-800 rounded-full"></div>
             My Stack
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-gray-500 text-center py-8">
+          <p className="text-ink-500 text-center py-8">
             No supplements in your stack yet. Add some from the library below!
           </p>
         </CardContent>
@@ -76,41 +78,41 @@ export function StackPanel() {
   }
 
   const getEffectColor = (value) => {
-    if (value >= 9.5) return 'bg-red-500';
-    if (value >= 8) return 'bg-orange-500';
-    if (value >= 6) return 'bg-yellow-500';
-    if (value >= 3) return 'bg-green-500';
-    return 'bg-gray-300';
+    if (value >= 9.5) return 'bg-danger-500';
+    if (value >= 8) return 'bg-warn-500';
+    if (value >= 6) return 'bg-warn-500';
+    if (value >= 3) return 'bg-success-500';
+    return 'bg-ink-300';
   };
 
   const getEffectTextColor = (value) => {
-    if (value >= 9.5) return 'text-red-700';
-    if (value >= 8) return 'text-orange-700';
-    if (value >= 6) return 'text-yellow-700';
-    if (value >= 3) return 'text-green-700';
-    return 'text-gray-600';
+    if (value >= 9.5) return 'text-danger-700';
+    if (value >= 8) return 'text-warn-700';
+    if (value >= 6) return 'text-warn-700';
+    if (value >= 3) return 'text-success-700';
+    return 'text-ink-500';
   };
 
   const getSafetyIcon = () => {
-    if (!safetyAnalysis) return <CheckCircle className="w-5 h-5 text-green-500" />;
+    if (!safetyAnalysis) return <CheckCircle className="w-5 h-5 text-success-500" />;
     
     const hasHighSeverity = safetyAnalysis.warnings.some(w => w.severity === 'high');
     const hasMediumSeverity = safetyAnalysis.warnings.some(w => w.severity === 'medium');
     
-    if (hasHighSeverity) return <XCircle className="w-5 h-5 text-red-500" />;
-    if (hasMediumSeverity) return <AlertTriangle className="w-5 h-5 text-orange-500" />;
-    return <CheckCircle className="w-5 h-5 text-green-500" />;
+    if (hasHighSeverity) return <XCircle className="w-5 h-5 text-danger-500" />;
+    if (hasMediumSeverity) return <AlertTriangle className="w-5 h-5 text-warn-500" />;
+    return <CheckCircle className="w-5 h-5 text-success-500" />;
   };
 
   const getSafetyColor = () => {
-    if (!safetyAnalysis) return 'text-green-600';
+    if (!safetyAnalysis) return 'text-success-500';
     
     const hasHighSeverity = safetyAnalysis.warnings.some(w => w.severity === 'high');
     const hasMediumSeverity = safetyAnalysis.warnings.some(w => w.severity === 'medium');
     
-    if (hasHighSeverity) return 'text-red-600';
-    if (hasMediumSeverity) return 'text-orange-600';
-    return 'text-green-600';
+    if (hasHighSeverity) return 'text-danger-500';
+    if (hasMediumSeverity) return 'text-warn-500';
+    return 'text-success-500';
   };
 
   return (
@@ -119,7 +121,7 @@ export function StackPanel() {
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+              <div className="w-3 h-3 bg-primary-800 rounded-full"></div>
               My Stack ({stack.length} supplements)
             </div>
             <div className="flex items-center gap-2">
@@ -128,7 +130,7 @@ export function StackPanel() {
                   <Share2 className="w-3.5 h-3.5 mr-1" />Share
                 </Button>
                 {shareCopied && (
-                  <span className="text-xs text-green-600 font-medium">Link copied!</span>
+                  <span className="text-xs text-success-500 font-medium">Link copied!</span>
                 )}
               </div>
               {user && stack.length > 0 && (
@@ -174,20 +176,20 @@ export function StackPanel() {
                 <Alert 
                   key={index} 
                   className={`${
-                    warning.severity === 'high' ? 'border-red-200 bg-red-50' :
-                    warning.severity === 'medium' ? 'border-orange-200 bg-orange-50' :
-                    'border-yellow-200 bg-yellow-50'
+                    warning.severity === 'high' ? 'border-danger-100 bg-danger-100' :
+                    warning.severity === 'medium' ? 'border-warn-100 bg-warn-100' :
+                    'border-warn-100 bg-warn-100'
                   }`}
                 >
                   <AlertTriangle className={`h-4 w-4 ${
-                    warning.severity === 'high' ? 'text-red-600' :
-                    warning.severity === 'medium' ? 'text-orange-600' :
-                    'text-yellow-600'
+                    warning.severity === 'high' ? 'text-danger-500' :
+                    warning.severity === 'medium' ? 'text-warn-500' :
+                    'text-warn-500'
                   }`} />
                   <AlertDescription className={`${
-                    warning.severity === 'high' ? 'text-red-800' :
-                    warning.severity === 'medium' ? 'text-orange-800' :
-                    'text-yellow-800'
+                    warning.severity === 'high' ? 'text-danger-700' :
+                    warning.severity === 'medium' ? 'text-warn-700' :
+                    'text-warn-700'
                   }`}>
                     {warning.message}
                   </AlertDescription>
@@ -203,10 +205,10 @@ export function StackPanel() {
               if (!supplement) return null;
 
               return (
-                <div key={stackItem.supplementId} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div key={stackItem.supplementId} className="flex items-center justify-between p-3 bg-ink-050 rounded-lg">
                   <div className="flex-1">
                     <div className="font-medium">{supplement.name}</div>
-                    <div className="text-sm text-gray-600">
+                    <div className="text-sm text-ink-500">
                       {stackItem.dosage} {supplement.dosage.unit} • {stackItem.timing}
                     </div>
                   </div>
@@ -218,13 +220,13 @@ export function StackPanel() {
                       min={supplement.dosage.min}
                       max={supplement.dosage.max}
                       step={supplement.dosage.unit === 'mcg' ? 10 : supplement.dosage.unit === 'mg' ? 50 : 1}
-                      className="w-20 px-2 py-1 text-sm border rounded"
+                      className="w-20 px-2 py-1 text-sm border border-input rounded-md"
                     />
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => removeSupplement(stackItem.supplementId)}
-                      className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                      className="text-danger-500 hover:text-danger-700 hover:bg-danger-100"
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>
@@ -240,7 +242,7 @@ export function StackPanel() {
             if (stackWithLinks.length === 0) return null;
             return (
               <div className="mt-4 pt-4 border-t">
-                <h4 className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-1">
+                <h4 className="text-sm font-semibold text-ink-700 mb-2 flex items-center gap-1">
                   <ShoppingCart className="w-4 h-4" />
                   Shop Your Stack
                 </h4>
@@ -260,10 +262,10 @@ export function StackPanel() {
                         href={buyUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-between p-2 rounded hover:bg-green-50 text-sm group"
+                        className="flex items-center justify-between p-2 rounded hover:bg-success-100 text-sm group"
                       >
-                        <span className="text-gray-700 group-hover:text-green-800 truncate mr-2">{supplement.name}</span>
-                        <span className="text-green-600 text-xs font-medium shrink-0 flex items-center gap-1">
+                        <span className="text-ink-700 group-hover:text-success-700 truncate mr-2">{supplement.name}</span>
+                        <span className="text-success-500 text-xs font-medium shrink-0 flex items-center gap-1">
                           Buy <ExternalLink className="w-3 h-3" />
                         </span>
                       </a>
@@ -271,7 +273,7 @@ export function StackPanel() {
                   })}
                 </div>
                 {stackWithLinks.length > 5 && (
-                  <p className="text-xs text-gray-500 mt-1">+{stackWithLinks.length - 5} more in your stack</p>
+                  <p className="text-xs text-ink-500 mt-1">+{stackWithLinks.length - 5} more in your stack</p>
                 )}
               </div>
             );
@@ -281,12 +283,12 @@ export function StackPanel() {
           {stack.length > 0 && (
             <div className="mt-3 pt-3 border-t flex items-center justify-between">
               <div>
-                <p className="text-xs text-gray-500">Estimated monthly cost</p>
-                <p className="text-lg font-bold text-gray-800">${getMonthlyStackCost(stack)}/mo</p>
+                <p className="text-xs text-ink-500">Estimated monthly cost</p>
+                <p className="text-lg font-bold text-ink-700">${getMonthlyStackCost(stack)}/mo</p>
               </div>
               <div className="text-right">
-                <p className="text-xs text-gray-500">{stack.length} supplement{stack.length !== 1 ? 's' : ''}</p>
-                <p className="text-xs text-gray-400">~${Math.round(getMonthlyStackCost(stack)/30)}/day</p>
+                  <p className="text-xs text-ink-500">{stack.length} supplement{stack.length !== 1 ? 's' : ''}</p>
+                  <p className="text-xs text-ink-400">~${Math.round(getMonthlyStackCost(stack)/30)}/day</p>
               </div>
             </div>
           )}
