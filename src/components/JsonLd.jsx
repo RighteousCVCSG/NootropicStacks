@@ -1,12 +1,10 @@
 import { Helmet } from 'react-helmet-async';
 
-// Escape sequences that would break out of <script> context or trip JSON parsers
-// embedded in HTML — </script>, U+2028 LINE SEPARATOR, U+2029 PARAGRAPH SEPARATOR.
+// Escape any literal "</" so a stray closing-script-tag in user-supplied
+// content (e.g. an article excerpt that mentions HTML) cannot break out
+// of the <script type="application/ld+json"> wrapper.
 function safeStringify(data) {
-  return JSON.stringify(data)
-    .replace(/</g, '\\u003c')
-    .replace(/ /g, '\\u2028')
-    .replace(/ /g, '\\u2029');
+  return JSON.stringify(data).replace(/</g, '\\u003c');
 }
 
 export function JsonLd({ data }) {
