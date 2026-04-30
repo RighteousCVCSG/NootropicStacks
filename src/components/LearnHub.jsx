@@ -70,6 +70,33 @@ export function LearnHub() {
               </div>
             </section>
           ))}
+
+          {/* Trusted Resources (moved from homepage in P3) */}
+          <section>
+            <div className="mb-4">
+              <h2 className="text-xl font-semibold text-ink-900">Trusted Resources</h2>
+              <p className="text-sm text-ink-500">Supplement data cross-referenced with peer-reviewed sources and trusted industry resources.</p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {[
+                { name: 'Examine.com', desc: 'Supplement research database', url: 'https://examine.com' },
+                { name: 'PubMed', desc: 'Clinical research studies', url: 'https://pubmed.ncbi.nlm.nih.gov' },
+                { name: 'Nootropics Depot', desc: 'Third-party lab tested', url: 'https://nootropicsdepot.com' },
+                { name: 'Labdoor', desc: 'Supplement quality rankings', url: 'https://labdoor.com' },
+              ].map((resource) => (
+                <a
+                  key={resource.name}
+                  href={resource.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block p-5 rounded-xl bg-surface-card border border-ink-200 hover:border-primary-300 transition-colors"
+                >
+                  <h3 className="text-base font-semibold text-ink-900 mb-1">{resource.name}</h3>
+                  <p className="text-sm text-ink-500">{resource.desc}</p>
+                </a>
+              ))}
+            </div>
+          </section>
         </div>
       </div>
     </>

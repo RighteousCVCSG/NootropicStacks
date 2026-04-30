@@ -84,14 +84,31 @@ export function StackPanel() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+            <div className="w-3 h-3 bg-primary-800 rounded-full"></div>
             My Stack
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-gray-500 text-center py-8">
-            No supplements in your stack yet. Add some from the library below!
+          <p className="text-sm text-ink-500 mb-4">
+            No supplements yet. Here's how the builder works:
           </p>
+          <ol className="space-y-3">
+            {[
+              { n: 1, title: 'Set Your Goals', desc: 'Pick what you want to optimize.' },
+              { n: 2, title: 'Build Your Stack', desc: 'Add supplements; get real-time synergy analysis.' },
+              { n: 3, title: 'Optimize with Stack Score', desc: '0-100 score across synergy, coverage, balance.' },
+            ].map((step) => (
+              <li key={step.n} className="flex items-start gap-3">
+                <div className="w-6 h-6 shrink-0 rounded-full bg-primary-800 text-ink-on-dark text-xs font-bold flex items-center justify-center mt-0.5">
+                  {step.n}
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-ink-900 leading-tight">{step.title}</p>
+                  <p className="text-xs text-ink-500">{step.desc}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
         </CardContent>
       </Card>
     );
