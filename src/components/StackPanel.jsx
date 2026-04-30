@@ -16,6 +16,7 @@ import { SaveStackDialog } from './SaveStackDialog.jsx';
 import { SavedStacksList } from './SavedStacksList.jsx';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
 import { withAffiliateUtms } from '@/lib/affiliate.js';
+import { AffiliateDisclosureInline } from './AffiliateDisclosure.jsx';
 
 // Estimated monthly costs in USD (based on typical market prices for quality products)
 const MONTHLY_COSTS = {
@@ -292,9 +293,12 @@ export function StackPanel() {
             if (stackWithLinks.length === 0) return null;
             return (
               <div className="mt-4 pt-4 border-t">
-                <h4 className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-1">
-                  <ShoppingCart className="w-4 h-4" />
-                  Shop Your Stack
+                <h4 className="text-sm font-semibold text-gray-700 mb-1 flex items-center gap-2 flex-wrap">
+                  <span className="flex items-center gap-1">
+                    <ShoppingCart className="w-4 h-4" />
+                    Shop Your Stack
+                  </span>
+                  <AffiliateDisclosureInline />
                 </h4>
                 <div className="space-y-1">
                   {stackWithLinks.slice(0, 5).map(item => {

@@ -41,9 +41,22 @@ const AffiliateDisclosurePage = lazy(() => import('./components/AffiliateDisclos
 const LearnHub = lazy(() => import('./components/LearnHub.jsx').then(m => ({ default: m.LearnHub })));
 import { Button } from '@/components/ui/button.jsx';
 import { Pill, Layers, Library, BookOpen, Home, HelpCircle, LogIn, LogOut, User } from 'lucide-react';
-import AffiliateDisclosure from './components/AffiliateDisclosure.jsx';
 import { ThemeToggle } from './components/ThemeToggle.jsx';
 import './App.css';
+
+// Medical disclaimer scoped to home, supplement, and stack routes
+function ScopedMedicalDisclaimer() {
+  const { pathname } = useLocation();
+  const show = pathname === '/' || pathname.startsWith('/supplements') || pathname.startsWith('/stacks');
+  if (!show) return null;
+  return (
+    <div className="callout callout--warn mb-3 py-2">
+      <p className="callout__body text-sm">
+        <strong>Important:</strong> Educational purposes only. Consult healthcare professionals before starting supplements.
+      </p>
+    </div>
+  );
+}
 
 // Scroll to top + fire pageview on route changes
 function ScrollToTop() {
@@ -213,14 +226,8 @@ function App() {
 
         {/* Main Content */}
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <AffiliateDisclosure variant="banner" />
-
-          {/* Medical Disclaimer */}
-          <div className="callout callout--warn mb-3 py-2">
-            <p className="callout__body text-sm">
-              <strong>Important:</strong> Educational purposes only. Consult healthcare professionals before starting supplements.
-            </p>
-          </div>
+          {/* Medical Disclaimer (scoped to home, supplement, stack routes) */}
+          <ScopedMedicalDisclaimer />
 
           {/* Routes */}
           <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="text-ink-500 text-sm">Loading...</div></div>}>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useStack } from '../contexts/StackContext.jsx';
 import { Card } from '@/components/ui/card.jsx';
 import { Button } from '@/components/ui/button.jsx';
@@ -8,6 +9,9 @@ import {
   Target, Scale, Gauge, Lightbulb, Activity
 } from 'lucide-react';
 import { StackScoreDetails } from './StackScoreDetails.jsx';
+
+// Route allow-list: widget renders only on stack-relevant routes
+const STACK_ROUTES = new Set(['/', '/quiz', '/stacks', '/celebrity-stacks', '/best-stacks']);
 
 const DIMENSION_CONFIG = [
   {
@@ -159,10 +163,13 @@ function DiagnosticsPanel({ synergy, coverage, balance, efficiency }) {
 }
 
 export function StackScoreWidget() {
+  const { pathname } = useLocation();
+  const allowed = STACK_ROUTES.has(pathname) || pathname.startsWith('/stacks/');
   const { stackScore, stack, userGoals } = useStack();
   const [expanded, setExpanded] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
 
+  if (!allowed) return null;
   if (!stack || stack.length === 0) return null;
   if (!stackScore) return null;
 

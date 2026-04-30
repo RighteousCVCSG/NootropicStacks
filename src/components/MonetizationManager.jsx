@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge.jsx';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
 import { ExternalLink, DollarSign, TrendingUp, Users, Eye, ShoppingCart } from 'lucide-react';
 import { useAffiliateCampaign, withAffiliateUtms } from '@/lib/affiliate.js';
+import { AffiliateDisclosureInline } from './AffiliateDisclosure.jsx';
 
 // ============================================================
 // AFFILIATE CONFIGURATION
@@ -621,9 +622,9 @@ export function AffiliateLinks({ supplementId, supplementName }) {
           );
         })}
       </div>
-      <p className="text-xs text-gray-500 mt-3">
-        * Affiliate links — we earn a small commission at no extra cost to you. Helps keep this tool free.
-      </p>
+      <div className="mt-3">
+        <AffiliateDisclosureInline />
+      </div>
     </div>
   );
 }
