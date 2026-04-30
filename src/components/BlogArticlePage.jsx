@@ -6,8 +6,10 @@ import { Button } from '@/components/ui/button.jsx';
 import { Separator } from '@/components/ui/separator.jsx';
 import { Calendar, Clock, ArrowLeft, BookOpen, Share2, ShoppingCart, ExternalLink, Beaker } from 'lucide-react';
 import { getRecentArticlesMeta } from '../data/blogArticlesIndex.js';
-import { SEOOptimizer, generateArticleStructuredData } from './SEOOptimizer.jsx';
+import { SEOOptimizer } from './SEOOptimizer.jsx';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
+import { JsonLd } from './JsonLd.jsx';
+import { buildArticleSchema, buildBreadcrumbSchema } from '../lib/schema/builders.js';
 import { withAffiliateUtms } from '@/lib/affiliate.js';
 import { EmailCaptureForm } from './EmailCaptureForm.jsx';
 import { ExitIntentPopup } from './ExitIntentPopup.jsx';
@@ -84,38 +86,23 @@ export function BlogArticlePage() {
 
   const recentArticles = getRecentArticlesMeta(4).filter(a => a.slug !== slug).slice(0, 3);
 
-  const articleSchema = generateArticleStructuredData({
+  const articleSchema = buildArticleSchema({
     title: article.title,
     description: article.excerpt || article.description || '',
+    image: article.heroImage || article.image,
     datePublished: article.publishedDate,
-    dateModified: article.publishedDate,
-    url: `https://nootropicstacker.com/blog/${article.slug}`
+    dateModified: article.dateModified || article.publishedDate,
+    author: article.author,
+    authorUrl: article.authorUrl,
+    slug: article.slug,
+    citations: article.pubmedCitations || article.citations,
   });
 
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://nootropicstacker.com"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Blog",
-        "item": "https://nootropicstacker.com/blog"
-      },
-      {
-        "@type": "ListItem",
-        "position": 3,
-        "name": article.title,
-        "item": `https://nootropicstacker.com/blog/${article.slug}`
-      }
-    ]
-  };
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: 'Home', url: 'https://nootropicstacker.com' },
+    { name: 'Blog', url: 'https://nootropicstacker.com/blog' },
+    { name: article.title, url: `https://nootropicstacker.com/blog/${article.slug}` },
+  ]);
 
   const articleSupplements = [...new Set(
     (article.tags || [])
@@ -134,8 +121,8 @@ export function BlogArticlePage() {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <JsonLd data={articleSchema} />
+      <JsonLd data={breadcrumbSchema} />
       <SEOOptimizer
         page="home"
         customTitle={`${article.title} | NootropicStacker Blog`}

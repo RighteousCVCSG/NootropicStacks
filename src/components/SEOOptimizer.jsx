@@ -1,5 +1,9 @@
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useLocation } from 'react-router-dom';
+
+const SITE_URL = 'https://nootropicstacker.com';
+const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.png`;
 
 // SEO data for different pages and supplements
 const SEO_DATA = {
@@ -211,20 +215,23 @@ export function SEOOptimizer({
   supplement = null,
   article = null,
   customTitle = null,
-  customDescription = null
+  customDescription = null,
+  ogImage = null,
 }) {
   const seoData = SEO_DATA[page] || SEO_DATA.home;
+  const { pathname } = useLocation();
 
   // Generate dynamic title and description for supplement and article pages
   let title = customTitle || seoData.title;
   let description = customDescription || seoData.description;
-  let canonical = seoData.canonical;
+  // Derive canonical from current pathname so every route emits an explicit canonical
+  let canonical = `${SITE_URL}${pathname === '/' ? '' : pathname}`;
   let ogType = 'website';
 
   if (supplement) {
     title = `${supplement.name} - Effects, Dosage & Safety | NootropicStacker`;
     description = `Complete guide to ${supplement.name}: ${supplement.description} Learn about effects, optimal dosage (${supplement.dosage.min}-${supplement.dosage.max} ${supplement.dosage.unit}), and safety considerations.`;
-    canonical = `https://nootropicstacker.com/supplements/${encodeURIComponent(supplement.name.toLowerCase().replace(/\s+/g, '-'))}`;
+    canonical = `${SITE_URL}/supplements/${encodeURIComponent(supplement.id || supplement.name.toLowerCase().replace(/\s+/g, '-'))}`;
   }
 
   if (article) {
@@ -233,6 +240,8 @@ export function SEOOptimizer({
     canonical = article.url || canonical;
     ogType = 'article';
   }
+
+  const finalOgImage = ogImage || DEFAULT_OG_IMAGE;
 
   useEffect(() => {
     // Track page views for SEO analytics
@@ -259,14 +268,14 @@ export function SEOOptimizer({
       <meta property="og:description" content={description} />
       <meta property="og:type" content={ogType} />
       <meta property="og:url" content={canonical} />
-      <meta property="og:image" content="https://nootropicstacker.com/og-image.png" />
+      <meta property="og:image" content={finalOgImage} />
       <meta property="og:site_name" content="NootropicStacker" />
 
       {/* Twitter Card Tags */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content="https://nootropicstacker.com/og-image.png" />
+      <meta name="twitter:image" content={finalOgImage} />
 
       {/* Additional SEO Tags */}
       <meta name="robots" content="index, follow" />

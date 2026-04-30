@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build:index": "node scripts/build-article-index.mjs",
-    "build": "node scripts/build-article-index.mjs && vite build && cp server.js dist/index.js",
-    "build:full": "node scripts/build-article-index.mjs && vite build && node scripts/prerender.mjs && cp server.js dist/index.js",
+    "build:sitemap": "node scripts/build-sitemap.mjs",
+    "build": "node scripts/build-article-index.mjs && node scripts/build-sitemap.mjs && vite build && cp server.js dist/index.js",
+    "build:full": "node scripts/build-article-index.mjs && node scripts/build-sitemap.mjs && vite build && node scripts/prerender.mjs && cp server.js dist/index.js",
     "pdf": "node lead-magnet/build.mjs",
     "start": "node server.js",
     "migrate": "node server/migrate.js",

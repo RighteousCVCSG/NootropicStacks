@@ -2,6 +2,8 @@ import React from 'react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion.jsx';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.jsx';
 import { HelpCircle } from 'lucide-react';
+import { JsonLd } from './JsonLd.jsx';
+import { buildFAQSchema } from '../lib/schema/builders.js';
 
 const faqData = [
   {
@@ -147,22 +149,13 @@ const faqData = [
 ];
 
 export function FAQPage() {
+  const flatFaqs = faqData.flatMap((category) =>
+    category.questions.map((item) => ({ question: item.q, answer: item.a }))
+  );
+
   return (
     <div className="max-w-3xl mx-auto space-y-8">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": faqData.flatMap(category =>
-          category.questions.map(q => ({
-            "@type": "Question",
-            "name": q.q,
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": q.a
-            }
-          }))
-        )
-      }) }} />
+      <JsonLd data={buildFAQSchema(flatFaqs)} />
 
       <div>
         <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">

@@ -8,6 +8,8 @@ import { useStack } from '@/contexts/StackContext.jsx';
 import { supplements } from '@/data/supplements.js';
 import { SEOOptimizer } from './SEOOptimizer.jsx';
 import { CELEBRITIES, MATRIX_EXPERTS, MATRIX_DATA, FAQ_DATA, SUPPLEMENT_SLUG_MAP } from '@/data/celebrityStacks.js';
+import { JsonLd } from './JsonLd.jsx';
+import { buildItemListSchema } from '@/lib/schema/builders.js';
 
 function StarRow({ count }) {
   return (
@@ -50,12 +52,31 @@ export function CelebrityStacksPage() {
     });
   };
 
+  const itemListItems = CELEBRITIES.flatMap((celeb) =>
+    (celeb.supplements || [])
+      .map((s) => {
+        const id = SUPPLEMENT_SLUG_MAP[s.slug];
+        if (!id) return null;
+        return {
+          name: s.name,
+          url: `https://nootropicstacker.com/supplements/${id}`,
+        };
+      })
+      .filter(Boolean)
+  );
+
   return (
     <>
       <SEOOptimizer
         page="home"
         customTitle="Celebrity Supplement Stacks — What Experts Actually Take | NootropicStacker"
         customDescription="We traced every supplement Huberman, Bryan Johnson, Peter Attia, Rhonda Patrick, and 4 others actually take back to the exact podcast episode or book page. Doses, brands, and sources — all in one place."
+      />
+      <JsonLd
+        data={buildItemListSchema({
+          name: 'Celebrity Supplement Stacks',
+          items: itemListItems,
+        })}
       />
 
       <div className="max-w-5xl mx-auto space-y-12">

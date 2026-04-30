@@ -7,9 +7,11 @@ import { Progress } from '@/components/ui/progress.jsx';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
 import { Plus, AlertTriangle, Clock, Pill, ArrowLeft, ExternalLink } from 'lucide-react';
 import { useStack } from '../contexts/StackContext.jsx';
-import { AffiliateLinks } from './MonetizationManager.jsx';
+import { AffiliateLinks, AFFILIATE_LINKS } from './MonetizationManager.jsx';
 import { SEOOptimizer } from './SEOOptimizer.jsx';
 import { supplements } from '../data/supplements.js';
+import { JsonLd } from './JsonLd.jsx';
+import { buildProductSchema } from '../lib/schema/builders.js';
 
 const getCategoryColor = (category) => {
   const colors = {
@@ -73,9 +75,18 @@ export function SupplementPage() {
     .filter(s => s.category === supplement.category && s.id !== supplement.id)
     .slice(0, 4);
 
+  const affiliates = AFFILIATE_LINKS[supplement.id] || {};
+  const productSchemaSource = {
+    ...supplement,
+    affiliateAmazon: affiliates.amazon,
+    affiliateIherb: affiliates.iherb,
+    affiliateNootropicsDepot: affiliates.nootropicsdepot,
+  };
+
   return (
     <>
       <SEOOptimizer page="supplements" supplement={supplement} />
+      <JsonLd data={buildProductSchema(productSchemaSource)} />
 
       <div className="space-y-6">
         {/* Breadcrumb */}

@@ -11,6 +11,8 @@ import { SupplementModal } from './components/SupplementModal.jsx';
 import { SEOOptimizer } from './components/SEOOptimizer.jsx';
 import { StackScoreWidget } from './components/StackScoreWidget.jsx';
 import { NewsletterCapture } from './components/NewsletterCapture.jsx';
+import { JsonLd } from './components/JsonLd.jsx';
+import { buildOrganizationSchema, buildWebsiteSchema } from './lib/schema/builders.js';
 
 // Lazy-loaded route-level components
 const AdminPage = lazy(() => import('./components/AdminPage.jsx').then(m => ({ default: m.AdminPage })));
@@ -171,6 +173,8 @@ function App() {
     <AuthProvider>
     <StackProvider>
       <ScrollToTop />
+      <JsonLd data={buildOrganizationSchema()} />
+      <JsonLd data={buildWebsiteSchema()} />
       <div className="min-h-screen bg-surface-page">
         {/* Header */}
         <header className="bg-surface-card shadow-sm border-b border-ink-200">
