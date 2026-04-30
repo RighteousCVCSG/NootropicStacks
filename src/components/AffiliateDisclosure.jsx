@@ -62,7 +62,11 @@ const VARIANT_CONFIG = {
 
 export function AffiliateDisclosureInline() {
   return (
-    <span className="text-xs text-ink-500 italic">
+    <span
+      role="note"
+      aria-label="Affiliate disclosure"
+      className="text-xs text-ink-500 italic"
+    >
       (we earn a commission, no extra cost to you)
     </span>
   );

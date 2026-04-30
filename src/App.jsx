@@ -47,7 +47,12 @@ import './App.css';
 // Medical disclaimer scoped to home, supplement, and stack routes
 function ScopedMedicalDisclaimer() {
   const { pathname } = useLocation();
-  const show = pathname === '/' || pathname.startsWith('/supplements') || pathname.startsWith('/stacks');
+  const show =
+    pathname === '/' ||
+    pathname === '/supplements' ||
+    pathname.startsWith('/supplements/') ||
+    pathname === '/stacks' ||
+    pathname.startsWith('/stacks/');
   if (!show) return null;
   return (
     <div className="callout callout--warn mb-3 py-2">
