@@ -1,10 +1,15 @@
 /* =============================================================
  * NootropicStacker Brand Tokens v2 — Cognitive Lab
- * Authoritative source: brand-kit/tokens/tokens.css
- * Mirror: brand-kit/tokens/tokens.json
- * Substrates: web (CSS variables) and PDF (rendered via Chrome headless)
  *
- * Source of truth: NOO-41 brand kit, Cognitive Lab redesign.
+ * Source of truth (design intent): src/brand-kit/tokens.json
+ * Compiled-by-hand runtime form:    src/brand-kit/tokens.css (this file)
+ *
+ * The JSON is the canonical design-token document (style-dictionary
+ * compatible). This CSS file is hand-maintained to mirror the JSON
+ * for direct browser consumption — no build step. When tokens change,
+ * update tokens.json first, then propagate the change here by hand.
+ *
+ * Substrates: web (CSS variables) and PDF (rendered via Chrome headless).
  * Dark is the default theme; light is a toggle (`:root[data-theme="light"]`).
  * ============================================================= */
 
@@ -46,8 +51,8 @@
   --primary-100: #322861;
   --primary-300: #6B47FF;
   --primary-400: var(--accent-primary);
-  --primary-700: var(--accent-primary);
-  --primary-800: var(--accent-primary);
+  --primary-700: var(--accent-primary-hover);
+  --primary-800: var(--accent-primary-hover);
   --primary-900: #C5B5FF;
 
   /* ---------- Color: brand (prefixed aliases for shadcn/Tailwind bridge) ---------- */
@@ -57,8 +62,8 @@
   --color-primary-400: var(--primary-400);
   --color-primary-500: var(--accent-primary);
   --color-primary-600: var(--accent-primary);
-  --color-primary-700: var(--accent-primary);
-  --color-primary-800: var(--accent-primary);
+  --color-primary-700: var(--accent-primary-hover);
+  --color-primary-800: var(--accent-primary-hover);
   --color-primary-900: var(--primary-900);
 
   --color-accent-050: var(--accent-secondary-soft);
@@ -79,7 +84,7 @@
   --color-ink-500: var(--ink-500);
   --color-ink-400: #6F768A;
   --color-ink-300: #4F576B;
-  --color-ink-200: var(--border);
+  --color-ink-200: #2A3046;
   --color-ink-100: #232940;
   --color-ink-050: #1B2030;
   --color-ink-on-dark: var(--ink-on-dark);
@@ -273,7 +278,7 @@
   --color-ink-500: var(--ink-500);
   --color-ink-400: #8C95A8;
   --color-ink-300: #B8BFCC;
-  --color-ink-200: var(--border);
+  --color-ink-200: #E5E7EB;
   --color-ink-100: #EEF0F4;
   --color-ink-050: #F4F5F7;
   --color-ink-on-dark: var(--ink-on-dark);

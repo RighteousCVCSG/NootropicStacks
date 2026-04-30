@@ -1,18 +1,15 @@
 /* =============================================================
- * Tailwind v4 brand-token bridge.
+ * Hand-maintained Tailwind v4 bridge.
  *
- * Source: src/brand-kit/tokens.css (Cognitive Lab redesign).
+ * References `--color-*` CSS custom properties from tokens.css so
+ * utility classes (e.g. bg-primary-800, text-ink-on-dark,
+ * bg-surface-page) inherit theme changes via `data-theme`. The
+ * underlying variables are themed: dark by default, light via
+ * `:root[data-theme="light"]`. Utility classes inherit the active
+ * theme automatically — no rebuild needed when toggling.
  *
- * This file exposes brand tokens to Tailwind v4 utility classes
- * (e.g. bg-primary-800, text-ink-on-dark, bg-surface-page) by
- * pointing each `@theme` color at the CSS variable defined in
- * tokens.css. The variable is themed: dark by default, light via
- * `:root[data-theme="light"]`. So utility classes inherit the
- * active theme automatically — no rebuild needed when toggling.
- *
- * If you regenerate this from tokens.json, preserve the
- * `var(--color-*)` references — do NOT inline hex values here, or
- * the light-mode toggle will break.
+ * Do NOT replace `var()` references with literal hex values — that
+ * breaks the light-mode toggle.
  * ============================================================= */
 
 @theme inline {
