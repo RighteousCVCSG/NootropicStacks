@@ -47,7 +47,7 @@ import { supplements } from './data/supplements.js';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
 import { Button } from '@/components/ui/button.jsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.jsx';
-import { AlertTriangle, Pill, Layers, Library, BookOpen, Home, HelpCircle, LogIn, LogOut, User } from 'lucide-react';
+import { Pill, Layers, Library, BookOpen, Home, HelpCircle, LogIn, LogOut, User } from 'lucide-react';
 import AffiliateDisclosure from './components/AffiliateDisclosure.jsx';
 import { ThemeToggle } from './components/ThemeToggle.jsx';
 import './App.css';
@@ -67,7 +67,7 @@ function NavLink({ to, icon: Icon, children }) {
   const isActive = to === '/' ? location.pathname === '/' : location.pathname.startsWith(to);
 
   return (
-    <Link to={to}>
+    <Link to={to} aria-current={isActive ? 'page' : undefined}>
       <Button
         variant={isActive ? 'default' : 'ghost'}
         size="sm"
@@ -395,19 +395,21 @@ function App() {
         </header>
 
         {/* Mobile Navigation */}
-        <nav className="md:hidden bg-surface-card border-b border-ink-200 px-4 py-2" aria-label="Mobile navigation">
-          <div className="flex items-center gap-2 overflow-x-auto">
-            <NavLink to="/" icon={Home}>Build</NavLink>
-            <NavLink to="/supplements" icon={Library}>Supplements</NavLink>
-            <NavLink to="/stacks" icon={Layers}>Stacks</NavLink>
-            <NavLink to="/learn" icon={BookOpen}>Learn</NavLink>
-            <Link to="/quiz" className="shrink-0">
-              <Button size="sm" className="bg-primary-800 hover:bg-primary-700 text-ink-on-dark">
-                <HelpCircle className="w-4 h-4 mr-1" />
-                Quiz
-              </Button>
-            </Link>
-            <div className="ml-auto shrink-0">
+        <nav className="md:hidden bg-surface-card border-b border-ink-200" aria-label="Mobile navigation">
+          <div className="flex items-center">
+            <div className="flex items-center gap-2 overflow-x-auto flex-1 min-w-0 px-4 py-2">
+              <NavLink to="/" icon={Home}>Build</NavLink>
+              <NavLink to="/supplements" icon={Library}>Supplements</NavLink>
+              <NavLink to="/stacks" icon={Layers}>Stacks</NavLink>
+              <NavLink to="/learn" icon={BookOpen}>Learn</NavLink>
+              <Link to="/quiz" className="shrink-0">
+                <Button size="sm" className="bg-primary-800 hover:bg-primary-700 text-ink-on-dark">
+                  <HelpCircle className="w-4 h-4 mr-1" />
+                  Quiz
+                </Button>
+              </Link>
+            </div>
+            <div className="shrink-0 px-2 border-l border-ink-200">
               <ThemeToggle />
             </div>
           </div>
