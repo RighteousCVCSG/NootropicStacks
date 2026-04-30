@@ -42,12 +42,14 @@ const BrandKitSmokeTest = lazy(() => import('./components/BrandKitSmokeTest.jsx'
 const CelebrityStacksPage = lazy(() => import('./components/CelebrityStacksPage.jsx').then(m => ({ default: m.CelebrityStacksPage })));
 const VideosPage = lazy(() => import('./components/VideosPage.jsx').then(m => ({ default: m.VideosPage })));
 const AffiliateDisclosurePage = lazy(() => import('./components/AffiliateDisclosurePage.jsx').then(m => ({ default: m.AffiliateDisclosurePage })));
+const LearnHub = lazy(() => import('./components/LearnHub.jsx').then(m => ({ default: m.LearnHub })));
 import { supplements } from './data/supplements.js';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
 import { Button } from '@/components/ui/button.jsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.jsx';
-import { AlertTriangle, Pill, Layers, Library, Newspaper, BookOpen, Home, HelpCircle, LogIn, LogOut, User, PenLine, Award, GitCompare, Star, Users, FlaskConical, Play } from 'lucide-react';
+import { AlertTriangle, Pill, Layers, Library, BookOpen, Home, HelpCircle, LogIn, LogOut, User } from 'lucide-react';
 import AffiliateDisclosure from './components/AffiliateDisclosure.jsx';
+import { ThemeToggle } from './components/ThemeToggle.jsx';
 import './App.css';
 
 // Scroll to top + fire pageview on route changes
@@ -371,43 +373,43 @@ function App() {
               </Link>
 
               {/* Navigation */}
-              <nav className="hidden md:flex items-center space-x-2">
-                <NavLink to="/" icon={Home}>Stack Builder</NavLink>
-                <NavLink to="/quiz" icon={HelpCircle}>Quiz</NavLink>
-                <NavLink to="/supplements" icon={Library}>Library</NavLink>
-                <NavLink to="/families" icon={BookOpen}>Families</NavLink>
-                <NavLink to="/news" icon={Newspaper}>News</NavLink>
-                <NavLink to="/blog" icon={PenLine}>Blog</NavLink>
-                <NavLink to="/best-nootropics" icon={Award}>Best Nootropics</NavLink>
-                <NavLink to="/best-stacks" icon={Layers}>Best Stacks</NavLink>
-                <NavLink to="/reviews" icon={Star}>Reviews</NavLink>
-                <NavLink to="/celebrity-stacks" icon={Users}>Celebrity Stacks</NavLink>
-                <NavLink to="/videos" icon={Play}>Videos</NavLink>
-                <NavLink to="/compare-supplements" icon={GitCompare}>Compare</NavLink>
-                <NavLink to="/research-library" icon={FlaskConical}>Research</NavLink>
+              <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
+                <NavLink to="/" icon={Home}>Build</NavLink>
+                <NavLink to="/supplements" icon={Library}>Supplements</NavLink>
+                <NavLink to="/stacks" icon={Layers}>Stacks</NavLink>
+                <NavLink to="/learn" icon={BookOpen}>Learn</NavLink>
+                <Link to="/quiz">
+                  <Button size="sm" className="bg-primary-800 hover:bg-primary-700 text-ink-on-dark ml-2">
+                    <HelpCircle className="w-4 h-4 mr-1" />
+                    Quiz
+                  </Button>
+                </Link>
               </nav>
 
-              <HeaderAuth />
+              <div className="flex items-center gap-2">
+                <ThemeToggle />
+                <HeaderAuth />
+              </div>
             </div>
           </div>
         </header>
 
         {/* Mobile Navigation */}
-        <nav className="md:hidden bg-surface-card border-b border-ink-200 px-4 py-2">
+        <nav className="md:hidden bg-surface-card border-b border-ink-200 px-4 py-2" aria-label="Mobile navigation">
           <div className="flex items-center gap-2 overflow-x-auto">
-            <NavLink to="/" icon={Home}>Builder</NavLink>
-            <NavLink to="/quiz" icon={HelpCircle}>Quiz</NavLink>
-            <NavLink to="/supplements" icon={Library}>Library</NavLink>
-            <NavLink to="/families" icon={BookOpen}>Families</NavLink>
-            <NavLink to="/news" icon={Newspaper}>News</NavLink>
-            <NavLink to="/blog" icon={PenLine}>Blog</NavLink>
-            <NavLink to="/best-nootropics" icon={Award}>Best</NavLink>
-            <NavLink to="/best-stacks" icon={Layers}>Stacks</NavLink>
-            <NavLink to="/reviews" icon={Star}>Reviews</NavLink>
-            <NavLink to="/celebrity-stacks" icon={Users}>Stacks</NavLink>
-            <NavLink to="/videos" icon={Play}>Videos</NavLink>
-            <NavLink to="/compare-supplements" icon={GitCompare}>Compare</NavLink>
-            <NavLink to="/research-library" icon={FlaskConical}>Research</NavLink>
+            <NavLink to="/" icon={Home}>Build</NavLink>
+            <NavLink to="/supplements" icon={Library}>Supplements</NavLink>
+            <NavLink to="/stacks" icon={Layers}>Stacks</NavLink>
+            <NavLink to="/learn" icon={BookOpen}>Learn</NavLink>
+            <Link to="/quiz" className="shrink-0">
+              <Button size="sm" className="bg-primary-800 hover:bg-primary-700 text-ink-on-dark">
+                <HelpCircle className="w-4 h-4 mr-1" />
+                Quiz
+              </Button>
+            </Link>
+            <div className="ml-auto shrink-0">
+              <ThemeToggle />
+            </div>
           </div>
         </nav>
 
@@ -476,6 +478,7 @@ function App() {
             <Route path="/compare-supplements" element={<ComparisonPage />} />
             <Route path="/nootropics-for-focus" element={<NootropicsForFocusPage />} />
             <Route path="/nootropics-for-anxiety" element={<NootropicsForAnxietyPage />} />
+            <Route path="/learn" element={<LearnHub />} />
             <Route path="/start-here" element={<Suspense fallback={<div className="flex items-center justify-center py-16"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-800"></div></div>}><StartHerePage /></Suspense>} />
             <Route path="/downloads/10-stacks" element={
               <>
