@@ -9,7 +9,6 @@ import { HomePage } from './components/HomePage.jsx';
 import { SupplementLibrary } from './components/SupplementLibrary.jsx';
 import { SupplementModal } from './components/SupplementModal.jsx';
 import { SEOOptimizer } from './components/SEOOptimizer.jsx';
-import { AdRevenueTracker } from './components/AdManager.jsx';
 import { StackScoreWidget } from './components/StackScoreWidget.jsx';
 import { NewsletterCapture } from './components/NewsletterCapture.jsx';
 
@@ -141,8 +140,6 @@ function LibraryPage() {
 }
 
 function App() {
-  const adRevenue = AdRevenueTracker();
-
   // Track affiliate clicks
   useEffect(() => {
     const handleAffiliateClick = (event) => {
