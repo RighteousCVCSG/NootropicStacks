@@ -13,19 +13,25 @@ import { Button } from '@/components/ui/button.jsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.jsx';
 import { Layers, Library, BookOpen, ArrowRight } from 'lucide-react';
 
+const ARTICLE_COUNT = 93;
+
+const FEATURED_ARTICLES = [
+  { slug: 'caffeine-l-theanine-stack-the-ultimate-guide', title: 'Caffeine + L-Theanine: The Ultimate Stack Guide', tags: ['caffeine', 'theanine'], readTime: 8 },
+  { slug: 'best-nootropic-stack-for-focus-2026', title: 'Best Nootropic Stack for Focus 2026', tags: ['focus', 'stack'], readTime: 10 },
+  { slug: 'ashwagandha-benefits-dosage-complete-guide', title: 'Ashwagandha: Benefits & Dosage Guide', tags: ['ashwagandha', 'adaptogen'], readTime: 10 },
+];
+
+const FEATURED_STACKS = [
+  { slug: 'focus', title: 'For Focus', desc: "L-Theanine + Caffeine + Lion's Mane", href: '/stacks?goal=focus' },
+  { slug: 'sleep', title: 'For Sleep', desc: 'Magnesium + Glycine + Apigenin', href: '/stacks?goal=sleep' },
+  { slug: 'mood', title: 'For Mood', desc: 'Ashwagandha + Rhodiola + Saffron', href: '/stacks?goal=mood' },
+];
+
 // Home page with stack builder
 export function HomePage() {
   const [selectedSupplement, setSelectedSupplement] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { stack, loadStack } = useStack();
-
-  const articleCount = 93;
-  // Trimmed to 3 (lowest readTime) per Phase 3 redesign.
-  const featuredArticles = [
-    { slug: 'caffeine-l-theanine-stack-the-ultimate-guide', title: 'Caffeine + L-Theanine: The Ultimate Stack Guide', tags: ['caffeine', 'theanine'], readTime: 8 },
-    { slug: 'best-nootropic-stack-for-focus-2026', title: 'Best Nootropic Stack for Focus 2026', tags: ['focus', 'stack'], readTime: 10 },
-    { slug: 'ashwagandha-benefits-dosage-complete-guide', title: 'Ashwagandha: Benefits & Dosage Guide', tags: ['ashwagandha', 'adaptogen'], readTime: 10 },
-  ];
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -44,6 +50,9 @@ export function HomePage() {
         loadStack(itemsToLoad);
       }
     }
+    // One-shot URL hydration on mount; loadStack and stack are stable enough
+    // that re-running on every change would clobber user edits.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleViewDetails = (supplement) => {
@@ -128,11 +137,7 @@ export function HomePage() {
           </Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {[
-            { slug: 'focus', title: 'For Focus', desc: "L-Theanine + Caffeine + Lion's Mane", href: '/stacks?goal=focus' },
-            { slug: 'sleep', title: 'For Sleep', desc: 'Magnesium + Glycine + Apigenin', href: '/stacks?goal=sleep' },
-            { slug: 'mood', title: 'For Mood', desc: 'Ashwagandha + Rhodiola + Saffron', href: '/stacks?goal=mood' },
-          ].map(s => (
+          {FEATURED_STACKS.map(s => (
             <Link key={s.slug} to={s.href}>
               <div className="p-5 rounded-xl bg-surface-card border border-ink-200 hover:border-primary-300 transition-colors">
                 <h3 className="font-semibold text-ink-900 mb-1">{s.title}</h3>
@@ -165,10 +170,10 @@ export function HomePage() {
             <BookOpen className="w-5 h-5 text-primary-800" />
             Popular Nootropic Guides
           </h2>
-          <Link to="/blog" className="text-sm text-primary-800 hover:underline">View all {articleCount} articles →</Link>
+          <Link to="/blog" className="text-sm text-primary-800 hover:underline">View all {ARTICLE_COUNT} articles →</Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {featuredArticles.map(article => (
+          {FEATURED_ARTICLES.map(article => (
             <Link key={article.slug} to={`/blog/${article.slug}`}>
               <div className="p-4 rounded-lg border border-ink-200 hover:border-primary-300 hover:shadow-sm transition-all bg-surface-card">
                 <div className="flex flex-wrap gap-1 mb-2">

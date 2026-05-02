@@ -157,59 +157,6 @@ const generateFAQStructuredData = () => {
   };
 };
 
-// Generate article structured data for blog posts
-export const generateArticleStructuredData = ({ title, description, datePublished, dateModified, url }) => {
-  const now = new Date().toISOString();
-  return {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": title,
-    "description": description,
-    "datePublished": datePublished || now,
-    "dateModified": dateModified || datePublished || now,
-    "author": {
-      "@type": "Organization",
-      "name": "NootropicStacker Team",
-      "url": "https://nootropicstacker.com"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "NootropicStacker",
-      "url": "https://nootropicstacker.com",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://nootropicstacker.com/logo.png"
-      }
-    },
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": url || "https://nootropicstacker.com/blog"
-    },
-    "image": "https://nootropicstacker.com/og-image.png"
-  };
-};
-
-// Generate organization structured data
-const generateOrganizationStructuredData = () => {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "NootropicStacker",
-    "url": "https://nootropicstacker.com",
-    "logo": "https://nootropicstacker.com/logo.png",
-    "description": "Free nootropic supplement stack builder for biohackers and cognitive optimizers",
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "email": "info@nootropicstacker.com",
-      "contactType": "customer support"
-    },
-    "sameAs": [
-      "https://twitter.com/nootropicstacker",
-      "https://facebook.com/nootropicstacker"
-    ]
-  };
-};
-
 export function SEOOptimizer({
   page = 'home',
   supplement = null,
@@ -282,11 +229,6 @@ export function SEOOptimizer({
       <meta name="author" content="NootropicStacker Team" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-      {/* Structured Data — Organization (always present) */}
-      <script type="application/ld+json">
-        {JSON.stringify(generateOrganizationStructuredData())}
-      </script>
-
       {/* Structured Data — FAQ (home page only) */}
       {page === 'home' && (
         <script type="application/ld+json">
@@ -300,13 +242,6 @@ export function SEOOptimizer({
           {JSON.stringify(schema)}
         </script>
       ))}
-
-      {/* Structured Data — Article (blog posts) */}
-      {article && (
-        <script type="application/ld+json">
-          {JSON.stringify(generateArticleStructuredData(article))}
-        </script>
-      )}
 
       {/* Preconnect to external domains for performance */}
       <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -385,21 +320,6 @@ export function SEOContent() {
     </section>
   );
 }
-
-// Generate sitemap data
-export const generateSitemapData = () => {
-  const baseUrl = 'https://nootropicstacker.com';
-  const pages = [
-    { url: baseUrl, priority: 1.0, changefreq: 'daily' },
-    { url: `${baseUrl}/nootropics`, priority: 0.9, changefreq: 'weekly' },
-    { url: `${baseUrl}/supplements`, priority: 0.9, changefreq: 'weekly' },
-    { url: `${baseUrl}/stacks`, priority: 0.8, changefreq: 'weekly' },
-    { url: `${baseUrl}/safety`, priority: 0.7, changefreq: 'monthly' },
-    { url: `${baseUrl}/about`, priority: 0.5, changefreq: 'monthly' }
-  ];
-  
-  return pages;
-};
 
 // Keywords for content optimization
 export const TARGET_KEYWORDS = {

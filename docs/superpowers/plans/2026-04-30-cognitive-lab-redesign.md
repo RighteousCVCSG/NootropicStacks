@@ -831,6 +831,37 @@ git commit -m "feat(ai-commerce): structured data, llms.txt, AI crawler allowlis
 
 ## Phase 6 — Audit + polish
 
+### Carry items from earlier phases
+
+Items deferred from P5 review:
+- Create `public/og-image.png` (1200x630) — currently 404s; referenced by index.html, SEOOptimizer, and schema builders.
+- Switch production deploy from `pnpm build` to `pnpm build:full` so JSON-LD/OG/canonical ship in static HTML for non-JS-executing AI crawlers.
+- Remove duplicate Organization schema: legacy `generateOrganizationStructuredData` in `SEOOptimizer.jsx` overlaps the new `buildOrganizationSchema` in App.jsx. Migrate `sameAs` (Twitter/Facebook URLs) into the new builder before deleting the legacy path.
+- Delete dead exports `generateArticleStructuredData` and `generateSitemapData` from `SEOOptimizer.jsx`.
+- Add null/empty-array guards to `buildItemListSchema` and `buildBreadcrumbSchema` for parity with `buildArticleSchema` / `buildFAQSchema`.
+- Reconsider ItemList semantics on stack pages: should items be the *stacks* themselves (each with its own URL) or the flat list of supplements within them? Current implementation flattens to supplements.
+- Add `author`, `dateModified`, `heroImage` fields to blog article data so Article schema can populate them; today they fall back to Organization author and og-image.
+- Generate real supplement images or reference og-image.png so sitemap can emit `<image:image>` for the 195 supplement pages.
+
+Items deferred from P3 review:
+- Verify dark-mode contrast on small `text-primary-800` links/CTAs (e.g., "View all stacks →", "View all 93 articles →") and the `Take the Quiz` button on `bg-primary-100`.
+- `StackPanel.jsx` body still uses raw Tailwind grays (`bg-white`, `border-gray-200`, `text-gray-600`, `text-red-600`, etc.) — replace with token-driven utilities.
+- Empty-state step 2 ("Build Your Stack") lost the orienting "library below / on the right" hint — restore in copy.
+- Lift inline `featuredStacks` array in `HomePage.jsx` to a const for symmetry with `featuredArticles`.
+- `AdManager.jsx` is now dead code — `ContextualAd` / `SmartAdPlacement` / `AdRevenueTracker` have zero live consumers. Either delete the file or move it to a `legacy/` folder.
+- Add `// eslint-disable-next-line react-hooks/exhaustive-deps` with rationale comment on the `?stack=` URL-param `useEffect` in `HomePage.jsx`.
+
+Items deferred from P1 review (do not skip):
+- Decide whether `tailwind-theme.css` is still needed (Tailwind v4 may auto-pick up `--color-*` from `:root`); if redundant, delete.
+- Add light-mode block to `tokens.json` so the JSON describes both themes.
+- Raise light-mode `--ink-500` contrast to ≥ 4.5:1 (e.g., `#5B6478`).
+- Differentiate tier-3 `fg` from `rule` (currently both `#FFC53D`).
+- Pick one entry stylesheet (`App.css` vs `index.css`) and delete the other; `--border` cycle.
+- Smoke test: add a section that uses bare Tailwind utility classes (`bg-primary-800`, `text-ink-700`, `bg-accent-500`) so the bridge is exercised end-to-end.
+- Smoke test: add `prefers-color-scheme` listener so first-visit theme matches OS.
+- Add `/* keep in sync with --border */` comment next to the `--color-ink-200` literal in both `:root` blocks.
+- Flatten the legacy `--primary-*` intermediate alias layer (currently 3 hops to a hex).
+
 ### Task 6.1: Hardcoded color audit
 
 - [ ] **Step 1: Run search**

@@ -9,7 +9,10 @@ export function buildOrganizationSchema() {
     logo: `${SITE_URL}/og-image.png`,
     description:
       'The PCPartPicker for nootropics. Discover, compare, and build supplement stacks with evidence-based scoring.',
-    sameAs: [],
+    sameAs: [
+      'https://twitter.com/nootropicstacker',
+      'https://facebook.com/nootropicstacker',
+    ],
     contactPoint: {
       '@type': 'ContactPoint',
       email: 'info@nootropicstacker.com',
@@ -79,7 +82,8 @@ export function buildProductSchema(supplement) {
   };
 }
 
-export function buildItemListSchema({ name, items }) {
+export function buildItemListSchema({ name, items } = {}) {
+  if (!items?.length) return null;
   return {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
@@ -136,6 +140,7 @@ export function buildFAQSchema(faqs) {
 }
 
 export function buildBreadcrumbSchema(crumbs) {
+  if (!crumbs?.length) return null;
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
