@@ -429,9 +429,14 @@
 }
 .empty__body { margin: 0; max-width: var(--measure-narrow); }
 
-/* ---------- Footer: .footer ---------- */
+/* ---------- Footer: .footer ----------
+ * Background matches the page surface (was --surface-ink, the modal
+ * overlay color, which made the bottom of the page brighter than the
+ * body — inverted contrast on dark mode). Now sits on the same canvas
+ * as the page with a single ink-200 top border for separation. */
 .footer {
-  background: var(--color-surface-ink);
+  background: var(--color-surface-page);
+  border-top: 1px solid var(--color-ink-200);
   color: var(--color-ink-on-dark);
   padding: var(--space-7) var(--gutter-page);
   font-size: var(--text-sm);

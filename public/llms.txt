@@ -2,7 +2,7 @@
 
 > The PCPartPicker for nootropics. A free tool to discover, compare, and build nootropic supplement stacks with evidence-based scoring and interaction warnings.
 
-NootropicStacker indexes 195 supplements with 7-dimension effect scores (Focus, Energy, Memory, Mood, Sleep, Anxiety, Clarity), maps 60+ interactions, and links to peer-reviewed research. Every claim cites PubMed.
+NootropicStacker indexes 195 supplements with 7-dimension per-supplement effect scores (Focus, Energy, Memory, Mood, Sleep, Anxiety, Clarity, each 0–10) and maps 60+ pairwise interactions. The composite Stack Score is 0–100 overall, made of four 0–25 sub-dimensions (synergy, coverage, balance, efficiency). Every claim cites PubMed.
 
 ## Key URLs
 

@@ -9,7 +9,7 @@ const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.png`;
 const SEO_DATA = {
   home: {
     title: 'NootropicStacker — Build Your Perfect Nootropic Stack Builder',
-    description: 'Build nootropic supplement stacks with 195+ compounds. Stack Score rates synergy, coverage, and balance. Free quiz and interaction warnings.',
+    description: 'Build nootropic supplement stacks with 195 compounds. Stack Score rates synergy, coverage, and balance. Free quiz and interaction warnings.',
     keywords: 'nootropic stacker, nootropics, biohacking, supplement stack, racetams, modafinil, cognitive enhancement, smart drugs, supplement interactions, biohacker tools, stack score',
     canonical: 'https://nootropicstacker.com'
   },
@@ -205,8 +205,12 @@ export function SEOOptimizer({
       {/* Basic Meta Tags */}
       <title>{title}</title>
       <meta name="description" content={description} />
-      <meta name="keywords" content={seoData.keywords} />
+      {/* keywords meta dropped: zero SEO value since 2009 and listing
+          prescription-class names (modafinil etc.) can trigger pharma-policy
+          classifiers (Google Ads disapproval, conservative LLM filters). */}
       <link rel="canonical" href={canonical} />
+      <meta property="og:locale" content="en_US" />
+      <meta name="twitter:site" content="@nootropicstacker" />
 
       {/* Open Graph Tags */}
       <meta property="og:title" content={title} />
@@ -257,21 +261,21 @@ export function SEOOptimizer({
 // SEO-friendly visible content section for the homepage
 export function SEOContent() {
   return (
-    <section className="mt-12 px-4 py-8 bg-muted/30 rounded-lg space-y-8">
+    <section className="mt-12 px-4 py-8 bg-surface-card border border-ink-200 rounded-lg space-y-8">
       <div>
         <h2 className="text-2xl font-bold mb-4">The Nootropic Stack Builder for Biohackers</h2>
-        <p className="text-muted-foreground mb-4">
+        <p className="text-ink-500 mb-4">
           NootropicStacker is a free tool for building, analyzing, and optimizing nootropic supplement stacks. Our database
           covers 195 supplements — including racetams, adaptogens, cholinergics, vitamins, and performance compounds — with
           detailed effect profiles, dosage ranges, and interaction data sourced from research literature and biohacking communities.
         </p>
-        <p className="text-muted-foreground mb-4">
+        <p className="text-ink-500 mb-4">
           Unlike simple supplement databases, NootropicStacker evaluates how your chosen compounds work <em>together</em>.
           The Stack Score system rates your combination across four dimensions: Synergy (do these supplements enhance each other?),
           Coverage (does the stack address your goals?), Balance (is there unnecessary overlap?), and Efficiency (is the stack
           lean and purposeful?). Each dimension scores 0-25, combining into an overall 0-100 rating with a letter grade.
         </p>
-        <p className="text-muted-foreground">
+        <p className="text-ink-500">
           Whether you're a first-time stacker looking for a focus and energy combo or an experienced biohacker fine-tuning a
           complex protocol, the tools here help you make informed decisions. Set your goals, add supplements, and let the
           scoring system show you where your stack is strong and where it can improve.
@@ -281,7 +285,7 @@ export function SEOContent() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div>
           <h3 className="font-semibold mb-2">195 Supplements with Effect Profiles</h3>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-ink-500">
             Explore racetams, modafinil alternatives, adaptogens like ashwagandha and rhodiola, and natural cognitive
             enhancers like Bacopa Monnieri, Lion's Mane, and Alpha-GPC. Each supplement includes effect ratings across
             seven categories, dosage recommendations, interaction warnings, and mechanism of action.
@@ -289,7 +293,7 @@ export function SEOContent() {
         </div>
         <div>
           <h3 className="font-semibold mb-2">Stack Score &amp; Interaction Analysis</h3>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-ink-500">
             Our Stack Score system analyzes 60+ pairwise supplement interactions and detects mechanism overlap across
             9 categories — stimulants, GABAergics, cholinergics, adaptogens, racetams, and more. Get real-time feedback
             as you build, with specific optimization tips to improve your stack's effectiveness.
@@ -297,8 +301,8 @@ export function SEOContent() {
         </div>
         <div>
           <h3 className="font-semibold mb-2">Personalized Recommendations</h3>
-          <p className="text-sm text-muted-foreground">
-            Take the 5-question Stack Quiz for a personalized starting point, or set your goals directly in the Stack Builder.
+          <p className="text-sm text-ink-500">
+            Take the 6-question Stack Quiz for a personalized starting point, or set your goals directly in the Stack Builder.
             The recommendation engine suggests supplements that fill gaps in your stack while avoiding redundancy and diminishing
             returns. Compare supplements side-by-side to choose between similar options.
           </p>
@@ -307,7 +311,7 @@ export function SEOContent() {
 
       <div>
         <h3 className="font-semibold mb-2">Built for Biohackers Who Want Signal, Not Noise</h3>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-ink-500">
           NootropicStacker takes an optimization-first approach. The Stack Score acts like an audio mixer — telling you when
           your bass is too heavy or your coverage is thin — rather than a medical tool that warns you away from every decision.
           We track synergistic pairs (caffeine + L-theanine, racetams + choline sources, curcumin + piperine), flag redundant
