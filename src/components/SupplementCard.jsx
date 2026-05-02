@@ -9,6 +9,8 @@ import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
 import { withAffiliateUtms } from '@/lib/affiliate.js';
 import { AffiliateDisclosureInline } from './AffiliateDisclosure.jsx';
 import { TierBadge } from './TierBadge.jsx';
+import { VendorPricesCompact } from './VendorPrices.jsx';
+import { hasTrackedPrices, getCheapestVendor } from '../data/priceTable.js';
 import { calculateStackScore } from '../utils/stackAnalyzer.js';
 
 export function SupplementCard({ supplement, onViewDetails }) {
@@ -175,23 +177,29 @@ export function SupplementCard({ supplement, onViewDetails }) {
         </div>
         {AFFILIATE_LINKS[supplement.id] && (
           <>
-            <Button
-              variant="outline"
-              size="sm"
-              className="w-full text-green-700 border-green-300 hover:bg-green-50"
-              onClick={() => {
-                const links = AFFILIATE_LINKS[supplement.id];
-                const url = links.nootropicsdepot || (
-                  links.amazon ? withAffiliateUtms(links.amazon, { campaign: `supplement-${supplement.id}` }) : (
-                    links.iherb || Object.values(links).find(v => typeof v === 'string')
-                  )
-                );
-                if (url) window.open(url, '_blank');
-              }}
-            >
-              <ShoppingCart className="w-4 h-4 mr-1" />
-              Buy {supplement.name.split(' ')[0]}
-            </Button>
+            {hasTrackedPrices(supplement.id) ? (
+              <div className="w-full">
+                <VendorPricesCompact supplementId={supplement.id} />
+              </div>
+            ) : (
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full text-accent-700 border-accent-500 hover:bg-accent-050"
+                onClick={() => {
+                  const links = AFFILIATE_LINKS[supplement.id];
+                  const url = links.nootropicsdepot || (
+                    links.amazon ? withAffiliateUtms(links.amazon, { campaign: `supplement-${supplement.id}` }) : (
+                      links.iherb || Object.values(links).find(v => typeof v === 'string')
+                    )
+                  );
+                  if (url) window.open(url, '_blank');
+                }}
+              >
+                <ShoppingCart className="w-4 h-4 mr-1" />
+                Buy {supplement.name.split(' ')[0]}
+              </Button>
+            )}
             <div className="w-full text-center">
               <AffiliateDisclosureInline />
             </div>

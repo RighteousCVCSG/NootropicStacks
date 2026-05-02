@@ -8,6 +8,8 @@ import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
 import { Plus, AlertTriangle, Clock, Pill, ArrowLeft, ExternalLink } from 'lucide-react';
 import { useStack } from '../contexts/StackContext.jsx';
 import { AffiliateLinks, AFFILIATE_LINKS } from './MonetizationManager.jsx';
+import { VendorPricesDetailed } from './VendorPrices.jsx';
+import { hasTrackedPrices } from '../data/priceTable.js';
 import { SEOOptimizer } from './SEOOptimizer.jsx';
 import { supplements } from '../data/supplements.js';
 import { JsonLd } from './JsonLd.jsx';
@@ -239,6 +241,11 @@ export function SupplementPage() {
                 </div>
               </CardContent>
             </Card>
+
+            {/* Vendor price comparison (when we track prices for this item) */}
+            {hasTrackedPrices(supplement.id) && (
+              <VendorPricesDetailed supplementId={supplement.id} />
+            )}
 
             {/* Affiliate Links / Where to Buy */}
             <AffiliateLinks supplementId={supplement.id} supplementName={supplement.name} />

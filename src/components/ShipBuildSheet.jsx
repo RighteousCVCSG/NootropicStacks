@@ -7,6 +7,7 @@ import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
 import { withAffiliateUtms } from '@/lib/affiliate.js';
 import { AffiliateDisclosureInline } from './AffiliateDisclosure.jsx';
 import { track } from '../lib/analytics.js';
+import { getCheapestVendor, hasTrackedPrices } from '../data/priceTable.js';
 
 // Per-vendor display order (matches existing buy-button preference).
 const VENDOR_ORDER = ['nootropicsdepot', 'amazon', 'iherb', 'nordicnaturals', 'buymodafinilonline'];
@@ -39,7 +40,13 @@ const MONTHLY_COSTS = {
   'kanna': 22, 'pramiracetam': 30, 'coluracetam': 32, 'fasoracetam': 28,
 };
 
-function pickPreferredVendor(links) {
+function pickPreferredVendor(supplementId, links) {
+  // If we have tracked prices, prefer the cheapest vendor that ALSO has an
+  // affiliate link wired up. This is the multi-vendor moat in action.
+  if (hasTrackedPrices(supplementId)) {
+    const cheapest = getCheapestVendor(supplementId);
+    if (cheapest && links?.[cheapest.vendor]) return cheapest.vendor;
+  }
   if (!links) return null;
   for (const v of VENDOR_ORDER) {
     if (links[v]) return v;
@@ -105,7 +112,7 @@ export function ShipBuildSheet({ open, onOpenChange, stack }) {
     return stack.map((item) => {
       const supplement = supplements.find((s) => s.id === item.supplementId);
       const links = AFFILIATE_LINKS[item.supplementId];
-      const defaultVendor = pickPreferredVendor(links);
+      const defaultVendor = pickPreferredVendor(item.supplementId, links);
       const vendor = overrides[item.supplementId] || defaultVendor;
       return { item, supplement, links, vendor };
     }).filter((r) => r.supplement);
