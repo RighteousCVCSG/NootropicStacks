@@ -50,24 +50,10 @@ import { Pill, Layers, Library, BookOpen, Home, HelpCircle, LogIn, LogOut, User 
 import { ThemeToggle } from './components/ThemeToggle.jsx';
 import './App.css';
 
-// Medical disclaimer scoped to home, supplement, and stack routes.
-// One quiet italic line — YMYL compliance still in place via the
-// footer's full medical-disclaimer language; the top-of-page banner
-// no longer dominates the layout.
+// Medical disclaimer removed from page chrome. YMYL coverage is
+// retained via the footer's full medical-disclaimer language.
 function ScopedMedicalDisclaimer() {
-  const { pathname } = useLocation();
-  const show =
-    pathname === '/' ||
-    pathname === '/supplements' ||
-    pathname.startsWith('/supplements/') ||
-    pathname === '/stacks' ||
-    pathname.startsWith('/stacks/');
-  if (!show) return null;
-  return (
-    <p className="text-[11px] text-ink-400 italic mb-4">
-      Educational only · Consult a healthcare professional before starting supplements.
-    </p>
-  );
+  return null;
 }
 
 // Scroll to top + fire pageview on route changes
