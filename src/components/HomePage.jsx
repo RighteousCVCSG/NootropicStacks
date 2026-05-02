@@ -11,7 +11,7 @@ import { PredefinedStacks } from './PredefinedStacks.jsx';
 import { supplements } from '../data/supplements.js';
 import { Button } from '@/components/ui/button.jsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.jsx';
-import { Layers, Library, BookOpen, ArrowRight } from 'lucide-react';
+import { Layers, Library, BookOpen, ArrowRight, Sparkles, HelpCircle } from 'lucide-react';
 
 const ARTICLE_COUNT = 93;
 
@@ -71,7 +71,7 @@ export function HomePage() {
 
       {/* Hero */}
       <section className="mb-10">
-        <div className="text-center max-w-3xl mx-auto">
+        <div className="text-center max-w-3xl mx-auto mb-8">
           <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary-800 bg-primary-100 px-3 py-1 rounded-full mb-4">
             Free Nootropic Stack Builder
           </span>
@@ -82,14 +82,63 @@ export function HomePage() {
             Build smarter nootropic stacks,<br />
             <span className="text-primary-800">backed by science.</span>
           </h1>
-          <p className="text-ink-700 text-base sm:text-lg max-w-2xl mx-auto mb-6">
+          <p className="text-ink-700 text-base sm:text-lg max-w-2xl mx-auto">
             The PCPartPicker for nootropics. 195 supplements, 60+ interactions mapped, every claim cites PubMed.
           </p>
-          <a href="#stack-builder">
-            <Button size="lg" className="bg-primary-800 hover:bg-primary-700 text-ink-on-dark">
-              Start Building <ArrowRight className="w-4 h-4 ml-1" />
-            </Button>
+        </div>
+
+        {/* Three-door entry — pick your readiness level */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
+          <a
+            href="#stack-builder"
+            className="group rounded-xl bg-primary-050 border border-primary-300 hover:border-primary-800 hover:bg-primary-100 p-5 transition-colors text-left flex flex-col"
+          >
+            <div className="flex items-center gap-2 mb-2">
+              <Layers className="w-5 h-5 text-primary-800" />
+              <span className="text-xs uppercase tracking-widest font-semibold text-primary-800">Build</span>
+            </div>
+            <h3 className="text-base font-semibold text-ink-900 mb-1">I'll build my own</h3>
+            <p className="text-xs text-ink-700 mb-3 flex-1">
+              Pick goals, browse 195 supplements, see real-time synergy and Stack Score.
+            </p>
+            <span className="inline-flex items-center gap-1 text-sm font-medium text-primary-800 group-hover:translate-x-0.5 transition-transform">
+              Start building <ArrowRight className="w-4 h-4" />
+            </span>
           </a>
+
+          <Link
+            to="/quiz"
+            className="group rounded-xl bg-surface-card border border-ink-200 hover:border-accent-500 hover:bg-accent-050 p-5 transition-colors text-left flex flex-col"
+          >
+            <div className="flex items-center gap-2 mb-2">
+              <HelpCircle className="w-5 h-5 text-accent-700" />
+              <span className="text-xs uppercase tracking-widest font-semibold text-accent-700">Quiz</span>
+            </div>
+            <h3 className="text-base font-semibold text-ink-900 mb-1">Not sure where to start</h3>
+            <p className="text-xs text-ink-700 mb-3 flex-1">
+              Answer 6 questions and we'll suggest a stack tuned to your goals.
+            </p>
+            <span className="inline-flex items-center gap-1 text-sm font-medium text-accent-700 group-hover:translate-x-0.5 transition-transform">
+              Take the quiz <ArrowRight className="w-4 h-4" />
+            </span>
+          </Link>
+
+          <Link
+            to="/stacks"
+            className="group rounded-xl bg-surface-card border border-ink-200 hover:border-warn-500 hover:bg-warn-100 p-5 transition-colors text-left flex flex-col"
+          >
+            <div className="flex items-center gap-2 mb-2">
+              <Sparkles className="w-5 h-5 text-warn-700" />
+              <span className="text-xs uppercase tracking-widest font-semibold text-warn-700">Browse</span>
+            </div>
+            <h3 className="text-base font-semibold text-ink-900 mb-1">Show me what works</h3>
+            <p className="text-xs text-ink-700 mb-3 flex-1">
+              Curated, evidence-backed stacks for focus, sleep, energy, mood, and more.
+            </p>
+            <span className="inline-flex items-center gap-1 text-sm font-medium text-warn-700 group-hover:translate-x-0.5 transition-transform">
+              See top stacks <ArrowRight className="w-4 h-4" />
+            </span>
+          </Link>
         </div>
       </section>
 

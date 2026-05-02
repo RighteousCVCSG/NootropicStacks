@@ -11,6 +11,7 @@ import { SupplementModal } from './components/SupplementModal.jsx';
 import { SEOOptimizer } from './components/SEOOptimizer.jsx';
 import { StackScoreWidget } from './components/StackScoreWidget.jsx';
 import { StackDrawer } from './components/StackDrawer.jsx';
+import { Toaster } from './components/ui/sonner.jsx';
 import { NewsletterCapture } from './components/NewsletterCapture.jsx';
 import { JsonLd } from './components/JsonLd.jsx';
 import { buildOrganizationSchema, buildWebsiteSchema } from './lib/schema/builders.js';
@@ -340,6 +341,9 @@ function App() {
 
         {/* Stack Drawer */}
         <StackDrawer />
+
+        {/* Toast notifications (used by addSupplement and friends) */}
+        <Toaster />
 
         {/* Footer */}
         <footer className="footer mt-12">
