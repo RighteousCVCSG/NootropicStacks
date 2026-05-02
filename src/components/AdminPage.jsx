@@ -15,10 +15,10 @@ async function apiAdmin(path, options = {}) {
 
 function StatCard({ icon: Icon, label, value, color = 'blue' }) {
   const colors = {
-    blue: 'bg-primary-050 text-primary-700 border-blue-100',
-    green: 'bg-accent-050 text-accent-700 border-green-100',
+    blue: 'bg-primary-050 text-primary-700 border-primary-100',
+    green: 'bg-accent-050 text-accent-700 border-accent-100',
     purple: 'bg-primary-050 text-primary-700 border-primary-300',
-    orange: 'bg-warn-100 text-warn-700 border-orange-100',
+    orange: 'bg-warn-100 text-warn-700 border-warn-100',
   };
   return (
     <div className={`rounded-md border p-5 flex items-center gap-4 ${colors[color]}`}>
@@ -158,7 +158,7 @@ export function AdminPage() {
                   <th className="px-4 py-3 text-left">Date</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-ink-200">
                 {leads.length === 0 && (
                   <tr><td colSpan={3} className="px-4 py-4 text-center text-ink-400">No subscribers yet</td></tr>
                 )}
@@ -185,7 +185,7 @@ export function AdminPage() {
                   <th className="px-4 py-3 text-left">Joined</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-ink-200">
                 {users.length === 0 && (
                   <tr><td colSpan={4} className="px-4 py-4 text-center text-ink-400">No users yet</td></tr>
                 )}
@@ -213,7 +213,7 @@ export function AdminPage() {
                   <th className="px-4 py-3 text-right">Clicks</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-ink-200">
                 {clicks.length === 0 && (
                   <tr><td colSpan={4} className="px-4 py-4 text-center text-ink-400">No clicks recorded yet</td></tr>
                 )}

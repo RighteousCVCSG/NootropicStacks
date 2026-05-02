@@ -215,7 +215,7 @@ export function NewsSection() {
                 {article.category}
               </Badge>
               {showTrending && article.trending && (
-                <Badge variant="outline" className="text-warn-700 border-orange-300">
+                <Badge variant="outline" className="text-warn-700 border-warn-300">
                   <TrendingUp className="w-3 h-3 mr-1" />
                   Trending
                 </Badge>

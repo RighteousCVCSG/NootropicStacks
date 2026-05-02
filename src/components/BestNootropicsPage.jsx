@@ -10,7 +10,7 @@ import { SEOOptimizer } from './SEOOptimizer.jsx';
 const TOP_NOOTROPICS = [
   {
     rank: 1,
-    id: 'lions-mane-mushroom',
+    id: 'lions-mane',
     name: "Lion's Mane Mushroom",
     tagline: 'Best for Neuroplasticity & Long-Term Brain Health',
     why: "Lion's Mane is the only supplement proven to stimulate Nerve Growth Factor (NGF), supporting new neuron formation and myelin repair. Backed by human trials showing improved cognitive function and reduced anxiety.",
@@ -21,7 +21,7 @@ const TOP_NOOTROPICS = [
   },
   {
     rank: 2,
-    id: 'bacopa-monnieri',
+    id: 'bacopa',
     name: 'Bacopa Monnieri',
     tagline: 'Best for Memory and Learning',
     why: 'Bacopa has the most consistent human clinical evidence of any natural nootropic — 12+ RCTs show improvements in memory formation, recall speed, and anxiety. Requires patience (8–12 weeks) but delivers reliable results.',
@@ -65,7 +65,7 @@ const TOP_NOOTROPICS = [
   },
   {
     rank: 6,
-    id: 'rhodiola-rosea',
+    id: 'rhodiola',
     name: 'Rhodiola Rosea',
     tagline: 'Best for Mental Fatigue and Acute Stress',
     why: 'Unlike calming adaptogens, Rhodiola is stimulating — it reduces mental fatigue and improves performance under stress within hours of dosing. Excellent for high-cognitive-load days and periods of burnout recovery.',
@@ -98,7 +98,7 @@ const TOP_NOOTROPICS = [
   },
   {
     rank: 9,
-    id: 'magnesium-glycinate',
+    id: 'magnesium',
     name: 'Magnesium Glycinate',
     tagline: 'Best for Sleep, Anxiety, and Foundation Health',
     why: 'Most people are magnesium deficient. Magnesium Glycinate is the best-absorbed form — it improves sleep quality, reduces anxiety, and supports over 300 enzymatic reactions. Every serious stack should include it.',
@@ -109,7 +109,7 @@ const TOP_NOOTROPICS = [
   },
   {
     rank: 10,
-    id: 'omega-3-dha',
+    id: 'omega3',
     name: 'Omega-3 / DHA',
     tagline: 'Essential Structural Brain Nutrient',
     why: 'DHA makes up 60% of brain fat. Without adequate omega-3, every other nootropic works less effectively. The research on DHA for mood, cognition, and brain aging is the most robust in the supplement world.',
@@ -121,7 +121,7 @@ const TOP_NOOTROPICS = [
 ];
 
 const getRankColor = (rank) => {
-  if (rank === 1) return 'bg-warn-100 border-yellow-300 text-warn-700';
+  if (rank === 1) return 'bg-warn-100 border-warn-300 text-warn-700';
   if (rank === 2) return 'bg-surface-sunk border-ink-300 text-ink-700';
   if (rank === 3) return 'bg-warn-100 border-warn-500 text-warn-700';
   return 'bg-primary-050 border-primary-300 text-primary-800';
@@ -193,7 +193,7 @@ export function BestNootropicsPage() {
                         {links?.amazon && (
                           <a href={withAffiliateUtms(links.amazon, { campaign: `nootropic-${nootropic.id}` })} target="_blank" rel="noopener noreferrer sponsored"
                              onClick={() => trackClick(nootropic.id, 'amazon')}
-                             className="flex items-center gap-1 text-xs bg-warn-1000 hover:bg-warn-700 text-white px-3 py-1.5 rounded font-medium transition-colors">
+                             className="flex items-center gap-1 text-xs bg-warn-700 hover:bg-warn-800 text-white px-3 py-1.5 rounded font-medium transition-colors">
                             <ExternalLink className="w-3 h-3" /> Amazon
                           </a>
                         )}

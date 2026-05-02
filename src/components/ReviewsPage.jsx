@@ -153,7 +153,7 @@ const REVIEWS = [
     ],
     bestFor: 'Budget-conscious users, custom stack builders, energy optimization',
     badge: 'Best Value',
-    badgeColor: 'bg-emerald-100 text-emerald-700',
+    badgeColor: 'bg-accent-100 text-accent-700',
     links: {
       amazon: 'https://www.amazon.com/s?k=NOW+Foods+Acetyl+L-Carnitine&tag=nootropicstk-20',
       iherb: 'https://www.iherb.com/search?kw=NOW+acetyl+l-carnitine',
@@ -169,13 +169,13 @@ function StarRating({ rating }) {
   return (
     <div className="flex items-center gap-1">
       {Array.from({ length: fullStars }).map((_, i) => (
-        <Star key={`full-${i}`} className="w-4 h-4 fill-yellow-400 text-warn-500" />
+        <Star key={`full-${i}`} className="w-4 h-4 fill-warn-500 text-warn-500" />
       ))}
       {hasHalf && (
         <div className="relative w-4 h-4">
           <Star className="absolute w-4 h-4 text-ink-300" />
           <div className="overflow-hidden w-2 absolute">
-            <Star className="w-4 h-4 fill-yellow-400 text-warn-500" />
+            <Star className="w-4 h-4 fill-warn-500 text-warn-500" />
           </div>
         </div>
       )}
@@ -224,7 +224,7 @@ export function ReviewsPage() {
         </div>
 
         {/* Rating System */}
-        <div className="mb-4 p-5 bg-primary-050 border border-blue-100 rounded-md">
+        <div className="mb-4 p-5 bg-primary-050 border border-primary-100 rounded-md">
           <div className="flex items-start gap-3">
             <ShieldCheck className="w-5 h-5 text-primary-700 flex-shrink-0 mt-0.5" />
             <div>
@@ -290,7 +290,7 @@ export function ReviewsPage() {
                 </div>
 
                 {/* Best For + Buttons */}
-                <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-gray-100">
+                <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-ink-200">
                   <p className="text-xs text-ink-500">
                     <span className="font-semibold text-ink-700">Best for:</span> {product.bestFor}
                   </p>
@@ -301,7 +301,7 @@ export function ReviewsPage() {
                         target="_blank"
                         rel="noopener noreferrer sponsored"
                         onClick={() => trackClick(product.name, 'amazon')}
-                        className="flex items-center gap-1.5 text-xs bg-warn-1000 hover:bg-warn-700 text-white px-3 py-1.5 rounded font-medium transition-colors"
+                        className="flex items-center gap-1.5 text-xs bg-warn-700 hover:bg-warn-800 text-white px-3 py-1.5 rounded font-medium transition-colors"
                       >
                         <ExternalLink className="w-3 h-3" /> Amazon
                       </a>

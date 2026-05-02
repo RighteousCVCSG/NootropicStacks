@@ -250,7 +250,7 @@ export function SupplementFamilyGuide() {
                   <CardContent>
                     <div className="space-y-1">
                       {family.interactions.positive.map((interaction, index) => (
-                        <Badge key={index} variant="outline" className="text-accent-700 border-green-300">
+                        <Badge key={index} variant="outline" className="text-accent-700 border-accent-300">
                           {interaction}
                         </Badge>
                       ))}
@@ -268,7 +268,7 @@ export function SupplementFamilyGuide() {
                   <CardContent>
                     <div className="space-y-1">
                       {family.interactions.negative.map((interaction, index) => (
-                        <Badge key={index} variant="outline" className="text-danger-700 border-red-300">
+                        <Badge key={index} variant="outline" className="text-danger-700 border-danger-300">
                           {interaction}
                         </Badge>
                       ))}

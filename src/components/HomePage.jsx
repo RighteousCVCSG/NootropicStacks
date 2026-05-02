@@ -144,7 +144,7 @@ export function HomePage() {
                   <ArrowRight className="w-3.5 h-3.5 text-primary-800 group-hover:translate-x-1 transition-all shrink-0" />
                 </div>
                 <p className="text-xs text-ink-500 mt-0.5">
-                  Six questions, one suggested stack. ~1 min.
+                  Five questions, one suggested stack. ~1 min.
                 </p>
               </div>
             </Link>

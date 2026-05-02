@@ -5,26 +5,26 @@ import { useLocation } from 'react-router-dom';
 const SITE_URL = 'https://nootropicstacker.com';
 const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.png`;
 
-// SEO data for different pages and supplements
+// Per-page meta defaults. Canonical is derived from window.location.pathname
+// in the component (line ~196), so we don't store one here — that prevents
+// stale-canonical bugs where two routes share a SEO_DATA key.
 const SEO_DATA = {
   home: {
-    title: 'NootropicStacker — Build Your Perfect Nootropic Stack Builder',
-    description: 'Build nootropic supplement stacks with 195 compounds. Stack Score rates synergy, coverage, and balance. Free quiz and interaction warnings.',
-    keywords: 'nootropic stacker, nootropics, biohacking, supplement stack, racetams, modafinil, cognitive enhancement, smart drugs, supplement interactions, biohacker tools, stack score',
-    canonical: 'https://nootropicstacker.com'
+    title: 'NootropicStacker — Free Nootropic Stack Builder | 195 Supplements',
+    description: 'Build nootropic supplement stacks with 195 compounds. Stack Score rates synergy, coverage, balance, and efficiency. Free quiz and interaction warnings.',
   },
-  nootropics: {
-    title: 'Best Nootropics Guide 2026 - Racetams, Modafinil & Cognitive Enhancers',
-    description: 'Complete guide to the most effective nootropics including racetams, modafinil, armodafinil, and natural cognitive enhancers. Dosage, effects, and safety information.',
-    keywords: 'nootropics, racetams, modafinil, armodafinil, piracetam, phenylpiracetam, cognitive enhancement, smart drugs, memory enhancement',
-    canonical: 'https://nootropicstacker.com/nootropics'
+  build: {
+    title: 'Stack Builder — Pick Goals, Add Supplements, Score the Stack',
+    description: 'Free interactive nootropic stack builder. Choose goals, browse 195 supplements, get a Stack Score across four 0–25 dimensions, and see interaction warnings live.',
+  },
+  quiz: {
+    title: 'Stack Quiz — Get a Personalized Nootropic Starting Point',
+    description: 'Five quick questions and you get a starter nootropic stack matched to your goals — focus, sleep, energy, mood, or memory.',
   },
   supplements: {
-    title: 'Supplement Database — 195 Biohacking Supplements with Effects & Dosages',
-    description: 'Comprehensive database of 195 biohacking supplements including nootropics, adaptogens, vitamins, and performance enhancers. Complete with dosage recommendations and safety warnings.',
-    keywords: 'supplement database, biohacking supplements, supplement effects, dosage guide, supplement interactions, health supplements',
-    canonical: 'https://nootropicstacker.com/supplements'
-  }
+    title: 'Supplement Library — 195 Nootropics with Effects & Dosages',
+    description: 'Search 195 nootropic and biohacking supplements by goal, evidence tier, or category. Effect profiles, dosage ranges, interaction warnings, every claim cited.',
+  },
 };
 
 // Generate structured data for supplements
@@ -241,6 +241,8 @@ export function SEOOptimizer({
       <meta property="og:type" content={ogType} />
       <meta property="og:url" content={canonical} />
       <meta property="og:image" content={finalOgImage} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
       <meta property="og:site_name" content="NootropicStacker" />
 
       {/* Twitter Card Tags */}
@@ -254,8 +256,11 @@ export function SEOOptimizer({
       <meta name="author" content="Vera Huang, NootropicStacker" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-      {/* Structured Data — FAQ (home page only) */}
-      {page === 'home' && (
+      {/* Structured Data — FAQ (home + /faq only). Gated on pathname,
+          not the `page` prop, because many non-home routes pass
+          page="home" to inherit the default meta and would otherwise
+          inject duplicate FAQPage schemas across the site. */}
+      {(pathname === '/' || pathname === '/faq') && (
         <script type="application/ld+json">
           {JSON.stringify(generateFAQStructuredData())}
         </script>
@@ -325,7 +330,7 @@ export function SEOContent() {
         <div>
           <h3 className="text-sm font-semibold text-ink-900 mb-1">Personalized Recommendations</h3>
           <p className="text-xs text-ink-500 leading-snug">
-            Take the 6-question Stack Quiz for a personalized starting point, or set your goals directly in the Stack Builder.
+            Take the 5-question Stack Quiz for a personalized starting point, or set your goals directly in the Stack Builder.
             The recommendation engine suggests supplements that fill gaps in your stack while avoiding redundancy and diminishing
             returns. Compare supplements side-by-side to choose between similar options.
           </p>

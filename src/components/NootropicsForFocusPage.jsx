@@ -181,14 +181,14 @@ const MECHANISMS = [
     icon: Target,
     neurotransmitter: 'Adenosine Blockade',
     color: 'text-danger-500',
-    bgColor: 'bg-danger-100 border-red-200',
+    bgColor: 'bg-danger-100 border-danger-200',
     headline: 'Fighting Fatigue',
     body: "Adenosine is a byproduct of neural activity that accumulates over the day, creating the sensation of mental fatigue. Caffeine works entirely by blocking adenosine receptors — it doesn't give you energy directly, it removes the brakes. Rhodiola and other adaptogens prevent adenosine buildup under stress, extending your effective focus window.",
   },
 ];
 
 const getRankColor = (rank) => {
-  if (rank === 1) return 'bg-warn-100 border-yellow-300 text-warn-700';
+  if (rank === 1) return 'bg-warn-100 border-warn-300 text-warn-700';
   if (rank === 2) return 'bg-surface-sunk border-ink-300 text-ink-700';
   if (rank === 3) return 'bg-warn-100 border-warn-500 text-warn-700';
   return 'bg-primary-050 border-primary-300 text-primary-800';
@@ -218,7 +218,7 @@ export function NootropicsForFocusPage() {
           <div className="flex flex-wrap items-center gap-2 mb-3">
             <Badge variant="outline" className="text-primary-800 border-primary-300 bg-primary-050 text-xs font-medium">Pillar Guide</Badge>
             <Badge variant="outline" className="text-ink-700 border-ink-300 bg-surface-card text-xs font-medium">Updated April 2026</Badge>
-            <Badge variant="outline" className="text-accent-700 border-green-300 bg-accent-050 text-xs font-medium">Evidence-Ranked</Badge>
+            <Badge variant="outline" className="text-accent-700 border-accent-300 bg-accent-050 text-xs font-medium">Evidence-Ranked</Badge>
           </div>
 
           <h1 className="text-3xl sm:text-4xl font-semibold text-ink-900 mb-4 leading-tight">
@@ -307,7 +307,7 @@ export function NootropicsForFocusPage() {
                         {/* Best for tags */}
                         <div className="flex flex-wrap gap-1 mb-4">
                           {s.bestFor.map((tag) => (
-                            <span key={tag} className="text-xs bg-primary-050 text-primary-800 border border-blue-100 px-2 py-0.5 rounded-full">
+                            <span key={tag} className="text-xs bg-primary-050 text-primary-800 border border-primary-100 px-2 py-0.5 rounded-full">
                               {tag}
                             </span>
                           ))}
@@ -326,7 +326,7 @@ export function NootropicsForFocusPage() {
                             target="_blank"
                             rel="noopener noreferrer sponsored"
                             onClick={() => trackClick(s.name, 'amazon')}
-                            className="flex items-center gap-1 text-xs bg-warn-1000 hover:bg-warn-700 text-white px-3 py-1.5 rounded font-medium transition-colors"
+                            className="flex items-center gap-1 text-xs bg-warn-700 hover:bg-warn-800 text-white px-3 py-1.5 rounded font-medium transition-colors"
                           >
                             <ExternalLink className="w-3 h-3" /> Buy on Amazon
                           </a>
@@ -383,7 +383,7 @@ export function NootropicsForFocusPage() {
                     <p className="text-xs text-ink-500 italic mb-4">{stack.why}</p>
 
                     <Link
-                      to={`/?stack=${stackIds}`}
+                      to={`/build?stack=${stackIds}`}
                       className="inline-flex items-center gap-1.5 text-sm bg-primary-700 hover:bg-primary-800 text-white font-semibold px-4 py-2 rounded-md transition-colors"
                     >
                       <Brain className="w-3.5 h-3.5" />
@@ -415,7 +415,7 @@ export function NootropicsForFocusPage() {
             ))}
           </div>
 
-          <div className="mt-5 p-4 bg-warn-100 border border-amber-200 rounded-md">
+          <div className="mt-5 p-4 bg-warn-100 border border-warn-200 rounded-md">
             <p className="text-sm text-warn-700 leading-relaxed">
               <strong>The key insight:</strong> Most nootropics only hit one mechanism. A caffeine + L-Theanine stack covers adenosine blockade and calm alertness. Add Alpha-GPC and you add acetylcholine. Add Rhodiola and you protect the dopamine and adenosine systems under stress. This is why stacking outperforms single compounds.
             </p>
@@ -439,7 +439,7 @@ export function NootropicsForFocusPage() {
             </Link>
             <Link
               to="/quiz"
-              className="inline-flex items-center justify-center gap-2 bg-primary-500 hover:bg-primary-400 text-white font-semibold px-6 py-3 rounded-md transition-colors border border-primary-300"
+              className="inline-flex items-center justify-center gap-2 bg-primary-500 hover:bg-primary-300 text-white font-semibold px-6 py-3 rounded-md transition-colors border border-primary-300"
             >
               Take the Stack Quiz
             </Link>

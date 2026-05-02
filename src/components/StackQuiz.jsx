@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.jsx';
-import { Button } from '@/components/ui/button.jsx';
-import { Badge } from '@/components/ui/badge.jsx';
-import { Progress } from '@/components/ui/progress.jsx';
-import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
-import { ArrowRight, ArrowLeft, Sparkles, Brain, Zap, Heart, Moon, Shield, Plus, ShoppingCart, AlertTriangle } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Sparkles, Brain, Zap, Heart, Moon, Shield, Plus, ShoppingCart, AlertTriangle, BookOpen } from 'lucide-react';
 import { supplements } from '../data/supplements.js';
 import { useStack } from '../contexts/StackContext.jsx';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
 import { withAffiliateUtms } from '@/lib/affiliate.js';
 import { SEOOptimizer } from './SEOOptimizer.jsx';
+import { track } from '../lib/analytics.js';
 
 const QUESTIONS = [
   {
@@ -21,10 +17,10 @@ const QUESTIONS = [
       { value: 'focus', label: 'Focus & Concentration', icon: Brain, description: 'Better attention, deeper work sessions' },
       { value: 'energy', label: 'Energy & Motivation', icon: Zap, description: 'More drive, less fatigue' },
       { value: 'mood', label: 'Mood & Stress Relief', icon: Heart, description: 'Calmer, happier, less anxious' },
-      { value: 'memory', label: 'Memory & Learning', icon: Brain, description: 'Better recall, faster learning' },
+      { value: 'memory', label: 'Memory & Learning', icon: BookOpen, description: 'Better recall, faster learning' },
       { value: 'sleep', label: 'Sleep Quality', icon: Moon, description: 'Fall asleep faster, deeper rest' },
       { value: 'overall', label: 'Overall Brain Health', icon: Shield, description: 'Long-term cognitive protection' },
-    ]
+    ],
   },
   {
     id: 'secondary_goal',
@@ -37,7 +33,7 @@ const QUESTIONS = [
       { value: 'physical', label: 'Physical Performance', description: 'Workout energy, recovery' },
       { value: 'longevity', label: 'Anti-Aging', description: 'Neuroprotection, cellular health' },
       { value: 'none', label: 'Just the primary goal', description: 'Keep it simple' },
-    ]
+    ],
   },
   {
     id: 'experience',
@@ -48,7 +44,7 @@ const QUESTIONS = [
       { value: 'some', label: 'Some Experience', description: 'Tried a few supplements (vitamins, fish oil, etc.)' },
       { value: 'experienced', label: 'Experienced', description: 'Regularly use nootropic supplements' },
       { value: 'advanced', label: 'Advanced', description: 'Familiar with racetams, stacking protocols, etc.' },
-    ]
+    ],
   },
   {
     id: 'sensitivity',
@@ -61,34 +57,29 @@ const QUESTIONS = [
       { value: 'sleep_issues', label: 'Sleep Problems', description: 'Difficulty falling or staying asleep' },
       { value: 'stomach', label: 'Sensitive Stomach', description: 'Supplements upset your stomach' },
       { value: 'none', label: 'No Sensitivities', description: 'I tolerate supplements well' },
-    ]
+    ],
   },
   {
     id: 'budget',
     title: 'What is your monthly supplement budget?',
     subtitle: 'We\'ll tailor the stack size to your budget.',
     options: [
-      { value: 'low', label: 'Under $30/month', description: '2-3 supplements' },
-      { value: 'medium', label: '$30-60/month', description: '3-5 supplements' },
-      { value: 'high', label: '$60-100/month', description: '5-8 supplements' },
+      { value: 'low', label: 'Under $30/month', description: '2–3 supplements' },
+      { value: 'medium', label: '$30–60/month', description: '3–5 supplements' },
+      { value: 'high', label: '$60–100/month', description: '5–8 supplements' },
       { value: 'unlimited', label: '$100+/month', description: 'Whatever works best' },
-    ]
-  }
+    ],
+  },
 ];
 
-// Stack recommendation engine
 function getRecommendedStack(answers) {
   const { primary_goal, secondary_goal, experience, sensitivity, budget } = answers;
   const sensitivities = sensitivity || [];
 
   const isCaffeineSensitive = sensitivities.includes('caffeine') || sensitivities.includes('stimulant');
-  const hasSleepIssues = sensitivities.includes('sleep_issues');
   const isBeginner = experience === 'beginner' || experience === 'some';
   const maxSupplements = budget === 'low' ? 3 : budget === 'medium' ? 5 : budget === 'high' ? 7 : 10;
 
-  let recommended = [];
-
-  // Core foundation based on primary goal
   const goalStacks = {
     focus: [
       { id: 'l-theanine', reason: 'Promotes calm focus without drowsiness', priority: 1 },
@@ -134,9 +125,8 @@ function getRecommendedStack(answers) {
     ],
   };
 
-  recommended = [...(goalStacks[primary_goal] || goalStacks.overall)];
+  let recommended = [...(goalStacks[primary_goal] || goalStacks.overall)];
 
-  // Add secondary goal supplements (avoid duplicates)
   const secondaryMap = {
     creativity: [{ id: 'aniracetam', reason: 'Enhances creative thinking' }],
     social: [{ id: 'kanna', reason: 'Reduces social anxiety naturally' }],
@@ -144,46 +134,71 @@ function getRecommendedStack(answers) {
     physical: [{ id: 'creatine', reason: 'Dual brain and muscle performance' }],
     longevity: [{ id: 'resveratrol', reason: 'Powerful antioxidant for healthy aging' }],
   };
-
   if (secondary_goal && secondary_goal !== 'none' && secondaryMap[secondary_goal]) {
     secondaryMap[secondary_goal].forEach(item => {
-      if (!recommended.find(r => r.id === item.id)) {
-        recommended.push({ ...item, priority: 6 });
-      }
+      if (!recommended.find(r => r.id === item.id)) recommended.push({ ...item, priority: 6 });
     });
   }
 
-  // Filter out caffeine for sensitive users
-  if (isCaffeineSensitive) {
-    recommended = recommended.filter(r => r.id !== 'caffeine');
-  }
-
-  // For beginners, remove advanced supplements
+  if (isCaffeineSensitive) recommended = recommended.filter(r => r.id !== 'caffeine');
+  let strippedAdvanced = 0;
   if (isBeginner) {
     const advancedIds = ['noopept', 'aniracetam', 'piracetam', 'phenylpiracetam', 'modafinil', 'armodafinil'];
+    const before = recommended.length;
     recommended = recommended.filter(r => !advancedIds.includes(r.id));
+    strippedAdvanced = before - recommended.length;
   }
 
-  // Trim to budget
-  recommended = recommended
-    .sort((a, b) => a.priority - b.priority)
-    .slice(0, maxSupplements);
+  recommended = recommended.sort((a, b) => a.priority - b.priority).slice(0, maxSupplements);
 
-  // Enrich with full supplement data
-  return recommended.map(rec => {
-    const supplement = supplements.find(s => s.id === rec.id);
-    return { ...rec, supplement };
-  }).filter(r => r.supplement);
+  return {
+    items: recommended.map(rec => {
+      const supplement = supplements.find(s => s.id === rec.id);
+      return { ...rec, supplement };
+    }).filter(r => r.supplement),
+    strippedAdvanced,
+  };
+}
+
+function OptionButton({ option, selected, onClick }) {
+  const Icon = option.icon;
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`p-3 rounded-md border text-left transition-colors ${
+        selected
+          ? 'border-primary-500 bg-primary-050'
+          : 'border-ink-200 bg-surface-card hover:border-primary-300'
+      }`}
+      aria-pressed={selected}
+    >
+      <div className="flex items-center gap-2 mb-1">
+        {Icon && <Icon className="w-4 h-4 text-primary-700" />}
+        <span className="text-sm font-semibold text-ink-900">{option.label}</span>
+      </div>
+      <p className="text-xs text-ink-700 leading-snug">{option.description}</p>
+    </button>
+  );
 }
 
 export function StackQuiz() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({});
   const [showResults, setShowResults] = useState(false);
+  const [tracked, setTracked] = useState({ start: false, complete: false });
   const { addSupplement, stack } = useStack();
 
   const currentQuestion = QUESTIONS[step];
   const progress = ((step + 1) / QUESTIONS.length) * 100;
+
+  // Fire quiz_start once at mount
+  React.useEffect(() => {
+    if (!tracked.start) {
+      track('quiz_start');
+      setTracked(t => ({ ...t, start: true }));
+    }
+  }, [tracked.start]);
 
   const handleAnswer = (value) => {
     if (currentQuestion.multi) {
@@ -198,129 +213,140 @@ export function StackQuiz() {
         setAnswers({ ...answers, [currentQuestion.id]: updated });
       }
     } else {
-      setAnswers({ ...answers, [currentQuestion.id]: value });
+      const next = { ...answers, [currentQuestion.id]: value };
+      setAnswers(next);
       if (step < QUESTIONS.length - 1) {
         setStep(step + 1);
       } else {
         setShowResults(true);
+        if (!tracked.complete) {
+          track('quiz_complete', { primary_goal: next.primary_goal, experience: next.experience });
+          setTracked(t => ({ ...t, complete: true }));
+        }
       }
     }
   };
 
   const handleMultiNext = () => {
-    if (step < QUESTIONS.length - 1) {
-      setStep(step + 1);
-    } else {
-      setShowResults(true);
-    }
+    if (step < QUESTIONS.length - 1) setStep(step + 1);
+    else setShowResults(true);
   };
 
   const isSelected = (value) => {
-    if (currentQuestion.multi) {
-      return (answers[currentQuestion.id] || []).includes(value);
-    }
+    if (currentQuestion.multi) return (answers[currentQuestion.id] || []).includes(value);
     return answers[currentQuestion.id] === value;
   };
 
   if (showResults) {
-    const recommended = getRecommendedStack(answers);
+    const { items: recommended, strippedAdvanced } = getRecommendedStack(answers);
 
     return (
       <>
         <SEOOptimizer
-          page="home"
+          page="quiz"
           customTitle="Your Personalized Nootropic Stack | NootropicStacker"
           customDescription="Get a personalized supplement stack recommendation based on your goals, experience, and sensitivities."
         />
-        <div className="max-w-3xl mx-auto space-y-3">
+        <div className="max-w-3xl mx-auto px-4 py-6 space-y-4">
           <div className="text-center">
-            <Sparkles className="w-12 h-12 text-primary-700 mx-auto mb-4" />
-            <h2 className="text-3xl font-semibold mb-2">Your Personalized Stack</h2>
-            <p className="text-ink-700">
-              Based on your answers, here's our recommended starting stack.
+            <Sparkles className="w-6 h-6 text-primary-700 mx-auto mb-2" />
+            <h1 className="text-xl sm:text-2xl font-semibold text-ink-900">Your personalized stack</h1>
+            <p className="text-sm text-ink-700 mt-1">
+              Based on your answers, here's a starting stack you can refine in the builder.
             </p>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-2">
             {recommended.map((rec, index) => (
-              <Card key={rec.id} className="hover:shadow-1 transition-shadow">
-                <CardContent className="pt-6">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <Badge variant="outline" className="text-xs">{index + 1}</Badge>
-                        <Link to={`/supplements/${rec.id}`} className="text-lg font-semibold hover:text-primary-700">
-                          {rec.supplement.name}
-                        </Link>
-                        <Badge className="text-xs">{rec.supplement.category.replace('-', ' ')}</Badge>
-                      </div>
-                      <p className="text-sm text-accent-700 font-medium mb-1">{rec.reason}</p>
-                      <p className="text-sm text-ink-700">{rec.supplement.description}</p>
-                      <div className="mt-2 text-xs text-ink-500">
-                        Dosage: {rec.supplement.dosage.min}-{rec.supplement.dosage.max} {rec.supplement.dosage.unit} • {rec.supplement.dosage.timing}
-                      </div>
+              <div key={rec.id} className="rounded-md bg-surface-card border border-ink-200 p-3 hover:border-primary-300 transition-colors">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
+                      <span className="inline-flex items-center justify-center w-5 h-5 rounded-md text-[11px] font-semibold bg-primary-050 text-primary-800 border border-primary-300">{index + 1}</span>
+                      <Link to={`/supplements/${rec.id}`} className="text-sm font-semibold text-ink-900 hover:text-primary-700">
+                        {rec.supplement.name}
+                      </Link>
+                      <span className="text-[10px] uppercase tracking-wider text-ink-500">{rec.supplement.category.replace('-', ' ')}</span>
                     </div>
-                    <div className="flex flex-col gap-2 ml-4">
-                      <Button
-                        size="sm"
-                        onClick={() => addSupplement(rec.supplement)}
-                        disabled={stack.some(s => s.supplementId === rec.id)}
-                      >
-                        <Plus className="w-3 h-3 mr-1" />
-                        {stack.some(s => s.supplementId === rec.id) ? 'Added' : 'Add'}
-                      </Button>
-                      {AFFILIATE_LINKS[rec.id] && (
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="text-accent-700 border-green-300"
-                          onClick={() => {
-                            const links = AFFILIATE_LINKS[rec.id];
-                            const url = links.nootropicsdepot || (
-                              links.amazon ? withAffiliateUtms(links.amazon, { campaign: `quiz-${rec.id}` }) : (
-                                links.iherb || Object.values(links).find(v => typeof v === 'string')
-                              )
-                            );
-                            if (url) window.open(url, '_blank');
-                          }}
-                        >
-                          <ShoppingCart className="w-3 h-3 mr-1" />
-                          Buy
-                        </Button>
-                      )}
-                    </div>
+                    <p className="text-xs text-accent-700 font-medium mb-1">{rec.reason}</p>
+                    <p className="text-xs text-ink-700 line-clamp-2 leading-snug">{rec.supplement.description}</p>
+                    <p className="mt-1 text-[11px] text-ink-500 font-mono">
+                      {rec.supplement.dosage.min}–{rec.supplement.dosage.max} {rec.supplement.dosage.unit} · {rec.supplement.dosage.timing}
+                    </p>
                   </div>
-                </CardContent>
-              </Card>
+                  <div className="flex flex-col gap-1 shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => addSupplement(rec.supplement)}
+                      disabled={stack.some(s => s.supplementId === rec.id)}
+                      className="inline-flex items-center justify-center gap-1 h-7 px-2.5 rounded-md text-[11px] font-medium bg-primary-050 hover:bg-primary-100 text-primary-800 border border-primary-300 hover:border-primary-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                      <Plus className="w-3 h-3" />
+                      {stack.some(s => s.supplementId === rec.id) ? 'Added' : 'Add'}
+                    </button>
+                    {AFFILIATE_LINKS[rec.id] && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const links = AFFILIATE_LINKS[rec.id];
+                          const url = links.nootropicsdepot || (
+                            links.amazon ? withAffiliateUtms(links.amazon, { campaign: `quiz-${rec.id}` }) : (
+                              links.iherb || Object.values(links).find(v => typeof v === 'string')
+                            )
+                          );
+                          if (url) window.open(url, '_blank', 'noopener,noreferrer');
+                        }}
+                        className="inline-flex items-center justify-center gap-1 h-7 px-2.5 rounded-md text-[11px] font-medium border border-accent-500 text-accent-700 hover:bg-accent-050 transition-colors"
+                      >
+                        <ShoppingCart className="w-3 h-3" />
+                        Buy
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
 
-          <Alert className="border-primary-300 bg-primary-050">
-            <Sparkles className="h-4 w-4 text-primary-700" />
-            <AlertDescription className="text-primary-800">
-              <strong>Next step:</strong> Add these supplements to your stack using the buttons above,
-              then visit the <Link to="/build" className="font-semibold underline">Stack Builder</Link> to
-              see real-time effects, interaction warnings, and fine-tune your dosages.
-            </AlertDescription>
-          </Alert>
+          {strippedAdvanced > 0 && (
+            <p className="text-xs text-ink-500 italic">
+              Hid {strippedAdvanced} advanced supplement{strippedAdvanced === 1 ? '' : 's'} (racetams) since you're newer to nootropics. Switch the experience level to see them.
+            </p>
+          )}
 
-          <Alert className="border-ink-200 bg-surface-card">
-            <AlertTriangle className="h-4 w-4 text-ink-700" />
-            <AlertDescription className="text-ink-700">
-              <strong>Disclaimer:</strong> These recommendations are for educational purposes only.
-              Always consult a healthcare professional before starting any supplement regimen.
-            </AlertDescription>
-          </Alert>
+          <div className="rounded-md border border-primary-300 bg-primary-050 p-3">
+            <div className="flex items-start gap-2">
+              <Sparkles className="w-4 h-4 text-primary-700 mt-0.5 shrink-0" />
+              <p className="text-xs text-primary-800 leading-snug">
+                <span className="font-semibold">Next step:</span> add these supplements to your stack, then open the{' '}
+                <Link to="/build" className="font-semibold underline">Stack Builder</Link> for real-time effects, interaction warnings, and dose tuning.
+              </p>
+            </div>
+          </div>
 
-          <div className="flex justify-center gap-4">
-            <Button variant="outline" onClick={() => { setShowResults(false); setStep(0); setAnswers({}); }}>
-              Retake Quiz
-            </Button>
-            <Link to="/build">
-              <Button>
-                <Sparkles className="w-4 h-4 mr-2" />
-                Open Stack Builder
-              </Button>
+          <div className="rounded-md border border-ink-200 bg-surface-card p-3">
+            <div className="flex items-start gap-2">
+              <AlertTriangle className="w-4 h-4 text-ink-500 mt-0.5 shrink-0" />
+              <p className="text-xs text-ink-700 leading-snug">
+                <span className="font-semibold">Disclaimer:</span> educational tool only. Consult a healthcare professional before starting any supplement regimen.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex justify-center gap-2 pt-2">
+            <button
+              type="button"
+              onClick={() => { setShowResults(false); setStep(0); setAnswers({}); }}
+              className="inline-flex items-center justify-center h-8 px-3 rounded-md text-xs font-semibold text-ink-700 hover:text-ink-900 bg-surface-card border border-ink-200 hover:border-primary-300 transition-colors"
+            >
+              Retake quiz
+            </button>
+            <Link
+              to="/build"
+              className="inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-xs font-semibold bg-primary-700 text-white hover:bg-primary-800 transition-colors"
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              Open Stack Builder
             </Link>
           </div>
         </div>
@@ -331,73 +357,63 @@ export function StackQuiz() {
   return (
     <>
       <SEOOptimizer
-        page="home"
-        customTitle="Nootropic Stack Quiz — Find Your Perfect Stack | NootropicStacker"
-        customDescription="Answer 5 quick questions to get a personalized nootropic supplement stack recommendation based on your goals and experience."
+        page="quiz"
+        customTitle="Stack Quiz — Find Your Starting Nootropic Stack | NootropicStacker"
+        customDescription="Five quick questions and you get a personalized nootropic stack matched to your goals, experience level, and sensitivities."
       />
-      <div className="max-w-2xl mx-auto space-y-3">
-        {/* Progress */}
+      <div className="max-w-2xl mx-auto px-4 py-6 space-y-3">
+        {/* Progress strip */}
         <div>
-          <div className="flex justify-between text-sm text-ink-500 mb-2">
+          <div className="flex justify-between text-[11px] text-ink-500 mb-1">
             <span>Question {step + 1} of {QUESTIONS.length}</span>
-            <span>{Math.round(progress)}% complete</span>
+            <span>{Math.round(progress)}%</span>
           </div>
-          <Progress value={progress} className="h-2" />
+          <div className="h-1.5 w-full rounded-full bg-surface-sunk overflow-hidden">
+            <div className="h-full bg-primary-500 transition-all" style={{ width: `${progress}%` }} />
+          </div>
         </div>
 
-        {/* Question */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-2xl">{currentQuestion.title}</CardTitle>
-            <p className="text-ink-700">{currentQuestion.subtitle}</p>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {currentQuestion.options.map(option => {
-                const Icon = option.icon;
-                return (
-                  <button
-                    key={option.value}
-                    onClick={() => handleAnswer(option.value)}
-                    className={`p-4 rounded-md border-2 text-left transition-all hover:shadow-1 ${
-                      isSelected(option.value)
-                        ? 'border-primary-500 bg-primary-050'
-                        : 'border-ink-200 hover:border-ink-300'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2 mb-1">
-                      {Icon && <Icon className="w-5 h-5 text-primary-700" />}
-                      <span className="font-semibold">{option.label}</span>
-                    </div>
-                    <p className="text-sm text-ink-700">{option.description}</p>
-                  </button>
-                );
-              })}
-            </div>
+        {/* Question card */}
+        <div className="rounded-md bg-surface-card border border-ink-200 p-3 sm:p-4">
+          <h1 className="text-lg sm:text-xl font-semibold text-ink-900">{currentQuestion.title}</h1>
+          <p className="text-xs text-ink-700 mt-0.5 mb-3">{currentQuestion.subtitle}</p>
 
-            {currentQuestion.multi && (
-              <div className="mt-4 flex justify-end">
-                <Button
-                  onClick={handleMultiNext}
-                  disabled={!(answers[currentQuestion.id]?.length > 0)}
-                >
-                  Next <ArrowRight className="w-4 h-4 ml-1" />
-                </Button>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            {currentQuestion.options.map(option => (
+              <OptionButton
+                key={option.value}
+                option={option}
+                selected={isSelected(option.value)}
+                onClick={() => handleAnswer(option.value)}
+              />
+            ))}
+          </div>
+
+          {currentQuestion.multi && (
+            <div className="mt-3 flex justify-end">
+              <button
+                type="button"
+                onClick={handleMultiNext}
+                disabled={!(answers[currentQuestion.id]?.length > 0)}
+                className="inline-flex items-center justify-center gap-1 h-8 px-3 rounded-md text-xs font-semibold bg-primary-700 text-white hover:bg-primary-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                Next <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          )}
+        </div>
 
         {/* Navigation */}
-        <div className="flex justify-between">
-          <Button
-            variant="ghost"
+        <div className="flex items-center justify-between">
+          <button
+            type="button"
             onClick={() => setStep(Math.max(0, step - 1))}
             disabled={step === 0}
+            className="inline-flex items-center gap-1 text-xs text-ink-500 hover:text-ink-900 disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            <ArrowLeft className="w-4 h-4 mr-1" /> Back
-          </Button>
-          <Link to="/build" className="text-sm text-ink-500 hover:text-ink-700 flex items-center">
+            <ArrowLeft className="w-3.5 h-3.5" /> Back
+          </button>
+          <Link to="/build" className="text-xs text-ink-500 hover:text-ink-900">
             Skip quiz → use Stack Builder
           </Link>
         </div>

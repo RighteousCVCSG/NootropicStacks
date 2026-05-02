@@ -14,39 +14,29 @@ export function ContactPage() {
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) {
       setError('All fields are required.');
       return;
     }
-    setStatus('loading');
     setError('');
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      });
-      if (res.ok) {
-        setStatus('success');
-      } else {
-        const data = await res.json();
-        setError(data.error || 'Failed to send. Try emailing info@nootropicstacker.com directly.');
-        setStatus('idle');
-      }
-    } catch {
-      setError('Network error. Try emailing info@nootropicstacker.com directly.');
-      setStatus('idle');
-    }
+    setStatus('loading');
+    // Backend isn't wired — open the user's mail client with everything
+    // pre-filled so the message actually gets to us. Falls back to the
+    // success state once the mailto window opens.
+    const subject = encodeURIComponent(`NootropicStacker contact — ${form.name}`);
+    const body = encodeURIComponent(`${form.message}\n\n— ${form.name}\n${form.email}`);
+    window.location.href = `mailto:info@nootropicstacker.com?subject=${subject}&body=${body}`;
+    setTimeout(() => setStatus('success'), 250);
   };
 
   if (status === 'success') {
     return (
       <div className="max-w-lg mx-auto py-8 text-center">
         <CheckCircle className="w-12 h-12 text-accent-500 mx-auto mb-4" />
-        <h2 className="text-2xl font-semibold mb-2">Message Sent!</h2>
-        <p className="text-ink-700">We'll get back to you within 24 hours.</p>
+        <h2 className="text-2xl font-semibold mb-2">Mail client opened</h2>
+        <p className="text-ink-700">If your email app didn't open, send your message to <a href="mailto:info@nootropicstacker.com" className="text-primary-700 hover:underline">info@nootropicstacker.com</a> directly. We'll reply within 24 hours.</p>
       </div>
     );
   }
@@ -75,15 +65,15 @@ export function ContactPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <Label htmlFor="name">Name</Label>
-              <Input id="name" name="name" value={form.name} onChange={handleChange} placeholder="Your name" />
+              <Input id="name" name="name" value={form.name} onChange={handleChange} placeholder="Your name" required />
             </div>
             <div>
               <Label htmlFor="email">Email</Label>
-              <Input id="email" name="email" type="email" value={form.email} onChange={handleChange} placeholder="your@email.com" />
+              <Input id="email" name="email" type="email" value={form.email} onChange={handleChange} placeholder="your@email.com" required />
             </div>
             <div>
               <Label htmlFor="message">Message</Label>
-              <Textarea id="message" name="message" value={form.message} onChange={handleChange} placeholder="Your question or message..." rows={5} />
+              <Textarea id="message" name="message" value={form.message} onChange={handleChange} placeholder="Your question or message..." rows={5} required />
             </div>
             <Button type="submit" className="w-full" disabled={status === 'loading'}>
               {status === 'loading' ? 'Sending...' : 'Send Message'}

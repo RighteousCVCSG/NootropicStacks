@@ -47,9 +47,9 @@ function getCategoryColor(category) {
     energy: 'bg-warn-100 text-warn-700',
     mineral: 'bg-surface-sunk text-ink-900',
     vitamin: 'bg-warn-100 text-warn-700',
-    essential: 'bg-teal-100 text-teal-800',
+    essential: 'bg-info-100 text-info-700',
     longevity: 'bg-primary-100 text-primary-800',
-    performance: 'bg-emerald-100 text-emerald-800',
+    performance: 'bg-accent-100 text-accent-700',
     sleep: 'bg-info-050 text-info-700 border border-info-300',
   };
   return colors[category] || 'bg-surface-sunk text-ink-900';
@@ -77,7 +77,7 @@ function AffiliateButtons({ supplement }) {
           target="_blank"
           rel="noopener noreferrer sponsored"
           onClick={() => trackClick(supplement.name, 'amazon')}
-          className="flex items-center gap-1.5 text-xs bg-warn-1000 hover:bg-warn-700 text-white px-3 py-2 rounded-md font-medium transition-colors"
+          className="flex items-center gap-1.5 text-xs bg-warn-700 hover:bg-warn-800 text-white px-3 py-2 rounded-md font-medium transition-colors"
         >
           <ShoppingCart className="w-3 h-3" />
           Amazon
@@ -180,7 +180,7 @@ function EffectRow({ effectKey, label, icon, valA, valB }) {
   const winner = diff > 1 ? 'a' : diff < -1 ? 'b' : 'tie';
 
   return (
-    <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 py-2 border-b border-gray-100 last:border-0">
+    <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 py-2 border-b border-ink-200 last:border-0">
       {/* Left supplement bar */}
       <div className="space-y-1">
         <div className="flex items-center justify-between gap-1">
@@ -292,7 +292,7 @@ function VerdictSection({ suppA, suppB }) {
       <CardContent>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {verdicts.map(v => (
-            <div key={v.label} className="bg-white rounded-md p-3 border border-blue-100">
+            <div key={v.label} className="bg-white rounded-md p-3 border border-primary-100">
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-lg">{v.icon}</span>
                 <span className="text-xs font-semibold text-ink-500 uppercase tracking-wide">{v.label}</span>
@@ -364,7 +364,7 @@ export function ComparisonPage() {
     return (suppB.interactions || []).filter(i => setA.has(i));
   }, [suppA, suppB, bothSelected]);
 
-  const stackUrl = bothSelected ? `/?stack=${suppA.id},${suppB.id}` : '/';
+  const stackUrl = bothSelected ? `/build?stack=${suppA.id},${suppB.id}` : '/';
 
   const pageTitle = bothSelected
     ? `${suppA.name} vs ${suppB.name}: Head-to-Head Comparison | NootropicStacker`
@@ -482,7 +482,7 @@ export function ComparisonPage() {
                 <CardContent className="space-y-3">
                   {[suppA, suppB].map((s, i) => (
                     <div key={s.id} className="flex gap-3">
-                      <div className={`w-2 rounded-full flex-shrink-0 mt-1 ${i === 0 ? 'bg-primary-400' : 'bg-primary-400'}`} style={{ minHeight: 40 }} />
+                      <div className={`w-2 rounded-full flex-shrink-0 mt-1 ${i === 0 ? 'bg-primary-300' : 'bg-primary-300'}`} style={{ minHeight: 40 }} />
                       <div>
                         <div className="font-semibold text-sm text-ink-900">{s.name}</div>
                         <div className="text-xs text-ink-700">
@@ -504,7 +504,7 @@ export function ComparisonPage() {
                   {[suppA, suppB].map((s, i) => (
                     <div key={s.id}>
                       <div className="flex items-center gap-2 mb-1">
-                        <div className={`w-2 h-2 rounded-full flex-shrink-0 ${i === 0 ? 'bg-primary-400' : 'bg-primary-400'}`} />
+                        <div className={`w-2 h-2 rounded-full flex-shrink-0 ${i === 0 ? 'bg-primary-300' : 'bg-primary-300'}`} />
                         <span className="font-semibold text-sm">{s.name}</span>
                         <Badge className={`text-xs ${getCategoryColor(s.category)}`}>{s.category}</Badge>
                       </div>
@@ -530,7 +530,7 @@ export function ComparisonPage() {
                   {[suppA, suppB].map((s, i) => (
                     <div key={s.id}>
                       <div className="flex items-center gap-2 mb-1">
-                        <div className={`w-2 h-2 rounded-full flex-shrink-0 ${i === 0 ? 'bg-primary-400' : 'bg-primary-400'}`} />
+                        <div className={`w-2 h-2 rounded-full flex-shrink-0 ${i === 0 ? 'bg-primary-300' : 'bg-primary-300'}`} />
                         <span className="font-semibold text-sm">{s.name}</span>
                         {(s.warnings?.length === 0 || (s.warnings?.length === 1 && s.warnings[0].toLowerCase().includes('well tolerated'))) && (
                           <span className="flex items-center gap-0.5 text-xs text-accent-700 font-medium">
@@ -587,7 +587,7 @@ export function ComparisonPage() {
                   {[suppA, suppB].map((s, i) => (
                     <div key={s.id} className="mb-2 last:mb-0">
                       <div className="flex items-center gap-1.5 mb-1">
-                        <div className={`w-1.5 h-1.5 rounded-full ${i === 0 ? 'bg-primary-400' : 'bg-primary-400'}`} />
+                        <div className={`w-1.5 h-1.5 rounded-full ${i === 0 ? 'bg-primary-300' : 'bg-primary-300'}`} />
                         <span className="text-xs font-medium text-ink-700">{s.name}</span>
                       </div>
                       {s.interactions?.length > 0 ? (
@@ -619,7 +619,7 @@ export function ComparisonPage() {
             <VerdictSection suppA={suppA} suppB={suppB} />
 
             {/* Stack Together CTA */}
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-md p-3 text-white text-center">
+            <div className="bg-gradient-to-br from-primary-700 to-primary-900 rounded-md p-3 text-white text-center">
               <Layers className="w-8 h-8 mx-auto mb-2 opacity-90" />
               <h2 className="text-xl font-semibold mb-2">Stack These Together</h2>
               <p className="text-primary-100 text-sm mb-4 max-w-md mx-auto">

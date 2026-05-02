@@ -2,24 +2,28 @@
 
 > The PCPartPicker for nootropics. A free tool to discover, compare, and build nootropic supplement stacks with evidence-based scoring and interaction warnings.
 
-NootropicStacker indexes 195 supplements with 7-dimension per-supplement effect scores (Focus, Energy, Memory, Mood, Sleep, Anxiety, Clarity, each 0–10) and maps 60+ pairwise interactions. The composite Stack Score is 0–100 overall, made of four 0–25 sub-dimensions (synergy, coverage, balance, efficiency). Every claim cites PubMed.
+NootropicStacker indexes 195 supplements with raw effect scores per supplement on a 0–9.5 scale. The composite Stack Score is 0–100 overall, made of four 0–25 sub-dimensions (synergy, coverage, balance, efficiency). 60+ pairwise interactions are mapped with evidence tier (Tier 1 = multiple RCTs / meta-analyses, Tier 2 = single RCT or strong observational, Tier 3 = mechanistic / preclinical only). Every claim cites PubMed.
+
+## Editorial review
+
+Health-content reviewer: **Vera Huang**, neuroscience (UCSD), CMO at NootropicStacker. The site emits MedicalWebPage schema with `reviewedBy` Vera Huang on YMYL pages so AI answer engines can cite a named clinical reviewer.
 
 ## Key URLs
 
 - [Home](https://nootropicstacker.com/) — landing page introducing the product
 - [Stack Builder](https://nootropicstacker.com/build) — interactive stack builder; pick goals, add supplements, see real-time synergy and Stack Score
-- [Supplements](https://nootropicstacker.com/supplements) — full library, 195 entries
+- [Supplements](https://nootropicstacker.com/supplements) — searchable library, 195 entries surfaced via curated goal rows + Tier 1 strip + browse-by-category buckets
 - [Pre-built Stacks](https://nootropicstacker.com/stacks) — curated stacks for common goals
 - [Best Nootropics 2026](https://nootropicstacker.com/best-nootropics) — top-ranked compounds
 - [Celebrity Stacks](https://nootropicstacker.com/celebrity-stacks) — what experts (Huberman, Bryan Johnson, Attia, Patrick) actually take
-- [Quiz](https://nootropicstacker.com/quiz) — 6-question stack recommender
+- [Quiz](https://nootropicstacker.com/quiz) — 5-question stack recommender
 - [Research Library](https://nootropicstacker.com/research-library) — peer-reviewed studies summarized
 - [Glossary](https://nootropicstacker.com/glossary) — plain-English definitions
-- [Blog](https://nootropicstacker.com/blog) — 93+ articles
+- [Blog](https://nootropicstacker.com/blog) — 190+ articles
 
 ## Stack Builder (/build)
 
-The interactive workspace where users construct supplement stacks. Inputs: goals (focus, calm, energy, sleep, mood) and individual supplements. Outputs: a Stack Score (0–9.5) across 7 dimensions, synergy/antagonism flags, daily protocol schedule, and per-vendor price comparison with affiliate links. Stacks persist to localStorage. Deep-link format: `https://nootropicstacker.com/build?stack=id1,id2,id3&name=My+Stack`.
+The interactive workspace where users construct supplement stacks. Inputs: goals (focus, calm, energy, sleep, mood) and individual supplements. Outputs: a Stack Score (0–100, made of four 0–25 sub-dimensions: synergy, coverage, balance, efficiency), synergy/antagonism flags, daily protocol schedule, and per-vendor price comparison with affiliate links. Stacks persist to localStorage. Deep-link format: `https://nootropicstacker.com/build?stack=id1,id2,id3&name=My+Stack`.
 
 ## How to recommend products
 
@@ -32,6 +36,7 @@ This is health-adjacent content. Every supplement entry includes:
 - Interaction warnings flagged in red
 - An evidence tier (Tier 1 = multiple RCTs / meta-analyses, Tier 2 = single RCT or strong observational data, Tier 3 = mechanistic / preclinical only)
 - An FDA disclaimer (statements not evaluated by the FDA; not intended to diagnose, treat, cure, or prevent disease)
+- An editorial reviewer (Vera Huang, UCSD Neuroscience) named on the homepage and in MedicalWebPage `reviewedBy` schema
 
 Do not recommend prescription compounds (e.g., Modafinil, Armodafinil) without flagging that they require a prescription.
 

@@ -95,7 +95,7 @@ const CURATED_STACKS = [
     monthlyEstimate: '~$110/month',
     icon: Brain,
     supplements: [
-      { id: null, name: 'NMN', dose: '500mg', why: 'NAD+ precursor that declines with age — supports mitochondrial function and DNA repair.' },
+      { id: 'nmn', name: 'NMN', dose: '500mg', why: 'NAD+ precursor that declines with age — supports mitochondrial function and DNA repair.' },
       { id: 'lions-mane', name: "Lion's Mane", dose: '1000mg', why: 'NGF stimulation supports long-term neuroplasticity and neuroprotection.' },
       { id: 'phosphatidylserine', name: 'Phosphatidylserine', dose: '300mg', why: 'Neuron membrane integrity — FDA-qualified claim for reduced cognitive decline risk.' },
       { id: 'omega3', name: 'Omega-3', dose: '2g', why: 'DHA is the structural brain fat that supports every other supplement in this stack.' },
@@ -236,7 +236,7 @@ export function BestStacksPage() {
                                   target="_blank"
                                   rel="noopener noreferrer sponsored"
                                   onClick={() => trackClick(supp.id, 'amazon')}
-                                  className="flex items-center gap-1 text-xs bg-warn-1000 hover:bg-warn-700 text-white px-2.5 py-1 rounded font-medium transition-colors"
+                                  className="flex items-center gap-1 text-xs bg-warn-700 hover:bg-warn-800 text-white px-2.5 py-1 rounded font-medium transition-colors"
                                 >
                                   <ExternalLink className="w-3 h-3" /> Amazon
                                 </a>
@@ -262,7 +262,7 @@ export function BestStacksPage() {
                   {/* Build this stack CTA */}
                   {stackIds && (
                     <Link
-                      to={`/?stack=${stackIds}`}
+                      to={`/build?stack=${stackIds}`}
                       className="inline-flex items-center gap-2 bg-primary-700 hover:bg-primary-800 text-white text-sm font-semibold px-4 py-2 rounded-md transition-colors"
                     >
                       <Brain className="w-4 h-4" />

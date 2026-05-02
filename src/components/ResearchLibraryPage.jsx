@@ -17,7 +17,7 @@ const EVIDENCE_ORDER = {
 };
 
 const EVIDENCE_BADGE = {
-  'Meta-Analysis': 'bg-emerald-100 text-emerald-800 border-emerald-300',
+  'Meta-Analysis': 'bg-accent-100 text-accent-700 border-accent-300',
   'RCT': 'bg-primary-100 text-primary-800 border-primary-300',
   'Observational': 'bg-warn-100 text-warn-700 border-amber-300',
   'Animal': 'bg-slate-100 text-slate-600 border-slate-300',
@@ -341,7 +341,7 @@ export function ResearchLibraryPage() {
                 </div>
               </div>
 
-              <div className="border-t border-gray-100 px-5">
+              <div className="border-t border-ink-200 px-5">
                 <Accordion type="single" collapsible>
                   <AccordionItem value="relevance">
                     <AccordionTrigger className="text-xs font-medium text-ink-500 py-3 hover:no-underline hover:text-ink-900">
@@ -374,7 +374,7 @@ export function ResearchLibraryPage() {
         </div>
       )}
 
-      <Alert className="border-amber-200 bg-warn-100">
+      <Alert className="border-warn-200 bg-warn-100">
         <AlertTriangle className="h-4 w-4 text-warn-700" />
         <AlertDescription className="text-warn-700 text-sm">
           <strong>Educational purposes only.</strong> Summaries are simplified interpretations for general education. Read the full studies before making any health decisions. This content does not constitute medical advice.

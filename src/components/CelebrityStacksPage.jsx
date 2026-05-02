@@ -157,7 +157,7 @@ export function CelebrityStacksPage() {
                       {row.values.map((v, i) => (
                         <td key={i} className="text-center px-3 py-3">
                           {v ? (
-                            <CheckCircle className="w-4 h-4 text-success-500 inline-block" />
+                            <CheckCircle className="w-4 h-4 text-accent-500 inline-block" />
                           ) : (
                             <span className="text-ink-300">—</span>
                           )}

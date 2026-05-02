@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { EmailCaptureForm } from './EmailCaptureForm.jsx';
 import { SEOOptimizer } from './SEOOptimizer.jsx';
 import { Button } from '@/components/ui/button.jsx';
-import { Pill, BookOpen, Award, ChevronRight } from 'lucide-react';
+import { Layers, BookOpen, Award, ChevronRight } from 'lucide-react';
 
 const EVIDENCE_TIER_LEGEND = [
   { tier: 'T1', label: 'Multiple human RCTs / meta-analysis', color: 'bg-accent-100 text-accent-700' },
@@ -188,14 +188,14 @@ export function LeadMagnetDownloadPage() {
         </div>
 
         {/* CTA to stack builder */}
-        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-md border border-blue-100 p-3 text-center mb-4">
+        <div className="bg-gradient-to-br from-primary-050 to-primary-100 rounded-md border border-primary-100 p-3 text-center mb-4">
           <h2 className="text-lg font-semibold text-ink-900 mb-2">Build Your Own Stack</h2>
           <p className="text-sm text-ink-700 mb-4">
             Use the free stack builder to combine any of 195 supplements, check interactions, and optimize your Stack Score.
           </p>
           <Link to="/build">
             <Button size="sm" className="gap-2">
-              <Pill className="w-4 h-4" />
+              <Layers className="w-4 h-4" />
               Open Stack Builder
               <ChevronRight className="w-4 h-4" />
             </Button>

@@ -166,7 +166,7 @@ function AffiliateButtons({ name }) {
         target="_blank"
         rel="noopener noreferrer sponsored"
         onClick={() => trackClick(name, 'amazon')}
-        className="flex items-center gap-1 text-xs bg-warn-1000 hover:bg-warn-700 text-white px-3 py-1.5 rounded font-medium transition-colors"
+        className="flex items-center gap-1 text-xs bg-warn-700 hover:bg-warn-800 text-white px-3 py-1.5 rounded font-medium transition-colors"
       >
         <ExternalLink className="w-3 h-3" /> Amazon
       </a>
@@ -211,7 +211,7 @@ export function NootropicsForAnxietyPage() {
           </p>
 
           {/* Disclaimer */}
-          <div className="flex gap-3 p-4 bg-warn-100 border border-amber-200 rounded-md mb-5">
+          <div className="flex gap-3 p-4 bg-warn-100 border border-warn-200 rounded-md mb-5">
             <AlertTriangle className="w-5 h-5 text-warn-700 flex-shrink-0 mt-0.5" />
             <p className="text-sm text-warn-700">
               <strong>Not medical advice.</strong> This is research-based educational information. Supplements are not a substitute for professional mental health treatment. If you have an anxiety disorder, please consult a qualified healthcare provider before using any supplement.
@@ -302,7 +302,7 @@ export function NootropicsForAnxietyPage() {
                 </div>
                 <p className="text-xs text-ink-700 leading-relaxed mb-4 flex-1">{item.rationale}</p>
                 <Link
-                  to={`/?stack=${item.ids.join(',')}`}
+                  to={`/build?stack=${item.ids.join(',')}`}
                   className="text-xs text-primary-700 hover:text-primary-800 font-medium flex items-center gap-1"
                 >
                   Build This Stack <ChevronRight className="w-3 h-3" />
@@ -313,7 +313,7 @@ export function NootropicsForAnxietyPage() {
         </div>
 
         {/* Safety Note */}
-        <div className="mb-10 p-5 bg-danger-100 border border-red-200 rounded-md">
+        <div className="mb-10 p-5 bg-danger-100 border border-danger-200 rounded-md">
           <div className="flex items-start gap-3">
             <ShieldAlert className="w-5 h-5 text-danger-500 flex-shrink-0 mt-0.5" />
             <div>
@@ -372,7 +372,7 @@ export function NootropicsForAnxietyPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {RELATED_ARTICLES.map((article) => (
               <Link key={article.slug} to={`/blog/${article.slug}`}>
-                <div className="p-4 rounded-md border border-ink-200 hover:border-indigo-300 hover:shadow-sm transition-all bg-white h-full">
+                <div className="p-4 rounded-md border border-ink-200 hover:border-primary-300 hover:shadow-sm transition-all bg-white h-full">
                   <p className="text-sm font-medium text-ink-900 hover:text-primary-800 leading-snug">{article.title}</p>
                   <p className="text-xs text-ink-400 mt-1">{article.readTime} min read</p>
                 </div>

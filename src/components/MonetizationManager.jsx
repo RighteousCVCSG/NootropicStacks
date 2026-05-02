@@ -587,7 +587,7 @@ export function AffiliateLinks({ supplementId, supplementName }) {
   };
 
   return (
-    <div className="mt-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 border border-accent-300 rounded-md">
+    <div className="mt-4 p-4 bg-gradient-to-r from-accent-050 to-accent-100 border border-accent-300 rounded-md">
       <h4 className="font-semibold mb-3 flex items-center gap-2 text-accent-700">
         <ShoppingCart className="w-4 h-4" />
         Buy {supplementName}

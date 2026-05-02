@@ -1,41 +1,47 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useStack } from '../contexts/StackContext.jsx';
-import { useAuth } from '../contexts/AuthContext.jsx';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.jsx';
 import { Button } from '@/components/ui/button.jsx';
 import { Badge } from '@/components/ui/badge.jsx';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible.jsx';
-import { FolderOpen, Trash2, Download, ChevronDown, Loader2 } from 'lucide-react';
+import { FolderOpen, ChevronDown, X } from 'lucide-react';
 import { supplements as allSupplements } from '../data/supplements.js';
+
+const STORAGE_KEY = 'ns_saved_stacks';
 
 function getSupplementName(id) {
   const supp = allSupplements.find(s => s.id === id);
   return supp ? supp.name : id;
 }
 
+// Saved stacks live in localStorage until a real persistence backend
+// lands. Component reads on open and on storage events so multiple tabs
+// stay in sync.
 export function SavedStacksList() {
-  const { user } = useAuth();
   const { loadStack, setUserGoals } = useStack();
   const [stacks, setStacks] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const [deleting, setDeleting] = useState(null);
 
-  const fetchStacks = useCallback(async () => {
-    if (!user) return;
-    setLoading(true);
+  const refresh = useCallback(() => {
     try {
-      const res = await fetch('/api/stacks');
-      if (!res.ok) return;
-      const data = await res.json();
-      setStacks(data.stacks || []);
-    } catch { /* ignore */ }
-    finally { setLoading(false); }
-  }, [user]);
+      const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      setStacks(Array.isArray(raw) ? raw : []);
+    } catch {
+      setStacks([]);
+    }
+  }, []);
 
   useEffect(() => {
-    if (open && user) fetchStacks();
-  }, [open, user, fetchStacks]);
+    if (open) refresh();
+  }, [open, refresh]);
+
+  useEffect(() => {
+    const onStorage = (e) => { if (e.key === STORAGE_KEY) refresh(); };
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
+  }, [refresh]);
+
+  // Refresh once on mount so the chip shows correct count without opening.
+  useEffect(() => { refresh(); }, [refresh]);
 
   const handleLoad = (stack) => {
     loadStack(stack.supplements);
@@ -44,18 +50,15 @@ export function SavedStacksList() {
     }
   };
 
-  const handleDelete = async (id) => {
-    setDeleting(id);
+  const handleDelete = (id) => {
     try {
-      const res = await fetch(`/api/stacks/${id}`, { method: 'DELETE' });
-      if (res.ok) {
-        setStacks(prev => prev.filter(s => s.id !== id));
-      }
+      const next = stacks.filter(s => s.id !== id);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+      setStacks(next);
     } catch { /* ignore */ }
-    finally { setDeleting(null); }
   };
 
-  if (!user) return null;
+  if (stacks.length === 0 && !open) return null;
 
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
@@ -73,53 +76,50 @@ export function SavedStacksList() {
       </CollapsibleTrigger>
 
       <CollapsibleContent className="mt-2 space-y-2">
-        {loading ? (
-          <div className="flex items-center justify-center py-4">
-            <Loader2 className="w-4 h-4 animate-spin text-ink-400" />
-          </div>
-        ) : stacks.length === 0 ? (
+        {stacks.length === 0 ? (
           <p className="text-sm text-ink-500 text-center py-3">No saved stacks yet.</p>
         ) : (
           stacks.map(stack => (
-            <Card key={stack.id} className="bg-surface-card">
-              <CardContent className="py-3 px-4">
-                <div className="flex items-start justify-between gap-2">
-                  <div className="min-w-0">
-                    <p className="text-sm font-medium text-ink-900 truncate">{stack.name}</p>
-                    <p className="text-xs text-ink-500 mt-0.5">
-                      {stack.supplements.length} supplement{stack.supplements.length !== 1 ? 's' : ''}
-                      {' '}&middot;{' '}
-                      {new Date(stack.createdAt).toLocaleDateString()}
-                    </p>
-                    <div className="flex flex-wrap gap-1 mt-1">
-                      {stack.supplements.slice(0, 4).map(s => (
-                        <Badge key={s.supplementId} variant="outline" className="text-xs">
-                          {getSupplementName(s.supplementId)}
-                        </Badge>
-                      ))}
-                      {stack.supplements.length > 4 && (
-                        <Badge variant="outline" className="text-xs">+{stack.supplements.length - 4} more</Badge>
-                      )}
-                    </div>
-                  </div>
-                  <div className="flex gap-1 shrink-0">
-                    <Button variant="ghost" size="sm" onClick={() => handleLoad(stack)} title="Load this stack">
-                      <Download className="w-3.5 h-3.5" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleDelete(stack.id)}
-                      disabled={deleting === stack.id}
-                      title="Delete this stack"
-                      className="text-danger-500 hover:text-danger-700"
-                    >
-                      {deleting === stack.id ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Trash2 className="w-3.5 h-3.5" />}
-                    </Button>
+            <div key={stack.id} className="rounded-md bg-surface-card border border-ink-200 p-3">
+              <div className="flex items-start justify-between gap-2">
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold text-ink-900 truncate">{stack.name}</p>
+                  <p className="text-xs text-ink-500 mt-0.5">
+                    {stack.supplements.length} supplement{stack.supplements.length !== 1 ? 's' : ''}
+                    {' '}&middot;{' '}
+                    {new Date(stack.savedAt || stack.createdAt || Date.now()).toLocaleDateString()}
+                  </p>
+                  <div className="flex flex-wrap gap-1 mt-1.5">
+                    {stack.supplements.slice(0, 4).map(s => (
+                      <Badge key={s.supplementId} variant="outline" className="text-[10px]">
+                        {getSupplementName(s.supplementId)}
+                      </Badge>
+                    ))}
+                    {stack.supplements.length > 4 && (
+                      <Badge variant="outline" className="text-[10px]">+{stack.supplements.length - 4} more</Badge>
+                    )}
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+                <div className="flex gap-1 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => handleLoad(stack)}
+                    title="Load this stack"
+                    className="inline-flex items-center justify-center w-7 h-7 rounded-md text-ink-500 hover:text-primary-700 hover:bg-primary-050"
+                  >
+                    <FolderOpen className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(stack.id)}
+                    title="Delete this stack"
+                    className="inline-flex items-center justify-center w-7 h-7 rounded-md text-ink-500 hover:text-danger-500 hover:bg-danger-050"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            </div>
           ))
         )}
       </CollapsibleContent>

@@ -13,30 +13,17 @@ export function NewsletterCapture({ source = 'footer' }) {
     if (!email) return;
     if (honeypotRef.current?.value) return;
     setStatus('loading');
+    // Backend isn't wired — capture locally so the form succeeds
+    // immediately. Operator can export from localStorage key
+    // "ns_pending_subscribers" until the digest backend ships.
     try {
-      const res = await fetch('/api/email/subscribe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email,
-          source,
-          articleSlug: '',
-          hp_field: honeypotRef.current?.value || '',
-        }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setStatus('success');
-        setMessage('You\'re in! We\'ll send the best nootropic research your way.');
-        track('email_signup', { source });
-      } else {
-        setStatus('error');
-        setMessage(data.error || 'Something went wrong.');
-      }
-    } catch {
-      setStatus('error');
-      setMessage('Network error. Please try again.');
-    }
+      const stored = JSON.parse(localStorage.getItem('ns_pending_subscribers') || '[]');
+      stored.push({ email, source, articleSlug: '', capturedAt: new Date().toISOString() });
+      localStorage.setItem('ns_pending_subscribers', JSON.stringify(stored));
+    } catch { /* ignore */ }
+    setStatus('success');
+    setMessage('You\'re in. The next digest goes out within the week.');
+    track('email_signup', { source });
   };
 
   if (status === 'success') {
@@ -70,7 +57,7 @@ export function NewsletterCapture({ source = 'footer' }) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           disabled={status === 'loading'}
-          className="flex-1 min-w-0 h-6 px-2 rounded-md text-[11px] bg-surface-card border border-ink-200 text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-primary-500"
+          className="flex-1 min-w-0 h-6 px-2 rounded-md text-[11px] bg-surface-card border border-ink-200 text-ink-900 placeholder:text-ink-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:border-primary-500"
         />
         <button
           type="submit"

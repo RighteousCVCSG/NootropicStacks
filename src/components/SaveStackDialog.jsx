@@ -1,48 +1,43 @@
 import React, { useState } from 'react';
 import { useStack } from '../contexts/StackContext.jsx';
-import { useAuth } from '../contexts/AuthContext.jsx';
 import { track } from '../lib/analytics.js';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog.jsx';
 import { Input } from '@/components/ui/input.jsx';
 import { Label } from '@/components/ui/label.jsx';
 import { Button } from '@/components/ui/button.jsx';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
-import { Save, Loader2 } from 'lucide-react';
+import { Save } from 'lucide-react';
+
+const STORAGE_KEY = 'ns_saved_stacks';
 
 export function SaveStackDialog({ open, onOpenChange, onSaved }) {
   const { stack, userGoals } = useStack();
-  const { user } = useAuth();
   const [name, setName] = useState('');
   const [error, setError] = useState('');
-  const [saving, setSaving] = useState(false);
 
-  const handleSave = async (e) => {
+  // Saves go to localStorage until a real persistence backend is wired.
+  // Stacks are keyed by uuid and timestamped so the saved-stacks list
+  // can sort newest-first and dedupe by name.
+  const handleSave = (e) => {
     e.preventDefault();
-    if (!name.trim()) { setError('Give your stack a name'); return; }
+    const trimmed = name.trim();
+    if (!trimmed) { setError('Give your stack a name'); return; }
     if (stack.length === 0) { setError('Your stack is empty'); return; }
-
     setError('');
-    setSaving(true);
     try {
-      const res = await fetch('/api/stacks', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: name.trim(), supplements: stack, userGoals }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Failed to save');
+      const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      const id = `local-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+      const record = { id, name: trimmed, supplements: stack, userGoals, savedAt: new Date().toISOString() };
+      existing.unshift(record);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
+      track('stack_save', { stack_size: stack.length, stack_name: trimmed });
       setName('');
       onOpenChange(false);
-      track('stack_save', { stack_size: stack.length, stack_name: name.trim() });
-      if (onSaved) onSaved(data);
+      if (onSaved) onSaved(record);
     } catch (err) {
-      setError(err.message);
-    } finally {
-      setSaving(false);
+      setError(err.message || 'Could not save (storage may be full).');
     }
   };
-
-  if (!user) return null;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -71,8 +66,8 @@ export function SaveStackDialog({ open, onOpenChange, onSaved }) {
           <p className="text-xs text-ink-500">
             {stack.length} supplement{stack.length !== 1 ? 's' : ''} &middot; {userGoals.length} goal{userGoals.length !== 1 ? 's' : ''}
           </p>
-          <Button type="submit" className="w-full" disabled={saving || stack.length === 0}>
-            {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
+          <Button type="submit" className="w-full" disabled={stack.length === 0}>
+            <Save className="w-4 h-4 mr-2" />
             Save Stack
           </Button>
         </form>

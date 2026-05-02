@@ -16,7 +16,7 @@ const BEGINNER_STACKS = [
     goals: ['Energy', 'Focus', 'Calm'],
     difficulty: 'Beginner',
     cost: '$15–25/mo',
-    stackUrl: '/?stack=caffeine,l-theanine',
+    stackUrl: '/build?stack=caffeine,l-theanine',
     why: 'Caffeine sharpens focus and energy; L-Theanine smooths out the jitters and crash. Together they create alert, sustained focus without anxiety. Backed by dozens of studies.',
   },
   {
@@ -26,7 +26,7 @@ const BEGINNER_STACKS = [
     goals: ['Memory', 'Neuroprotection', 'Learning'],
     difficulty: 'Beginner',
     cost: '$40–60/mo',
-    stackUrl: '/?stack=lions-mane,bacopa-monnieri,alpha-gpc',
+    stackUrl: '/build?stack=lions-mane,bacopa,alpha-gpc',
     why: 'Lion\'s Mane stimulates NGF for neurogenesis; Bacopa improves memory encoding over weeks; Alpha-GPC provides choline for acetylcholine synthesis. All three are evidence-backed and have excellent safety profiles.',
   },
   {
@@ -36,7 +36,7 @@ const BEGINNER_STACKS = [
     goals: ['Mood', 'Anxiety', 'Stress'],
     difficulty: 'Beginner',
     cost: '$30–45/mo',
-    stackUrl: '/?stack=ashwagandha,l-theanine,rhodiola-rosea',
+    stackUrl: '/build?stack=ashwagandha,l-theanine,rhodiola',
     why: 'Ashwagandha reduces cortisol and anxiety over 4–8 weeks; L-Theanine provides immediate calm focus; Rhodiola is an adaptogen that improves stress resilience and mental endurance.',
   },
 ];
@@ -79,7 +79,7 @@ const STEPS = [
     title: 'Track and Adjust',
     description: 'Keep a simple log: what you took, when, and how you felt. This is how you distinguish placebo from real effect and find your optimal doses. Most experienced biohackers still track.',
     icon: TrendingUp,
-    color: 'bg-teal-100 text-teal-700',
+    color: 'bg-info-100 text-info-700',
     action: { label: 'Read Biohacker\'s Guide →', to: '/blog/biohackers-guide-to-nootropics-testing-and-tracking' }
   },
 ];
@@ -192,7 +192,7 @@ export function StartHerePage() {
           {STEPS.map((step) => {
             const Icon = step.icon;
             return (
-              <div key={step.number} className="flex gap-4 p-5 bg-white border border-gray-100 rounded-md shadow-sm hover:shadow-1 transition-shadow">
+              <div key={step.number} className="flex gap-4 p-5 bg-white border border-ink-200 rounded-md shadow-sm hover:shadow-1 transition-shadow">
                 <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center ${step.color}`}>
                   <Icon className="w-5 h-5" />
                 </div>
@@ -253,7 +253,7 @@ export function StartHerePage() {
         <p className="text-ink-700 mb-3">Every nootropic belongs to a mechanism family. Understanding these helps you build non-redundant stacks.</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {CATEGORIES.map((cat) => (
-            <Link key={cat.name} to={cat.link} className="flex gap-3 p-4 bg-white border border-gray-100 rounded-md hover:border-primary-300 hover:shadow-sm transition-all group">
+            <Link key={cat.name} to={cat.link} className="flex gap-3 p-4 bg-white border border-ink-200 rounded-md hover:border-primary-300 hover:shadow-sm transition-all group">
               <span className="text-2xl flex-shrink-0">{cat.icon}</span>
               <div className="min-w-0">
                 <div className="flex items-center gap-2 mb-0.5">
@@ -273,7 +273,7 @@ export function StartHerePage() {
         <h2 className="text-2xl font-semibold text-ink-900 mb-3">4 Common Myths (Debunked)</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {MYTHS.map((item) => (
-            <div key={item.myth} className="p-4 bg-white border border-gray-100 rounded-md">
+            <div key={item.myth} className="p-4 bg-white border border-ink-200 rounded-md">
               <div className="flex items-start gap-2 mb-2">
                 <AlertTriangle className="w-4 h-4 text-warn-500 flex-shrink-0 mt-0.5" />
                 <p className="text-sm font-semibold text-ink-700">{item.myth}</p>
@@ -316,7 +316,7 @@ export function StartHerePage() {
       </section>
 
       {/* CTA */}
-      <section className="text-center bg-gradient-to-br from-blue-600 to-indigo-700 rounded-md p-4 text-white space-y-4">
+      <section className="text-center bg-gradient-to-br from-primary-700 to-primary-900 rounded-md p-4 text-white space-y-4">
         <Brain className="w-10 h-10 mx-auto opacity-90" />
         <h2 className="text-2xl font-semibold">Ready to Build Your Stack?</h2>
         <p className="text-primary-100 max-w-lg mx-auto text-sm">
@@ -328,7 +328,7 @@ export function StartHerePage() {
             <Layers className="w-4 h-4" />
             Open Stack Builder
           </Link>
-          <Link to="/quiz" className="inline-flex items-center gap-2 bg-primary-500 hover:bg-primary-400 text-white border border-primary-300 px-5 py-2.5 rounded-md font-medium transition-colors">
+          <Link to="/quiz" className="inline-flex items-center gap-2 bg-primary-500 hover:bg-primary-300 text-white border border-primary-300 px-5 py-2.5 rounded-md font-medium transition-colors">
             <HelpCircle className="w-4 h-4" />
             Take the Quiz
           </Link>

@@ -257,7 +257,7 @@ export function SupplementCompare() {
               and optimize your dosages.
             </p>
             <Link to="/build">
-              <Button variant="outline" className="border-green-600 text-accent-700 hover:bg-accent-100">
+              <Button variant="outline" className="border-accent-500 text-accent-700 hover:bg-accent-100">
                 Open Stack Builder
               </Button>
             </Link>

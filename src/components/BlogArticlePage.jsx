@@ -190,19 +190,19 @@ export function BlogArticlePage() {
                 if (!links) return null;
                 const name = id.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
                 return (
-                  <div key={id} className="bg-white rounded-md p-3 border border-green-100">
+                  <div key={id} className="bg-white rounded-md p-3 border border-accent-100">
                     <p className="font-medium text-ink-900 text-sm mb-2">{name}</p>
                     <div className="flex gap-2">
                       {links.amazon && (
                         <a href={withAffiliateUtms(links.amazon, { campaign: `blog-${slug}` })} target="_blank" rel="noopener noreferrer sponsored"
-                           onClick={() => fetch('/api/track/click', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ supplementId: id, vendor: 'amazon', page: 'blog' }) })}
-                           className="flex items-center gap-1 text-xs bg-warn-1000 hover:bg-warn-700 text-white px-3 py-1.5 rounded font-medium transition-colors">
+                           
+                           className="flex items-center gap-1 text-xs bg-warn-700 hover:bg-warn-800 text-white px-3 py-1.5 rounded font-medium transition-colors">
                           <ExternalLink className="w-3 h-3" /> Amazon
                         </a>
                       )}
                       {links.iherb && (
                         <a href={links.iherb} target="_blank" rel="noopener noreferrer sponsored"
-                           onClick={() => fetch('/api/track/click', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ supplementId: id, vendor: 'iherb', page: 'blog' }) })}
+                           
                            className="flex items-center gap-1 text-xs bg-accent-600 hover:bg-accent-700 text-white px-3 py-1.5 rounded font-medium transition-colors">
                           <ExternalLink className="w-3 h-3" /> iHerb
                         </a>

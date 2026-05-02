@@ -254,7 +254,7 @@ export function StackScoreDetails({ open, onClose, stackScore }) {
                 <Badge
                   key={groupId}
                   variant="outline"
-                  className={`text-xs ${count >= 3 ? 'border-orange-300 text-warn-700' : 'border-ink-300 text-ink-700'}`}
+                  className={`text-xs ${count >= 3 ? 'border-warn-300 text-warn-700' : 'border-ink-300 text-ink-700'}`}
                 >
                   {label}: {count}
                 </Badge>

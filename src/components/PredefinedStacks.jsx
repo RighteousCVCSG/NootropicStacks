@@ -180,7 +180,7 @@ export function PredefinedStacks() {
             <div className="flex items-center gap-2">
               <div className={`w-2 h-2 rounded-full ${
                 analysis.safetyScore >= 80 ? 'bg-accent-500' : 
-                analysis.safetyScore >= 60 ? 'bg-warn-1000' : 'bg-danger-1000'
+                analysis.safetyScore >= 60 ? 'bg-warn-700' : 'bg-danger-700'
               }`} />
               <span className="text-sm">{analysis.safetyScore}/100</span>
             </div>
@@ -297,7 +297,7 @@ export function PredefinedStacks() {
                               {links.amazon && (
                                 <a href={withAffiliateUtms(links.amazon, { campaign: `stack-${stackData.id}` })} target="_blank" rel="noopener noreferrer sponsored"
                                    onClick={() => trackClick('amazon')}
-                                   className="flex items-center gap-1 text-xs bg-warn-1000 hover:bg-warn-700 text-white px-3 py-1.5 rounded font-medium transition-colors">
+                                   className="flex items-center gap-1 text-xs bg-warn-700 hover:bg-warn-800 text-white px-3 py-1.5 rounded font-medium transition-colors">
                                   <ShoppingCart className="w-3 h-3" /> Amazon
                                 </a>
                               )}
@@ -326,7 +326,7 @@ export function PredefinedStacks() {
                     <div className="flex items-center gap-2">
                       <div className={`w-3 h-3 rounded-full ${
                         analysis.safetyScore >= 80 ? 'bg-accent-500' : 
-                        analysis.safetyScore >= 60 ? 'bg-warn-1000' : 'bg-danger-1000'
+                        analysis.safetyScore >= 60 ? 'bg-warn-700' : 'bg-danger-700'
                       }`} />
                       <span className="font-semibold">{analysis.safetyScore}/100</span>
                     </div>

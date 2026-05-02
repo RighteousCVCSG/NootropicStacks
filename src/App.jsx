@@ -1,5 +1,6 @@
 // v2
-import React, { useState, useEffect, Suspense, lazy } from 'react';
+import React, { useEffect, Suspense, lazy } from 'react';
+import { ErrorBoundary } from './components/ErrorBoundary.jsx';
 import { Routes, Route, Link, useLocation, Navigate, useParams } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext.jsx';
 import { AuthDialog } from './components/AuthDialog.jsx';
@@ -87,37 +88,12 @@ function NavLink({ to, children }) {
   );
 }
 
-// Header auth section
+// Header auth section. Backend isn't wired yet, so the Sign-In affordance
+// is suppressed — pressing it would only ship a broken modal. The
+// AuthContext + AuthDialog remain in the tree so the route can be
+// re-enabled instantly once a real backend lands.
 function HeaderAuth() {
-  const { user, logout, loading } = useAuth();
-  const [showAuth, setShowAuth] = useState(false);
-
-  if (loading) return null;
-
-  if (user) {
-    return (
-      <div className="flex items-center gap-2">
-        <span className="hidden sm:inline text-sm text-ink-700">
-          <User className="w-3.5 h-3.5 inline mr-1" />
-          {user.name || user.email}
-        </span>
-        <Button variant="ghost" size="sm" onClick={logout}>
-          <LogOut className="w-4 h-4 mr-1" />
-          <span className="hidden sm:inline">Logout</span>
-        </Button>
-      </div>
-    );
-  }
-
-  return (
-    <>
-      <Button variant="outline" size="sm" onClick={() => setShowAuth(true)}>
-        <LogIn className="w-4 h-4 mr-1" />
-        Sign In
-      </Button>
-      <AuthDialog open={showAuth} onOpenChange={setShowAuth} />
-    </>
-  );
+  return null;
 }
 
 function GuideRedirect() {
@@ -153,6 +129,13 @@ function App() {
       <JsonLd data={buildOrganizationSchema()} />
       <JsonLd data={buildWebsiteSchema()} />
       <div className="min-h-screen bg-surface-page">
+        {/* Skip-to-content for keyboard users — invisible until focused. */}
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[1000] focus:inline-flex focus:items-center focus:h-8 focus:px-3 focus:rounded-md focus:bg-primary-700 focus:text-white focus:text-xs focus:font-semibold"
+        >
+          Skip to main content
+        </a>
         {/* Header — MeasureBoard-style: tight wordmark, no tagline, text-only
             nav with a single primary CTA. Dashboard tone, not marketing splash. */}
         <header className="bg-surface-page border-b border-ink-200">
@@ -217,12 +200,13 @@ function App() {
         </nav>
 
         {/* Main Content */}
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <main id="main" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Medical Disclaimer (scoped to home, supplement, stack routes) */}
           <ScopedMedicalDisclaimer />
 
           {/* Routes */}
-          <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="text-ink-500 text-sm">Loading...</div></div>}>
+          <ErrorBoundary>
+          <Suspense fallback={<div className="flex items-center justify-center min-h-[60vh]"><div className="text-ink-500 text-sm">Loading…</div></div>}>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/build" element={<StackBuilderPage />} />
@@ -327,6 +311,7 @@ function App() {
             } />
           </Routes>
           </Suspense>
+          </ErrorBoundary>
         </main>
 
         {/* Stack Score Floating Widget */}
@@ -377,7 +362,7 @@ function App() {
             </div>
           </div>
           <div className="footer__legal">
-            <span>Educational information only. Consult healthcare professionals for medical advice.</span>
+            <span>© {new Date().getFullYear()} NootropicStacker. Educational information only. Consult healthcare professionals for medical advice.</span>
             <Link to="/affiliate-disclosure" className="hover:underline">
               As an Amazon Associate we earn from qualifying purchases. Affiliate disclosure →
             </Link>

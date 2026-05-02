@@ -398,7 +398,7 @@ function DrawerBody({ stack, stackName, safetyAnalysis, stackScore, user, onRemo
     const ids = stack.map(s => s.supplementId).join(',');
     const params = new URLSearchParams({ stack: ids });
     if (stackName) params.set('name', stackName);
-    const url = `${window.location.origin}/?${params.toString()}`;
+    const url = `${window.location.origin}/build?${params.toString()}`;
     navigator.clipboard.writeText(url).then(() => {
       setShareCopied(true);
       setTimeout(() => setShareCopied(false), 2000);
@@ -548,25 +548,6 @@ function DesktopDrawer({ open, onClose, children }) {
         {open && children}
       </div>
     </>
-  );
-}
-
-/* =========== Desktop tab handle =========== */
-function TabHandle({ count, onClick }) {
-  return (
-    <button
-      onClick={onClick}
-      className="fixed right-0 top-1/2 -translate-y-1/2 z-[900] w-10 h-10 flex items-center justify-center rounded-l-lg bg-surface-card border border-r-0 border-primary-300 text-primary-800 shadow-2 hover:border-primary-500 hover:bg-primary-050 transition-colors"
-      aria-label="Toggle stack drawer"
-      aria-expanded={false}
-    >
-      <Layers className="w-4 h-4" />
-      {count > 0 && (
-        <span className="absolute -top-1 -right-1 w-4 h-4 flex items-center justify-center rounded-full bg-accent-500 text-ink-on-dark text-[9px] font-semibold" aria-live="polite">
-          {count > 9 ? '9+' : count}
-        </span>
-      )}
-    </button>
   );
 }
 
