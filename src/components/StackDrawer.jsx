@@ -4,15 +4,20 @@ import { useAuth } from '../contexts/AuthContext.jsx';
 import { supplements } from '../data/supplements.js';
 import { SaveStackDialog } from './SaveStackDialog.jsx';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
-import { withAffiliateUtms } from '@/lib/affiliate.js';
+import { withAffiliateUtms, withAffiliateLink } from '@/lib/affiliate.js';
 import { AffiliateDisclosureInline } from './AffiliateDisclosure.jsx';
 import { track } from '../lib/analytics.js';
 import { Button } from '@/components/ui/button.jsx';
 import { Drawer, DrawerContent, DrawerTrigger, DrawerHeader, DrawerTitle, DrawerDescription, DrawerClose } from '@/components/ui/drawer.jsx';
+import { ShipBuildSheet } from './ShipBuildSheet.jsx';
+import { StackPosterButton } from './StackPosterButton.jsx';
+import { TIMING_CONFIG, getSupplementTiming } from './StackProtocolBuilder.jsx';
+import { suggestStackName } from '../contexts/StackContext.jsx';
 import {
   Trash2, AlertTriangle, CheckCircle, XCircle,
   Save, ShoppingCart, ExternalLink, Share2, X, Layers,
-  Moon, Zap, Brain, Activity, ChevronDown, ChevronUp
+  Moon, Zap, Brain, Activity, ChevronDown, ChevronUp, Truck,
+  List, Clock
 } from 'lucide-react';
 
 const MONTHLY_COSTS = {
@@ -169,14 +174,14 @@ function StackShopLinks({ stack }) {
         <AffiliateDisclosureInline />
       </h4>
       <div className="space-y-1">
-        {stackWithLinks.slice(0, 5).map(item => {
+        {stackWithLinks.map(item => {
           const links = AFFILIATE_LINKS[item.supplementId];
           const supplement = supplements.find(s => s.id === item.supplementId);
-          const buyUrl = links.nootropicsdepot || (
-            links.amazon ? withAffiliateUtms(links.amazon, { campaign: `stack-${item.supplementId}` }) : (
-              links.iherb || Object.values(links).find(v => typeof v === 'string')
-            )
-          );
+          const rawUrl = links.nootropicsdepot ||
+            links.amazon ||
+            links.iherb ||
+            Object.values(links).find(v => typeof v === 'string');
+          const buyUrl = withAffiliateLink(rawUrl, { campaign: `stack-${item.supplementId}` });
           if (!supplement || !buyUrl) return null;
           return (
             <a
@@ -194,9 +199,6 @@ function StackShopLinks({ stack }) {
           );
         })}
       </div>
-      {stackWithLinks.length > 5 && (
-        <p className="text-xs text-ink-400 mt-1">+{stackWithLinks.length - 5} more in your stack</p>
-      )}
     </div>
   );
 }
@@ -235,17 +237,64 @@ function ShareButton({ onShare, shareCopied }) {
   );
 }
 
-function DrawerBody({ stack, safetyAnalysis, stackScore, user, onRemove, onDosageChange, onClear, onSave, showSaveDialog, setShowSaveDialog }) {
+function ScheduleView({ stack }) {
+  const groups = { morning: [], prework: [], evening: [], bedtime: [] };
+  stack.forEach((item) => {
+    const supplement = supplements.find((s) => s.id === item.supplementId);
+    if (!supplement) return;
+    const timing = getSupplementTiming(item.supplementId);
+    groups[timing].push({ supplement, item });
+  });
+  const active = Object.keys(groups).filter((k) => groups[k].length > 0);
+
+  return (
+    <div className="space-y-2">
+      {active.map((timing) => {
+        const config = TIMING_CONFIG[timing];
+        const Icon = config.icon;
+        return (
+          <div key={timing} className={`p-2.5 rounded-lg border ${config.bg} ${config.border}`}>
+            <div className="flex items-center gap-1.5 mb-1.5">
+              <Icon className={`w-3.5 h-3.5 ${config.color}`} />
+              <span className="text-xs font-semibold text-ink-900">{config.label}</span>
+              <span className="text-[10px] text-ink-500">{config.subtitle}</span>
+            </div>
+            <div className="flex flex-wrap gap-1">
+              {groups[timing].map(({ supplement, item }) => (
+                <span
+                  key={supplement.id}
+                  className="text-[11px] px-1.5 py-0.5 rounded bg-surface-card border border-ink-200 text-ink-700"
+                >
+                  {supplement.name}{' '}
+                  <span className="text-ink-500">
+                    {item.dosage}
+                    {supplement.dosage.unit}
+                  </span>
+                </span>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function DrawerBody({ stack, stackName, safetyAnalysis, stackScore, user, onRemove, onDosageChange, onClear, onSave, showSaveDialog, setShowSaveDialog }) {
   const [shareCopied, setShareCopied] = useState(false);
+  const [shipOpen, setShipOpen] = useState(false);
+  const [view, setView] = useState('list'); // 'list' | 'schedule'
 
   const handleShare = () => {
     const ids = stack.map(s => s.supplementId).join(',');
-    const url = `${window.location.origin}/?stack=${encodeURIComponent(ids)}`;
+    const params = new URLSearchParams({ stack: ids });
+    if (stackName) params.set('name', stackName);
+    const url = `${window.location.origin}/?${params.toString()}`;
     navigator.clipboard.writeText(url).then(() => {
       setShareCopied(true);
       setTimeout(() => setShareCopied(false), 2000);
     });
-    track('stack_share', { stack_size: stack.length, supplement_ids: ids });
+    track('stack_share', { stack_size: stack.length, named: Boolean(stackName) });
   };
 
   if (stack.length === 0) {
@@ -260,35 +309,82 @@ function DrawerBody({ stack, safetyAnalysis, stackScore, user, onRemove, onDosag
 
   return (
     <div className="space-y-4">
+      <ShipBuildSheet open={shipOpen} onOpenChange={setShipOpen} stack={stack} />
+
       <StackScoreMini stackScore={stackScore} />
       <StackWarnings safetyAnalysis={safetyAnalysis} />
-      <div className="space-y-2">
-        {stack.map(item => (
-          <StackItemRow
-            key={item.supplementId}
-            item={item}
-            onRemove={onRemove}
-            onDosageChange={onDosageChange}
-          />
-        ))}
+
+      <div className="flex items-center gap-1 p-0.5 rounded-md bg-surface-sunk text-xs">
+        <button
+          type="button"
+          onClick={() => setView('list')}
+          aria-pressed={view === 'list'}
+          className={`flex-1 inline-flex items-center justify-center gap-1.5 py-1 rounded transition-colors ${
+            view === 'list'
+              ? 'bg-surface-card text-ink-900 font-medium shadow-1'
+              : 'text-ink-500 hover:text-ink-700'
+          }`}
+        >
+          <List className="w-3 h-3" /> List
+        </button>
+        <button
+          type="button"
+          onClick={() => setView('schedule')}
+          aria-pressed={view === 'schedule'}
+          className={`flex-1 inline-flex items-center justify-center gap-1.5 py-1 rounded transition-colors ${
+            view === 'schedule'
+              ? 'bg-surface-card text-ink-900 font-medium shadow-1'
+              : 'text-ink-500 hover:text-ink-700'
+          }`}
+        >
+          <Clock className="w-3 h-3" /> Schedule
+        </button>
       </div>
+
+      {view === 'list' ? (
+        <div className="space-y-2">
+          {stack.map(item => (
+            <StackItemRow
+              key={item.supplementId}
+              item={item}
+              onRemove={onRemove}
+              onDosageChange={onDosageChange}
+            />
+          ))}
+        </div>
+      ) : (
+        <ScheduleView stack={stack} />
+      )}
       <StackShopLinks stack={stack} />
       <div className="border-t border-ink-200" />
       <StackCost stack={stack} />
-      <div className="flex items-center gap-2 pt-2">
+
+      {/* Primary "ship the whole build" CTA lives BELOW the list so the
+          drawer answers "what's in my stack?" before "do you want to buy?". */}
+      <Button
+        size="sm"
+        onClick={() => setShipOpen(true)}
+        className="w-full bg-primary-800 hover:bg-primary-700 text-ink-on-dark"
+      >
+        <Truck className="w-4 h-4 mr-1.5" />
+        Ship This Build
+      </Button>
+
+      <div className="flex items-center gap-2 pt-2 flex-wrap">
         {user && (
           <Button variant="outline" size="sm" onClick={() => setShowSaveDialog(true)} className="flex-1 text-xs">
             <Save className="w-3.5 h-3.5 mr-1" />
-            Save Stack
+            Save
           </Button>
         )}
+        <StackPosterButton stack={stack} stackScore={stackScore} stackName={stackName} />
         <Button
           variant="tertiary"
           size="sm"
           onClick={onClear}
           className="flex-1 text-danger-500 hover:text-danger-700 text-xs"
         >
-          Clear Stack
+          Clear
         </Button>
         <ShareButton onShare={handleShare} shareCopied={shareCopied} />
       </div>
@@ -345,13 +441,44 @@ function TabHandle({ count, onClick }) {
   );
 }
 
+/* Editable header — replaces the static "My Stack" heading. The placeholder
+ * is derived from the user's goals (e.g. "Focus & Energy Stack") so the
+ * field never feels blank, and a real name they type ("Dad's Anti-Brain-Fog
+ * Stack") is propagated everywhere we emit the stack identity (poster
+ * title, share URL, returning-user welcome strip).
+ */
+function StackHeader({ stackName, setStackName, userGoals, itemCount }) {
+  const suggested = suggestStackName(userGoals);
+  const placeholder = suggested || 'Name your stack';
+  return (
+    <div className="min-w-0 flex-1">
+      <input
+        type="text"
+        value={stackName}
+        onChange={(e) => setStackName(e.target.value)}
+        placeholder={placeholder}
+        maxLength={80}
+        aria-label="Stack name"
+        className="w-full bg-transparent border-0 px-0 text-lg font-semibold text-ink-900 placeholder:text-ink-500 focus:outline-none focus:ring-0"
+        style={{ fontFamily: 'var(--font-display)' }}
+      />
+      {itemCount > 0 && (
+        <p className="text-xs text-ink-500">
+          {itemCount} supplement{itemCount !== 1 ? 's' : ''}
+        </p>
+      )}
+    </div>
+  );
+}
+
 /* =========== StackDrawer (main) =========== */
 export function StackDrawer() {
   const {
     stack, safetyAnalysis, stackScore,
     removeSupplement, updateDosage, clearStack,
     drawerOpen, openDrawer, closeDrawer, toggleDrawer,
-    hasSupplement, itemCount
+    hasSupplement, itemCount,
+    stackName, setStackName, userGoals,
   } = useStack();
   const { user } = useAuth();
   const [showSaveDialog, setShowSaveDialog] = useState(false);
@@ -392,15 +519,13 @@ export function StackDrawer() {
             </DrawerTrigger>
             <DrawerContent className="max-h-[85vh] pb-6">
               <div className="px-4 py-4 overflow-y-auto space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h2 className="text-lg font-semibold text-ink-900" style={{ fontFamily: 'var(--font-display)' }}>
-                      My Stack
-                    </h2>
-                    {stack.length > 0 && (
-                      <p className="text-xs text-ink-500">{stack.length} supplement{stack.length !== 1 ? 's' : ''}</p>
-                    )}
-                  </div>
+                <div className="flex items-start justify-between gap-2">
+                  <StackHeader
+                    stackName={stackName}
+                    setStackName={setStackName}
+                    userGoals={userGoals}
+                    itemCount={stack.length}
+                  />
                   <DrawerClose asChild>
                     <button
                       className="p-1.5 rounded-md text-ink-400 hover:text-ink-700 hover:bg-ink-100 transition-colors"
@@ -412,6 +537,7 @@ export function StackDrawer() {
                 </div>
                 <DrawerBody
                   stack={stack}
+                  stackName={stackName}
                   safetyAnalysis={safetyAnalysis}
                   stackScore={stackScore}
                   user={user}
@@ -436,15 +562,13 @@ export function StackDrawer() {
       <TabHandle count={itemCount} onClick={toggleDrawer} />
       <DesktopDrawer open={drawerOpen} onClose={closeDrawer}>
         <div className="flex flex-col h-full">
-          <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-ink-200">
-            <div>
-              <h2 className="text-lg font-semibold text-ink-900" style={{ fontFamily: 'var(--font-display)' }}>
-                My Stack
-              </h2>
-              {stack.length > 0 && (
-                <p className="text-xs text-ink-500">{stack.length} supplement{stack.length !== 1 ? 's' : ''}</p>
-              )}
-            </div>
+          <div className="flex items-start justify-between gap-2 px-4 pt-4 pb-3 border-b border-ink-200">
+            <StackHeader
+              stackName={stackName}
+              setStackName={setStackName}
+              userGoals={userGoals}
+              itemCount={stack.length}
+            />
             <button
               onClick={closeDrawer}
               className="p-1.5 rounded-md text-ink-400 hover:text-ink-700 hover:bg-ink-100 transition-colors"
@@ -456,6 +580,7 @@ export function StackDrawer() {
           <div className="flex-1 overflow-y-auto px-4 py-4">
             <DrawerBody
               stack={stack}
+              stackName={stackName}
               safetyAnalysis={safetyAnalysis}
               stackScore={stackScore}
               user={user}

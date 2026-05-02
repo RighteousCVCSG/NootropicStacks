@@ -11,12 +11,14 @@ import { SupplementModal } from './components/SupplementModal.jsx';
 import { SEOOptimizer } from './components/SEOOptimizer.jsx';
 import { StackScoreWidget } from './components/StackScoreWidget.jsx';
 import { StackDrawer } from './components/StackDrawer.jsx';
+import { CommandPalette } from './components/CommandPalette.jsx';
 import { Toaster } from './components/ui/sonner.jsx';
 import { NewsletterCapture } from './components/NewsletterCapture.jsx';
 import { JsonLd } from './components/JsonLd.jsx';
 import { buildOrganizationSchema, buildWebsiteSchema } from './lib/schema/builders.js';
 
 // Lazy-loaded route-level components
+const StackBuilderPage = lazy(() => import('./components/StackBuilderPage.jsx').then(m => ({ default: m.StackBuilderPage })));
 const AdminPage = lazy(() => import('./components/AdminPage.jsx').then(m => ({ default: m.AdminPage })));
 const SupplementPage = lazy(() => import('./components/SupplementPage.jsx').then(m => ({ default: m.SupplementPage })));
 const SupplementCompare = lazy(() => import('./components/SupplementCompare.jsx').then(m => ({ default: m.SupplementCompare })));
@@ -77,20 +79,26 @@ function ScrollToTop() {
   return null;
 }
 
+// Header nav link. Uses Button.asChild so the rendered DOM is a single
+// styled anchor (not the invalid <a><button> nesting that was making the
+// header buttons inflate / overflow). Custom h-8 sizing reads as a nav
+// item, not a primary CTA — the Quiz button stays the only chunky CTA in
+// the header.
 function NavLink({ to, icon: Icon, children }) {
   const location = useLocation();
   const isActive = to === '/' ? location.pathname === '/' : location.pathname.startsWith(to);
+  const activeClass = isActive
+    ? 'text-primary-800 bg-primary-050'
+    : 'text-ink-700 hover:text-ink-900 hover:bg-surface-sunk';
 
   return (
-    <Link to={to} aria-current={isActive ? 'page' : undefined}>
-      <Button
-        variant={isActive ? 'default' : 'ghost'}
-        size="sm"
-        className="flex items-center gap-2"
-      >
-        <Icon className="w-4 h-4" />
-        {children}
-      </Button>
+    <Link
+      to={to}
+      aria-current={isActive ? 'page' : undefined}
+      className={`inline-flex items-center gap-1.5 h-8 px-2.5 rounded-md text-sm font-medium transition-colors ${activeClass}`}
+    >
+      <Icon className="w-3.5 h-3.5" />
+      {children}
     </Link>
   );
 }
@@ -194,15 +202,16 @@ function App() {
 
               {/* Navigation */}
               <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
-                <NavLink to="/" icon={Home}>Build</NavLink>
+                <NavLink to="/build" icon={Home}>Build</NavLink>
                 <NavLink to="/supplements" icon={Library}>Supplements</NavLink>
                 <NavLink to="/stacks" icon={Layers}>Stacks</NavLink>
                 <NavLink to="/learn" icon={BookOpen}>Learn</NavLink>
-                <Link to="/quiz">
-                  <Button size="sm" className="bg-primary-800 hover:bg-primary-700 text-ink-on-dark ml-2">
-                    <HelpCircle className="w-4 h-4 mr-1" />
-                    Quiz
-                  </Button>
+                <Link
+                  to="/quiz"
+                  className="ml-1 inline-flex items-center gap-1 h-8 px-3 rounded-md text-sm font-semibold bg-primary-800 hover:bg-primary-700 text-ink-on-dark transition-colors"
+                >
+                  <HelpCircle className="w-3.5 h-3.5" />
+                  Quiz
                 </Link>
               </nav>
 
@@ -218,15 +227,16 @@ function App() {
         <nav className="md:hidden bg-surface-card border-b border-ink-200" aria-label="Mobile navigation">
           <div className="flex items-center">
             <div className="flex items-center gap-2 overflow-x-auto flex-1 min-w-0 px-4 py-2">
-              <NavLink to="/" icon={Home}>Build</NavLink>
+              <NavLink to="/build" icon={Home}>Build</NavLink>
               <NavLink to="/supplements" icon={Library}>Supplements</NavLink>
               <NavLink to="/stacks" icon={Layers}>Stacks</NavLink>
               <NavLink to="/learn" icon={BookOpen}>Learn</NavLink>
-              <Link to="/quiz" className="shrink-0">
-                <Button size="sm" className="bg-primary-800 hover:bg-primary-700 text-ink-on-dark">
-                  <HelpCircle className="w-4 h-4 mr-1" />
-                  Quiz
-                </Button>
+              <Link
+                to="/quiz"
+                className="shrink-0 inline-flex items-center gap-1 h-8 px-3 rounded-md text-sm font-semibold bg-primary-800 hover:bg-primary-700 text-ink-on-dark transition-colors"
+              >
+                <HelpCircle className="w-3.5 h-3.5" />
+                Quiz
               </Link>
             </div>
             <div className="shrink-0 px-2 border-l border-ink-200">
@@ -244,6 +254,7 @@ function App() {
           <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="text-ink-500 text-sm">Loading...</div></div>}>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/build" element={<StackBuilderPage />} />
             <Route path="/quiz" element={<StackQuiz />} />
             <Route path="/supplements" element={<LibraryPage />} />
             <Route path="/supplements/:id" element={<SupplementPage />} />
@@ -327,7 +338,7 @@ function App() {
                 <h2 className="text-4xl font-bold mb-4">404</h2>
                 <p className="text-ink-700 mb-6">Page not found. Let's get you back on track.</p>
                 <div className="flex justify-center gap-4">
-                  <Link to="/"><Button>Stack Builder</Button></Link>
+                  <Link to="/build"><Button>Stack Builder</Button></Link>
                   <Link to="/supplements"><Button variant="outline">Supplement Library</Button></Link>
                 </div>
               </div>
@@ -341,6 +352,9 @@ function App() {
 
         {/* Stack Drawer */}
         <StackDrawer />
+
+        {/* Cmd+K / Ctrl+K command palette */}
+        <CommandPalette />
 
         {/* Toast notifications (used by addSupplement and friends) */}
         <Toaster />
@@ -357,7 +371,7 @@ function App() {
             </div>
             <div className="footer__col">
               <h4>Tools</h4>
-              <Link to="/">Stack Builder</Link>
+              <Link to="/build">Stack Builder</Link>
               <Link to="/quiz">Stack Quiz</Link>
               <Link to="/supplements">Supplement Library</Link>
               <Link to="/compare-supplements">Compare</Link>

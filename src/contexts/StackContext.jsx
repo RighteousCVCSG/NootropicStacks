@@ -5,6 +5,7 @@ import { track } from '../lib/analytics.js';
 
 const StackContext = createContext();
 const STORAGE_KEY = 'nootropicstacker-stack';
+const STORAGE_KEY_NAME = 'nootropicstacker-stack-name';
 
 function loadPersistedStack() {
   if (typeof window === 'undefined') return [];
@@ -19,6 +20,40 @@ function loadPersistedStack() {
   } catch {
     return [];
   }
+}
+
+function loadPersistedStackName() {
+  if (typeof window === 'undefined') return '';
+  try {
+    return window.localStorage.getItem(STORAGE_KEY_NAME) || '';
+  } catch {
+    return '';
+  }
+}
+
+// Builds a smart-default placeholder name from the user's selected goals.
+// Empty string when no goals are selected — caller falls back to "My Stack".
+const GOAL_NAME_MAP = {
+  energy:     'Energy',
+  mood:       'Mood',
+  balance:    'Calm',
+  creativity: 'Creative',
+  socialness: 'Social',
+  learning:   'Memory',
+  study:      'Focus',
+  // legacy/alias
+  focus:      'Focus',
+  sleep:      'Sleep',
+};
+
+export function suggestStackName(userGoals = []) {
+  const labels = (userGoals || [])
+    .map((g) => GOAL_NAME_MAP[g])
+    .filter(Boolean)
+    .slice(0, 2);
+  if (labels.length === 0) return '';
+  if (labels.length === 1) return `${labels[0]} Stack`;
+  return `${labels[0]} & ${labels[1]} Stack`;
 }
 
 // Initial state
@@ -95,6 +130,7 @@ function stackReducer(state, action) {
 export function StackProvider({ children }) {
   const [state, dispatch] = useReducer(stackReducer, initialState);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [stackName, setStackNameState] = useState(loadPersistedStackName);
 
   // Persist stack to localStorage whenever it changes
   useEffect(() => {
@@ -105,6 +141,24 @@ export function StackProvider({ children }) {
       // ignore quota errors
     }
   }, [state.stack]);
+
+  // Persist stack name alongside the stack itself.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      if (stackName) {
+        window.localStorage.setItem(STORAGE_KEY_NAME, stackName);
+      } else {
+        window.localStorage.removeItem(STORAGE_KEY_NAME);
+      }
+    } catch {
+      // ignore
+    }
+  }, [stackName]);
+
+  const setStackName = (name) => {
+    setStackNameState(typeof name === 'string' ? name.slice(0, 80) : '');
+  };
 
   // Update analysis whenever stack or goals change
   useEffect(() => {
@@ -186,6 +240,7 @@ export function StackProvider({ children }) {
       type: ACTIONS.LOAD_STACK,
       payload: []
     });
+    setStackNameState('');
   };
 
   const loadStack = (stackItems) => {
@@ -212,6 +267,8 @@ export function StackProvider({ children }) {
     safetyAnalysis: state.safetyAnalysis,
     recommendations: state.recommendations,
     stackScore: state.stackScore,
+    stackName,
+    setStackName,
     addSupplement,
     removeSupplement,
     updateDosage,

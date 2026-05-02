@@ -8,42 +8,30 @@ import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
 import { Plus, AlertTriangle, Clock, Pill, ArrowLeft, ExternalLink } from 'lucide-react';
 import { useStack } from '../contexts/StackContext.jsx';
 import { AffiliateLinks, AFFILIATE_LINKS } from './MonetizationManager.jsx';
+import { VendorPricesDetailed } from './VendorPrices.jsx';
+import { hasTrackedPrices } from '../data/priceTable.js';
 import { SEOOptimizer } from './SEOOptimizer.jsx';
 import { supplements } from '../data/supplements.js';
 import { JsonLd } from './JsonLd.jsx';
 import { buildProductSchema } from '../lib/schema/builders.js';
 
-const getCategoryColor = (category) => {
-  const colors = {
-    'energy': 'bg-orange-100 text-orange-800',
-    'nootropic': 'bg-blue-100 text-blue-800',
-    'adaptogen': 'bg-green-100 text-green-800',
-    'longevity': 'bg-purple-100 text-purple-800',
-    'vitamin': 'bg-yellow-100 text-yellow-800',
-    'mineral': 'bg-gray-100 text-gray-800',
-    'amino-acid': 'bg-pink-100 text-pink-800',
-    'antioxidant': 'bg-red-100 text-red-800',
-    'anti-inflammatory': 'bg-indigo-100 text-indigo-800',
-    'sleep': 'bg-violet-100 text-violet-800',
-    'performance': 'bg-emerald-100 text-emerald-800',
-    'essential': 'bg-teal-100 text-teal-800',
-    'gut-health': 'bg-lime-100 text-lime-800',
-    'hormone': 'bg-rose-100 text-rose-800',
-    'protein': 'bg-amber-100 text-amber-800',
-    'immune': 'bg-cyan-100 text-cyan-800',
-    'metabolic': 'bg-slate-100 text-slate-800',
-    'superfood': 'bg-green-200 text-green-900',
-    'fat': 'bg-orange-200 text-orange-900',
-    'prescription': 'bg-red-200 text-red-900'
-  };
-  return colors[category] || 'bg-gray-100 text-gray-800';
-};
+// Category chip uses a single token-driven neutral style. The visual
+// signal that varies per supplement is the evidence-tier badge on the
+// detail header; the category text is just metadata, not the headline.
+const CATEGORY_CHIP_CLASS = 'bg-surface-sunk text-ink-700 border border-ink-200';
+
+const PRESCRIPTION_CATEGORIES = new Set(['prescription']);
+
+const getCategoryColor = (category) =>
+  PRESCRIPTION_CATEGORIES.has(category)
+    ? 'bg-danger-100 text-danger-700 border border-danger-500'
+    : CATEGORY_CHIP_CLASS;
 
 const getEffectColor = (value) => {
-  if (value >= 7) return 'text-green-600';
-  if (value >= 4) return 'text-blue-600';
-  if (value >= 1) return 'text-gray-600';
-  return 'text-gray-400';
+  if (value >= 7) return 'text-accent-700';
+  if (value >= 4) return 'text-primary-800';
+  if (value >= 1) return 'text-ink-700';
+  return 'text-ink-400';
 };
 
 export function SupplementPage() {
@@ -56,7 +44,7 @@ export function SupplementPage() {
     return (
       <div className="text-center py-20">
         <h2 className="text-2xl font-bold mb-4">Supplement Not Found</h2>
-        <p className="text-gray-600 mb-6">The supplement you're looking for doesn't exist in our database.</p>
+        <p className="text-ink-700 mb-6">The supplement you're looking for doesn't exist in our database.</p>
         <Link to="/supplements">
           <Button><ArrowLeft className="w-4 h-4 mr-2" /> Back to Library</Button>
         </Link>
@@ -90,12 +78,12 @@ export function SupplementPage() {
 
       <div className="space-y-6">
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-sm text-gray-600">
-          <Link to="/" className="hover:text-gray-900">Home</Link>
+        <nav className="flex items-center gap-2 text-sm text-ink-500">
+          <Link to="/" className="hover:text-ink-900">Home</Link>
           <span>/</span>
-          <Link to="/supplements" className="hover:text-gray-900">Supplements</Link>
+          <Link to="/supplements" className="hover:text-ink-900">Supplements</Link>
           <span>/</span>
-          <span className="text-gray-900 font-medium">{supplement.name}</span>
+          <span className="text-ink-900 font-medium">{supplement.name}</span>
         </nav>
 
         {/* Header */}
@@ -106,7 +94,7 @@ export function SupplementPage() {
               <Badge className={`${getCategoryColor(supplement.category)}`}>
                 {supplement.category.replace('-', ' ')}
               </Badge>
-              <span className="text-sm text-gray-500">
+              <span className="text-sm text-ink-500">
                 {supplement.dosage.min}-{supplement.dosage.max} {supplement.dosage.unit}
               </span>
             </div>
@@ -131,7 +119,7 @@ export function SupplementPage() {
                 <CardTitle>About {supplement.name}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-700 leading-relaxed">{supplement.description}</p>
+                <p className="text-ink-700 leading-relaxed">{supplement.description}</p>
               </CardContent>
             </Card>
 
@@ -188,9 +176,9 @@ export function SupplementPage() {
                       <h4 className="font-semibold mb-2">Warnings</h4>
                       <div className="space-y-2">
                         {supplement.warnings.map((warning, index) => (
-                          <Alert key={index} className="border-orange-200 bg-orange-50">
-                            <AlertTriangle className="h-4 w-4 text-orange-600" />
-                            <AlertDescription className="text-orange-800">{warning}</AlertDescription>
+                          <Alert key={index} className="border-warn-500 bg-warn-100">
+                            <AlertTriangle className="h-4 w-4 text-warn-700" />
+                            <AlertDescription className="text-warn-700">{warning}</AlertDescription>
                           </Alert>
                         ))}
                       </div>
@@ -224,21 +212,26 @@ export function SupplementPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="p-4 bg-blue-50 rounded-lg">
-                  <div className="text-2xl font-bold text-blue-800">
-                    {supplement.dosage.min}-{supplement.dosage.max} {supplement.dosage.unit}
+                <div className="p-4 bg-surface-sunk border border-ink-200 rounded-lg">
+                  <div className="text-2xl font-bold text-ink-900 font-mono">
+                    {supplement.dosage.min}–{supplement.dosage.max} {supplement.dosage.unit}
                   </div>
-                  <p className="text-sm text-blue-600 mt-1">Recommended daily dose</p>
+                  <p className="text-sm text-ink-500 mt-1">Recommended daily dose</p>
                 </div>
-                <div className="p-4 bg-green-50 rounded-lg">
+                <div className="p-4 bg-surface-sunk border border-ink-200 rounded-lg">
                   <div className="flex items-center gap-2 mb-1">
-                    <Clock className="w-4 h-4 text-green-600" />
-                    <span className="font-semibold text-green-800">Best Timing</span>
+                    <Clock className="w-4 h-4 text-accent-700" />
+                    <span className="font-semibold text-ink-900">Best Timing</span>
                   </div>
-                  <p className="text-green-700">{supplement.dosage.timing}</p>
+                  <p className="text-ink-700">{supplement.dosage.timing}</p>
                 </div>
               </CardContent>
             </Card>
+
+            {/* Vendor price comparison (when we track prices for this item) */}
+            {hasTrackedPrices(supplement.id) && (
+              <VendorPricesDetailed supplementId={supplement.id} />
+            )}
 
             {/* Affiliate Links / Where to Buy */}
             <AffiliateLinks supplementId={supplement.id} supplementName={supplement.name} />
@@ -258,7 +251,7 @@ export function SupplementPage() {
                         className="block p-3 rounded-lg border hover:bg-gray-50 transition-colors"
                       >
                         <div className="font-medium">{related.name}</div>
-                        <div className="text-sm text-gray-500 line-clamp-1">{related.description}</div>
+                        <div className="text-sm text-ink-500 line-clamp-1">{related.description}</div>
                       </Link>
                     ))}
                   </div>
@@ -270,8 +263,8 @@ export function SupplementPage() {
 
         {/* Medical Disclaimer */}
         <Alert className="border-gray-200 bg-gray-50">
-          <AlertTriangle className="h-4 w-4 text-gray-600" />
-          <AlertDescription className="text-gray-700">
+          <AlertTriangle className="h-4 w-4 text-ink-500" />
+          <AlertDescription className="text-ink-700">
             <strong>Medical Disclaimer:</strong> This information is for educational purposes only and is not intended as medical advice.
             Always consult with a healthcare professional before starting any new supplement regimen.
           </AlertDescription>
