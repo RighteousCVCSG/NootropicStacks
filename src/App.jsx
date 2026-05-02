@@ -79,25 +79,22 @@ function ScrollToTop() {
   return null;
 }
 
-// Header nav link. Uses Button.asChild so the rendered DOM is a single
-// styled anchor (not the invalid <a><button> nesting that was making the
-// header buttons inflate / overflow). Custom h-8 sizing reads as a nav
-// item, not a primary CTA — the Quiz button stays the only chunky CTA in
-// the header.
-function NavLink({ to, icon: Icon, children }) {
+// Header nav link. Text-only (no leading icon) to match MeasureBoard /
+// Linear / Vercel-style dashboard nav. Active state is a subtle ink-on-
+// surface change, not a chunky filled pill.
+function NavLink({ to, children }) {
   const location = useLocation();
   const isActive = to === '/' ? location.pathname === '/' : location.pathname.startsWith(to);
   const activeClass = isActive
-    ? 'text-primary-800 bg-primary-050'
-    : 'text-ink-700 hover:text-ink-900 hover:bg-surface-sunk';
+    ? 'text-ink-900'
+    : 'text-ink-500 hover:text-ink-900';
 
   return (
     <Link
       to={to}
       aria-current={isActive ? 'page' : undefined}
-      className={`inline-flex items-center gap-1.5 h-8 px-2.5 rounded-md text-sm font-medium transition-colors ${activeClass}`}
+      className={`inline-flex items-center h-7 px-2 rounded-md text-xs font-medium transition-colors ${activeClass}`}
     >
-      <Icon className="w-3.5 h-3.5" />
       {children}
     </Link>
   );
@@ -186,36 +183,33 @@ function App() {
       <JsonLd data={buildOrganizationSchema()} />
       <JsonLd data={buildWebsiteSchema()} />
       <div className="min-h-screen bg-surface-page">
-        {/* Header */}
-        <header className="bg-surface-card shadow-sm border-b border-ink-200">
+        {/* Header — MeasureBoard-style: tight wordmark, no tagline, text-only
+            nav with a single primary CTA. Dashboard tone, not marketing splash. */}
+        <header className="bg-surface-page border-b border-ink-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between h-16">
-              <Link to="/" className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-primary-800 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Pill className="w-5 h-5 text-ink-on-dark" />
+            <div className="flex items-center justify-between h-12">
+              <Link to="/" className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-primary-800 rounded-md flex items-center justify-center shrink-0">
+                  <Pill className="w-3.5 h-3.5 text-ink-on-dark" />
                 </div>
-                <div>
-                  <span className="text-lg sm:text-xl font-bold text-ink-900">NootropicStacker</span>
-                  <p className="hidden sm:block text-sm text-ink-700">Build Your Perfect Nootropic Stack</p>
-                </div>
+                <span className="text-base font-semibold text-ink-900 tracking-tight">NootropicStacker</span>
               </Link>
 
               {/* Navigation */}
-              <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
-                <NavLink to="/build" icon={Home}>Build</NavLink>
-                <NavLink to="/supplements" icon={Library}>Supplements</NavLink>
-                <NavLink to="/stacks" icon={Layers}>Stacks</NavLink>
-                <NavLink to="/learn" icon={BookOpen}>Learn</NavLink>
+              <nav className="hidden md:flex items-center gap-0.5" aria-label="Main navigation">
+                <NavLink to="/build">Build</NavLink>
+                <NavLink to="/supplements">Supplements</NavLink>
+                <NavLink to="/stacks">Stacks</NavLink>
+                <NavLink to="/learn">Learn</NavLink>
                 <Link
                   to="/quiz"
-                  className="ml-1 inline-flex items-center gap-1 h-8 px-3 rounded-md text-sm font-semibold bg-primary-800 hover:bg-primary-700 text-ink-on-dark transition-colors"
+                  className="ml-2 inline-flex items-center gap-1 h-7 px-2.5 rounded-md text-xs font-medium bg-primary-800 hover:bg-primary-700 text-ink-on-dark transition-colors"
                 >
-                  <HelpCircle className="w-3.5 h-3.5" />
                   Quiz
                 </Link>
               </nav>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1">
                 <ThemeToggle />
                 <HeaderAuth />
               </div>
@@ -223,23 +217,22 @@ function App() {
           </div>
         </header>
 
-        {/* Mobile Navigation */}
-        <nav className="md:hidden bg-surface-card border-b border-ink-200" aria-label="Mobile navigation">
+        {/* Mobile Navigation — same text-only treatment as desktop. */}
+        <nav className="md:hidden bg-surface-page border-b border-ink-200" aria-label="Mobile navigation">
           <div className="flex items-center">
-            <div className="flex items-center gap-2 overflow-x-auto flex-1 min-w-0 px-4 py-2">
-              <NavLink to="/build" icon={Home}>Build</NavLink>
-              <NavLink to="/supplements" icon={Library}>Supplements</NavLink>
-              <NavLink to="/stacks" icon={Layers}>Stacks</NavLink>
-              <NavLink to="/learn" icon={BookOpen}>Learn</NavLink>
+            <div className="flex items-center gap-0.5 overflow-x-auto flex-1 min-w-0 px-3 py-1.5">
+              <NavLink to="/build">Build</NavLink>
+              <NavLink to="/supplements">Supplements</NavLink>
+              <NavLink to="/stacks">Stacks</NavLink>
+              <NavLink to="/learn">Learn</NavLink>
               <Link
                 to="/quiz"
-                className="shrink-0 inline-flex items-center gap-1 h-8 px-3 rounded-md text-sm font-semibold bg-primary-800 hover:bg-primary-700 text-ink-on-dark transition-colors"
+                className="shrink-0 ml-1 inline-flex items-center h-7 px-2.5 rounded-md text-xs font-medium bg-primary-800 hover:bg-primary-700 text-ink-on-dark transition-colors"
               >
-                <HelpCircle className="w-3.5 h-3.5" />
                 Quiz
               </Link>
             </div>
-            <div className="shrink-0 px-2 border-l border-ink-200">
+            <div className="shrink-0 px-1.5 border-l border-ink-200">
               <ThemeToggle />
             </div>
           </div>

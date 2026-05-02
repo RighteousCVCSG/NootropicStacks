@@ -53,10 +53,11 @@ export function HomePage() {
           <p className="text-ink-700 text-base sm:text-lg max-w-2xl mx-auto mb-6">
             The PCPartPicker for nootropics. 195 supplements, 60+ interactions mapped, every claim cites PubMed.
           </p>
-          <Link to="/build">
-            <Button size="lg" className="bg-primary-800 hover:bg-primary-700 text-ink-on-dark">
-              Start building <ArrowRight className="w-4 h-4 ml-1" />
-            </Button>
+          <Link
+            to="/build"
+            className="inline-flex items-center gap-1 h-9 px-4 rounded-md text-sm font-medium bg-primary-800 hover:bg-primary-700 text-ink-on-dark transition-colors"
+          >
+            Start building <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
@@ -113,7 +114,7 @@ export function HomePage() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-5xl mx-auto">
           <Link
             to="/build"
-            className="group rounded-xl bg-primary-050 border border-primary-300 hover:border-primary-800 p-5 transition-colors flex flex-col"
+            className="group rounded-md bg-primary-050 border border-primary-300 hover:border-primary-800 p-4 transition-colors flex flex-col"
           >
             <div className="flex items-center gap-2 mb-2">
               <Layers className="w-5 h-5 text-primary-800" />
@@ -130,7 +131,7 @@ export function HomePage() {
 
           <Link
             to="/quiz"
-            className="group rounded-xl bg-surface-card border border-ink-200 hover:border-accent-500 hover:bg-accent-050 p-5 transition-colors flex flex-col"
+            className="group rounded-md bg-surface-card border border-ink-200 hover:border-accent-500 hover:bg-accent-050 p-4 transition-colors flex flex-col"
           >
             <div className="flex items-center gap-2 mb-2">
               <HelpCircle className="w-5 h-5 text-accent-700" />
@@ -147,7 +148,7 @@ export function HomePage() {
 
           <Link
             to="/stacks"
-            className="group rounded-xl bg-surface-card border border-ink-200 hover:border-warn-500 hover:bg-warn-100 p-5 transition-colors flex flex-col"
+            className="group rounded-md bg-surface-card border border-ink-200 hover:border-warn-500 hover:bg-warn-100 p-4 transition-colors flex flex-col"
           >
             <div className="flex items-center gap-2 mb-2">
               <Sparkles className="w-5 h-5 text-warn-700" />
@@ -178,7 +179,7 @@ export function HomePage() {
           ].map((s) => (
             <div
               key={s.n}
-              className="p-5 rounded-xl bg-surface-card border border-ink-200"
+              className="p-4 rounded-md bg-surface-card border border-ink-200"
             >
               <div className="w-7 h-7 rounded-full bg-primary-050 text-primary-800 flex items-center justify-center text-sm font-bold mb-3">
                 {s.n}
@@ -201,7 +202,7 @@ export function HomePage() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {FEATURED_STACKS.map((s) => (
             <Link key={s.slug} to={s.href}>
-              <div className="p-5 rounded-xl bg-surface-card border border-ink-200 hover:border-primary-300 transition-colors h-full">
+              <div className="p-4 rounded-md bg-surface-card border border-ink-200 hover:border-primary-300 transition-colors h-full">
                 <h3 className="font-semibold text-ink-900 mb-1">{s.title}</h3>
                 <p className="text-sm text-ink-500">{s.desc}</p>
               </div>
