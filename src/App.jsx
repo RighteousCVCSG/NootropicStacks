@@ -18,6 +18,7 @@ import { JsonLd } from './components/JsonLd.jsx';
 import { buildOrganizationSchema, buildWebsiteSchema } from './lib/schema/builders.js';
 
 // Lazy-loaded route-level components
+const StackBuilderPage = lazy(() => import('./components/StackBuilderPage.jsx').then(m => ({ default: m.StackBuilderPage })));
 const AdminPage = lazy(() => import('./components/AdminPage.jsx').then(m => ({ default: m.AdminPage })));
 const SupplementPage = lazy(() => import('./components/SupplementPage.jsx').then(m => ({ default: m.SupplementPage })));
 const SupplementCompare = lazy(() => import('./components/SupplementCompare.jsx').then(m => ({ default: m.SupplementCompare })));
@@ -195,7 +196,7 @@ function App() {
 
               {/* Navigation */}
               <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
-                <NavLink to="/" icon={Home}>Build</NavLink>
+                <NavLink to="/build" icon={Home}>Build</NavLink>
                 <NavLink to="/supplements" icon={Library}>Supplements</NavLink>
                 <NavLink to="/stacks" icon={Layers}>Stacks</NavLink>
                 <NavLink to="/learn" icon={BookOpen}>Learn</NavLink>
@@ -219,7 +220,7 @@ function App() {
         <nav className="md:hidden bg-surface-card border-b border-ink-200" aria-label="Mobile navigation">
           <div className="flex items-center">
             <div className="flex items-center gap-2 overflow-x-auto flex-1 min-w-0 px-4 py-2">
-              <NavLink to="/" icon={Home}>Build</NavLink>
+              <NavLink to="/build" icon={Home}>Build</NavLink>
               <NavLink to="/supplements" icon={Library}>Supplements</NavLink>
               <NavLink to="/stacks" icon={Layers}>Stacks</NavLink>
               <NavLink to="/learn" icon={BookOpen}>Learn</NavLink>
@@ -245,6 +246,7 @@ function App() {
           <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="text-ink-500 text-sm">Loading...</div></div>}>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/build" element={<StackBuilderPage />} />
             <Route path="/quiz" element={<StackQuiz />} />
             <Route path="/supplements" element={<LibraryPage />} />
             <Route path="/supplements/:id" element={<SupplementPage />} />
@@ -328,7 +330,7 @@ function App() {
                 <h2 className="text-4xl font-bold mb-4">404</h2>
                 <p className="text-ink-700 mb-6">Page not found. Let's get you back on track.</p>
                 <div className="flex justify-center gap-4">
-                  <Link to="/"><Button>Stack Builder</Button></Link>
+                  <Link to="/build"><Button>Stack Builder</Button></Link>
                   <Link to="/supplements"><Button variant="outline">Supplement Library</Button></Link>
                 </div>
               </div>
@@ -361,7 +363,7 @@ function App() {
             </div>
             <div className="footer__col">
               <h4>Tools</h4>
-              <Link to="/">Stack Builder</Link>
+              <Link to="/build">Stack Builder</Link>
               <Link to="/quiz">Stack Quiz</Link>
               <Link to="/supplements">Supplement Library</Link>
               <Link to="/compare-supplements">Compare</Link>
