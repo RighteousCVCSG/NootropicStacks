@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useStack } from '../contexts/StackContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { supplements } from '../data/supplements.js';
@@ -284,6 +284,18 @@ function DrawerBody({ stack, stackName, safetyAnalysis, stackScore, user, onRemo
   const [shareCopied, setShareCopied] = useState(false);
   const [shipOpen, setShipOpen] = useState(false);
   const [view, setView] = useState('list'); // 'list' | 'schedule'
+  const shipBtnRef = useRef(null);
+
+  // C2 mediation: at >=3 items, surface a tiny "Ready to ship?" text link
+  // up top so committed users don't scroll past the list. The primary Ship
+  // button stays below the list — review-mode is preserved for early stacks.
+  const showShipAnchor = stack.length >= 3;
+  const handleShipAnchorClick = () => {
+    track('ship_anchor_click', { stack_size: stack.length });
+    shipBtnRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Brief pause so the user sees where they're being scrolled before opening
+    setTimeout(() => setShipOpen(true), 350);
+  };
 
   const handleShare = () => {
     const ids = stack.map(s => s.supplementId).join(',');
@@ -312,6 +324,22 @@ function DrawerBody({ stack, stackName, safetyAnalysis, stackScore, user, onRemo
       <ShipBuildSheet open={shipOpen} onOpenChange={setShipOpen} stack={stack} />
 
       <StackScoreMini stackScore={stackScore} />
+
+      {/* Ship anchor — only shows when the stack is large enough that the
+          bottom Ship button would otherwise scroll out of reach. */}
+      {showShipAnchor && (
+        <button
+          type="button"
+          onClick={handleShipAnchorClick}
+          className={`w-full inline-flex items-center justify-center gap-1.5 text-xs ${
+            stack.length >= 7 ? 'font-medium' : ''
+          } text-primary-800 hover:text-primary-700 hover:underline`}
+        >
+          <Truck className="w-3 h-3" />
+          Ready to ship? Jump to checkout
+        </button>
+      )}
+
       <StackWarnings safetyAnalysis={safetyAnalysis} />
 
       <div className="flex items-center gap-1 p-0.5 rounded-md bg-surface-sunk text-xs">
@@ -360,8 +388,10 @@ function DrawerBody({ stack, stackName, safetyAnalysis, stackScore, user, onRemo
       <StackCost stack={stack} />
 
       {/* Primary "ship the whole build" CTA lives BELOW the list so the
-          drawer answers "what's in my stack?" before "do you want to buy?". */}
+          drawer answers "what's in my stack?" before "do you want to buy?".
+          The top inline anchor (when stack.length >= 3) scrolls here. */}
       <Button
+        ref={shipBtnRef}
         size="sm"
         onClick={() => setShipOpen(true)}
         className="w-full bg-primary-800 hover:bg-primary-700 text-ink-on-dark"

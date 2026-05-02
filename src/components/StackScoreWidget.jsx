@@ -166,7 +166,11 @@ export function StackScoreWidget() {
 
   return (
     <>
-      <div className="fixed bottom-4 right-4 z-50 w-72 sm:w-80">
+      {/* Desktop-only: pinned bottom-LEFT so it doesn't compete with the
+          StackDrawer/TabHandle on the right edge. Hidden on mobile because
+          the mobile drawer pill lives at bottom-left and the drawer's
+          score-mini already shows this data. */}
+      <div className="hidden md:block fixed bottom-4 left-4 z-50 w-72 sm:w-80">
         <Card className="shadow-2 border-ink-200 overflow-hidden">
           {/* Header — always visible */}
           <button

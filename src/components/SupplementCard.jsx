@@ -40,8 +40,15 @@ export function SupplementCard({ supplement }) {
   };
 
   const preferredVendor = pickPreferredVendor(supplement.id, links, getCheapestVendor);
+  const cheapest = getCheapestVendor(supplement.id);
+  const vendorShort = preferredVendor ? (VENDOR_LABEL_SHORT[preferredVendor] || preferredVendor) : '';
+  // Vendor-first label keeps the price anchor visible without reading as a
+  // price-tag-first storefront on a YMYL site. Falls back to vendor-only when
+  // we don't have tracked-price data so cards never show stale numbers.
   const buyLabel = preferredVendor
-    ? `Buy on ${VENDOR_LABEL_SHORT[preferredVendor] || preferredVendor}`
+    ? (cheapest && cheapest.vendor === preferredVendor
+        ? `${vendorShort} · $${cheapest.price.toFixed(2)}`
+        : vendorShort)
     : 'Buy';
 
   const handleBuy = () => {
@@ -87,13 +94,14 @@ export function SupplementCard({ supplement }) {
         </div>
       </CardContent>
 
-      {/* Footer is a 3-equal-column flex row. Each button uses w-full to fill
-          its column. We use Button.asChild for the Details link so the rendered
-          DOM is a single <a> styled as a button (not a nested <a><button>,
-          which renders incorrectly and was making +Add spill outside the card). */}
+      {/* Footer hierarchy: Add is the primary conversion action (filled),
+          Buy is the secondary affiliate action (outline), Details is a small
+          icon-only ghost — least visual weight, since it's just a "more info"
+          jump. Designer panel called this out: equal-weight buttons hid the
+          primary action. */}
       <CardFooter className="pt-0 pb-3 px-3 flex items-stretch gap-1.5">
-        <Button asChild variant="outline" size="sm" className="flex-1 min-w-0 text-xs px-1">
-          <Link to={`/supplements/${supplement.id}`} aria-label="Details">
+        <Button asChild variant="ghost" size="sm" className="w-8 px-0 shrink-0 text-ink-500 hover:text-ink-900">
+          <Link to={`/supplements/${supplement.id}`} aria-label={`View details for ${supplement.name}`} title={`Details — ${supplement.name}`}>
             <Info className="w-3.5 h-3.5" />
           </Link>
         </Button>
@@ -101,7 +109,7 @@ export function SupplementCard({ supplement }) {
           size="sm"
           onClick={handleAdd}
           disabled={isInStack}
-          className="flex-1 min-w-0 text-xs px-1"
+          className="flex-1 min-w-0 text-xs px-2"
         >
           <Plus className="w-3.5 h-3.5 mr-0.5 shrink-0" />
           <span className="truncate">{isInStack ? 'Added' : 'Add'}</span>
@@ -111,7 +119,7 @@ export function SupplementCard({ supplement }) {
           size="sm"
           onClick={handleBuy}
           disabled={!links}
-          className="flex-1 min-w-0 text-xs px-1 border-accent-500 text-accent-700 hover:bg-accent-050 disabled:opacity-40"
+          className="flex-1 min-w-0 text-xs px-2 border-accent-500 text-accent-700 hover:bg-accent-050 disabled:opacity-40"
           title={links ? buyLabel : 'Vendor links not yet available'}
         >
           <ShoppingCart className="w-3.5 h-3.5 mr-0.5 shrink-0" />

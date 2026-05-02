@@ -10,7 +10,7 @@ import { StackProtocolBuilder } from './StackProtocolBuilder.jsx';
 import { PredefinedStacks } from './PredefinedStacks.jsx';
 import { supplements } from '../data/supplements.js';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.jsx';
-import { Layers, Library, ChevronLeft, Activity } from 'lucide-react';
+import { Layers, Library, Activity } from 'lucide-react';
 
 /**
  * Dedicated stack-builder page at /build. The homepage is now the marketing
@@ -71,27 +71,14 @@ export function StackBuilderPage() {
         customDescription="Pick goals, browse 195 supplements, see real-time synergy and Stack Score. Free."
       />
 
-      {/* Page header */}
+      {/* Page header — single h1 + tagline. The header nav already shows
+          the user is on the Build page; breadcrumb + eyebrow chrome was
+          dead vertical space. */}
       <section className="mb-6">
-        <Link
-          to="/"
-          className="inline-flex items-center gap-1 text-xs text-ink-500 hover:text-ink-700 mb-3"
-        >
-          <ChevronLeft className="w-3.5 h-3.5" />
-          Home
-        </Link>
-
-        <span className="inline-block text-[10px] font-semibold tracking-widest uppercase text-primary-900 bg-primary-050 border border-primary-300 px-2.5 py-0.5 rounded-full mb-2">
-          Stack Builder
-        </span>
-
-        <h1
-          className="text-2xl sm:text-3xl font-bold text-ink-900 leading-tight"
-          style={{ fontFamily: 'var(--font-display)' }}
-        >
-          Build your stack.
+        <h1 className="text-xl sm:text-2xl font-semibold text-ink-900 tracking-tight">
+          Build your stack
         </h1>
-        <p className="text-ink-700 text-sm sm:text-base mt-1">
+        <p className="text-ink-500 text-xs sm:text-sm mt-0.5">
           Set goals, add supplements, watch your Stack Score react.
         </p>
       </section>

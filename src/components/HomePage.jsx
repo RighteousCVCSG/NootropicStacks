@@ -2,10 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useStack } from '../contexts/StackContext.jsx';
 import { SEOOptimizer, SEOContent } from './SEOOptimizer.jsx';
-import { Button } from '@/components/ui/button.jsx';
 import {
-  Layers, BookOpen, ArrowRight, Sparkles, HelpCircle,
-  Activity, ShieldCheck, FlaskConical,
+  Layers, BookOpen, ArrowRight, Sparkles, HelpCircle, Activity,
 } from 'lucide-react';
 
 const ARTICLE_COUNT = 93;
@@ -37,21 +35,18 @@ export function HomePage() {
     <>
       <SEOOptimizer page="home" />
 
-      {/* Hero */}
+      {/* Hero — benefit-led headline + tight credential bar above fold. */}
       <section className="mb-10">
         <div className="text-center max-w-3xl mx-auto">
-          <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary-900 bg-primary-050 border border-primary-300 px-3 py-1 rounded-full mb-4">
+          <span className="inline-block text-[10px] font-semibold tracking-widest uppercase text-primary-900 bg-primary-050 border border-primary-300 px-2.5 py-0.5 rounded-md mb-4">
             Free Nootropic Stack Builder
           </span>
-          <h1
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-ink-900 leading-tight mb-3"
-            style={{ fontFamily: 'var(--font-display)' }}
-          >
-            Build smarter nootropic stacks,{' '}
-            <span className="text-primary-800">backed by science.</span>
+          <h1 className="text-3xl sm:text-4xl font-semibold text-ink-900 leading-tight tracking-tight mb-3">
+            Know exactly what you're stacking —{' '}
+            <span className="text-primary-800">and why it works.</span>
           </h1>
-          <p className="text-ink-700 text-base sm:text-lg max-w-2xl mx-auto mb-6">
-            The PCPartPicker for nootropics. 195 supplements, 60+ interactions mapped, every claim cites PubMed.
+          <p className="text-ink-500 text-sm sm:text-base max-w-2xl mx-auto mb-5">
+            Build supplement stacks with real-time synergy scoring and evidence-graded recommendations.
           </p>
           <Link
             to="/build"
@@ -59,6 +54,16 @@ export function HomePage() {
           >
             Start building <ArrowRight className="w-3.5 h-3.5" />
           </Link>
+
+          {/* Credential bar — single inline row, above the fold, replaces the
+              old below-fold three-card trust strip. */}
+          <div className="mt-6 flex items-center justify-center flex-wrap gap-x-4 gap-y-1.5 text-xs text-ink-500">
+            <span><span className="font-semibold text-ink-700 font-mono">195</span> compounds</span>
+            <span aria-hidden className="text-ink-300">·</span>
+            <span><span className="font-semibold text-ink-700 font-mono">60+</span> interactions mapped</span>
+            <span aria-hidden className="text-ink-300">·</span>
+            <span>Every claim links to PubMed</span>
+          </div>
         </div>
 
         {/* Returning-user one-line strip — only when localStorage already has a stack. */}
@@ -165,11 +170,12 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* How it works — three explicit steps with copy. */}
+      {/* Inside the stack builder — describes the /build flow specifically,
+          so the numbered steps don't imply the whole site is one funnel. */}
       <section className="mb-12">
         <div className="text-center mb-6">
-          <h2 className="text-xl font-semibold text-ink-900">How it works</h2>
-          <p className="text-sm text-ink-500 mt-1">Three steps from blank page to a full daily protocol.</p>
+          <h2 className="text-lg font-semibold text-ink-900">Inside the stack builder</h2>
+          <p className="text-xs text-ink-500 mt-1">How the builder works, step by step.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
           {[
@@ -208,39 +214,6 @@ export function HomePage() {
               </div>
             </Link>
           ))}
-        </div>
-      </section>
-
-      {/* Trust strip — three short credibility cues. */}
-      <section className="mb-12">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-5xl mx-auto">
-          <div className="rounded-lg bg-surface-card border border-ink-200 p-4 flex gap-3 items-start">
-            <FlaskConical className="w-5 h-5 text-primary-800 shrink-0 mt-0.5" />
-            <div>
-              <h3 className="text-sm font-semibold text-ink-900 mb-1">Tier-graded evidence</h3>
-              <p className="text-xs text-ink-500">
-                Every supplement carries a Tier 1/2/3 chip — strong, moderate, or preliminary — so you see what's well-studied at a glance.
-              </p>
-            </div>
-          </div>
-          <div className="rounded-lg bg-surface-card border border-ink-200 p-4 flex gap-3 items-start">
-            <ShieldCheck className="w-5 h-5 text-accent-700 shrink-0 mt-0.5" />
-            <div>
-              <h3 className="text-sm font-semibold text-ink-900 mb-1">Interactions mapped</h3>
-              <p className="text-xs text-ink-500">
-                60+ interaction pairs flagged in red. Stack Score docks for redundant or risky combinations.
-              </p>
-            </div>
-          </div>
-          <div className="rounded-lg bg-surface-card border border-ink-200 p-4 flex gap-3 items-start">
-            <BookOpen className="w-5 h-5 text-warn-700 shrink-0 mt-0.5" />
-            <div>
-              <h3 className="text-sm font-semibold text-ink-900 mb-1">Cited, not claimed</h3>
-              <p className="text-xs text-ink-500">
-                Every effect score, dosage range, and warning links to the underlying study. PubMed, not vendor copy.
-              </p>
-            </div>
-          </div>
         </div>
       </section>
 
