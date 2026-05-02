@@ -1,37 +1,29 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.jsx';
-import { Badge } from '@/components/ui/badge.jsx';
-import { Button } from '@/components/ui/button.jsx';
 import {
-  Target,
-  Zap,
-  Heart,
-  Scale,
-  Lightbulb,
-  Users,
-  BookOpen,
-  GraduationCap,
-  ChevronDown,
-  ChevronUp,
+  Target, Zap, Heart, Scale, Lightbulb, Users, BookOpen, GraduationCap,
+  ChevronDown, ChevronUp,
 } from 'lucide-react';
 import { useStack } from '../contexts/StackContext.jsx';
 import { goals } from '../data/supplements.js';
 
 const goalIcons = {
-  study:      GraduationCap,  // Focus / concentration
+  study:      GraduationCap,
   energy:     Zap,
-  balance:    Scale,           // Calm / stress
+  balance:    Scale,
   mood:       Heart,
   learning:   BookOpen,
   creativity: Lightbulb,
   socialness: Users,
 };
 
-// Headline 4 dimensions surface up front. Memory / Creativity / Social tuck
-// behind a "more dimensions" toggle so first-time visitors aren't drowning
-// in seven options before they've picked one.
 const HEADLINE_GOAL_IDS = ['study', 'energy', 'balance', 'mood'];
 
+/**
+ * Goals panel. Replaces the previous full-shadcn-Card with chunky 100px
+ * tile buttons. Now: a thin section heading + compact two-row grid of
+ * icon + label chips that read like dashboard filters, not marketing
+ * blocks. MeasureBoard tone.
+ */
 export function GoalSelector() {
   const { userGoals, setUserGoals } = useStack();
   const [expanded, setExpanded] = useState(false);
@@ -51,87 +43,76 @@ export function GoalSelector() {
     .filter(Boolean);
   const moreGoals = goals.filter((g) => !HEADLINE_GOAL_IDS.includes(g.id));
 
-  // If a user previously selected a "more" goal, auto-expand so they can see it.
   const hasHiddenSelection = userGoals.some((id) => !HEADLINE_GOAL_IDS.includes(id));
   const showMore = expanded || hasHiddenSelection;
 
-  const renderGoalButton = (goal) => {
+  const renderGoalChip = (goal) => {
     const Icon = goalIcons[goal.id] || Target;
     const isSelected = userGoals.includes(goal.id);
+    const base = 'inline-flex items-center gap-1.5 h-8 px-2.5 rounded-md text-xs font-medium transition-colors w-full';
+    const styled = isSelected
+      ? 'bg-primary-800 text-ink-on-dark hover:bg-primary-700'
+      : 'bg-surface-card border border-ink-200 text-ink-700 hover:border-primary-300 hover:text-ink-900';
     return (
-      <Button
+      <button
         key={goal.id}
-        variant={isSelected ? 'default' : 'outline'}
+        type="button"
         onClick={() => toggleGoal(goal.id)}
-        className="h-auto p-4 flex flex-col items-center gap-2 text-center min-h-[100px]"
+        aria-pressed={isSelected}
+        className={`${base} ${styled}`}
       >
-        <Icon className="w-6 h-6 flex-shrink-0" />
-        <div className="space-y-1">
-          <div className="font-medium text-sm leading-tight">{goal.name}</div>
-        </div>
-      </Button>
+        <Icon className="w-3.5 h-3.5 shrink-0" />
+        <span className="truncate">{goal.name}</span>
+      </button>
     );
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Target className="w-5 h-5" />
-          Your Goals
-        </CardTitle>
-        <p className="text-sm text-ink-700">
-          Pick what you want to optimize for. We'll tune the recommendations to match.
-        </p>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {headlineGoals.map(renderGoalButton)}
-        </div>
-
-        {showMore && (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-2 border-t border-ink-200">
-            {moreGoals.map(renderGoalButton)}
-          </div>
-        )}
-
-        <div className="flex items-center justify-between flex-wrap gap-2">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setExpanded((v) => !v)}
-            className="text-xs text-ink-500 hover:text-ink-700"
-            aria-expanded={showMore}
-          >
-            {showMore ? (
-              <>Fewer goals <ChevronUp className="w-3 h-3 ml-1" /></>
-            ) : (
-              <>More goals (memory, creativity, social) <ChevronDown className="w-3 h-3 ml-1" /></>
-            )}
-          </Button>
-
+    <section className="rounded-md bg-surface-card border border-ink-200 p-3">
+      <div className="flex items-center justify-between mb-2">
+        <h2 className="text-sm font-semibold text-ink-900 inline-flex items-center gap-1.5">
+          <Target className="w-3.5 h-3.5 text-primary-800" />
+          Goals
           {userGoals.length > 0 && (
-            <Button variant="ghost" size="sm" onClick={clearGoals} className="text-xs">
-              Clear All
-            </Button>
+            <span className="text-[10px] font-mono text-ink-500">({userGoals.length})</span>
           )}
-        </div>
-
+        </h2>
         {userGoals.length > 0 && (
-          <div className="flex flex-wrap gap-1 pt-2 border-t border-ink-200">
-            <span className="text-sm font-medium text-ink-700 mr-1">Selected:</span>
-            {userGoals.map((goalId) => {
-              const goal = goals.find((g) => g.id === goalId);
-              if (!goal) return null;
-              return (
-                <Badge key={goalId} variant="secondary" className="text-xs">
-                  {goal.name}
-                </Badge>
-              );
-            })}
-          </div>
+          <button
+            type="button"
+            onClick={clearGoals}
+            className="text-[11px] text-ink-500 hover:text-ink-900"
+          >
+            Clear
+          </button>
         )}
-      </CardContent>
-    </Card>
+      </div>
+      <p className="text-xs text-ink-500 mb-2.5">
+        What to optimize for. Recommendations follow your picks.
+      </p>
+
+      <div className="grid grid-cols-2 gap-1.5">
+        {headlineGoals.map(renderGoalChip)}
+      </div>
+
+      {showMore && (
+        <div className="grid grid-cols-2 gap-1.5 mt-1.5 pt-2 border-t border-ink-100">
+          {moreGoals.map(renderGoalChip)}
+        </div>
+      )}
+
+      <button
+        type="button"
+        onClick={() => setExpanded((v) => !v)}
+        aria-expanded={showMore}
+        className="mt-2 text-[11px] text-ink-500 hover:text-ink-900 inline-flex items-center gap-1"
+      >
+        {showMore ? (
+          <>Fewer <ChevronUp className="w-3 h-3" /></>
+        ) : (
+          <>More (memory, creativity, social) <ChevronDown className="w-3 h-3" /></>
+        )}
+      </button>
+    </section>
   );
 }

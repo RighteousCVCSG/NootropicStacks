@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button.jsx';
 import { Badge } from '@/components/ui/badge.jsx';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card.jsx';
 import { Plus, Info, ShoppingCart } from 'lucide-react';
 import { useStack } from '../contexts/StackContext.jsx';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
@@ -59,26 +57,26 @@ export function SupplementCard({ supplement }) {
   };
 
   return (
-    <Card className="flex flex-col h-full hover:shadow-2 hover:border-primary-300 transition-colors">
-      <CardHeader className="pb-2 space-y-2">
+    <div className="flex flex-col h-full rounded-md bg-surface-card border border-ink-200 hover:border-primary-300 transition-colors">
+      <div className="px-3 pt-2.5 pb-1.5 space-y-1.5">
         <div className="flex items-center gap-1.5 flex-wrap">
           <TierBadge supplementId={supplement.id} size="xs" />
           <Badge variant="outline" className="text-[10px] capitalize px-1.5 py-0">
             {supplement.category.replace('-', ' ')}
           </Badge>
         </div>
-        <CardTitle className="text-base font-semibold leading-tight">
+        <h3 className="text-sm font-semibold leading-tight text-ink-900">
           {supplement.name}
-        </CardTitle>
-      </CardHeader>
+        </h3>
+      </div>
 
-      <CardContent className="flex-1 pb-3 space-y-2">
+      <div className="flex-1 px-3 pb-2 space-y-1.5">
         <p className="text-xs text-ink-700 line-clamp-2 leading-snug">
           {supplement.description}
         </p>
         {/* Fixed-height stat row keeps card grid alignment regardless of
             whether the supplement has a non-zero top effect. */}
-        <div className="flex items-center gap-2 text-xs text-ink-500 min-h-[1.25rem]">
+        <div className="flex items-center gap-2 text-[11px] text-ink-500 min-h-[1.1rem]">
           {top && (
             <>
               <span className="inline-flex items-center gap-1">
@@ -92,40 +90,40 @@ export function SupplementCard({ supplement }) {
             {supplement.dosage.min}–{supplement.dosage.max} {supplement.dosage.unit}
           </span>
         </div>
-      </CardContent>
+      </div>
 
-      {/* Footer hierarchy: Add is the primary conversion action (filled),
-          Buy is the secondary affiliate action (outline), Details is a small
-          icon-only ghost — least visual weight, since it's just a "more info"
-          jump. Designer panel called this out: equal-weight buttons hid the
-          primary action. */}
-      <CardFooter className="pt-0 pb-3 px-3 flex items-stretch gap-1.5">
-        <Button asChild variant="ghost" size="sm" className="w-8 px-0 shrink-0 text-ink-500 hover:text-ink-900">
-          <Link to={`/supplements/${supplement.id}`} aria-label={`View details for ${supplement.name}`} title={`Details — ${supplement.name}`}>
-            <Info className="w-3.5 h-3.5" />
-          </Link>
-        </Button>
-        <Button
-          size="sm"
+      {/* Footer hierarchy: Add primary, Buy secondary outline, Details
+          is the tiny ghost icon. Custom anchors at h-7 to match the
+          MeasureBoard density we use everywhere else. */}
+      <div className="px-2 pb-2 flex items-stretch gap-1">
+        <Link
+          to={`/supplements/${supplement.id}`}
+          aria-label={`View details for ${supplement.name}`}
+          title={`Details — ${supplement.name}`}
+          className="inline-flex items-center justify-center w-7 h-7 rounded-md text-ink-500 hover:text-ink-900 hover:bg-surface-sunk shrink-0"
+        >
+          <Info className="w-3.5 h-3.5" />
+        </Link>
+        <button
+          type="button"
           onClick={handleAdd}
           disabled={isInStack}
-          className="flex-1 min-w-0 text-xs px-2"
+          className="inline-flex items-center justify-center gap-1 h-7 px-2 rounded-md text-[11px] font-medium bg-primary-800 hover:bg-primary-700 text-ink-on-dark transition-colors flex-1 min-w-0 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <Plus className="w-3.5 h-3.5 mr-0.5 shrink-0" />
+          <Plus className="w-3 h-3 shrink-0" />
           <span className="truncate">{isInStack ? 'Added' : 'Add'}</span>
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
+        </button>
+        <button
+          type="button"
           onClick={handleBuy}
           disabled={!links}
-          className="flex-1 min-w-0 text-xs px-2 border-accent-500 text-accent-700 hover:bg-accent-050 disabled:opacity-40"
           title={links ? buyLabel : 'Vendor links not yet available'}
+          className="inline-flex items-center justify-center gap-1 h-7 px-2 rounded-md text-[11px] font-medium border border-accent-500 text-accent-700 hover:bg-accent-050 transition-colors flex-1 min-w-0 disabled:opacity-40 disabled:cursor-not-allowed"
         >
-          <ShoppingCart className="w-3.5 h-3.5 mr-0.5 shrink-0" />
+          <ShoppingCart className="w-3 h-3 shrink-0" />
           <span className="truncate">{buyLabel}</span>
-        </Button>
-      </CardFooter>
-    </Card>
+        </button>
+      </div>
+    </div>
   );
 }

@@ -1,107 +1,109 @@
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.jsx';
-import { Button } from '@/components/ui/button.jsx';
-import { Badge } from '@/components/ui/badge.jsx';
 import { Sparkles, Plus, TrendingUp } from 'lucide-react';
 import { useStack } from '../contexts/StackContext.jsx';
-import { supplements } from '../data/supplements.js';
 
+/**
+ * Recommendations rail. Replaces the previous blue-gradient Card stack
+ * (off-palette, chubby) with a tight section + single-row rec items that
+ * match the rest of the workspace. Each item: name + 1-line description
+ * + reasoning chips, with an inline match-score bar and a small Add
+ * button on the right.
+ */
 export function RecommendationPanel() {
   const { recommendations, addSupplement, userGoals } = useStack();
 
-  if (!recommendations || recommendations.length === 0) {
-    return (
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Sparkles className="w-5 h-5" />
-            Recommendations
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-gray-500 text-center py-4">
-            {userGoals.length === 0 
-              ? "Select your goals above to get personalized recommendations!"
-              : "Add some supplements to your stack to get recommendations for synergistic additions!"
-            }
-          </p>
-        </CardContent>
-      </Card>
-    );
-  }
+  const empty = !recommendations || recommendations.length === 0;
+  const emptyMessage = userGoals.length === 0
+    ? 'Pick a goal above to see personalized recommendations.'
+    : 'Add a supplement to see synergistic next picks.';
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Sparkles className="w-5 h-5" />
-          Recommended for You
-        </CardTitle>
-        <p className="text-sm text-gray-600">
-          Based on your goals and current stack
-        </p>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {recommendations.map((rec, index) => {
-          const supplement = rec.supplement;
-          
-          return (
-            <div key={supplement.id} className="p-4 border rounded-lg bg-gradient-to-r from-blue-50 to-indigo-50">
-              <div className="flex items-start justify-between mb-3">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-1">
-                    <h4 className="font-semibold">{supplement.name}</h4>
-                    <Badge variant="outline" className="text-xs">
-                      #{index + 1}
-                    </Badge>
+    <section className="rounded-md bg-surface-card border border-ink-200 p-3">
+      <div className="flex items-center justify-between mb-2">
+        <h2 className="text-sm font-semibold text-ink-900 inline-flex items-center gap-1.5">
+          <Sparkles className="w-3.5 h-3.5 text-primary-800" />
+          Recommended
+          {!empty && (
+            <span className="text-[10px] font-mono text-ink-500">({recommendations.length})</span>
+          )}
+        </h2>
+        {!empty && (
+          <span className="text-[10px] text-ink-500">Based on goals + current stack</span>
+        )}
+      </div>
+
+      {empty && (
+        <p className="text-xs text-ink-500 py-1">{emptyMessage}</p>
+      )}
+
+      {!empty && (
+        <ul className="space-y-1.5">
+          {recommendations.map((rec, index) => {
+            const supplement = rec.supplement;
+            const matchPct = Math.min(Math.round(rec.score * 2), 100);
+            return (
+              <li
+                key={supplement.id}
+                className="flex items-start gap-3 p-2 rounded-md border border-ink-100 hover:border-primary-300 transition-colors"
+              >
+                <span className="w-5 h-5 rounded-full bg-primary-050 text-primary-800 inline-flex items-center justify-center text-[10px] font-semibold font-mono shrink-0 mt-0.5">
+                  {index + 1}
+                </span>
+
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-baseline gap-2 flex-wrap">
+                    <h3 className="text-sm font-semibold text-ink-900 truncate">
+                      {supplement.name}
+                    </h3>
+                    <span className="text-[10px] font-mono text-ink-500">
+                      {supplement.dosage.min}–{supplement.dosage.max} {supplement.dosage.unit}
+                    </span>
                   </div>
-                  <p className="text-sm text-gray-600 mb-2">
+                  <p className="text-xs text-ink-500 line-clamp-1 leading-snug mt-0.5">
                     {supplement.description}
                   </p>
-                  
-                  {/* Reasoning */}
-                  <div className="flex flex-wrap gap-1 mb-2">
-                    {rec.reasoning.map((reason, idx) => (
-                      <Badge key={idx} variant="secondary" className="text-xs">
-                        <TrendingUp className="w-3 h-3 mr-1" />
-                        {reason}
-                      </Badge>
-                    ))}
-                  </div>
-                  
-                  <div className="text-xs text-gray-500">
-                    Dosage: {supplement.dosage.min}-{supplement.dosage.max} {supplement.dosage.unit}
+
+                  {rec.reasoning && rec.reasoning.length > 0 && (
+                    <div className="flex flex-wrap gap-1 mt-1">
+                      {rec.reasoning.slice(0, 3).map((reason, idx) => (
+                        <span
+                          key={idx}
+                          className="inline-flex items-center gap-1 text-[10px] text-primary-800 bg-primary-050 px-1.5 py-0.5 rounded"
+                        >
+                          <TrendingUp className="w-2.5 h-2.5" />
+                          {reason}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="flex items-center gap-2 mt-1.5">
+                    <div className="flex-1 h-1 rounded-full bg-ink-100 overflow-hidden">
+                      <div
+                        className="h-full bg-primary-500 rounded-full transition-all duration-300"
+                        style={{ width: `${matchPct}%` }}
+                      />
+                    </div>
+                    <span className="text-[10px] font-mono font-semibold text-ink-700 w-8 text-right">
+                      {matchPct}%
+                    </span>
                   </div>
                 </div>
-                
-                <Button
-                  size="sm"
+
+                <button
+                  type="button"
                   onClick={() => addSupplement(supplement)}
-                  className="ml-4"
+                  className="inline-flex items-center gap-1 h-7 px-2 rounded-md text-xs font-medium bg-primary-800 hover:bg-primary-700 text-ink-on-dark transition-colors shrink-0"
+                  aria-label={`Add ${supplement.name} to stack`}
                 >
-                  <Plus className="w-4 h-4 mr-1" />
+                  <Plus className="w-3 h-3" />
                   Add
-                </Button>
-              </div>
-              
-              {/* Match Score */}
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-medium">Match Score:</span>
-                <div className="flex-1 bg-gray-200 rounded-full h-2">
-                  <div 
-                    className="bg-blue-500 h-2 rounded-full transition-all duration-300"
-                    style={{ width: `${Math.min(rec.score * 2, 100)}%` }}
-                  ></div>
-                </div>
-                <span className="text-xs font-bold text-blue-600">
-                  {Math.round(rec.score * 2)}%
-                </span>
-              </div>
-            </div>
-          );
-        })}
-      </CardContent>
-    </Card>
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </section>
   );
 }
-
