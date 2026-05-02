@@ -163,7 +163,7 @@ export function StartHerePage() {
           <Brain className="w-4 h-4" />
           Start Here — Beginner's Guide
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-ink-900 leading-tight">
+        <h1 className="text-3xl sm:text-4xl font-semibold text-ink-900 leading-tight">
           Your First Nootropic Stack:<br />
           <span className="text-primary-700">A Practical Starter Guide</span>
         </h1>
@@ -173,11 +173,11 @@ export function StartHerePage() {
           free tool to build and score your first stack.
         </p>
         <div className="flex flex-wrap gap-3 justify-center pt-2">
-          <Link to="/quiz" className="inline-flex items-center gap-2 bg-primary-700 hover:bg-primary-800 text-white px-5 py-2.5 rounded-lg font-medium transition-colors">
+          <Link to="/quiz" className="inline-flex items-center gap-2 bg-primary-700 hover:bg-primary-800 text-white px-5 py-2.5 rounded-md font-medium transition-colors">
             <HelpCircle className="w-4 h-4" />
             Take the Quiz
           </Link>
-          <Link to="/" className="inline-flex items-center gap-2 bg-white border border-ink-200 hover:border-primary-300 text-ink-700 px-5 py-2.5 rounded-lg font-medium transition-colors">
+          <Link to="/" className="inline-flex items-center gap-2 bg-white border border-ink-200 hover:border-primary-300 text-ink-700 px-5 py-2.5 rounded-md font-medium transition-colors">
             <Layers className="w-4 h-4" />
             Open Stack Builder
           </Link>
@@ -186,13 +186,13 @@ export function StartHerePage() {
 
       {/* 5 Steps */}
       <section>
-        <h2 className="text-2xl font-bold text-ink-900 mb-2">The 5-Step Framework</h2>
+        <h2 className="text-2xl font-semibold text-ink-900 mb-2">The 5-Step Framework</h2>
         <p className="text-ink-700 mb-8">Every successful nootropic protocol follows these steps, whether you're a first-timer or a veteran biohacker.</p>
         <div className="space-y-4">
           {STEPS.map((step) => {
             const Icon = step.icon;
             return (
-              <div key={step.number} className="flex gap-4 p-5 bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+              <div key={step.number} className="flex gap-4 p-5 bg-white border border-gray-100 rounded-md shadow-sm hover:shadow-1 transition-shadow">
                 <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center ${step.color}`}>
                   <Icon className="w-5 h-5" />
                 </div>
@@ -214,14 +214,14 @@ export function StartHerePage() {
 
       {/* Beginner Stacks */}
       <section>
-        <h2 className="text-2xl font-bold text-ink-900 mb-2">3 Proven Starter Stacks</h2>
+        <h2 className="text-2xl font-semibold text-ink-900 mb-2">3 Proven Starter Stacks</h2>
         <p className="text-ink-700 mb-6">These combinations are well-researched, beginner-safe, and cover the three most common goals. Pick one and run it for 30 days before adding anything.</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {BEGINNER_STACKS.map((stack) => (
             <Card key={stack.name} className="border-ink-200 hover:border-primary-300 transition-colors">
               <CardContent className="p-5 space-y-3">
                 <div>
-                  <h3 className="font-bold text-ink-900">{stack.name}</h3>
+                  <h3 className="font-semibold text-ink-900">{stack.name}</h3>
                   <p className="text-xs text-ink-500 mt-0.5">{stack.cost} · {stack.difficulty}</p>
                 </div>
                 <p className="text-sm text-ink-700">{stack.description}</p>
@@ -237,7 +237,7 @@ export function StartHerePage() {
                 <p className="text-xs text-ink-700 border-l-2 border-primary-300 pl-2">{stack.why}</p>
                 <Link
                   to={stack.stackUrl}
-                  className="block text-center text-sm bg-primary-700 hover:bg-primary-800 text-white py-2 rounded-lg font-medium transition-colors"
+                  className="block text-center text-sm bg-primary-700 hover:bg-primary-800 text-white py-2 rounded-md font-medium transition-colors"
                 >
                   Build This Stack →
                 </Link>
@@ -249,11 +249,11 @@ export function StartHerePage() {
 
       {/* Categories */}
       <section>
-        <h2 className="text-2xl font-bold text-ink-900 mb-2">Nootropic Categories Explained</h2>
+        <h2 className="text-2xl font-semibold text-ink-900 mb-2">Nootropic Categories Explained</h2>
         <p className="text-ink-700 mb-6">Every nootropic belongs to a mechanism family. Understanding these helps you build non-redundant stacks.</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {CATEGORIES.map((cat) => (
-            <Link key={cat.name} to={cat.link} className="flex gap-3 p-4 bg-white border border-gray-100 rounded-xl hover:border-primary-300 hover:shadow-sm transition-all group">
+            <Link key={cat.name} to={cat.link} className="flex gap-3 p-4 bg-white border border-gray-100 rounded-md hover:border-primary-300 hover:shadow-sm transition-all group">
               <span className="text-2xl flex-shrink-0">{cat.icon}</span>
               <div className="min-w-0">
                 <div className="flex items-center gap-2 mb-0.5">
@@ -270,10 +270,10 @@ export function StartHerePage() {
 
       {/* Myths */}
       <section>
-        <h2 className="text-2xl font-bold text-ink-900 mb-6">4 Common Myths (Debunked)</h2>
+        <h2 className="text-2xl font-semibold text-ink-900 mb-6">4 Common Myths (Debunked)</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {MYTHS.map((item) => (
-            <div key={item.myth} className="p-4 bg-white border border-gray-100 rounded-xl">
+            <div key={item.myth} className="p-4 bg-white border border-gray-100 rounded-md">
               <div className="flex items-start gap-2 mb-2">
                 <AlertTriangle className="w-4 h-4 text-orange-500 flex-shrink-0 mt-0.5" />
                 <p className="text-sm font-semibold text-ink-700">{item.myth}</p>
@@ -288,8 +288,8 @@ export function StartHerePage() {
       </section>
 
       {/* Popular reads */}
-      <section className="bg-surface-card rounded-xl p-6">
-        <h2 className="text-xl font-bold text-ink-900 mb-4 flex items-center gap-2">
+      <section className="bg-surface-card rounded-md p-6">
+        <h2 className="text-xl font-semibold text-ink-900 mb-4 flex items-center gap-2">
           <Star className="w-5 h-5 text-warn-500" />
           Most Popular Guides
         </h2>
@@ -302,7 +302,7 @@ export function StartHerePage() {
             { label: 'Nootropics for ADHD Adults: Complete Guide 2026', to: '/blog/nootropics-for-adhd-adults-complete-guide-2026' },
             { label: 'How to Cycle Nootropics (Prevent Tolerance)', to: '/blog/how-to-cycle-nootropics-prevent-tolerance-and-burnout' },
           ].map((item) => (
-            <Link key={item.to} to={item.to} className="flex items-center gap-2 text-sm text-ink-700 hover:text-primary-800 group p-2 rounded-lg hover:bg-white transition-all">
+            <Link key={item.to} to={item.to} className="flex items-center gap-2 text-sm text-ink-700 hover:text-primary-800 group p-2 rounded-md hover:bg-white transition-all">
               <ArrowRight className="w-3.5 h-3.5 text-primary-500 flex-shrink-0" />
               <span className="group-hover:underline">{item.label}</span>
             </Link>
@@ -316,19 +316,19 @@ export function StartHerePage() {
       </section>
 
       {/* CTA */}
-      <section className="text-center bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl p-8 text-white space-y-4">
+      <section className="text-center bg-gradient-to-br from-blue-600 to-indigo-700 rounded-md p-8 text-white space-y-4">
         <Brain className="w-10 h-10 mx-auto opacity-90" />
-        <h2 className="text-2xl font-bold">Ready to Build Your Stack?</h2>
+        <h2 className="text-2xl font-semibold">Ready to Build Your Stack?</h2>
         <p className="text-blue-100 max-w-lg mx-auto text-sm">
           Use the free NootropicStacker tool to browse 195 supplements, check interactions,
           and get a real-time Stack Score across synergy, coverage, balance, and efficiency.
         </p>
         <div className="flex flex-wrap gap-3 justify-center">
-          <Link to="/" className="inline-flex items-center gap-2 bg-white text-primary-800 hover:bg-primary-050 px-5 py-2.5 rounded-lg font-semibold transition-colors">
+          <Link to="/" className="inline-flex items-center gap-2 bg-white text-primary-800 hover:bg-primary-050 px-5 py-2.5 rounded-md font-semibold transition-colors">
             <Layers className="w-4 h-4" />
             Open Stack Builder
           </Link>
-          <Link to="/quiz" className="inline-flex items-center gap-2 bg-primary-0500 hover:bg-blue-400 text-white border border-blue-400 px-5 py-2.5 rounded-lg font-medium transition-colors">
+          <Link to="/quiz" className="inline-flex items-center gap-2 bg-primary-0500 hover:bg-blue-400 text-white border border-blue-400 px-5 py-2.5 rounded-md font-medium transition-colors">
             <HelpCircle className="w-4 h-4" />
             Take the Quiz
           </Link>

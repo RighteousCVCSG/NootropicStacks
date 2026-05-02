@@ -235,7 +235,7 @@ export function StackQuiz() {
         <div className="max-w-3xl mx-auto space-y-6">
           <div className="text-center">
             <Sparkles className="w-12 h-12 text-primary-700 mx-auto mb-4" />
-            <h2 className="text-3xl font-bold mb-2">Your Personalized Stack</h2>
+            <h2 className="text-3xl font-semibold mb-2">Your Personalized Stack</h2>
             <p className="text-ink-700">
               Based on your answers, here's our recommended starting stack.
             </p>
@@ -243,13 +243,13 @@ export function StackQuiz() {
 
           <div className="space-y-4">
             {recommended.map((rec, index) => (
-              <Card key={rec.id} className="hover:shadow-md transition-shadow">
+              <Card key={rec.id} className="hover:shadow-1 transition-shadow">
                 <CardContent className="pt-6">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
                         <Badge variant="outline" className="text-xs">{index + 1}</Badge>
-                        <Link to={`/supplements/${rec.id}`} className="text-lg font-bold hover:text-primary-700">
+                        <Link to={`/supplements/${rec.id}`} className="text-lg font-semibold hover:text-primary-700">
                           {rec.supplement.name}
                         </Link>
                         <Badge className="text-xs">{rec.supplement.category.replace('-', ' ')}</Badge>
@@ -359,7 +359,7 @@ export function StackQuiz() {
                   <button
                     key={option.value}
                     onClick={() => handleAnswer(option.value)}
-                    className={`p-4 rounded-lg border-2 text-left transition-all hover:shadow-md ${
+                    className={`p-4 rounded-md border-2 text-left transition-all hover:shadow-1 ${
                       isSelected(option.value)
                         ? 'border-primary-500 bg-primary-050'
                         : 'border-ink-200 hover:border-ink-300'

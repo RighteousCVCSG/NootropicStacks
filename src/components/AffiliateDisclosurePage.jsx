@@ -10,7 +10,7 @@ export function AffiliateDisclosurePage() {
         customDescription="Learn about how NootropicStacker earns commissions through affiliate partnerships while maintaining editorial independence."
       />
       <div className="max-w-3xl mx-auto px-4 py-12">
-        <h1 className="text-3xl font-bold mb-6">Affiliate Disclosure Policy</h1>
+        <h1 className="text-3xl font-semibold mb-6">Affiliate Disclosure Policy</h1>
         <p className="text-sm text-ink-500 mb-8">Last updated: April 2026</p>
 
         <section className="space-y-6 text-ink-700 leading-relaxed">

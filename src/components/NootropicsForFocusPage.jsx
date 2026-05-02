@@ -221,7 +221,7 @@ export function NootropicsForFocusPage() {
             <Badge variant="outline" className="text-accent-700 border-green-300 bg-accent-050 text-xs font-medium">Evidence-Ranked</Badge>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl font-bold text-ink-900 mb-4 leading-tight">
+          <h1 className="text-3xl sm:text-4xl font-semibold text-ink-900 mb-4 leading-tight">
             Best Nootropics for Focus 2026 —{' '}
             <span className="text-primary-700">Ranked &amp; Reviewed</span>
           </h1>
@@ -231,15 +231,15 @@ export function NootropicsForFocusPage() {
           </p>
 
           <div className="flex flex-wrap gap-4 text-sm text-ink-500 mb-6">
-            <span className="flex items-center gap-1"><span className="text-green-500 font-bold">✓</span> 8 supplements ranked</span>
-            <span className="flex items-center gap-1"><span className="text-green-500 font-bold">✓</span> Clinical evidence cited</span>
-            <span className="flex items-center gap-1"><span className="text-green-500 font-bold">✓</span> 3 curated stacks</span>
-            <span className="flex items-center gap-1"><span className="text-green-500 font-bold">✓</span> Free stack builder</span>
+            <span className="flex items-center gap-1"><span className="text-green-500 font-semibold">✓</span> 8 supplements ranked</span>
+            <span className="flex items-center gap-1"><span className="text-green-500 font-semibold">✓</span> Clinical evidence cited</span>
+            <span className="flex items-center gap-1"><span className="text-green-500 font-semibold">✓</span> 3 curated stacks</span>
+            <span className="flex items-center gap-1"><span className="text-green-500 font-semibold">✓</span> Free stack builder</span>
           </div>
 
           <Link
             to="/"
-            className="inline-flex items-center gap-2 bg-primary-700 hover:bg-primary-800 text-white font-semibold px-6 py-3 rounded-lg transition-colors text-sm sm:text-base"
+            className="inline-flex items-center gap-2 bg-primary-700 hover:bg-primary-800 text-white font-semibold px-6 py-3 rounded-md transition-colors text-sm sm:text-base"
           >
             <Brain className="w-4 h-4" />
             Build Your Focus Stack Free
@@ -249,7 +249,7 @@ export function NootropicsForFocusPage() {
 
         {/* ── Top 8 Focus Supplements ── */}
         <section className="mb-12">
-          <h2 className="text-2xl font-bold text-ink-900 mb-2">Top 8 Nootropics for Focus in 2026</h2>
+          <h2 className="text-2xl font-semibold text-ink-900 mb-2">Top 8 Nootropics for Focus in 2026</h2>
           <p className="text-ink-500 text-sm mb-6">Ranked by a composite focus score combining clinical evidence strength, mechanism clarity, and dose-response reliability.</p>
 
           <div className="space-y-6">
@@ -259,17 +259,17 @@ export function NootropicsForFocusPage() {
               const scoreBarWidth = `${s.focusScore}%`;
 
               return (
-                <Card key={s.id} className="border-ink-200 hover:shadow-md transition-shadow">
+                <Card key={s.id} className="border-ink-200 hover:shadow-1 transition-shadow">
                   <CardContent className="pt-6">
                     <div className="flex items-start gap-4">
                       {/* Rank badge */}
-                      <div className={`flex-shrink-0 w-10 h-10 rounded-full border-2 flex items-center justify-center font-bold text-sm ${getRankColor(s.rank)}`}>
+                      <div className={`flex-shrink-0 w-10 h-10 rounded-full border-2 flex items-center justify-center font-semibold text-sm ${getRankColor(s.rank)}`}>
                         #{s.rank}
                       </div>
 
                       <div className="flex-1 min-w-0">
                         <div className="flex flex-wrap items-center gap-2 mb-1">
-                          <h3 className="text-lg font-bold text-ink-900">{s.name}</h3>
+                          <h3 className="text-lg font-semibold text-ink-900">{s.name}</h3>
                         </div>
 
                         <p className="text-sm font-medium text-primary-800 mb-3">{s.tagline}</p>
@@ -278,7 +278,7 @@ export function NootropicsForFocusPage() {
                         <div className="mb-3">
                           <div className="flex items-center justify-between text-xs text-ink-500 mb-1">
                             <span className="font-medium">Focus Score</span>
-                            <span className="font-bold text-ink-700">{s.focusScore}/100</span>
+                            <span className="font-semibold text-ink-700">{s.focusScore}/100</span>
                           </div>
                           <div className="h-2 bg-surface-sunk rounded-full overflow-hidden">
                             <div
@@ -351,7 +351,7 @@ export function NootropicsForFocusPage() {
 
         {/* ── Best Stacks for Focus ── */}
         <section className="mb-12">
-          <h2 className="text-2xl font-bold text-ink-900 mb-2">Best Stacks for Focus</h2>
+          <h2 className="text-2xl font-semibold text-ink-900 mb-2">Best Stacks for Focus</h2>
           <p className="text-ink-500 text-sm mb-6">
             Individual supplements are good. Stacks are better — the right combinations create synergies that single compounds can't match. Click "Build This Stack" to load any stack into our free Stack Builder and customize it.
           </p>
@@ -360,13 +360,13 @@ export function NootropicsForFocusPage() {
             {FOCUS_STACKS.map((stack) => {
               const stackIds = stack.supplements.map((s) => s.id).join(',');
               return (
-                <Card key={stack.level} className="border-ink-200 hover:shadow-md transition-shadow">
+                <Card key={stack.level} className="border-ink-200 hover:shadow-1 transition-shadow">
                   <CardContent className="pt-5">
                     <div className="flex flex-wrap items-center gap-2 mb-2">
                       <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full border ${stack.levelColor}`}>
                         {stack.level}
                       </span>
-                      <h3 className="text-base font-bold text-ink-900">{stack.title}</h3>
+                      <h3 className="text-base font-semibold text-ink-900">{stack.title}</h3>
                     </div>
 
                     <p className="text-ink-700 text-sm mb-3">{stack.description}</p>
@@ -384,7 +384,7 @@ export function NootropicsForFocusPage() {
 
                     <Link
                       to={`/?stack=${stackIds}`}
-                      className="inline-flex items-center gap-1.5 text-sm bg-primary-700 hover:bg-primary-800 text-white font-semibold px-4 py-2 rounded-lg transition-colors"
+                      className="inline-flex items-center gap-1.5 text-sm bg-primary-700 hover:bg-primary-800 text-white font-semibold px-4 py-2 rounded-md transition-colors"
                     >
                       <Brain className="w-3.5 h-3.5" />
                       Build This Stack
@@ -399,23 +399,23 @@ export function NootropicsForFocusPage() {
 
         {/* ── Focus Mechanism Explainer ── */}
         <section className="mb-12">
-          <h2 className="text-2xl font-bold text-ink-900 mb-2">How Nootropics Actually Improve Focus</h2>
+          <h2 className="text-2xl font-semibold text-ink-900 mb-2">How Nootropics Actually Improve Focus</h2>
           <p className="text-ink-500 text-sm mb-6">
             Most people think of focus as a single thing, but it's actually three overlapping systems. The best stacks address all three simultaneously.
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {MECHANISMS.map(({ icon: Icon, neurotransmitter, color, bgColor, headline, body }) => (
-              <div key={neurotransmitter} className={`rounded-xl border p-5 ${bgColor}`}>
+              <div key={neurotransmitter} className={`rounded-md border p-5 ${bgColor}`}>
                 <Icon className={`w-6 h-6 mb-2 ${color}`} />
-                <div className="text-xs font-bold uppercase tracking-wide text-ink-400 mb-0.5">{neurotransmitter}</div>
-                <h3 className="font-bold text-ink-900 text-sm mb-2">{headline}</h3>
+                <div className="text-xs font-semibold uppercase tracking-wide text-ink-400 mb-0.5">{neurotransmitter}</div>
+                <h3 className="font-semibold text-ink-900 text-sm mb-2">{headline}</h3>
                 <p className="text-xs text-ink-700 leading-relaxed">{body}</p>
               </div>
             ))}
           </div>
 
-          <div className="mt-5 p-4 bg-warn-100 border border-amber-200 rounded-lg">
+          <div className="mt-5 p-4 bg-warn-100 border border-amber-200 rounded-md">
             <p className="text-sm text-amber-900 leading-relaxed">
               <strong>The key insight:</strong> Most nootropics only hit one mechanism. A caffeine + L-Theanine stack covers adenosine blockade and calm alertness. Add Alpha-GPC and you add acetylcholine. Add Rhodiola and you protect the dopamine and adenosine systems under stress. This is why stacking outperforms single compounds.
             </p>
@@ -423,23 +423,23 @@ export function NootropicsForFocusPage() {
         </section>
 
         {/* ── CTA ── */}
-        <div className="mb-12 p-6 sm:p-8 bg-primary-700 rounded-xl text-white text-center">
+        <div className="mb-12 p-6 sm:p-8 bg-primary-700 rounded-md text-white text-center">
           <Brain className="w-9 h-9 mx-auto mb-3 opacity-90" />
-          <h2 className="text-xl sm:text-2xl font-bold mb-2">Build Your Personal Focus Stack — Free</h2>
+          <h2 className="text-xl sm:text-2xl font-semibold mb-2">Build Your Personal Focus Stack — Free</h2>
           <p className="text-blue-100 text-sm mb-5 max-w-md mx-auto">
             Use our Stack Builder to combine any of these 8 supplements, check interactions, and get a Stack Score across synergy, coverage, and efficiency. No account required.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               to="/"
-              className="inline-flex items-center justify-center gap-2 bg-white text-primary-800 font-semibold px-6 py-3 rounded-lg hover:bg-primary-050 transition-colors"
+              className="inline-flex items-center justify-center gap-2 bg-white text-primary-800 font-semibold px-6 py-3 rounded-md hover:bg-primary-050 transition-colors"
             >
               <Brain className="w-4 h-4" />
               Open Stack Builder
             </Link>
             <Link
               to="/quiz"
-              className="inline-flex items-center justify-center gap-2 bg-primary-0500 hover:bg-blue-400 text-white font-semibold px-6 py-3 rounded-lg transition-colors border border-blue-400"
+              className="inline-flex items-center justify-center gap-2 bg-primary-0500 hover:bg-blue-400 text-white font-semibold px-6 py-3 rounded-md transition-colors border border-blue-400"
             >
               Take the Stack Quiz
             </Link>
@@ -449,7 +449,7 @@ export function NootropicsForFocusPage() {
         {/* ── Related Articles ── */}
         <section className="mb-10">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold text-ink-900 flex items-center gap-2">
+            <h2 className="text-xl font-semibold text-ink-900 flex items-center gap-2">
               <BookOpen className="w-5 h-5 text-primary-700" />
               Related Focus Guides
             </h2>
@@ -459,7 +459,7 @@ export function NootropicsForFocusPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {RELATED_ARTICLES.map((article) => (
               <Link key={article.slug} to={`/blog/${article.slug}`}>
-                <div className="p-4 rounded-lg border border-ink-200 hover:border-primary-300 hover:shadow-sm transition-all bg-white h-full">
+                <div className="p-4 rounded-md border border-ink-200 hover:border-primary-300 hover:shadow-sm transition-all bg-white h-full">
                   <div className="flex flex-wrap gap-1 mb-2">
                     {article.tags.map((tag) => (
                       <span key={tag} className="text-xs bg-primary-050 text-primary-700 px-2 py-0.5 rounded">

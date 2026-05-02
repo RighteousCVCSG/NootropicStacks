@@ -61,7 +61,7 @@ export function StacksGuidePage() {
       />
 
       {status === 'success' && (
-        <div className="mb-6 p-4 bg-accent-050 border border-accent-300 rounded-xl">
+        <div className="mb-6 p-4 bg-accent-050 border border-accent-300 rounded-md">
           <div className="flex items-center gap-2 text-accent-700 font-semibold mb-2">
             <CheckCircle className="w-5 h-5" />
             {message}
@@ -69,7 +69,7 @@ export function StacksGuidePage() {
           <a
             href="/lead-magnet-v2.pdf"
             download
-            className="inline-flex items-center gap-2 bg-accent-600 hover:bg-accent-0500 text-white px-6 py-3 rounded-lg font-medium transition-colors text-base"
+            className="inline-flex items-center gap-2 bg-accent-600 hover:bg-accent-0500 text-white px-6 py-3 rounded-md font-medium transition-colors text-base"
           >
             <Download className="w-5 h-5" />
             Download the PDF
@@ -84,7 +84,7 @@ export function StacksGuidePage() {
             <FileText className="w-4 h-4" />
             Free PDF · Edition 01
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-ink-900 mb-3 leading-tight">
+          <h1 className="text-3xl sm:text-4xl font-semibold text-ink-900 mb-3 leading-tight">
             10 Evidence-Backed Nootropic Stacks
           </h1>
           <p className="text-lg text-ink-700 mb-6 max-w-2xl">
@@ -95,8 +95,8 @@ export function StacksGuidePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8">
           {STACK_PREVIEWS.map((stack, i) => (
-            <div key={i} className="flex items-center gap-3 p-3 bg-white rounded-lg border border-ink-200">
-              <div className="w-8 h-8 rounded-full bg-primary-100 text-primary-800 flex items-center justify-center text-xs font-bold shrink-0">
+            <div key={i} className="flex items-center gap-3 p-3 bg-white rounded-md border border-ink-200">
+              <div className="w-8 h-8 rounded-full bg-primary-100 text-primary-800 flex items-center justify-center text-xs font-semibold shrink-0">
                 {String(i + 1).padStart(2, '0')}
               </div>
               <div className="flex-1 min-w-0">
@@ -114,7 +114,7 @@ export function StacksGuidePage() {
           ))}
         </div>
 
-        <div className="bg-primary-050 border border-primary-300 rounded-xl p-6 mb-8">
+        <div className="bg-primary-050 border border-primary-300 rounded-md p-6 mb-8">
           <h2 className="text-lg font-semibold text-ink-900 mb-3 flex items-center gap-2">
             <Mail className="w-5 h-5 text-primary-700" />
             Get the full guide
@@ -155,7 +155,7 @@ export function StacksGuidePage() {
             { icon: Layers, label: '10 stacks', desc: 'Dosed and evidence-graded' },
             { icon: Star, label: 'Tier ratings', desc: 'Tier 1–3 by study quality' },
           ].map((item, i) => (
-            <div key={i} className="text-center p-4 bg-white rounded-lg border border-ink-200">
+            <div key={i} className="text-center p-4 bg-white rounded-md border border-ink-200">
               <item.icon className="w-6 h-6 text-primary-700 mx-auto mb-2" />
               <div className="text-sm font-semibold text-ink-900">{item.label}</div>
               <div className="text-xs text-ink-500">{item.desc}</div>

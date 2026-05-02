@@ -124,7 +124,7 @@ function SupplementSelect({ label, selected, onChange, exclude }) {
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="w-full text-left flex items-center justify-between gap-2 px-3 py-2.5 border border-ink-300 rounded-lg bg-white hover:border-blue-400 focus:outline-none focus:border-primary-500 transition-colors"
+        className="w-full text-left flex items-center justify-between gap-2 px-3 py-2.5 border border-ink-300 rounded-md bg-white hover:border-blue-400 focus:outline-none focus:border-primary-500 transition-colors"
       >
         <span className={selected ? 'text-ink-900 font-medium' : 'text-ink-400'}>
           {selected ? selected.name : 'Search supplements…'}
@@ -135,7 +135,7 @@ function SupplementSelect({ label, selected, onChange, exclude }) {
       </button>
 
       {open && (
-        <div className="absolute z-50 w-full mt-1 bg-white border border-ink-200 rounded-lg shadow-xl">
+        <div className="absolute z-50 w-full mt-1 bg-white border border-ink-200 rounded-md shadow-2">
           <div className="p-2 border-b">
             <input
               autoFocus
@@ -184,7 +184,7 @@ function EffectRow({ effectKey, label, icon, valA, valB }) {
       {/* Left supplement bar */}
       <div className="space-y-1">
         <div className="flex items-center justify-between gap-1">
-          <span className={`text-xs font-bold ${valA >= 7 ? 'text-accent-700' : valA >= 4 ? 'text-primary-700' : 'text-ink-500'}`}>
+          <span className={`text-xs font-semibold ${valA >= 7 ? 'text-accent-700' : valA >= 4 ? 'text-primary-700' : 'text-ink-500'}`}>
             {valA > 0 ? '+' : ''}{valA}
           </span>
           {winner === 'a' && <span className="text-xs text-accent-700 font-semibold">✓</span>}
@@ -207,7 +207,7 @@ function EffectRow({ effectKey, label, icon, valA, valB }) {
       <div className="space-y-1">
         <div className="flex items-center justify-between gap-1">
           {winner === 'b' && <span className="text-xs text-accent-700 font-semibold">✓</span>}
-          <span className={`text-xs font-bold ml-auto ${valB >= 7 ? 'text-accent-700' : valB >= 4 ? 'text-primary-700' : 'text-ink-500'}`}>
+          <span className={`text-xs font-semibold ml-auto ${valB >= 7 ? 'text-accent-700' : valB >= 4 ? 'text-primary-700' : 'text-ink-500'}`}>
             {valB > 0 ? '+' : ''}{valB}
           </span>
         </div>
@@ -292,12 +292,12 @@ function VerdictSection({ suppA, suppB }) {
       <CardContent>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {verdicts.map(v => (
-            <div key={v.label} className="bg-white rounded-lg p-3 border border-blue-100">
+            <div key={v.label} className="bg-white rounded-md p-3 border border-blue-100">
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-lg">{v.icon}</span>
                 <span className="text-xs font-semibold text-ink-500 uppercase tracking-wide">{v.label}</span>
               </div>
-              <div className="font-bold text-ink-900 text-sm mb-1">{v.winner.name}</div>
+              <div className="font-semibold text-ink-900 text-sm mb-1">{v.winner.name}</div>
               <p className="text-xs text-ink-500 leading-relaxed">{v.reason}</p>
             </div>
           ))}
@@ -387,7 +387,7 @@ export function ComparisonPage() {
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-2">
             <GitCompare className="w-6 h-6 text-primary-700" />
-            <h1 className="text-3xl font-bold text-ink-900">Nootropic Comparison</h1>
+            <h1 className="text-3xl font-semibold text-ink-900">Nootropic Comparison</h1>
           </div>
           <p className="text-ink-500 text-sm">
             Select two supplements to compare their effects, dosage, safety profile, and synergies side-by-side. Get a data-driven verdict on which is right for your goals.
@@ -429,7 +429,7 @@ export function ComparisonPage() {
                   <CardContent className="pt-4 pb-4">
                     <div className="space-y-2">
                       <Badge className={getCategoryColor(s.category)}>{s.category}</Badge>
-                      <h2 className="font-bold text-ink-900 text-base leading-snug">{s.name}</h2>
+                      <h2 className="font-semibold text-ink-900 text-base leading-snug">{s.name}</h2>
                       <p className="text-xs text-ink-500 leading-relaxed line-clamp-2">{s.description}</p>
                       <div className="flex items-center gap-1 text-xs text-ink-500">
                         <span className="font-medium">Dose:</span>
@@ -619,15 +619,15 @@ export function ComparisonPage() {
             <VerdictSection suppA={suppA} suppB={suppB} />
 
             {/* Stack Together CTA */}
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl p-6 text-white text-center">
+            <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-md p-6 text-white text-center">
               <Layers className="w-8 h-8 mx-auto mb-2 opacity-90" />
-              <h2 className="text-xl font-bold mb-2">Stack These Together</h2>
+              <h2 className="text-xl font-semibold mb-2">Stack These Together</h2>
               <p className="text-blue-100 text-sm mb-4 max-w-md mx-auto">
                 Load both {suppA.name} and {suppB.name} into the Stack Builder to check synergies, get your Stack Score, and build a complete protocol.
               </p>
               <Link
                 to={stackUrl}
-                className="inline-flex items-center gap-2 bg-white text-primary-800 font-semibold px-6 py-2.5 rounded-lg hover:bg-primary-050 transition-colors"
+                className="inline-flex items-center gap-2 bg-white text-primary-800 font-semibold px-6 py-2.5 rounded-md hover:bg-primary-050 transition-colors"
               >
                 <Layers className="w-4 h-4" />
                 Open in Stack Builder
@@ -657,7 +657,7 @@ export function ComparisonPage() {
                     key={`${a}-${b}`}
                     type="button"
                     onClick={() => { setSuppA(sA); setSuppB(sB); }}
-                    className="flex items-center justify-between p-3 border border-ink-200 rounded-lg hover:border-primary-300 hover:bg-primary-050 transition-all text-left group"
+                    className="flex items-center justify-between p-3 border border-ink-200 rounded-md hover:border-primary-300 hover:bg-primary-050 transition-all text-left group"
                   >
                     <span className="text-sm font-medium text-ink-900 group-hover:text-primary-800">{label}</span>
                     <ArrowRight className="w-4 h-4 text-ink-400 group-hover:text-primary-500" />

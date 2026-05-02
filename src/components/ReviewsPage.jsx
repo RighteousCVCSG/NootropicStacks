@@ -208,7 +208,7 @@ export function ReviewsPage() {
       <div className="max-w-3xl mx-auto">
         {/* Hero */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-ink-900 mb-3">
+          <h1 className="text-3xl font-semibold text-ink-900 mb-3">
             Nootropic Brand Reviews 2026 — Honest Ratings
           </h1>
           <p className="text-ink-700 leading-relaxed mb-4">
@@ -224,7 +224,7 @@ export function ReviewsPage() {
         </div>
 
         {/* Rating System */}
-        <div className="mb-8 p-5 bg-primary-050 border border-blue-100 rounded-xl">
+        <div className="mb-8 p-5 bg-primary-050 border border-blue-100 rounded-md">
           <div className="flex items-start gap-3">
             <ShieldCheck className="w-5 h-5 text-primary-700 flex-shrink-0 mt-0.5" />
             <div>
@@ -239,13 +239,13 @@ export function ReviewsPage() {
         {/* Product Cards */}
         <div className="space-y-6">
           {REVIEWS.map((product) => (
-            <Card key={product.id} className="border-ink-200 hover:shadow-md transition-shadow">
+            <Card key={product.id} className="border-ink-200 hover:shadow-1 transition-shadow">
               <CardContent className="pt-6">
                 {/* Header */}
                 <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
                   <div>
                     <div className="flex flex-wrap items-center gap-2 mb-1">
-                      <h2 className="text-xl font-bold text-ink-900">{product.name}</h2>
+                      <h2 className="text-xl font-semibold text-ink-900">{product.name}</h2>
                       <Badge className={`text-xs font-medium ${product.badgeColor}`} variant="outline">
                         {product.badge}
                       </Badge>
@@ -325,23 +325,23 @@ export function ReviewsPage() {
         </div>
 
         {/* Build Your Own Stack CTA */}
-        <div className="mt-10 p-6 bg-primary-700 rounded-xl text-white text-center">
+        <div className="mt-10 p-6 bg-primary-700 rounded-md text-white text-center">
           <Brain className="w-8 h-8 mx-auto mb-2 opacity-90" />
-          <h2 className="text-xl font-bold mb-2">Build Your Own Stack Instead</h2>
+          <h2 className="text-xl font-semibold mb-2">Build Your Own Stack Instead</h2>
           <p className="text-blue-100 text-sm mb-4">
             A custom stack is almost always cheaper and more effective than a pre-formulated product. You control the doses, eliminate redundancy, and pay only for what you actually need.
           </p>
           <Link
             to="/"
-            className="inline-block bg-white text-primary-800 font-semibold px-6 py-2.5 rounded-lg hover:bg-primary-050 transition-colors"
+            className="inline-block bg-white text-primary-800 font-semibold px-6 py-2.5 rounded-md hover:bg-primary-050 transition-colors"
           >
             Open the Free Stack Builder →
           </Link>
         </div>
 
         {/* Pre-Made vs Custom Comparison */}
-        <div className="mt-10 p-6 bg-white border border-ink-200 rounded-xl">
-          <h2 className="text-lg font-bold text-ink-900 mb-1">Pre-Made Stacks vs. Custom Stacks</h2>
+        <div className="mt-10 p-6 bg-white border border-ink-200 rounded-md">
+          <h2 className="text-lg font-semibold text-ink-900 mb-1">Pre-Made Stacks vs. Custom Stacks</h2>
           <p className="text-sm text-ink-500 mb-5">An honest comparison — pre-made products have real advantages, but they come at a cost.</p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

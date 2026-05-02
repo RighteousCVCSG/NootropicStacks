@@ -43,7 +43,7 @@ export function SupplementPage() {
   if (!supplement) {
     return (
       <div className="text-center py-20">
-        <h2 className="text-2xl font-bold mb-4">Supplement Not Found</h2>
+        <h2 className="text-2xl font-semibold mb-4">Supplement Not Found</h2>
         <p className="text-ink-700 mb-6">The supplement you're looking for doesn't exist in our database.</p>
         <Link to="/supplements">
           <Button><ArrowLeft className="w-4 h-4 mr-2" /> Back to Library</Button>
@@ -89,7 +89,7 @@ export function SupplementPage() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold mb-2">{supplement.name}</h1>
+            <h1 className="text-3xl font-semibold mb-2">{supplement.name}</h1>
             <div className="flex items-center gap-3">
               <Badge className={`${getCategoryColor(supplement.category)}`}>
                 {supplement.category.replace('-', ' ')}
@@ -150,7 +150,7 @@ export function SupplementPage() {
                     <div key={effect} className="space-y-2">
                       <div className="flex justify-between items-center">
                         <span className="text-sm font-medium capitalize">{effect}</span>
-                        <span className={`text-sm font-bold ${getEffectColor(value)}`}>
+                        <span className={`text-sm font-semibold ${getEffectColor(value)}`}>
                           {value > 0 ? '+' : ''}{value}/10
                         </span>
                       </div>
@@ -212,13 +212,13 @@ export function SupplementPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="p-4 bg-surface-sunk border border-ink-200 rounded-lg">
-                  <div className="text-2xl font-bold text-ink-900 font-mono">
+                <div className="p-4 bg-surface-sunk border border-ink-200 rounded-md">
+                  <div className="text-2xl font-semibold text-ink-900 font-mono">
                     {supplement.dosage.min}–{supplement.dosage.max} {supplement.dosage.unit}
                   </div>
                   <p className="text-sm text-ink-500 mt-1">Recommended daily dose</p>
                 </div>
-                <div className="p-4 bg-surface-sunk border border-ink-200 rounded-lg">
+                <div className="p-4 bg-surface-sunk border border-ink-200 rounded-md">
                   <div className="flex items-center gap-2 mb-1">
                     <Clock className="w-4 h-4 text-accent-700" />
                     <span className="font-semibold text-ink-900">Best Timing</span>
@@ -248,7 +248,7 @@ export function SupplementPage() {
                       <Link
                         key={related.id}
                         to={`/supplements/${related.id}`}
-                        className="block p-3 rounded-lg border hover:bg-surface-card transition-colors"
+                        className="block p-3 rounded-md border hover:bg-surface-card transition-colors"
                       >
                         <div className="font-medium">{related.name}</div>
                         <div className="text-sm text-ink-500 line-clamp-1">{related.description}</div>

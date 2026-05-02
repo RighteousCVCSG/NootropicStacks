@@ -62,7 +62,7 @@ export function SupplementModal({ supplement, isOpen, onClose }) {
         <DialogHeader>
           <DialogTitle className="flex items-center justify-between">
             <div>
-              <h2 className="text-2xl font-bold">{supplement.name}</h2>
+              <h2 className="text-2xl font-semibold">{supplement.name}</h2>
               <Badge className={`${getCategoryColor(supplement.category)} mt-2`}>
                 {supplement.category.replace('-', ' ')}
               </Badge>
@@ -105,7 +105,7 @@ export function SupplementModal({ supplement, isOpen, onClose }) {
                 <div key={effect} className="space-y-2">
                   <div className="flex justify-between items-center">
                     <span className="text-sm font-medium capitalize">{effect}</span>
-                    <span className={`text-sm font-bold ${getEffectColor(value)}`}>
+                    <span className={`text-sm font-semibold ${getEffectColor(value)}`}>
                       {value > 0 ? '+' : ''}{value}
                     </span>
                   </div>
@@ -120,7 +120,7 @@ export function SupplementModal({ supplement, isOpen, onClose }) {
 
           {/* Dosage Information */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-4 bg-primary-050 rounded-lg">
+            <div className="p-4 bg-primary-050 rounded-md">
               <div className="flex items-center gap-2 mb-2">
                 <Pill className="w-4 h-4 text-primary-700" />
                 <h4 className="font-semibold text-primary-800">Dosage</h4>
@@ -129,7 +129,7 @@ export function SupplementModal({ supplement, isOpen, onClose }) {
                 {supplement.dosage.min}-{supplement.dosage.max} {supplement.dosage.unit}
               </p>
             </div>
-            <div className="p-4 bg-accent-050 rounded-lg">
+            <div className="p-4 bg-accent-050 rounded-md">
               <div className="flex items-center gap-2 mb-2">
                 <Clock className="w-4 h-4 text-accent-700" />
                 <h4 className="font-semibold text-accent-700">Timing</h4>

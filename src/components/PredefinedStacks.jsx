@@ -97,7 +97,7 @@ export function PredefinedStacks() {
     const hasWarnings = analysis.warnings.length > 0;
 
     return (
-      <Card className="h-full hover:shadow-md transition-shadow">
+      <Card className="h-full hover:shadow-1 transition-shadow">
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <CardTitle className="text-lg">{stackData.name}</CardTitle>
@@ -227,10 +227,10 @@ export function PredefinedStacks() {
 
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="bg-white rounded-md max-w-2xl w-full max-h-[90vh] overflow-y-auto">
           <div className="p-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-2xl font-bold">{stackData.name}</h2>
+              <h2 className="text-2xl font-semibold">{stackData.name}</h2>
               <Button variant="outline" size="sm" onClick={onClose}>
                 Close
               </Button>
@@ -273,7 +273,7 @@ export function PredefinedStacks() {
                     const supplement = supplements.find(s => s.id === item.id);
                     const hasAffiliate = AFFILIATE_LINKS[item.id];
                     return (
-                      <div key={item.id} className="p-3 bg-surface-card rounded-lg">
+                      <div key={item.id} className="p-3 bg-surface-card rounded-md">
                         <div className="flex justify-between items-start mb-2">
                           <Link to={`/supplements/${item.id}`} className="font-medium hover:text-primary-700">
                             {supplement?.name || item.id}
@@ -321,14 +321,14 @@ export function PredefinedStacks() {
               <div>
                 <h3 className="font-semibold mb-3">Safety Analysis</h3>
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-surface-card rounded-lg">
+                  <div className="flex items-center justify-between p-3 bg-surface-card rounded-md">
                     <span className="font-medium">Overall Safety Score</span>
                     <div className="flex items-center gap-2">
                       <div className={`w-3 h-3 rounded-full ${
                         analysis.safetyScore >= 80 ? 'bg-accent-0500' : 
                         analysis.safetyScore >= 60 ? 'bg-warn-1000' : 'bg-danger-1000'
                       }`} />
-                      <span className="font-bold">{analysis.safetyScore}/100</span>
+                      <span className="font-semibold">{analysis.safetyScore}/100</span>
                     </div>
                   </div>
 
@@ -403,7 +403,7 @@ export function PredefinedStacks() {
         })}
       />
       <div>
-        <h2 className="text-2xl font-bold mb-2">Pre-Built Supplement Stacks</h2>
+        <h2 className="text-2xl font-semibold mb-2">Pre-Built Supplement Stacks</h2>
         <p className="text-ink-700">
           Expertly curated supplement combinations for specific goals and experience levels.
         </p>

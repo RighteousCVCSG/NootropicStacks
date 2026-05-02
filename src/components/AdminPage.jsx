@@ -21,12 +21,12 @@ function StatCard({ icon: Icon, label, value, color = 'blue' }) {
     orange: 'bg-warn-100 text-warn-700 border-orange-100',
   };
   return (
-    <div className={`rounded-xl border p-5 flex items-center gap-4 ${colors[color]}`}>
-      <div className="rounded-lg bg-white/70 p-2.5 shadow-sm">
+    <div className={`rounded-md border p-5 flex items-center gap-4 ${colors[color]}`}>
+      <div className="rounded-md bg-white/70 p-2.5 shadow-sm">
         <Icon className="w-5 h-5" />
       </div>
       <div>
-        <p className="text-2xl font-bold">{value ?? '—'}</p>
+        <p className="text-2xl font-semibold">{value ?? '—'}</p>
         <p className="text-xs font-medium opacity-75">{label}</p>
       </div>
     </div>
@@ -90,13 +90,13 @@ export function AdminPage() {
   if (!authed) {
     return (
       <div className="max-w-sm mx-auto mt-20">
-        <div className="rounded-2xl border border-ink-200 bg-white p-8 shadow-sm">
+        <div className="rounded-md border border-ink-200 bg-white p-8 shadow-sm">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-9 h-9 rounded-lg bg-gray-900 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-md bg-gray-900 flex items-center justify-center">
               <ShieldCheck className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h1 className="text-lg font-bold text-ink-900">Admin Access</h1>
+              <h1 className="text-lg font-semibold text-ink-900">Admin Access</h1>
               <p className="text-xs text-ink-500">NootropicStacker dashboard</p>
             </div>
           </div>
@@ -124,7 +124,7 @@ export function AdminPage() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <ShieldCheck className="w-5 h-5 text-ink-700" />
-          <h1 className="text-xl font-bold text-ink-900">Admin Dashboard</h1>
+          <h1 className="text-xl font-semibold text-ink-900">Admin Dashboard</h1>
         </div>
         <Button variant="outline" size="sm" onClick={handleLogout}>
           <LogOut className="w-4 h-4 mr-1.5" />
@@ -149,7 +149,7 @@ export function AdminPage() {
         </TabsList>
 
         <TabsContent value="leads">
-          <div className="rounded-xl border bg-white overflow-hidden">
+          <div className="rounded-md border bg-white overflow-hidden">
             <table className="w-full text-sm">
               <thead className="bg-surface-card text-xs text-ink-500 uppercase">
                 <tr>
@@ -175,7 +175,7 @@ export function AdminPage() {
         </TabsContent>
 
         <TabsContent value="users">
-          <div className="rounded-xl border bg-white overflow-hidden">
+          <div className="rounded-md border bg-white overflow-hidden">
             <table className="w-full text-sm">
               <thead className="bg-surface-card text-xs text-ink-500 uppercase">
                 <tr>
@@ -203,7 +203,7 @@ export function AdminPage() {
         </TabsContent>
 
         <TabsContent value="clicks">
-          <div className="rounded-xl border bg-white overflow-hidden">
+          <div className="rounded-md border bg-white overflow-hidden">
             <table className="w-full text-sm">
               <thead className="bg-surface-card text-xs text-ink-500 uppercase">
                 <tr>

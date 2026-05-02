@@ -66,7 +66,7 @@ export function VendorPricesCompact({ supplementId, onCardClickSource }) {
               <span className="font-medium">{VENDOR_LABEL[p.vendor] || p.vendor}</span>
               <span className="font-mono">${p.price.toFixed(2)}</span>
               {isBest && (
-                <span className="ml-0.5 text-[9px] uppercase tracking-wider font-bold">best</span>
+                <span className="ml-0.5 text-[9px] uppercase tracking-wider font-semibold">best</span>
               )}
             </button>
           );
@@ -92,7 +92,7 @@ export function VendorPricesDetailed({ supplementId }) {
   };
 
   return (
-    <div className="rounded-lg border border-ink-200 bg-surface-card overflow-hidden">
+    <div className="rounded-md border border-ink-200 bg-surface-card overflow-hidden">
       <div className="px-3 py-2 border-b border-ink-200 bg-surface-sunk">
         <h4 className="text-sm font-semibold text-ink-900">Compare prices</h4>
         <p className="text-[11px] text-ink-500">Snapshot {PRICE_SNAPSHOT_DATE}</p>
@@ -114,7 +114,7 @@ export function VendorPricesDetailed({ supplementId }) {
                   {VENDOR_LABEL[p.vendor] || p.vendor}
                 </span>
                 {isBest && (
-                  <span className="text-[10px] uppercase tracking-wider font-bold text-accent-700 bg-accent-100 px-1.5 py-0.5 rounded">
+                  <span className="text-[10px] uppercase tracking-wider font-semibold text-accent-700 bg-accent-100 px-1.5 py-0.5 rounded">
                     Best today
                   </span>
                 )}

@@ -22,7 +22,7 @@ export default function AffiliateBanner({ banner, compact = false }) {
   if (compact) {
     return (
       <div
-        className="flex items-center justify-between p-4 rounded-lg border cursor-pointer hover:border-primary/30 transition-all"
+        className="flex items-center justify-between p-4 rounded-md border cursor-pointer hover:border-primary/30 transition-all"
         onClick={handleClick}
       >
         <div className="flex items-center gap-3">
@@ -45,7 +45,7 @@ export default function AffiliateBanner({ banner, compact = false }) {
 
   return (
     <div
-      className="relative overflow-hidden rounded-xl border cursor-pointer transition-all hover:shadow-lg"
+      className="relative overflow-hidden rounded-md border cursor-pointer transition-all hover:shadow-2"
       onClick={handleClick}
     >
       <div

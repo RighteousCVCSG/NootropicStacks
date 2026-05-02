@@ -75,7 +75,7 @@ export function HeroStackGauge() {
       {/* Center content (counter-rotates so text stays upright) */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-2">
         <div
-          className="text-4xl sm:text-5xl font-bold text-ink-900 tabular-nums"
+          className="text-4xl sm:text-5xl font-semibold text-ink-900 tabular-nums"
           style={{ fontFamily: 'var(--font-display)' }}
         >
           {score}

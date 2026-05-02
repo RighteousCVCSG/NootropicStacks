@@ -158,7 +158,7 @@ export function FAQPage() {
       <JsonLd data={buildFAQSchema(flatFaqs)} />
 
       <div>
-        <h1 className="text-2xl font-bold text-ink-900 flex items-center gap-2">
+        <h1 className="text-2xl font-semibold text-ink-900 flex items-center gap-2">
           <HelpCircle className="w-6 h-6" />
           Frequently Asked Questions
         </h1>

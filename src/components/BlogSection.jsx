@@ -9,7 +9,7 @@ import { blogArticlesIndex as blogArticles, getRecentArticlesMeta } from '../dat
 
 function ArticleCard({ article }) {
   return (
-    <Card className="hover:shadow-md transition-shadow">
+    <Card className="hover:shadow-1 transition-shadow">
       <CardHeader className="pb-3">
         <div className="flex items-center gap-2 text-sm text-ink-500 mb-2">
           <Calendar className="w-3.5 h-3.5" />
@@ -69,7 +69,7 @@ export function BlogSection() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-ink-900 flex items-center gap-2">
+          <h2 className="text-2xl font-semibold text-ink-900 flex items-center gap-2">
             <BookOpen className="w-6 h-6" />
             NootropicStacker Blog
           </h2>
@@ -96,7 +96,7 @@ export function BlogSection() {
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`text-sm px-3 py-1.5 rounded-lg font-medium transition-colors ${
+              className={`text-sm px-3 py-1.5 rounded-md font-medium transition-colors ${
                 selectedCategory === cat
                   ? 'bg-primary-700 text-white'
                   : 'bg-surface-sunk text-ink-700 hover:bg-ink-200'

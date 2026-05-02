@@ -50,7 +50,7 @@ function DimensionCircle({ value, qual, config }) {
             className="transition-all duration-700"
           />
         </svg>
-        <span className="absolute inset-0 flex items-center justify-center text-sm font-bold text-ink-900">
+        <span className="absolute inset-0 flex items-center justify-center text-sm font-semibold text-ink-900">
           {value.toFixed(1)}
         </span>
       </div>
@@ -81,7 +81,7 @@ function SubScoreCircle({ value, max, label, icon: Icon, cssVar }) {
             strokeLinecap="round"
           />
         </svg>
-        <span className="absolute inset-0 flex items-center justify-center text-sm font-bold text-ink-900">
+        <span className="absolute inset-0 flex items-center justify-center text-sm font-semibold text-ink-900">
           {Math.round(value)}
         </span>
       </div>
@@ -134,7 +134,7 @@ export function StackScoreDetails({ open, onClose, stackScore }) {
           <DialogTitle className="flex items-center justify-between">
             <span>Stack Score Breakdown</span>
             <span className="flex items-center gap-2">
-              <span className="text-2xl font-bold text-ink-900">{overall.toFixed(1)}</span>
+              <span className="text-2xl font-semibold text-ink-900">{overall.toFixed(1)}</span>
               <span className="text-sm font-medium text-ink-500">{dimensionQuals.overall.label}</span>
             </span>
           </DialogTitle>

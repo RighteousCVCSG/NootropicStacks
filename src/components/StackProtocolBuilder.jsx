@@ -87,7 +87,7 @@ export function StackProtocolBuilder() {
           const config = TIMING_CONFIG[timing];
           const Icon = config.icon;
           return (
-            <div key={timing} className={`p-3 rounded-lg border ${config.bg} ${config.border}`}>
+            <div key={timing} className={`p-3 rounded-md border ${config.bg} ${config.border}`}>
               <div className="flex items-center gap-2 mb-2">
                 <Icon className={`w-4 h-4 ${config.color}`} />
                 <span className="text-sm font-semibold text-ink-900">{config.label}</span>

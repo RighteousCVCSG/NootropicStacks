@@ -99,7 +99,7 @@ export function LeadMagnetDownloadPage() {
             <Award className="w-3 h-3" />
             Free Guide · 10 Stacks · 12 Pages
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-ink-900 mb-3 leading-tight">
+          <h1 className="text-3xl sm:text-4xl font-semibold text-ink-900 mb-3 leading-tight">
             10 Evidence-Backed Nootropic Stacks
           </h1>
           <p className="text-lg text-ink-700 mb-4 max-w-2xl mx-auto">
@@ -108,7 +108,7 @@ export function LeadMagnetDownloadPage() {
 
           {/* Author badge */}
           <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-full bg-primary-700 flex items-center justify-center text-white font-bold text-sm">
+            <div className="w-10 h-10 rounded-full bg-primary-700 flex items-center justify-center text-white font-semibold text-sm">
               VH
             </div>
             <div className="text-left">
@@ -120,8 +120,8 @@ export function LeadMagnetDownloadPage() {
           {/* Evidence tier legend */}
           <div className="flex flex-wrap justify-center gap-3 mb-8">
             {EVIDENCE_TIER_LEGEND.map(({ tier, label, color }) => (
-              <div key={tier} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs ${color}`}>
-                <span className="font-bold">{tier}</span>
+              <div key={tier} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs ${color}`}>
+                <span className="font-semibold">{tier}</span>
                 <span className="text-ink-700">—</span>
                 <span>{label}</span>
               </div>
@@ -139,7 +139,7 @@ export function LeadMagnetDownloadPage() {
         </div>
 
         {/* Why this guide exists */}
-        <div className="bg-white rounded-xl border p-6 mb-8">
+        <div className="bg-white rounded-md border p-6 mb-8">
           <h2 className="text-lg font-semibold text-ink-900 mb-3">Why This Guide Exists</h2>
           <div className="space-y-3 text-sm text-ink-700 leading-relaxed">
             <p>
@@ -163,10 +163,10 @@ export function LeadMagnetDownloadPage() {
 
         {/* Stack previews */}
         <div className="mb-10">
-          <h2 className="text-xl font-bold text-ink-900 mb-6">The 10 Stacks</h2>
+          <h2 className="text-xl font-semibold text-ink-900 mb-6">The 10 Stacks</h2>
           <div className="grid gap-4">
             {STACKS.map((stack, i) => (
-              <div key={i} className="bg-white rounded-xl border p-5 hover:border-primary-300 hover:shadow-sm transition-all">
+              <div key={i} className="bg-white rounded-md border p-5 hover:border-primary-300 hover:shadow-sm transition-all">
                 <div className="flex items-start justify-between mb-2">
                   <div>
                     <div className="flex items-center gap-2 mb-1">
@@ -188,7 +188,7 @@ export function LeadMagnetDownloadPage() {
         </div>
 
         {/* CTA to stack builder */}
-        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl border border-blue-100 p-6 text-center mb-8">
+        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-md border border-blue-100 p-6 text-center mb-8">
           <h2 className="text-lg font-semibold text-ink-900 mb-2">Build Your Own Stack</h2>
           <p className="text-sm text-ink-700 mb-4">
             Use the free stack builder to combine any of 195 supplements, check interactions, and optimize your Stack Score.
@@ -224,7 +224,7 @@ export function LeadMagnetDownloadPage() {
                 a: 'No. This is a curated summary of published research for educational purposes. Supplement effects vary by individual. Always consult a qualified healthcare provider before starting any new supplement.',
               },
             ].map((faq, i) => (
-              <details key={i} className="group bg-white rounded-lg border p-4 [&[open]]:border-primary-300">
+              <details key={i} className="group bg-white rounded-md border p-4 [&[open]]:border-primary-300">
                 <summary className="text-sm font-medium text-ink-900 cursor-pointer flex items-center justify-between">
                   {faq.q}
                   <ChevronRight className="w-4 h-4 text-ink-400 group-open:rotate-90 transition-transform" />

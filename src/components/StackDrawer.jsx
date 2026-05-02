@@ -95,7 +95,7 @@ function StackScoreMini({ stackScore }) {
       {dimensions.map(d => {
         const colors = SCORE_COLORS[d.qual] || SCORE_COLORS.Low;
         return (
-          <div key={d.key} className="flex flex-col items-center gap-1 p-2 rounded-lg bg-surface-sunk">
+          <div key={d.key} className="flex flex-col items-center gap-1 p-2 rounded-md bg-surface-sunk">
             <d.icon className={`w-3.5 h-3.5 ${colors.text}`} />
             <span className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-ink-500">
               <span
@@ -105,7 +105,7 @@ function StackScoreMini({ stackScore }) {
               />
               {d.label}
             </span>
-            <span className={`text-sm font-bold ${colors.text}`}>{d.score.toFixed(1)}</span>
+            <span className={`text-sm font-semibold ${colors.text}`}>{d.score.toFixed(1)}</span>
             <MiniScoreBar score={d.score} qual={d.qual} />
           </div>
         );
@@ -163,7 +163,7 @@ function StackItemRow({ item, onRemove, onDosageChange, stackOverall, onClose })
   const stop = (e) => e.stopPropagation();
 
   return (
-    <div className="group relative rounded-lg bg-surface-sunk hover:bg-surface-card transition-colors">
+    <div className="group relative rounded-md bg-surface-sunk hover:bg-surface-card transition-colors">
       {/* The whole row is a Link to the supplement's research page. The
           dose input and remove button stop propagation so they remain
           interactive without firing the navigation. */}
@@ -215,7 +215,7 @@ function StackItemRow({ item, onRemove, onDosageChange, stackOverall, onClose })
       {/* Hover overlay — semi-transparent label that confirms the click
           action ("Open research →"). Pointer-events-none so it never
           blocks the underlying input/button. */}
-      <div className="pointer-events-none absolute inset-0 rounded-lg bg-primary-050/0 group-hover:bg-primary-050/40 transition-colors flex items-end justify-end p-2 opacity-0 group-hover:opacity-100">
+      <div className="pointer-events-none absolute inset-0 rounded-md bg-primary-050/0 group-hover:bg-primary-050/40 transition-colors flex items-end justify-end p-2 opacity-0 group-hover:opacity-100">
         <span className="text-[10px] font-medium text-primary-800 bg-surface-card border border-primary-300 rounded px-1.5 py-0.5">
           Open research →
         </span>
@@ -307,7 +307,7 @@ function StackCost({ stack }) {
     <div className="flex items-center justify-between py-3">
       <div>
         <p className="text-xs text-ink-500">Estimated monthly cost</p>
-        <p className="text-xl font-bold text-ink-900">${monthly}/mo</p>
+        <p className="text-xl font-semibold text-ink-900">${monthly}/mo</p>
       </div>
       <div className="text-right">
         <p className="text-xs text-ink-500">{stack.length} supplement{stack.length !== 1 ? 's' : ''}</p>
@@ -350,7 +350,7 @@ function ScheduleView({ stack }) {
         const config = TIMING_CONFIG[timing];
         const Icon = config.icon;
         return (
-          <div key={timing} className={`p-2.5 rounded-lg border ${config.bg} ${config.border}`}>
+          <div key={timing} className={`p-2.5 rounded-md border ${config.bg} ${config.border}`}>
             <div className="flex items-center gap-1.5 mb-1.5">
               <Icon className={`w-3.5 h-3.5 ${config.color}`} />
               <span className="text-xs font-semibold text-ink-900">{config.label}</span>
@@ -562,7 +562,7 @@ function TabHandle({ count, onClick }) {
     >
       <Layers className="w-4 h-4" />
       {count > 0 && (
-        <span className="absolute -top-1 -right-1 w-4 h-4 flex items-center justify-center rounded-full bg-accent-500 text-ink-on-dark text-[9px] font-bold" aria-live="polite">
+        <span className="absolute -top-1 -right-1 w-4 h-4 flex items-center justify-center rounded-full bg-accent-500 text-ink-on-dark text-[9px] font-semibold" aria-live="polite">
           {count > 9 ? '9+' : count}
         </span>
       )}
@@ -641,7 +641,7 @@ export function StackDrawer() {
               >
                 <Layers className="w-4 h-4" />
                 Stack
-                <span className="ml-0.5 w-5 h-5 flex items-center justify-center rounded-full bg-accent-500 text-ink-on-dark text-[10px] font-bold">
+                <span className="ml-0.5 w-5 h-5 flex items-center justify-center rounded-full bg-accent-500 text-ink-on-dark text-[10px] font-semibold">
                   {itemCount}
                 </span>
               </button>

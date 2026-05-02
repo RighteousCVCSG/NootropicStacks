@@ -174,7 +174,7 @@ export function BestStacksPage() {
 
       <div className="max-w-3xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-ink-900 mb-3">Best Nootropic Stacks 2026</h1>
+          <h1 className="text-3xl font-semibold text-ink-900 mb-3">Best Nootropic Stacks 2026</h1>
           <p className="text-ink-700 leading-relaxed mb-4">
             Individual supplements are powerful. Combined correctly, they're transformative. These 8 stacks are curated by goal — each one built around proven synergies, evidence-ranked ingredients, and real-world cost. Find your stack, build it yourself, or use the Stack Builder to customize further.
           </p>
@@ -196,16 +196,16 @@ export function BestStacksPage() {
               .join(',');
 
             return (
-              <Card key={stack.id} className="border-ink-200 hover:shadow-md transition-shadow">
+              <Card key={stack.id} className="border-ink-200 hover:shadow-1 transition-shadow">
                 <CardContent className="pt-6">
                   {/* Stack header */}
                   <div className="flex items-start gap-4 mb-4">
-                    <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-md bg-primary-100 flex items-center justify-center">
                       <StackIcon className="w-5 h-5 text-primary-700" />
                     </div>
                     <div className="flex-1">
                       <div className="flex flex-wrap items-center gap-2 mb-1">
-                        <h2 className="text-xl font-bold text-ink-900">{stack.name}</h2>
+                        <h2 className="text-xl font-semibold text-ink-900">{stack.name}</h2>
                         <Badge className={`text-xs font-medium ${difficultyColor[stack.difficulty]}`} variant="outline">
                           {stack.difficulty}
                         </Badge>
@@ -220,7 +220,7 @@ export function BestStacksPage() {
                     {stack.supplements.map((supp) => {
                       const links = supp.id ? AFFILIATE_LINKS[supp.id] : null;
                       return (
-                        <div key={supp.name} className="flex flex-col sm:flex-row sm:items-start gap-2 p-3 bg-surface-card rounded-lg">
+                        <div key={supp.name} className="flex flex-col sm:flex-row sm:items-start gap-2 p-3 bg-surface-card rounded-md">
                           <div className="flex-1">
                             <div className="flex items-center gap-2 mb-0.5">
                               <span className="font-semibold text-sm text-ink-900">{supp.name}</span>
@@ -263,7 +263,7 @@ export function BestStacksPage() {
                   {stackIds && (
                     <Link
                       to={`/?stack=${stackIds}`}
-                      className="inline-flex items-center gap-2 bg-primary-700 hover:bg-primary-800 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
+                      className="inline-flex items-center gap-2 bg-primary-700 hover:bg-primary-800 text-white text-sm font-semibold px-4 py-2 rounded-md transition-colors"
                     >
                       <Brain className="w-4 h-4" />
                       Build This Stack in the Stack Builder →
@@ -275,11 +275,11 @@ export function BestStacksPage() {
           })}
         </div>
 
-        <div className="mt-10 p-6 bg-primary-700 rounded-xl text-white text-center">
+        <div className="mt-10 p-6 bg-primary-700 rounded-md text-white text-center">
           <Brain className="w-8 h-8 mx-auto mb-2 opacity-90" />
-          <h2 className="text-xl font-bold mb-2">Customize Any Stack</h2>
+          <h2 className="text-xl font-semibold mb-2">Customize Any Stack</h2>
           <p className="text-blue-100 text-sm mb-4">Use the free Stack Builder to swap supplements, check interactions, adjust doses, and get a personalized Stack Score.</p>
-          <Link to="/" className="inline-block bg-white text-primary-800 font-semibold px-6 py-2.5 rounded-lg hover:bg-primary-050 transition-colors">
+          <Link to="/" className="inline-block bg-white text-primary-800 font-semibold px-6 py-2.5 rounded-md hover:bg-primary-050 transition-colors">
             Open Stack Builder →
           </Link>
         </div>

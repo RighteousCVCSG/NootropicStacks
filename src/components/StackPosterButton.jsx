@@ -141,7 +141,7 @@ export function StackPosterButton({ stack, stackScore, stackName }) {
           </DialogHeader>
 
           <div className="space-y-3">
-            <div className="rounded-lg overflow-hidden border border-ink-200 bg-surface-sunk aspect-[1200/630] flex items-center justify-center">
+            <div className="rounded-md overflow-hidden border border-ink-200 bg-surface-sunk aspect-[1200/630] flex items-center justify-center">
               {busy && <div className="text-ink-500 text-sm">Rendering…</div>}
               {!busy && dataUrl && (
                 <img

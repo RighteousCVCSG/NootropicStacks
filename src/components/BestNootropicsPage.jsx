@@ -146,7 +146,7 @@ export function BestNootropicsPage() {
 
       <div className="max-w-3xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-ink-900 mb-3">Best Nootropics 2026</h1>
+          <h1 className="text-3xl font-semibold text-ink-900 mb-3">Best Nootropics 2026</h1>
           <p className="text-ink-700 leading-relaxed mb-4">
             We evaluated 195 nootropic compounds across clinical evidence quality, safety profile, dose-response consistency, and real-world results. These 10 earn a place in any serious cognitive enhancement protocol — whether you're a beginner or an experienced biohacker.
           </p>
@@ -163,15 +163,15 @@ export function BestNootropicsPage() {
           {TOP_NOOTROPICS.map((nootropic) => {
             const links = AFFILIATE_LINKS[nootropic.id];
             return (
-              <Card key={nootropic.id} className="border-ink-200 hover:shadow-md transition-shadow">
+              <Card key={nootropic.id} className="border-ink-200 hover:shadow-1 transition-shadow">
                 <CardContent className="pt-6">
                   <div className="flex items-start gap-4">
-                    <div className={`flex-shrink-0 w-10 h-10 rounded-full border-2 flex items-center justify-center font-bold text-sm ${getRankColor(nootropic.rank)}`}>
+                    <div className={`flex-shrink-0 w-10 h-10 rounded-full border-2 flex items-center justify-center font-semibold text-sm ${getRankColor(nootropic.rank)}`}>
                       #{nootropic.rank}
                     </div>
                     <div className="flex-1">
                       <div className="flex flex-wrap items-center gap-2 mb-1">
-                        <h2 className="text-lg font-bold text-ink-900">{nootropic.name}</h2>
+                        <h2 className="text-lg font-semibold text-ink-900">{nootropic.name}</h2>
                         <div className="flex items-center gap-1 text-warn-500 text-sm">
                           <Star className="w-4 h-4 fill-current" />
                           <span className="font-medium text-ink-700">{nootropic.rating}/10</span>
@@ -213,11 +213,11 @@ export function BestNootropicsPage() {
           })}
         </div>
 
-        <div className="mt-10 p-6 bg-primary-700 rounded-xl text-white text-center">
+        <div className="mt-10 p-6 bg-primary-700 rounded-md text-white text-center">
           <Brain className="w-8 h-8 mx-auto mb-2 opacity-90" />
-          <h2 className="text-xl font-bold mb-2">Build Your Stack from These 10</h2>
+          <h2 className="text-xl font-semibold mb-2">Build Your Stack from These 10</h2>
           <p className="text-blue-100 text-sm mb-4">Use our free Stack Builder to combine the supplements that match your goals, check interactions, and get a personalized Stack Score.</p>
-          <Link to="/" className="inline-block bg-white text-primary-800 font-semibold px-6 py-2.5 rounded-lg hover:bg-primary-050 transition-colors">
+          <Link to="/" className="inline-block bg-white text-primary-800 font-semibold px-6 py-2.5 rounded-md hover:bg-primary-050 transition-colors">
             Open Stack Builder →
           </Link>
         </div>

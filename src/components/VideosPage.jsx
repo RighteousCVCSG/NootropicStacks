@@ -148,7 +148,7 @@ function VideoCard({ video }) {
   const { from, via, to, glyph, textColor } = video.theme;
 
   return (
-    <div className="rounded-xl border border-border/50 bg-card overflow-hidden flex flex-col group hover:border-border transition-colors">
+    <div className="rounded-md border border-border/50 bg-card overflow-hidden flex flex-col group hover:border-border transition-colors">
       <a
         href={youtubeUrl}
         target="_blank"
@@ -245,7 +245,7 @@ export default function VideosPage() {
             <PlayCircle className="w-3 h-3 mr-1" />
             Video Library
           </Badge>
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4 leading-tight">
+          <h1 className="font-display text-4xl md:text-5xl font-semibold text-foreground mb-4 leading-tight">
             Nootropics Video Library
           </h1>
           <p className="text-lg text-ink-500 max-w-2xl mx-auto leading-relaxed">
@@ -279,9 +279,9 @@ export default function VideosPage() {
           ))}
         </Tabs>
 
-        <div className="p-8 rounded-xl border border-primary/20 bg-primary/5 text-center">
+        <div className="p-8 rounded-md border border-primary/20 bg-primary/5 text-center">
           <PlayCircle className="w-8 h-8 text-primary mx-auto mb-3" />
-          <h2 className="font-display text-2xl font-bold text-foreground mb-2">
+          <h2 className="font-display text-2xl font-semibold text-foreground mb-2">
             Ready to apply what you've learned?
           </h2>
           <p className="text-ink-500 text-sm mb-6 max-w-md mx-auto">

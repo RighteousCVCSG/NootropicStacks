@@ -5,7 +5,7 @@ import { Mail, CheckCircle, Download, Lock, ArrowRight } from 'lucide-react';
 
 const VARIANT_STYLES = {
   inline_article: {
-    wrapper: 'bg-primary-050 border border-primary-300 rounded-lg p-4',
+    wrapper: 'bg-primary-050 border border-primary-300 rounded-md p-4',
     headline: 'text-sm font-semibold text-primary-900',
     subtext: 'text-xs text-primary-800',
     inputClass: 'text-sm h-8',
@@ -13,16 +13,16 @@ const VARIANT_STYLES = {
     successIcon: CheckCircle,
   },
   save_gate: {
-    wrapper: 'bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-200 rounded-xl p-6',
-    headline: 'text-base font-bold text-indigo-900',
+    wrapper: 'bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-200 rounded-md p-6',
+    headline: 'text-base font-semibold text-indigo-900',
     subtext: 'text-xs text-indigo-600',
     inputClass: 'text-sm h-9',
     buttonClass: 'h-9 shrink-0',
     successIcon: Lock,
   },
   lead_magnet: {
-    wrapper: 'bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl p-6 sm:p-8 shadow-lg',
-    headline: 'text-lg font-bold text-white',
+    wrapper: 'bg-gradient-to-br from-blue-600 to-indigo-700 rounded-md p-6 sm:p-8 shadow-2',
+    headline: 'text-lg font-semibold text-white',
     subtext: 'text-xs text-blue-200',
     inputClass: 'text-sm h-9 bg-white/95',
     buttonClass: 'h-9 shrink-0 bg-white text-primary-800 hover:bg-primary-050',
@@ -115,7 +115,7 @@ export function EmailCaptureForm({ source = 'lead_magnet', variant = 'inline_art
         {downloadUrl && (
           <a
             href={downloadUrl}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-white text-primary-800 rounded-lg text-sm font-medium hover:bg-primary-050 transition-colors shadow-sm"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-white text-primary-800 rounded-md text-sm font-medium hover:bg-primary-050 transition-colors shadow-sm"
           >
             <Download className="w-4 h-4" />
             Download Your Guide

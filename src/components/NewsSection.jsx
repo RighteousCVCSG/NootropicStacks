@@ -206,7 +206,7 @@ export function NewsSection() {
   };
 
   const NewsCard = ({ article, showTrending = true }) => (
-    <Card className="hover:shadow-md transition-shadow">
+    <Card className="hover:shadow-1 transition-shadow">
       <CardHeader>
         <div className="flex items-start justify-between">
           <div className="flex-1">
@@ -246,7 +246,7 @@ export function NewsSection() {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-3xl font-bold mb-2">Nootropics & Supplement News</h2>
+        <h2 className="text-3xl font-semibold mb-2">Nootropics & Supplement News</h2>
         <p className="text-ink-700">Stay updated with the latest research, trends, and developments</p>
       </div>
 
@@ -352,19 +352,19 @@ export function NewsSection() {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-            <div className="text-center p-3 border rounded-lg">
+            <div className="text-center p-3 border rounded-md">
               <div className="font-medium">Research Journals</div>
               <div className="text-ink-700">Nature, Science, NCBI</div>
             </div>
-            <div className="text-center p-3 border rounded-lg">
+            <div className="text-center p-3 border rounded-md">
               <div className="font-medium">Industry News</div>
               <div className="text-ink-700">Nutritional Outlook, SupplySide</div>
             </div>
-            <div className="text-center p-3 border rounded-lg">
+            <div className="text-center p-3 border rounded-md">
               <div className="font-medium">Health Media</div>
               <div className="text-ink-700">Healthline, WebMD, Forbes</div>
             </div>
-            <div className="text-center p-3 border rounded-lg">
+            <div className="text-center p-3 border rounded-md">
               <div className="font-medium">Business News</div>
               <div className="text-ink-700">TechCrunch, Business Insider</div>
             </div>

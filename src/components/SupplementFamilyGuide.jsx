@@ -44,7 +44,7 @@ export function SupplementFamilyGuide() {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-3xl font-bold mb-2">Supplement Family Guide</h2>
+        <h2 className="text-3xl font-semibold mb-2">Supplement Family Guide</h2>
         <p className="text-ink-700">Comprehensive guides to supplement families, mechanisms, and usage</p>
       </div>
 
@@ -218,7 +218,7 @@ export function SupplementFamilyGuide() {
                   </CardHeader>
                   <CardContent className="space-y-3">
                     {recommendations.map((rec, index) => (
-                      <div key={index} className="p-3 border rounded-lg">
+                      <div key={index} className="p-3 border rounded-md">
                         <h4 className="font-semibold">{rec.name}</h4>
                         <p className="text-sm text-ink-700 mb-2">{rec.description}</p>
                         <div className="flex flex-wrap gap-1">
@@ -308,7 +308,7 @@ export function SupplementFamilyGuide() {
             <TabsContent value="supplements" className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {familySupplements.map((supplement) => (
-                  <Card key={supplement.id} className="hover:shadow-md transition-shadow">
+                  <Card key={supplement.id} className="hover:shadow-1 transition-shadow">
                     <CardHeader>
                       <CardTitle className="text-lg">{supplement.name}</CardTitle>
                       <Badge className="w-fit">

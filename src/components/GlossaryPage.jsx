@@ -146,7 +146,7 @@ export function GlossaryPage() {
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-ink-900 flex items-center gap-2">
+        <h1 className="text-2xl font-semibold text-ink-900 flex items-center gap-2">
           <BookOpen className="w-6 h-6" />
           Nootropics Glossary
         </h1>
@@ -179,7 +179,7 @@ export function GlossaryPage() {
       {/* Terms */}
       {letters.map(letter => (
         <div key={letter} id={`glossary-${letter}`}>
-          <h2 className="text-lg font-bold text-ink-400 mb-2 border-b pb-1">{letter}</h2>
+          <h2 className="text-lg font-semibold text-ink-400 mb-2 border-b pb-1">{letter}</h2>
           <div className="space-y-3">
             {grouped[letter].map(item => (
               <Card key={item.term} className="hover:shadow-sm transition-shadow">

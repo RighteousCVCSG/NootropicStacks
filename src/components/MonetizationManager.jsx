@@ -407,25 +407,25 @@ export function MonetizationManager() {
           {showEarnings ? (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="text-center">
-                <div className="text-2xl font-bold text-accent-700">
+                <div className="text-2xl font-semibold text-accent-700">
                   ${revenueData.totalEarnings.toFixed(2)}
                 </div>
                 <div className="text-sm text-ink-700">Total Earnings</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary-700">
+                <div className="text-2xl font-semibold text-primary-700">
                   ${revenueData.monthlyEarnings.toFixed(2)}
                 </div>
                 <div className="text-sm text-ink-700">This Month</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary-700">
+                <div className="text-2xl font-semibold text-primary-700">
                   {revenueData.clickThroughs}
                 </div>
                 <div className="text-sm text-ink-700">Click-throughs</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-warn-700">
+                <div className="text-2xl font-semibold text-warn-700">
                   {revenueData.conversions}
                 </div>
                 <div className="text-sm text-ink-700">Conversions</div>
@@ -473,7 +473,7 @@ export function MonetizationManager() {
           </Alert>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="p-4 bg-accent-050 rounded-lg">
+            <div className="p-4 bg-accent-050 rounded-md">
               <h4 className="font-semibold text-accent-700 mb-2">Low Risk - High Frequency</h4>
               <ul className="text-sm text-accent-700 space-y-1">
                 <li>• Supplement affiliate links</li>
@@ -482,7 +482,7 @@ export function MonetizationManager() {
                 <li>• Nootropics Depot</li>
               </ul>
             </div>
-            <div className="p-4 bg-primary-050 rounded-lg">
+            <div className="p-4 bg-primary-050 rounded-md">
               <h4 className="font-semibold text-primary-800 mb-2">Medium Risk - Medium Frequency</h4>
               <ul className="text-sm text-primary-800 space-y-1">
                 <li>• Google AdSense</li>
@@ -491,7 +491,7 @@ export function MonetizationManager() {
                 <li>• Email newsletter ads</li>
               </ul>
             </div>
-            <div className="p-4 bg-primary-050 rounded-lg">
+            <div className="p-4 bg-primary-050 rounded-md">
               <h4 className="font-semibold text-primary-800 mb-2">Higher Risk - Lower Frequency</h4>
               <ul className="text-sm text-primary-800 space-y-1">
                 <li>• Premium stack analysis</li>
@@ -513,7 +513,7 @@ export function MonetizationManager() {
                     <div className="flex gap-4 text-sm">
                       <span>{stats.clicks} clicks</span>
                       <span>{stats.conversions} conversions</span>
-                      <span className="font-bold text-accent-700">${stats.earnings.toFixed(2)}</span>
+                      <span className="font-semibold text-accent-700">${stats.earnings.toFixed(2)}</span>
                     </div>
                   </div>
                 ))}
@@ -587,7 +587,7 @@ export function AffiliateLinks({ supplementId, supplementName }) {
   };
 
   return (
-    <div className="mt-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 border border-accent-300 rounded-lg">
+    <div className="mt-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 border border-accent-300 rounded-md">
       <h4 className="font-semibold mb-3 flex items-center gap-2 text-accent-700">
         <ShoppingCart className="w-4 h-4" />
         Buy {supplementName}
@@ -611,7 +611,7 @@ export function AffiliateLinks({ supplementId, supplementName }) {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => handleClick(vendor)}
-              className="flex items-center justify-between p-3 bg-white border border-accent-300 rounded-lg hover:border-green-400 hover:shadow-sm transition-all group"
+              className="flex items-center justify-between p-3 bg-white border border-accent-300 rounded-md hover:border-green-400 hover:shadow-sm transition-all group"
             >
               <div>
                 <div className="text-sm font-medium text-ink-900 group-hover:text-accent-700">{info.label}</div>

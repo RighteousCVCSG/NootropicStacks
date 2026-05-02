@@ -43,7 +43,7 @@ export function LearnHub() {
 
       <div className="max-w-5xl mx-auto">
         <header className="mb-10">
-          <h1 className="text-3xl sm:text-4xl font-bold text-ink-900 mb-3">Learn</h1>
+          <h1 className="text-3xl sm:text-4xl font-semibold text-ink-900 mb-3">Learn</h1>
           <p className="text-ink-500 text-base sm:text-lg max-w-2xl">
             Everything we publish about nootropics — research, reference material, and updates — organized so you can find what you need fast.
           </p>
@@ -61,7 +61,7 @@ export function LearnHub() {
                   <Link
                     key={card.to}
                     to={card.to}
-                    className="block p-5 rounded-xl bg-surface-card border border-ink-200 hover:border-primary-300 transition-colors"
+                    className="block p-5 rounded-md bg-surface-card border border-ink-200 hover:border-primary-300 transition-colors"
                   >
                     <h3 className="text-base font-semibold text-ink-900 mb-1">{card.title}</h3>
                     <p className="text-sm text-ink-500">{card.desc}</p>
@@ -89,7 +89,7 @@ export function LearnHub() {
                   href={resource.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block p-5 rounded-xl bg-surface-card border border-ink-200 hover:border-primary-300 transition-colors"
+                  className="block p-5 rounded-md bg-surface-card border border-ink-200 hover:border-primary-300 transition-colors"
                 >
                   <h3 className="text-base font-semibold text-ink-900 mb-1">{resource.name}</h3>
                   <p className="text-sm text-ink-500">{resource.desc}</p>

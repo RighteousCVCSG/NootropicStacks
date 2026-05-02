@@ -250,7 +250,7 @@ export function ResearchLibraryPage() {
           <FlaskConical className="w-5 h-5 text-primary-700" />
           <Badge variant="outline" className="text-xs">Research Library</Badge>
         </div>
-        <h1 className="text-2xl font-bold text-ink-900">Nootropics Research Library</h1>
+        <h1 className="text-2xl font-semibold text-ink-900">Nootropics Research Library</h1>
         <p className="text-ink-700 mt-2">
           Peer-reviewed studies with plain-English summaries — so you know what the evidence actually says.
         </p>
@@ -295,7 +295,7 @@ export function ResearchLibraryPage() {
       </p>
 
       {filtered.length === 0 ? (
-        <div className="rounded-xl border border-ink-200 bg-white p-14 text-center">
+        <div className="rounded-md border border-ink-200 bg-white p-14 text-center">
           <BookOpen className="w-10 h-10 text-ink-300 mx-auto mb-4" />
           <p className="text-ink-700 font-medium mb-1">No studies match your filters</p>
           <p className="text-sm text-ink-400">Try a different keyword or clear the filters.</p>
@@ -303,7 +303,7 @@ export function ResearchLibraryPage() {
       ) : (
         <div className="space-y-4">
           {filtered.map(study => (
-            <div key={study.id} className="rounded-xl border border-ink-200 bg-white overflow-hidden">
+            <div key={study.id} className="rounded-md border border-ink-200 bg-white overflow-hidden">
               <div className="p-5 pb-3">
                 <div className="flex flex-wrap items-center gap-2 mb-2">
                   <Badge className={`text-xs border ${EVIDENCE_BADGE[study.evidenceQuality]}`}>
@@ -384,7 +384,7 @@ export function ResearchLibraryPage() {
       <Separator className="bg-ink-200" />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <Link to="/start-here" className="p-6 rounded-xl border border-ink-200 bg-white text-center hover:border-primary-300 hover:shadow-sm transition-all">
+        <Link to="/start-here" className="p-6 rounded-md border border-ink-200 bg-white text-center hover:border-primary-300 hover:shadow-sm transition-all">
           <BookOpenCheck className="w-6 h-6 text-primary-700 mx-auto mb-3" />
           <h2 className="font-semibold text-ink-900 mb-2">New to nootropics?</h2>
           <p className="text-xs text-ink-500 mb-4">
@@ -394,7 +394,7 @@ export function ResearchLibraryPage() {
             Start Here <ArrowRight className="w-3.5 h-3.5" />
           </span>
         </Link>
-        <Link to="/" className="p-6 rounded-xl border border-primary-300 bg-primary-050 text-center hover:border-blue-400 hover:shadow-sm transition-all">
+        <Link to="/" className="p-6 rounded-md border border-primary-300 bg-primary-050 text-center hover:border-blue-400 hover:shadow-sm transition-all">
           <FlaskConical className="w-6 h-6 text-primary-700 mx-auto mb-3" />
           <h2 className="font-semibold text-ink-900 mb-2">Build your stack</h2>
           <p className="text-xs text-ink-500 mb-4">

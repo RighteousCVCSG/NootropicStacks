@@ -203,7 +203,7 @@ export function NootropicsForAnxietyPage() {
             <span>·</span>
             <span>Evidence-based</span>
           </div>
-          <h1 className="text-3xl font-bold text-ink-900 mb-4 leading-tight">
+          <h1 className="text-3xl font-semibold text-ink-900 mb-4 leading-tight">
             Best Nootropics for Anxiety 2026 — Evidence-Based Guide
           </h1>
           <p className="text-ink-700 leading-relaxed mb-4">
@@ -211,7 +211,7 @@ export function NootropicsForAnxietyPage() {
           </p>
 
           {/* Disclaimer */}
-          <div className="flex gap-3 p-4 bg-warn-100 border border-amber-200 rounded-lg mb-5">
+          <div className="flex gap-3 p-4 bg-warn-100 border border-amber-200 rounded-md mb-5">
             <AlertTriangle className="w-5 h-5 text-warn-700 flex-shrink-0 mt-0.5" />
             <p className="text-sm text-amber-800">
               <strong>Not medical advice.</strong> This is research-based educational information. Supplements are not a substitute for professional mental health treatment. If you have an anxiety disorder, please consult a qualified healthcare provider before using any supplement.
@@ -228,32 +228,32 @@ export function NootropicsForAnxietyPage() {
         </div>
 
         {/* CTA to stack builder */}
-        <div className="mb-8 p-4 bg-primary-050 border border-primary-300 rounded-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div className="mb-8 p-4 bg-primary-050 border border-primary-300 rounded-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div>
             <p className="text-sm font-semibold text-primary-900">Want a personalized anxiety stack?</p>
             <p className="text-xs text-primary-800">Use the free Stack Builder to combine supplements, check interactions, and get a Stack Score.</p>
           </div>
           <Link
             to="/"
-            className="flex-shrink-0 inline-flex items-center gap-1.5 bg-primary-700 hover:bg-primary-800 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
+            className="flex-shrink-0 inline-flex items-center gap-1.5 bg-primary-700 hover:bg-primary-800 text-white text-sm font-medium px-4 py-2 rounded-md transition-colors"
           >
             <Brain className="w-4 h-4" /> Build My Stack
           </Link>
         </div>
 
         {/* Top 8 Supplements */}
-        <h2 className="text-xl font-bold text-ink-900 mb-4">Top 8 Nootropics for Anxiety</h2>
+        <h2 className="text-xl font-semibold text-ink-900 mb-4">Top 8 Nootropics for Anxiety</h2>
         <div className="space-y-5 mb-12">
           {ANXIETY_SUPPLEMENTS.map((s) => (
-            <Card key={s.id} className="border-ink-200 hover:shadow-md transition-shadow">
+            <Card key={s.id} className="border-ink-200 hover:shadow-1 transition-shadow">
               <CardContent className="pt-5">
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-9 h-9 rounded-full bg-primary-100 border border-indigo-200 flex items-center justify-center font-bold text-sm text-primary-800">
+                  <div className="flex-shrink-0 w-9 h-9 rounded-full bg-primary-100 border border-indigo-200 flex items-center justify-center font-semibold text-sm text-primary-800">
                     {s.rank}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-wrap items-center gap-2 mb-1">
-                      <h3 className="text-base font-bold text-ink-900">{s.name}</h3>
+                      <h3 className="text-base font-semibold text-ink-900">{s.name}</h3>
                       <span className={`text-xs font-medium px-2 py-0.5 rounded border ${EVIDENCE_BADGE[s.evidence]}`}>
                         {s.evidence} Evidence
                       </span>
@@ -286,14 +286,14 @@ export function NootropicsForAnxietyPage() {
 
         {/* What Type of Anxiety? */}
         <div className="mb-12">
-          <h2 className="text-xl font-bold text-ink-900 mb-2">What Type of Anxiety Do You Have?</h2>
+          <h2 className="text-xl font-semibold text-ink-900 mb-2">What Type of Anxiety Do You Have?</h2>
           <p className="text-ink-700 text-sm mb-5">Different anxiety patterns respond to different mechanisms. Match your situation to the right stack.</p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {ANXIETY_TYPES.map((item) => (
-              <div key={item.type} className="border border-ink-200 rounded-xl p-5 bg-white hover:shadow-sm transition-shadow flex flex-col">
+              <div key={item.type} className="border border-ink-200 rounded-md p-5 bg-white hover:shadow-sm transition-shadow flex flex-col">
                 <div className="text-2xl mb-2">{item.icon}</div>
-                <h3 className="font-bold text-ink-900 text-sm mb-1">{item.type}</h3>
+                <h3 className="font-semibold text-ink-900 text-sm mb-1">{item.type}</h3>
                 <p className="text-xs text-ink-500 mb-3">{item.description}</p>
                 <div className="flex flex-wrap gap-1 mb-3">
                   {item.supplements.map((name) => (
@@ -313,11 +313,11 @@ export function NootropicsForAnxietyPage() {
         </div>
 
         {/* Safety Note */}
-        <div className="mb-10 p-5 bg-danger-100 border border-red-200 rounded-xl">
+        <div className="mb-10 p-5 bg-danger-100 border border-red-200 rounded-md">
           <div className="flex items-start gap-3">
             <ShieldAlert className="w-5 h-5 text-danger-500 flex-shrink-0 mt-0.5" />
             <div>
-              <h2 className="font-bold text-red-900 mb-2">Important Safety Information</h2>
+              <h2 className="font-semibold text-red-900 mb-2">Important Safety Information</h2>
               <div className="space-y-2 text-sm text-red-800">
                 <p><strong>Anxiety disorders require professional care.</strong> Supplements can support anxiety management, but they are not a replacement for therapy (especially CBT), medication when clinically indicated, or medical supervision for diagnosed anxiety disorders.</p>
                 <p><strong>If you take SSRIs, SNRIs, or benzodiazepines</strong> — consult your doctor before adding any supplement. Ashwagandha and Rhodiola can affect serotonin and cortisol pathways; GABA and L-Theanine interact with GABAergic systems that benzodiazepines also target.</p>
@@ -330,14 +330,14 @@ export function NootropicsForAnxietyPage() {
 
         {/* What to Avoid */}
         <div className="mb-12">
-          <h2 className="text-xl font-bold text-ink-900 mb-2">What to Avoid If You Have Anxiety</h2>
+          <h2 className="text-xl font-semibold text-ink-900 mb-2">What to Avoid If You Have Anxiety</h2>
           <p className="text-ink-700 text-sm mb-4">Some popular nootropics can actively worsen anxiety. Knowing what to skip is just as important as knowing what to take.</p>
 
           <div className="space-y-3">
             {AVOID_LIST.map((item) => (
-              <div key={item.name} className="flex gap-3 p-4 bg-white border border-ink-200 rounded-lg">
+              <div key={item.name} className="flex gap-3 p-4 bg-white border border-ink-200 rounded-md">
                 <div className="flex-shrink-0 w-5 h-5 rounded-full bg-danger-100 flex items-center justify-center mt-0.5">
-                  <span className="text-danger-500 text-xs font-bold">✕</span>
+                  <span className="text-danger-500 text-xs font-semibold">✕</span>
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-ink-900">{item.name}</p>
@@ -349,15 +349,15 @@ export function NootropicsForAnxietyPage() {
         </div>
 
         {/* CTA to Stack Builder */}
-        <div className="mb-12 p-6 bg-indigo-600 rounded-xl text-white text-center">
+        <div className="mb-12 p-6 bg-indigo-600 rounded-md text-white text-center">
           <Brain className="w-8 h-8 mx-auto mb-2 opacity-90" />
-          <h2 className="text-xl font-bold mb-2">Build Your Anxiety Stack</h2>
+          <h2 className="text-xl font-semibold mb-2">Build Your Anxiety Stack</h2>
           <p className="text-indigo-100 text-sm mb-4 max-w-md mx-auto">
             Use the free Stack Builder to combine these supplements, check for interactions, and get a personalized Stack Score based on your goals.
           </p>
           <Link
             to="/"
-            className="inline-block bg-white text-primary-800 font-semibold px-6 py-2.5 rounded-lg hover:bg-primary-050 transition-colors"
+            className="inline-block bg-white text-primary-800 font-semibold px-6 py-2.5 rounded-md hover:bg-primary-050 transition-colors"
           >
             Open Stack Builder →
           </Link>
@@ -365,14 +365,14 @@ export function NootropicsForAnxietyPage() {
 
         {/* Related Articles */}
         <div className="mb-8">
-          <h2 className="text-lg font-bold text-ink-900 mb-4 flex items-center gap-2">
+          <h2 className="text-lg font-semibold text-ink-900 mb-4 flex items-center gap-2">
             <BookOpen className="w-5 h-5 text-indigo-600" />
             Related Research & Guides
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {RELATED_ARTICLES.map((article) => (
               <Link key={article.slug} to={`/blog/${article.slug}`}>
-                <div className="p-4 rounded-lg border border-ink-200 hover:border-indigo-300 hover:shadow-sm transition-all bg-white h-full">
+                <div className="p-4 rounded-md border border-ink-200 hover:border-indigo-300 hover:shadow-sm transition-all bg-white h-full">
                   <p className="text-sm font-medium text-ink-900 hover:text-primary-800 leading-snug">{article.title}</p>
                   <p className="text-xs text-ink-400 mt-1">{article.readTime} min read</p>
                 </div>

@@ -45,7 +45,7 @@ function ArticleContent({ sections, showNewsletter = false, articleSlug }) {
       {sections.map((section, i) => (
         <React.Fragment key={i}>
           <div className="mb-8">
-            {section.heading && <h2 className="text-xl font-bold text-ink-900 mb-3">{section.heading}</h2>}
+            {section.heading && <h2 className="text-xl font-semibold text-ink-900 mb-3">{section.heading}</h2>}
             {section.paragraphs.map((p, j) => (
               <p key={j} className="text-ink-700 leading-relaxed mb-4">{p}</p>
             ))}
@@ -144,7 +144,7 @@ export function BlogArticlePage() {
                 <Badge key={tag} variant="outline" className="text-xs">{tag}</Badge>
               ))}
             </div>
-            <h1 className="text-3xl font-bold text-ink-900 mb-4">{article.title}</h1>
+            <h1 className="text-3xl font-semibold text-ink-900 mb-4">{article.title}</h1>
             <div className="flex items-center gap-4 text-sm text-ink-500">
               <span className="flex items-center gap-1">
                 <Calendar className="w-4 h-4" />
@@ -170,7 +170,7 @@ export function BlogArticlePage() {
           {article.bottomLine && (
             <Card className="bg-primary-050 border-primary-300 mt-8">
               <CardContent className="pt-6">
-                <h3 className="font-bold text-primary-900 mb-2">The Bottom Line</h3>
+                <h3 className="font-semibold text-primary-900 mb-2">The Bottom Line</h3>
                 <p className="text-primary-800">{article.bottomLine}</p>
               </CardContent>
             </Card>
@@ -178,8 +178,8 @@ export function BlogArticlePage() {
         </article>
 
         {articleSupplements.length > 0 && (
-          <div className="mt-8 p-6 bg-accent-050 border border-accent-300 rounded-xl">
-            <h3 className="font-bold text-accent-700 mb-1 flex items-center gap-2">
+          <div className="mt-8 p-6 bg-accent-050 border border-accent-300 rounded-md">
+            <h3 className="font-semibold text-accent-700 mb-1 flex items-center gap-2">
               <ShoppingCart className="w-5 h-5" />
               Shop Supplements in This Article
             </h3>
@@ -190,7 +190,7 @@ export function BlogArticlePage() {
                 if (!links) return null;
                 const name = id.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
                 return (
-                  <div key={id} className="bg-white rounded-lg p-3 border border-green-100">
+                  <div key={id} className="bg-white rounded-md p-3 border border-green-100">
                     <p className="font-medium text-ink-900 text-sm mb-2">{name}</p>
                     <div className="flex gap-2">
                       {links.amazon && (
@@ -216,11 +216,11 @@ export function BlogArticlePage() {
           </div>
         )}
 
-        <div className="mt-6 p-6 bg-primary-700 rounded-xl text-white text-center">
+        <div className="mt-6 p-6 bg-primary-700 rounded-md text-white text-center">
           <Beaker className="w-8 h-8 mx-auto mb-2 opacity-90" />
-          <h3 className="text-xl font-bold mb-2">Build Your Personalized Stack</h3>
+          <h3 className="text-xl font-semibold mb-2">Build Your Personalized Stack</h3>
           <p className="text-blue-100 text-sm mb-4">Use our free Stack Builder to combine these supplements, check interactions, and get a Stack Score rating.</p>
-          <Link to="/" className="inline-block bg-white text-primary-800 font-semibold px-6 py-2.5 rounded-lg hover:bg-primary-050 transition-colors">
+          <Link to="/" className="inline-block bg-white text-primary-800 font-semibold px-6 py-2.5 rounded-md hover:bg-primary-050 transition-colors">
             Open Stack Builder →
           </Link>
         </div>
@@ -230,14 +230,14 @@ export function BlogArticlePage() {
         {/* Related articles */}
         {recentArticles.length > 0 && (
           <div>
-            <h3 className="text-lg font-bold text-ink-900 mb-4 flex items-center gap-2">
+            <h3 className="text-lg font-semibold text-ink-900 mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
               More Articles
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {recentArticles.map(a => (
                 <Link key={a.slug} to={`/blog/${a.slug}`}>
-                  <Card className="hover:shadow-md transition-shadow h-full">
+                  <Card className="hover:shadow-1 transition-shadow h-full">
                     <CardContent className="pt-4">
                       <p className="text-xs text-ink-500 mb-1">
                         {new Date(a.publishedDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}

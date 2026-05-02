@@ -86,7 +86,7 @@ export function CelebrityStacksPage() {
             <CheckCircle className="w-3 h-3 mr-1" />
             Verified Sources
           </Badge>
-          <h1 className="text-3xl md:text-5xl font-bold text-ink-900 mb-4 leading-tight">
+          <h1 className="text-3xl md:text-5xl font-semibold text-ink-900 mb-4 leading-tight">
             What 8 Biohacking Experts<br />
             <span className="text-primary-800">Actually Take</span>
           </h1>
@@ -95,17 +95,17 @@ export function CelebrityStacksPage() {
             mentioned it. Verify it yourself.
           </p>
           <div className="flex items-center justify-center gap-4 flex-wrap">
-            <div className="px-5 py-3 rounded-xl bg-surface-card border border-ink-200 flex items-center gap-3">
+            <div className="px-5 py-3 rounded-md bg-surface-card border border-ink-200 flex items-center gap-3">
               <Users className="w-5 h-5 text-primary-800" />
               <div className="text-left">
-                <div className="text-2xl font-bold text-ink-900 leading-none">8</div>
+                <div className="text-2xl font-semibold text-ink-900 leading-none">8</div>
                 <div className="text-xs text-ink-500 mt-0.5">Experts</div>
               </div>
             </div>
-            <div className="px-5 py-3 rounded-xl bg-surface-card border border-ink-200 flex items-center gap-3">
+            <div className="px-5 py-3 rounded-md bg-surface-card border border-ink-200 flex items-center gap-3">
               <Brain className="w-5 h-5 text-primary-800" />
               <div className="text-left">
-                <div className="text-2xl font-bold text-ink-900 leading-none">100+</div>
+                <div className="text-2xl font-semibold text-ink-900 leading-none">100+</div>
                 <div className="text-xs text-ink-500 mt-0.5">Supplements Documented</div>
               </div>
             </div>
@@ -117,7 +117,7 @@ export function CelebrityStacksPage() {
         {/* Comparison Matrix */}
         <section>
           <div className="mb-5">
-            <h2 className="text-2xl font-bold text-ink-900 mb-1">
+            <h2 className="text-2xl font-semibold text-ink-900 mb-1">
               The Cross-Expert Comparison Matrix
             </h2>
             <p className="text-ink-500 text-sm max-w-3xl">
@@ -125,7 +125,7 @@ export function CelebrityStacksPage() {
               compounds. A check means the expert has publicly documented taking it.
             </p>
           </div>
-          <div className="rounded-xl border border-ink-200 bg-surface-card overflow-hidden">
+          <div className="rounded-md border border-ink-200 bg-surface-card overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
@@ -176,11 +176,11 @@ export function CelebrityStacksPage() {
           <Card className="border-primary-200 bg-primary-050">
             <CardContent className="p-6">
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-primary-100 border border-primary-200 flex items-center justify-center">
+                <div className="flex-shrink-0 w-10 h-10 rounded-md bg-primary-100 border border-primary-200 flex items-center justify-center">
                   <Shield className="w-5 h-5 text-primary-800" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-xl font-bold text-ink-900 mb-2">
+                  <h3 className="text-xl font-semibold text-ink-900 mb-2">
                     The 3 supplements that appear in 7+ of 8 stacks:{' '}
                     <span className="text-primary-800">Omega-3, Creatine, Magnesium</span>
                   </h3>
@@ -200,7 +200,7 @@ export function CelebrityStacksPage() {
         {/* Celebrity Cards */}
         <section>
           <div className="mb-5">
-            <h2 className="text-2xl font-bold text-ink-900 mb-1">
+            <h2 className="text-2xl font-semibold text-ink-900 mb-1">
               The 8 Expert Stacks
             </h2>
             <p className="text-ink-500 text-sm max-w-3xl">
@@ -213,11 +213,11 @@ export function CelebrityStacksPage() {
             {CELEBRITIES.map((celeb) => (
               <div
                 key={celeb.name}
-                className="p-6 rounded-xl border border-ink-200 bg-surface-card flex flex-col"
+                className="p-6 rounded-md border border-ink-200 bg-surface-card flex flex-col"
               >
                 <div className="flex items-start justify-between gap-3 mb-3">
                   <div className="min-w-0 flex-1">
-                    <h3 className="text-xl font-bold text-ink-900 mb-1">
+                    <h3 className="text-xl font-semibold text-ink-900 mb-1">
                       {celeb.name}
                     </h3>
                     <Badge variant="outline" className="text-xs text-ink-500 border-ink-200">
@@ -258,7 +258,7 @@ export function CelebrityStacksPage() {
                     {celeb.supplements.map((s, i) => (
                       <div
                         key={`${s.name}-${i}`}
-                        className="flex items-center justify-between gap-2 px-3 py-2 rounded-lg bg-surface-sunk border border-ink-100"
+                        className="flex items-center justify-between gap-2 px-3 py-2 rounded-md bg-surface-sunk border border-ink-100"
                       >
                         <span className="text-sm font-medium text-ink-900 truncate">
                           {s.name}
@@ -300,7 +300,7 @@ export function CelebrityStacksPage() {
               <div className="flex items-start gap-3">
                 <Shield className="w-5 h-5 text-primary-800 flex-shrink-0 mt-0.5" />
                 <div>
-                  <h3 className="text-lg font-bold text-ink-900 mb-2">
+                  <h3 className="text-lg font-semibold text-ink-900 mb-2">
                     Source transparency
                   </h3>
                   <p className="text-sm text-ink-700 leading-relaxed">
@@ -318,7 +318,7 @@ export function CelebrityStacksPage() {
         {/* FAQ */}
         <section>
           <div className="mb-5">
-            <h2 className="text-2xl font-bold text-ink-900 mb-1">
+            <h2 className="text-2xl font-semibold text-ink-900 mb-1">
               Frequently asked questions
             </h2>
           </div>
@@ -335,9 +335,9 @@ export function CelebrityStacksPage() {
         </section>
 
         {/* CTA */}
-        <section className="p-8 rounded-xl border border-primary-200 bg-primary-050 text-center">
+        <section className="p-8 rounded-md border border-primary-200 bg-primary-050 text-center">
           <Brain className="w-8 h-8 text-primary-800 mx-auto mb-3" />
-          <h2 className="text-2xl font-bold text-ink-900 mb-2">
+          <h2 className="text-2xl font-semibold text-ink-900 mb-2">
             Build Your Own Evidence-Based Stack
           </h2>
           <p className="text-ink-700 mb-6 max-w-md mx-auto text-sm">
