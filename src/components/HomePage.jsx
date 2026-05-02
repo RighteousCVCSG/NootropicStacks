@@ -11,8 +11,7 @@ import { PredefinedStacks } from './PredefinedStacks.jsx';
 import { supplements } from '../data/supplements.js';
 import { Button } from '@/components/ui/button.jsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.jsx';
-import { Layers, Library, BookOpen, ArrowRight, Sparkles, HelpCircle, Activity } from 'lucide-react';
-import { HeroStackGauge } from './HeroStackGauge.jsx';
+import { Layers, Library, BookOpen, ArrowRight, Activity } from 'lucide-react';
 
 const ARTICLE_COUNT = 93;
 
@@ -73,128 +72,78 @@ export function HomePage() {
     <>
       <SEOOptimizer page="home" />
 
-      {/* Hero */}
-      <section className="mb-10">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center mb-8 max-w-5xl mx-auto">
-          <div className="md:col-span-7 text-center md:text-left">
-            <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary-800 bg-primary-100 px-3 py-1 rounded-full mb-4">
-              Free Nootropic Stack Builder
-            </span>
-            <h1
-              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-ink-900 leading-tight mb-4"
-              style={{ fontFamily: 'var(--font-display)' }}
-            >
-              Build smarter nootropic stacks,<br />
-              <span className="text-primary-800">backed by science.</span>
-            </h1>
-            <p className="text-ink-700 text-base sm:text-lg max-w-xl">
-              The PCPartPicker for nootropics. 195 supplements, 60+ interactions mapped, every claim cites PubMed.
-            </p>
-          </div>
-          <div className="md:col-span-5 flex justify-center pb-12 md:pb-14">
-            <HeroStackGauge />
-          </div>
+      {/* Hero — orientation only. The Stack Builder below IS the product;
+          one eyebrow + headline + a thin "how it works" rail is enough to
+          tell a visitor "yes, you've arrived, here's the workflow." */}
+      <section className="mb-6">
+        <div className="text-center max-w-3xl mx-auto">
+          <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary-800 bg-primary-100 px-3 py-1 rounded-full mb-4">
+            Free Nootropic Stack Builder
+          </span>
+          <h1
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-ink-900 leading-tight mb-3"
+            style={{ fontFamily: 'var(--font-display)' }}
+          >
+            Build smarter nootropic stacks,{' '}
+            <span className="text-primary-800">backed by science.</span>
+          </h1>
+          <p className="text-ink-700 text-sm sm:text-base max-w-2xl mx-auto">
+            The PCPartPicker for nootropics. 195 supplements, 60+ interactions mapped, every claim cites PubMed.
+          </p>
         </div>
 
-        {/* Returning-user welcome — only renders when localStorage already has a stack */}
+        {/* Returning-user one-line strip — hidden for new visitors. */}
         {isReturning && (
-          <div className="max-w-4xl mx-auto mb-4">
-            <div className="rounded-xl border border-primary-300 bg-primary-050 p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
-              <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary-800 text-ink-on-dark shrink-0">
-                <Activity className="w-5 h-5" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="text-xs uppercase tracking-widest font-semibold text-primary-800 mb-0.5">
-                  Welcome back
-                </div>
-                <div className="text-sm text-ink-900">
-                  Your stack has{' '}
-                  <span className="font-semibold">
-                    {stack.length} supplement{stack.length === 1 ? '' : 's'}
-                  </span>
-                  {overall != null && (
-                    <>
-                      {' '}— Stack Score{' '}
-                      <span className="font-semibold">{overall.toFixed(1)}</span>
-                      {overallLabel && (
-                        <span className="text-ink-500"> ({overallLabel})</span>
-                      )}
-                    </>
-                  )}
-                </div>
-              </div>
-              <div className="flex items-center gap-2 shrink-0">
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={openDrawer}
-                  className="text-xs"
-                >
-                  View Stack
-                </Button>
-                <Link to="/stacks">
-                  <Button size="sm" className="text-xs bg-primary-800 hover:bg-primary-700 text-ink-on-dark">
-                    Optimize
-                  </Button>
-                </Link>
-              </div>
+          <div className="max-w-3xl mx-auto mt-5">
+            <div className="rounded-md border border-primary-300 bg-primary-050 px-3 py-2 flex items-center gap-3 text-sm">
+              <Activity className="w-4 h-4 text-primary-800 shrink-0" />
+              <span className="text-ink-900 flex-1 truncate">
+                Welcome back —{' '}
+                <span className="font-semibold">
+                  {stack.length} supplement{stack.length === 1 ? '' : 's'}
+                </span>
+                {overall != null && (
+                  <>
+                    , Stack Score{' '}
+                    <span className="font-semibold">{overall.toFixed(1)}</span>
+                    {overallLabel && (
+                      <span className="text-ink-500"> ({overallLabel})</span>
+                    )}
+                  </>
+                )}
+              </span>
+              <button
+                type="button"
+                onClick={openDrawer}
+                className="text-xs font-medium text-primary-800 hover:text-primary-700 shrink-0"
+              >
+                View →
+              </button>
             </div>
           </div>
         )}
 
-        {/* Three-door entry — pick your readiness level */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
-          <a
-            href="#stack-builder"
-            className="group rounded-xl bg-primary-050 border border-primary-300 hover:border-primary-800 hover:bg-primary-100 p-5 transition-colors text-left flex flex-col"
-          >
-            <div className="flex items-center gap-2 mb-2">
-              <Layers className="w-5 h-5 text-primary-800" />
-              <span className="text-xs uppercase tracking-widest font-semibold text-primary-800">Build</span>
-            </div>
-            <h3 className="text-base font-semibold text-ink-900 mb-1">I'll build my own</h3>
-            <p className="text-xs text-ink-700 mb-3 flex-1">
-              Pick goals, browse 195 supplements, see real-time synergy and Stack Score.
-            </p>
-            <span className="inline-flex items-center gap-1 text-sm font-medium text-primary-800 group-hover:translate-x-0.5 transition-transform">
-              Start building <ArrowRight className="w-4 h-4" />
-            </span>
-          </a>
-
-          <Link
-            to="/quiz"
-            className="group rounded-xl bg-surface-card border border-ink-200 hover:border-accent-500 hover:bg-accent-050 p-5 transition-colors text-left flex flex-col"
-          >
-            <div className="flex items-center gap-2 mb-2">
-              <HelpCircle className="w-5 h-5 text-accent-700" />
-              <span className="text-xs uppercase tracking-widest font-semibold text-accent-700">Quiz</span>
-            </div>
-            <h3 className="text-base font-semibold text-ink-900 mb-1">Not sure where to start</h3>
-            <p className="text-xs text-ink-700 mb-3 flex-1">
-              Answer 6 questions and we'll suggest a stack tuned to your goals.
-            </p>
-            <span className="inline-flex items-center gap-1 text-sm font-medium text-accent-700 group-hover:translate-x-0.5 transition-transform">
-              Take the quiz <ArrowRight className="w-4 h-4" />
-            </span>
-          </Link>
-
-          <Link
-            to="/stacks"
-            className="group rounded-xl bg-surface-card border border-ink-200 hover:border-warn-500 hover:bg-warn-100 p-5 transition-colors text-left flex flex-col"
-          >
-            <div className="flex items-center gap-2 mb-2">
-              <Sparkles className="w-5 h-5 text-warn-700" />
-              <span className="text-xs uppercase tracking-widest font-semibold text-warn-700">Browse</span>
-            </div>
-            <h3 className="text-base font-semibold text-ink-900 mb-1">Show me what works</h3>
-            <p className="text-xs text-ink-700 mb-3 flex-1">
-              Curated, evidence-backed stacks for focus, sleep, energy, mood, and more.
-            </p>
-            <span className="inline-flex items-center gap-1 text-sm font-medium text-warn-700 group-hover:translate-x-0.5 transition-transform">
-              See top stacks <ArrowRight className="w-4 h-4" />
-            </span>
-          </Link>
-        </div>
+        {/* Thin "how it works" rail — orients first-time visitors and points
+            their eye at the builder below. Hidden for returning users since
+            they already know the flow. */}
+        {!isReturning && (
+          <ol className="mt-5 max-w-3xl mx-auto flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs sm:text-sm text-ink-500">
+            <li className="inline-flex items-center gap-1.5">
+              <span className="w-5 h-5 rounded-full bg-primary-050 text-primary-800 inline-flex items-center justify-center text-[10px] font-bold">1</span>
+              Set goals
+            </li>
+            <span aria-hidden className="text-ink-300">→</span>
+            <li className="inline-flex items-center gap-1.5">
+              <span className="w-5 h-5 rounded-full bg-primary-050 text-primary-800 inline-flex items-center justify-center text-[10px] font-bold">2</span>
+              Add supplements
+            </li>
+            <span aria-hidden className="text-ink-300">→</span>
+            <li className="inline-flex items-center gap-1.5">
+              <span className="w-5 h-5 rounded-full bg-primary-050 text-primary-800 inline-flex items-center justify-center text-[10px] font-bold">3</span>
+              See your Stack Score
+            </li>
+          </ol>
+        )}
       </section>
 
       {/* Stack Builder — 2-col split (2/5 left, 3/5 right). No ads. */}
