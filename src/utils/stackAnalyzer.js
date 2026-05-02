@@ -622,6 +622,35 @@ export function calculateHeadlineScores(effects) {
   };
 }
 
+// Compute a single stack item's standalone contribution to the four
+// headline dimensions. Standalone = no synergy bonuses from the rest
+// of the stack and no diminishing returns from siblings — this is the
+// "what does THIS supplement, on its own, bring to Sleep / Energy /
+// Mind / Overall?" view used by the per-supplement contribution chips
+// in the stack drawer.
+export function calculateItemContribution(stackItem) {
+  if (!stackItem || !stackItem.supplementId) {
+    return { overall: 0, sleep: 0, energy: 0, mind: 0 };
+  }
+  const supplement = supplements.find(s => s.id === stackItem.supplementId);
+  if (!supplement) {
+    return { overall: 0, sleep: 0, energy: 0, mind: 0 };
+  }
+  const avgDose = (supplement.dosage.min + supplement.dosage.max) / 2;
+  const dosageMultiplier = avgDose > 0 ? stackItem.dosage / avgDose : 1;
+  const scaled = {};
+  Object.keys(supplement.effects || {}).forEach((k) => {
+    scaled[k] = (supplement.effects[k] || 0) * dosageMultiplier;
+  });
+  const headline = calculateHeadlineScores(scaled);
+  return {
+    overall: headline.overall,
+    sleep: headline.sleep,
+    energy: headline.energy,
+    mind: headline.mind,
+  };
+}
+
 // Generate maxed-dimension suggestions
 function generateDimensionTips(headlineScores) {
   const tips = [];

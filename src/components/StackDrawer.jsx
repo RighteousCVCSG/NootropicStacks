@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { useStack } from '../contexts/StackContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { supplements } from '../data/supplements.js';
+import { calculateItemContribution } from '../utils/stackAnalyzer.js';
 import { SaveStackDialog } from './SaveStackDialog.jsx';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
 import { withAffiliateUtms, withAffiliateLink } from '@/lib/affiliate.js';
@@ -68,6 +70,17 @@ function MiniScoreBar({ score, qual }) {
   );
 }
 
+// Per-dimension accent colors. Used in BOTH the StackScoreMini boxes
+// (a dot under the label) and the per-supplement contribution chips
+// (the leading colored dot) so a glance shows which dimension a row
+// is contributing to.
+const DIMENSION_ACCENT = {
+  overall: 'var(--color-primary-500)',
+  sleep:   'var(--color-info-500)',
+  energy:  'var(--color-warn-500)',
+  mind:    'var(--color-accent-500)',
+};
+
 function StackScoreMini({ stackScore }) {
   if (!stackScore?.headlineScores) return null;
   const { overall, sleep, energy, mind, dimensionQuals } = stackScore.headlineScores;
@@ -84,7 +97,14 @@ function StackScoreMini({ stackScore }) {
         return (
           <div key={d.key} className="flex flex-col items-center gap-1 p-2 rounded-lg bg-surface-sunk">
             <d.icon className={`w-3.5 h-3.5 ${colors.text}`} />
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-ink-500">{d.label}</span>
+            <span className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-ink-500">
+              <span
+                aria-hidden
+                className="inline-block w-1.5 h-1.5 rounded-full"
+                style={{ backgroundColor: DIMENSION_ACCENT[d.key] }}
+              />
+              {d.label}
+            </span>
             <span className={`text-sm font-bold ${colors.text}`}>{d.score.toFixed(1)}</span>
             <MiniScoreBar score={d.score} qual={d.qual} />
           </div>
@@ -94,34 +114,111 @@ function StackScoreMini({ stackScore }) {
   );
 }
 
-function StackItemRow({ item, onRemove, onDosageChange }) {
+// Per-supplement contribution chips. Mirrors the StackScoreMini up top
+// (Overall / Sleep / Energy / Mind) using the same color tier so a
+// glance shows "this row contributes to which dimension." Color-coded
+// dot + score in tiny mono font.
+function ContributionChips({ contribution, stackOverall }) {
+  const dims = [
+    { key: 'overall', label: 'O', score: contribution.overall, accent: 'var(--color-primary-500)' },
+    { key: 'sleep',   label: 'S', score: contribution.sleep,   accent: 'var(--color-info-500)' },
+    { key: 'energy',  label: 'E', score: contribution.energy,  accent: 'var(--color-warn-500)' },
+    { key: 'mind',    label: 'M', score: contribution.mind,    accent: 'var(--color-accent-500)' },
+  ];
+  // % of stack this item contributes to overall — capped sensibly.
+  const overallPct = stackOverall > 0
+    ? Math.min(100, Math.round((contribution.overall / stackOverall) * 100))
+    : 0;
+  return (
+    <div className="flex items-center gap-1.5 flex-wrap" aria-label="Contribution to stack score">
+      {dims.map((d) => (
+        <span
+          key={d.key}
+          title={`${d.label === 'O' ? 'Overall' : d.label === 'S' ? 'Sleep' : d.label === 'E' ? 'Energy' : 'Mind'} contribution ${d.score.toFixed(1)}/9.5`}
+          className="inline-flex items-center gap-0.5 text-[9px] font-mono font-semibold text-ink-500"
+        >
+          <span
+            className="inline-block w-1.5 h-1.5 rounded-full"
+            style={{ backgroundColor: d.accent, opacity: d.score >= 0.5 ? 1 : 0.25 }}
+          />
+          <span className="uppercase tracking-wider">{d.label}</span>
+          <span className="tabular-nums text-ink-700">{d.score.toFixed(1)}</span>
+        </span>
+      ))}
+      {overallPct > 0 && (
+        <span className="ml-auto text-[9px] font-mono text-ink-500">
+          ~<span className="tabular-nums text-ink-700 font-semibold">{overallPct}%</span> of stack
+        </span>
+      )}
+    </div>
+  );
+}
+
+function StackItemRow({ item, onRemove, onDosageChange, stackOverall, onClose }) {
   const supplement = supplements.find(s => s.id === item.supplementId);
   if (!supplement) return null;
+  const contribution = calculateItemContribution(item);
+
+  // Stop propagation so dose input + remove button don't trigger row navigation.
+  const stop = (e) => e.stopPropagation();
+
   return (
-    <div className="flex items-center justify-between p-3 rounded-lg bg-surface-sunk">
-      <div className="flex-1 min-w-0">
-        <div className="font-medium text-sm text-ink-900 truncate">{supplement.name}</div>
-        <div className="text-xs text-ink-500">
-          {item.dosage} {supplement.dosage.unit} &bull; {item.timing}
+    <div className="group relative rounded-lg bg-surface-sunk hover:bg-surface-card transition-colors">
+      {/* The whole row is a Link to the supplement's research page. The
+          dose input and remove button stop propagation so they remain
+          interactive without firing the navigation. */}
+      <Link
+        to={`/supplements/${supplement.id}`}
+        onClick={() => {
+          track('stack_item_research_open', { supplementId: supplement.id });
+          if (typeof onClose === 'function') onClose();
+        }}
+        className="block p-3"
+        aria-label={`Open research for ${supplement.name}`}
+      >
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex-1 min-w-0">
+            <div className="font-semibold text-sm text-ink-900 truncate group-hover:text-primary-800 transition-colors">
+              {supplement.name}
+            </div>
+            <div className="text-[11px] text-ink-500 mt-0.5">
+              {item.dosage} {supplement.dosage.unit} · {item.timing}
+            </div>
+          </div>
+          <div className="flex items-center gap-1.5 shrink-0" onClick={stop}>
+            <input
+              type="number"
+              value={item.dosage}
+              onChange={(e) => onDosageChange(item.supplementId, parseFloat(e.target.value))}
+              min={supplement.dosage.min}
+              max={supplement.dosage.max}
+              step={supplement.dosage.unit === 'mcg' ? 10 : supplement.dosage.unit === 'mg' ? 50 : 1}
+              className="w-14 px-1.5 py-0.5 text-[11px] border border-ink-200 rounded bg-surface-card text-ink-900"
+              aria-label={`Dosage for ${supplement.name}`}
+            />
+            <button
+              type="button"
+              onClick={(e) => { stop(e); onRemove(item.supplementId); }}
+              className="p-1 rounded-md text-ink-400 hover:text-danger-500 hover:bg-danger-100 transition-colors"
+              aria-label={`Remove ${supplement.name}`}
+            >
+              <Trash2 className="w-3 h-3" />
+            </button>
+          </div>
         </div>
-      </div>
-      <div className="flex items-center gap-2 shrink-0 ml-2">
-        <input
-          type="number"
-          value={item.dosage}
-          onChange={(e) => onDosageChange(item.supplementId, parseFloat(e.target.value))}
-          min={supplement.dosage.min}
-          max={supplement.dosage.max}
-          step={supplement.dosage.unit === 'mcg' ? 10 : supplement.dosage.unit === 'mg' ? 50 : 1}
-          className="w-16 px-2 py-1 text-xs border border-ink-200 rounded bg-surface-card text-ink-900"
-        />
-        <button
-          onClick={() => onRemove(item.supplementId)}
-          className="p-1.5 rounded-md text-ink-400 hover:text-danger-500 hover:bg-danger-100 transition-colors"
-          aria-label={`Remove ${supplement.name}`}
-        >
-          <Trash2 className="w-3.5 h-3.5" />
-        </button>
+
+        <div className="mt-2">
+          <ContributionChips contribution={contribution} stackOverall={stackOverall} />
+        </div>
+      </Link>
+
+      {/* Hover overlay — semi-transparent label that confirms the click
+          action ("Open research →"). Pointer-events-none so it never
+          blocks the underlying input/button. */}
+      <div className="pointer-events-none absolute inset-0 rounded-lg bg-primary-050/0 group-hover:bg-primary-050/40 transition-colors flex items-end justify-end p-2 opacity-0 group-hover:opacity-100">
+        <span className="text-[10px] font-medium text-primary-800 bg-surface-card border border-primary-300 rounded px-1.5 py-0.5">
+          Open research →
+        </span>
       </div>
     </div>
   );
@@ -280,7 +377,7 @@ function ScheduleView({ stack }) {
   );
 }
 
-function DrawerBody({ stack, stackName, safetyAnalysis, stackScore, user, onRemove, onDosageChange, onClear, onSave, showSaveDialog, setShowSaveDialog }) {
+function DrawerBody({ stack, stackName, safetyAnalysis, stackScore, user, onRemove, onDosageChange, onClear, onSave, showSaveDialog, setShowSaveDialog, onClose }) {
   const [shareCopied, setShareCopied] = useState(false);
   const [shipOpen, setShipOpen] = useState(false);
   const [view, setView] = useState('list'); // 'list' | 'schedule'
@@ -377,6 +474,8 @@ function DrawerBody({ stack, stackName, safetyAnalysis, stackScore, user, onRemo
               item={item}
               onRemove={onRemove}
               onDosageChange={onDosageChange}
+              stackOverall={stackScore?.headlineScores?.overall || 0}
+              onClose={onClose}
             />
           ))}
         </div>
@@ -577,6 +676,7 @@ export function StackDrawer() {
                   onSave={() => setShowSaveDialog(true)}
                   showSaveDialog={showSaveDialog}
                   setShowSaveDialog={setShowSaveDialog}
+                  onClose={closeDrawer}
                 />
               </div>
             </DrawerContent>
@@ -621,6 +721,7 @@ export function StackDrawer() {
               onSave={() => setShowSaveDialog(true)}
               showSaveDialog={showSaveDialog}
               setShowSaveDialog={setShowSaveDialog}
+              onClose={closeDrawer}
             />
           </div>
         </div>
