@@ -9,7 +9,7 @@ import { Star, Zap, Brain, Heart, Target, AlertTriangle, Plus, ShoppingCart } fr
 import { predefinedStacks } from '../data/predefinedStacks.js';
 import { supplements } from '../data/supplements.js';
 import { useStack } from '../contexts/StackContext.jsx';
-import { analyzeStackSafety } from '../utils/stackAnalyzer.js';
+import { analyzeStackSafety, calculateItemContribution } from '../utils/stackAnalyzer.js';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
 import { withAffiliateUtms } from '@/lib/affiliate.js';
 import { JsonLd } from './JsonLd.jsx';
@@ -125,16 +125,52 @@ export function PredefinedStacks() {
             </div>
           </div>
 
-          {/* Supplements */}
+          {/* Supplements — each row is a Link to the supplement's research
+              page. Tiny color-coded dimension dots after the name show what
+              this supplement contributes to (Overall / Sleep / Energy / Mind),
+              matching the dimension chip colors used in the StackDrawer. */}
           <div>
             <h4 className="text-sm font-medium mb-2">Supplements ({stackData.supplements.length})</h4>
-            <div className="space-y-1">
-              {stackData.supplements.map(item => (
-                <div key={item.id} className="flex justify-between text-xs">
-                  <span className="text-gray-700">{getSupplementName(item.id)}</span>
-                  <span className="text-gray-500">{item.dosage}mg</span>
-                </div>
-              ))}
+            <div className="space-y-0.5">
+              {stackData.supplements.map(item => {
+                const contribution = calculateItemContribution({
+                  supplementId: item.id,
+                  dosage: item.dosage,
+                });
+                const dims = [
+                  { key: 'overall', accent: 'var(--color-primary-500)', score: contribution.overall, label: 'Overall' },
+                  { key: 'sleep',   accent: 'var(--color-info-500)',    score: contribution.sleep,   label: 'Sleep' },
+                  { key: 'energy',  accent: 'var(--color-warn-500)',    score: contribution.energy,  label: 'Energy' },
+                  { key: 'mind',    accent: 'var(--color-accent-500)',  score: contribution.mind,    label: 'Mind' },
+                ];
+                return (
+                  <Link
+                    key={item.id}
+                    to={`/supplements/${item.id}`}
+                    className="flex items-center justify-between text-xs px-1.5 py-0.5 rounded hover:bg-primary-050 transition-colors group"
+                  >
+                    <span className="flex items-center gap-1.5 min-w-0 flex-1">
+                      <span className="text-ink-700 truncate group-hover:text-primary-800">
+                        {getSupplementName(item.id)}
+                      </span>
+                      <span className="inline-flex items-center gap-0.5 shrink-0">
+                        {dims.map((d) => (
+                          <span
+                            key={d.key}
+                            title={`${d.label}: ${d.score.toFixed(1)}`}
+                            className="inline-block w-1.5 h-1.5 rounded-full"
+                            style={{
+                              backgroundColor: d.accent,
+                              opacity: d.score >= 1 ? 1 : 0.18,
+                            }}
+                          />
+                        ))}
+                      </span>
+                    </span>
+                    <span className="text-ink-500 shrink-0 ml-2 font-mono">{item.dosage}mg</span>
+                  </Link>
+                );
+              })}
             </div>
           </div>
 

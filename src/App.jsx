@@ -376,7 +376,9 @@ function App() {
           </div>
           <div className="footer__legal">
             <span>Educational information only. Consult healthcare professionals for medical advice.</span>
-            <span>As an Amazon Associate we earn from qualifying purchases.</span>
+            <Link to="/affiliate-disclosure" className="hover:underline">
+              As an Amazon Associate we earn from qualifying purchases. Affiliate disclosure →
+            </Link>
           </div>
         </footer>
       </div>

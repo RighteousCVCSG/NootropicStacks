@@ -32,10 +32,28 @@ const FEATURED_STACKS = [
  * readiness level, and surface trust + featured content.
  */
 export function HomePage() {
-  const { stack, stackScore, stackName, openDrawer } = useStack();
+  const { stack, stackScore, stackName, openDrawer, safetyAnalysis } = useStack();
   const isReturning = stack.length > 0;
   const overall = stackScore?.headlineScores?.overall;
   const overallLabel = stackScore?.headlineScores?.dimensionQuals?.overall?.label;
+  const warningCount = safetyAnalysis?.warnings?.length || 0;
+  // Lightweight urgency cue surfaced beside the Continue link. Three states:
+  //   - small stack (1–2): suggest adding more
+  //   - has warnings: surface the count
+  //   - low score (overall < 6): "room to improve"
+  // Falls through silently when none apply.
+  const urgencyHint = (() => {
+    if (warningCount > 0) {
+      return `${warningCount} interaction${warningCount === 1 ? '' : 's'} to review`;
+    }
+    if (stack.length > 0 && stack.length < 3) {
+      return 'Add a few more for stronger synergy';
+    }
+    if (overall != null && overall < 6) {
+      return 'Room to improve';
+    }
+    return null;
+  })();
 
   return (
     <>
@@ -214,9 +232,23 @@ export function HomePage() {
                   </>
                 )}
               </span>
+              {urgencyHint && (
+                <span
+                  className={`hidden sm:inline text-[11px] shrink-0 ${
+                    warningCount > 0 ? 'text-warn-700' : 'text-ink-500'
+                  }`}
+                >
+                  {urgencyHint}
+                </span>
+              )}
               <Link
                 to="/build"
-                onClick={() => track('returning_continue_click', { stackLength: stack.length })}
+                onClick={() =>
+                  track('returning_continue_click', {
+                    stackLength: stack.length,
+                    warnings: warningCount,
+                  })
+                }
                 className="text-xs font-semibold text-primary-800 hover:text-primary-700 shrink-0"
               >
                 Continue →

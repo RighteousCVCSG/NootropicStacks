@@ -261,47 +261,47 @@ export function SEOOptimizer({
 // SEO-friendly visible content section for the homepage
 export function SEOContent() {
   return (
-    <section className="mt-12 px-4 py-8 bg-surface-card border border-ink-200 rounded-lg space-y-8">
+    <section className="px-3 py-4 bg-surface-card border border-ink-200 rounded-md space-y-4">
       <div>
-        <h2 className="text-2xl font-bold mb-4">The Nootropic Stack Builder for Biohackers</h2>
-        <p className="text-ink-500 mb-4">
+        <h2 className="text-base font-semibold text-ink-900 mb-2">The Nootropic Stack Builder for Biohackers</h2>
+        <p className="text-ink-500 mb-2 text-sm leading-snug">
           NootropicStacker is a free tool for building, analyzing, and optimizing nootropic supplement stacks. Our database
           covers 195 supplements — including racetams, adaptogens, cholinergics, vitamins, and performance compounds — with
           detailed effect profiles, dosage ranges, and interaction data sourced from research literature and biohacking communities.
         </p>
-        <p className="text-ink-500 mb-4">
+        <p className="text-ink-500 mb-2 text-sm leading-snug">
           Unlike simple supplement databases, NootropicStacker evaluates how your chosen compounds work <em>together</em>.
           The Stack Score system rates your combination across four dimensions: Synergy (do these supplements enhance each other?),
           Coverage (does the stack address your goals?), Balance (is there unnecessary overlap?), and Efficiency (is the stack
           lean and purposeful?). Each dimension scores 0-25, combining into an overall 0-100 rating with a letter grade.
         </p>
-        <p className="text-ink-500">
+        <p className="text-ink-500 text-sm leading-snug">
           Whether you're a first-time stacker looking for a focus and energy combo or an experienced biohacker fine-tuning a
           complex protocol, the tools here help you make informed decisions. Set your goals, add supplements, and let the
           scoring system show you where your stack is strong and where it can improve.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         <div>
-          <h3 className="font-semibold mb-2">195 Supplements with Effect Profiles</h3>
-          <p className="text-sm text-ink-500">
+          <h3 className="text-sm font-semibold text-ink-900 mb-1">195 Supplements with Effect Profiles</h3>
+          <p className="text-xs text-ink-500 leading-snug">
             Explore racetams, modafinil alternatives, adaptogens like ashwagandha and rhodiola, and natural cognitive
             enhancers like Bacopa Monnieri, Lion's Mane, and Alpha-GPC. Each supplement includes effect ratings across
             seven categories, dosage recommendations, interaction warnings, and mechanism of action.
           </p>
         </div>
         <div>
-          <h3 className="font-semibold mb-2">Stack Score &amp; Interaction Analysis</h3>
-          <p className="text-sm text-ink-500">
+          <h3 className="text-sm font-semibold text-ink-900 mb-1">Stack Score &amp; Interaction Analysis</h3>
+          <p className="text-xs text-ink-500 leading-snug">
             Our Stack Score system analyzes 60+ pairwise supplement interactions and detects mechanism overlap across
             9 categories — stimulants, GABAergics, cholinergics, adaptogens, racetams, and more. Get real-time feedback
             as you build, with specific optimization tips to improve your stack's effectiveness.
           </p>
         </div>
         <div>
-          <h3 className="font-semibold mb-2">Personalized Recommendations</h3>
-          <p className="text-sm text-ink-500">
+          <h3 className="text-sm font-semibold text-ink-900 mb-1">Personalized Recommendations</h3>
+          <p className="text-xs text-ink-500 leading-snug">
             Take the 6-question Stack Quiz for a personalized starting point, or set your goals directly in the Stack Builder.
             The recommendation engine suggests supplements that fill gaps in your stack while avoiding redundancy and diminishing
             returns. Compare supplements side-by-side to choose between similar options.
@@ -310,8 +310,8 @@ export function SEOContent() {
       </div>
 
       <div>
-        <h3 className="font-semibold mb-2">Built for Biohackers Who Want Signal, Not Noise</h3>
-        <p className="text-sm text-ink-500">
+        <h3 className="text-sm font-semibold text-ink-900 mb-1">Built for Biohackers Who Want Signal, Not Noise</h3>
+        <p className="text-xs text-ink-500 leading-snug">
           NootropicStacker takes an optimization-first approach. The Stack Score acts like an audio mixer — telling you when
           your bass is too heavy or your coverage is thin — rather than a medical tool that warns you away from every decision.
           We track synergistic pairs (caffeine + L-theanine, racetams + choline sources, curcumin + piperine), flag redundant

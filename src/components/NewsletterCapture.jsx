@@ -50,11 +50,11 @@ export function NewsletterCapture({ source = 'footer' }) {
 
   return (
     <div>
-      <p className="text-xs text-ink-500 mb-1.5 inline-flex items-center gap-1">
+      <p className="text-[11px] text-ink-500 mb-1 inline-flex items-center gap-1">
         <Mail className="w-3 h-3" />
         Weekly research digest. No spam.
       </p>
-      <form onSubmit={handleSubmit} className="flex gap-1.5 max-w-sm">
+      <form onSubmit={handleSubmit} className="flex gap-1 max-w-md">
         <input
           ref={honeypotRef}
           type="text"
@@ -70,12 +70,12 @@ export function NewsletterCapture({ source = 'footer' }) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           disabled={status === 'loading'}
-          className="flex-1 min-w-0 h-7 px-2 rounded-md text-xs bg-surface-card border border-ink-200 text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-primary-500"
+          className="flex-1 min-w-0 h-6 px-2 rounded-md text-[11px] bg-surface-card border border-ink-200 text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-primary-500"
         />
         <button
           type="submit"
           disabled={status === 'loading' || !email}
-          className="shrink-0 inline-flex items-center justify-center h-7 px-2.5 rounded-md text-xs font-medium bg-primary-050 hover:bg-primary-100 text-primary-800 border border-primary-300 hover:border-primary-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="shrink-0 inline-flex items-center justify-center h-6 px-2 rounded-md text-[11px] font-medium bg-primary-050 hover:bg-primary-100 text-primary-800 border border-primary-300 hover:border-primary-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {status === 'loading' ? '…' : 'Subscribe'}
         </button>
