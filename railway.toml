@@ -12,8 +12,12 @@ nixLibs = []
 cmds = ["npm install -g corepack@0.24.1 && corepack enable", "pnpm install --no-frozen-lockfile"]
 
 [phases.build]
-# Plain build for now — Railpack v0.23 auto-detects Node and runs the
-# package.json `build` script. Switching to `pnpm run build:full` (which
-# adds headless-Chrome prerender for AI-crawler-static HTML) requires
-# Chromium pinned on the build image; tracked as follow-up.
-cmds = ["pnpm run build"]
+# build:full = build + prerender via headless Chromium so JSON-LD/OG/canonical
+# ship in static HTML for non-JS-executing AI crawlers (GPTBot, ClaudeBot,
+# PerplexityBot, Google-Extended). Chromium is provisioned by aptPkgs in
+# [phases.setup]; the prerender script auto-detects /usr/bin/chromium and
+# gracefully no-ops if puppeteer-core or Chrome aren't available.
+#
+# CHROME_PATH env var can be set in Railway dashboard to override path
+# detection if Railway's chromium install lands at a non-standard location.
+cmds = ["pnpm run build:full"]

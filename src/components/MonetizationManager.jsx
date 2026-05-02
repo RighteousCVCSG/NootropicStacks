@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button.jsx';
 import { Badge } from '@/components/ui/badge.jsx';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
 import { ExternalLink, DollarSign, TrendingUp, Users, Eye, ShoppingCart } from 'lucide-react';
-import { useAffiliateCampaign, withAffiliateUtms } from '@/lib/affiliate.js';
+import { useAffiliateCampaign, withAffiliateUtms, withAffiliateLink } from '@/lib/affiliate.js';
 import { AffiliateDisclosureInline } from './AffiliateDisclosure.jsx';
 
 // ============================================================
@@ -603,7 +603,7 @@ export function AffiliateLinks({ supplementId, supplementName }) {
             buymodafinilonline: { label: '💊 Buy Modafinil Online', desc: 'Trusted vendor' },
           };
           const info = vendorLabels[vendor] || { label: vendor, desc: '' };
-          const href = vendor === 'amazon' ? withAffiliateUtms(url, { campaign }) : url;
+          const href = withAffiliateLink(url, { campaign });
           return (
             <a
               key={vendor}

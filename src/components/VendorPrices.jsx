@@ -2,7 +2,7 @@ import React from 'react';
 import { ExternalLink } from 'lucide-react';
 import { getVendorPrices, hasTrackedPrices, PRICE_SNAPSHOT_DATE } from '../data/priceTable.js';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
-import { withAffiliateUtms } from '@/lib/affiliate.js';
+import { withAffiliateLink } from '@/lib/affiliate.js';
 import { track } from '../lib/analytics.js';
 
 const VENDOR_LABEL = {
@@ -17,8 +17,7 @@ function vendorAffiliateUrl(supplementId, vendor) {
   const links = AFFILIATE_LINKS[supplementId];
   const url = links?.[vendor];
   if (!url) return null;
-  if (vendor === 'amazon') return withAffiliateUtms(url, { campaign: `price-${supplementId}` });
-  return url;
+  return withAffiliateLink(url, { campaign: `price-${supplementId}` });
 }
 
 /**

@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button.jsx';
 import { Progress } from '@/components/ui/progress.jsx';
 import { SEOOptimizer } from './SEOOptimizer.jsx';
 import { supplements } from '../data/supplements.js';
-import { buildAmazonSearchLink, useAffiliateCampaign } from '@/lib/affiliate.js';
+import { buildAmazonSearchLink, useAffiliateCampaign, withIherbRef } from '@/lib/affiliate.js';
 import AffiliateDisclosure, { AffiliateDisclosureInline } from './AffiliateDisclosure.jsx';
 
 // Effect labels with display names for the actual data schema
@@ -67,7 +67,7 @@ function AffiliateButtons({ supplement }) {
   const baseCampaign = useAffiliateCampaign();
   const campaign = `${baseCampaign}-${supplement.id}`;
   const amazonUrl = buildAmazonSearchLink(`${supplement.name} supplement`, { campaign });
-  const iherbUrl = `https://www.iherb.com/search?kw=${encodeURIComponent(supplement.name)}`;
+  const iherbUrl = withIherbRef(`https://www.iherb.com/search?kw=${encodeURIComponent(supplement.name)}`);
 
   return (
     <div className="flex flex-col gap-1">

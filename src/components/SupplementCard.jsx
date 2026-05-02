@@ -6,7 +6,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Plus, Info, ShoppingCart } from 'lucide-react';
 import { useStack } from '../contexts/StackContext.jsx';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
-import { withAffiliateUtms } from '@/lib/affiliate.js';
+import { withAffiliateUtms, withAffiliateLink } from '@/lib/affiliate.js';
 import { TierBadge } from './TierBadge.jsx';
 
 // One supplement card. Designed to render at a predictable, compact
@@ -40,11 +40,12 @@ export function SupplementCard({ supplement }) {
 
   const handleBuy = () => {
     if (!links) return;
-    const url =
+    const rawUrl =
       links.nootropicsdepot ||
-      (links.amazon
-        ? withAffiliateUtms(links.amazon, { campaign: `card-${supplement.id}` })
-        : links.iherb || Object.values(links).find((v) => typeof v === 'string'));
+      links.amazon ||
+      links.iherb ||
+      Object.values(links).find((v) => typeof v === 'string');
+    const url = withAffiliateLink(rawUrl, { campaign: `card-${supplement.id}` });
     if (url) window.open(url, '_blank', 'noopener,noreferrer');
   };
 
@@ -66,14 +67,18 @@ export function SupplementCard({ supplement }) {
         <p className="text-xs text-ink-700 line-clamp-2 leading-snug">
           {supplement.description}
         </p>
-        <div className="flex items-center gap-2 text-xs text-ink-500">
+        {/* Fixed-height stat row keeps card grid alignment regardless of
+            whether the supplement has a non-zero top effect. */}
+        <div className="flex items-center gap-2 text-xs text-ink-500 min-h-[1.25rem]">
           {top && (
-            <span className="inline-flex items-center gap-1">
-              <span className="font-semibold text-ink-700">{top.name}</span>
-              <span className="font-mono">+{top.value}</span>
-            </span>
+            <>
+              <span className="inline-flex items-center gap-1">
+                <span className="font-semibold text-ink-700">{top.name}</span>
+                <span className="font-mono">+{top.value}</span>
+              </span>
+              <span aria-hidden>·</span>
+            </>
           )}
-          {top && <span aria-hidden>·</span>}
           <span className="font-mono">
             {supplement.dosage.min}–{supplement.dosage.max} {supplement.dosage.unit}
           </span>
@@ -95,19 +100,17 @@ export function SupplementCard({ supplement }) {
           <Plus className="w-3.5 h-3.5 mr-0.5" />
           {isInStack ? 'Added' : 'Add'}
         </Button>
-        {links ? (
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleBuy}
-            className="col-span-1 text-xs px-1 border-accent-500 text-accent-700 hover:bg-accent-050"
-          >
-            <ShoppingCart className="w-3.5 h-3.5 mr-0.5" />
-            Buy
-          </Button>
-        ) : (
-          <span className="col-span-1" aria-hidden />
-        )}
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={handleBuy}
+          disabled={!links}
+          className="col-span-1 text-xs px-1 border-accent-500 text-accent-700 hover:bg-accent-050 disabled:opacity-40"
+          title={links ? undefined : 'Vendor links not yet available'}
+        >
+          <ShoppingCart className="w-3.5 h-3.5 mr-0.5" />
+          Buy
+        </Button>
       </CardFooter>
     </Card>
   );

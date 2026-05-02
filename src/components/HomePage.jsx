@@ -77,7 +77,7 @@ export function HomePage() {
           tell a visitor "yes, you've arrived, here's the workflow." */}
       <section className="mb-6">
         <div className="text-center max-w-3xl mx-auto">
-          <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary-800 bg-primary-100 px-3 py-1 rounded-full mb-4">
+          <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary-900 bg-primary-050 border border-primary-300 px-3 py-1 rounded-full mb-4">
             Free Nootropic Stack Builder
           </span>
           <h1
@@ -124,10 +124,11 @@ export function HomePage() {
         )}
 
         {/* Thin "how it works" rail — orients first-time visitors and points
-            their eye at the builder below. Hidden for returning users since
-            they already know the flow. */}
+            their eye at the builder below. Hidden on mobile (sm-and-up only)
+            so the builder sits above the fold on phones; hidden entirely
+            for returning users since they already know the flow. */}
         {!isReturning && (
-          <ol className="mt-5 max-w-3xl mx-auto flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs sm:text-sm text-ink-500">
+          <ol className="hidden sm:flex mt-5 max-w-3xl mx-auto flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs sm:text-sm text-ink-500">
             <li className="inline-flex items-center gap-1.5">
               <span className="w-5 h-5 rounded-full bg-primary-050 text-primary-800 inline-flex items-center justify-center text-[10px] font-bold">1</span>
               Set goals

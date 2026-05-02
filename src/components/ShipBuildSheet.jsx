@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button.jsx';
 import { ShoppingCart, ExternalLink, AlertCircle, Truck } from 'lucide-react';
 import { supplements } from '../data/supplements.js';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
-import { withAffiliateUtms } from '@/lib/affiliate.js';
+import { withAffiliateUtms, withAffiliateLink } from '@/lib/affiliate.js';
 import { AffiliateDisclosureInline } from './AffiliateDisclosure.jsx';
 import { track } from '../lib/analytics.js';
 import { getCheapestVendor, hasTrackedPrices } from '../data/priceTable.js';
@@ -57,8 +57,7 @@ function pickPreferredVendor(supplementId, links) {
 function vendorUrl(supplementId, vendor, links) {
   const url = links?.[vendor];
   if (!url) return null;
-  if (vendor === 'amazon') return withAffiliateUtms(url, { campaign: `ship-${supplementId}` });
-  return url;
+  return withAffiliateLink(url, { campaign: `ship-${supplementId}` });
 }
 
 function ShipRow({ item, supplement, vendor, links, onVendorChange }) {

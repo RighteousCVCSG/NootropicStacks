@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/AuthContext.jsx';
 import { supplements } from '../data/supplements.js';
 import { SaveStackDialog } from './SaveStackDialog.jsx';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
-import { withAffiliateUtms } from '@/lib/affiliate.js';
+import { withAffiliateUtms, withAffiliateLink } from '@/lib/affiliate.js';
 import { AffiliateDisclosureInline } from './AffiliateDisclosure.jsx';
 import { track } from '../lib/analytics.js';
 import { Button } from '@/components/ui/button.jsx';
@@ -173,14 +173,14 @@ function StackShopLinks({ stack }) {
         <AffiliateDisclosureInline />
       </h4>
       <div className="space-y-1">
-        {stackWithLinks.slice(0, 5).map(item => {
+        {stackWithLinks.map(item => {
           const links = AFFILIATE_LINKS[item.supplementId];
           const supplement = supplements.find(s => s.id === item.supplementId);
-          const buyUrl = links.nootropicsdepot || (
-            links.amazon ? withAffiliateUtms(links.amazon, { campaign: `stack-${item.supplementId}` }) : (
-              links.iherb || Object.values(links).find(v => typeof v === 'string')
-            )
-          );
+          const rawUrl = links.nootropicsdepot ||
+            links.amazon ||
+            links.iherb ||
+            Object.values(links).find(v => typeof v === 'string');
+          const buyUrl = withAffiliateLink(rawUrl, { campaign: `stack-${item.supplementId}` });
           if (!supplement || !buyUrl) return null;
           return (
             <a
@@ -198,9 +198,6 @@ function StackShopLinks({ stack }) {
           );
         })}
       </div>
-      {stackWithLinks.length > 5 && (
-        <p className="text-xs text-ink-400 mt-1">+{stackWithLinks.length - 5} more in your stack</p>
-      )}
     </div>
   );
 }
