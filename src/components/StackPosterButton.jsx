@@ -3,7 +3,7 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription,
 } from '@/components/ui/dialog.jsx';
 import { Button } from '@/components/ui/button.jsx';
-import { Image, Download, Clipboard, Check } from 'lucide-react';
+import { Image, Download, Clipboard, Check, Quote } from 'lucide-react';
 import { supplements } from '../data/supplements.js';
 import { getEvidenceTier } from '../lib/evidenceTier.js';
 import {
@@ -52,11 +52,21 @@ function buildPosterPayload(stack, stackScore, stackName) {
   };
 }
 
+function buildShareCaption(stack, stackScore, stackName) {
+  const overall = stackScore?.headlineScores?.overall;
+  const score100 = overall != null ? Math.round((overall / 9.5) * 100) : null;
+  const name = (stackName && stackName.trim()) || 'My nootropic stack';
+  const count = stack.length;
+  const scorePart = score100 != null ? ` · Stack Score ${score100}/100` : '';
+  return `${name} · ${count} supplement${count === 1 ? '' : 's'}${scorePart}. Built on nootropicstacker.com/build`;
+}
+
 export function StackPosterButton({ stack, stackScore, stackName }) {
   const [open, setOpen] = useState(false);
   const [dataUrl, setDataUrl] = useState(null);
   const [blob, setBlob] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [captionCopied, setCaptionCopied] = useState(false);
   const [busy, setBusy] = useState(false);
 
   const handleOpen = useCallback(async () => {
@@ -90,6 +100,18 @@ export function StackPosterButton({ stack, stackScore, stackName }) {
       setTimeout(() => setCopied(false), 1800);
     } catch (err) {
       console.error('Clipboard copy failed', err);
+    }
+  };
+
+  const handleCopyCaption = async () => {
+    try {
+      track('stack_poster_copy_caption');
+      const caption = buildShareCaption(stack, stackScore, stackName);
+      await navigator.clipboard.writeText(caption);
+      setCaptionCopied(true);
+      setTimeout(() => setCaptionCopied(false), 1800);
+    } catch (err) {
+      console.error('Caption copy failed', err);
     }
   };
 
@@ -144,10 +166,38 @@ export function StackPosterButton({ stack, stackScore, stackName }) {
                 ) : (
                   <>
                     <Clipboard className="w-4 h-4 mr-1" />
-                    Copy to clipboard
+                    Copy image
                   </>
                 )}
               </Button>
+            </div>
+
+            {/* Pre-written share caption — drops users straight into a Reddit/X
+                post without making them write copy from scratch. */}
+            <div className="rounded-md border border-ink-200 bg-surface-sunk p-2.5">
+              <div className="flex items-start gap-2">
+                <Quote className="w-3.5 h-3.5 text-ink-500 mt-0.5 shrink-0" />
+                <p className="text-xs text-ink-700 leading-snug flex-1 break-words">
+                  {buildShareCaption(stack, stackScore, stackName)}
+                </p>
+                <button
+                  type="button"
+                  onClick={handleCopyCaption}
+                  className="text-[11px] font-medium text-primary-800 hover:text-primary-700 shrink-0 inline-flex items-center gap-1"
+                >
+                  {captionCopied ? (
+                    <>
+                      <Check className="w-3 h-3 text-accent-700" />
+                      Copied
+                    </>
+                  ) : (
+                    <>
+                      <Clipboard className="w-3 h-3" />
+                      Copy
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </DialogContent>

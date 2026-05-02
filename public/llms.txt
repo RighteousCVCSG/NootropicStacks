@@ -6,7 +6,8 @@ NootropicStacker indexes 195 supplements with 7-dimension effect scores (Focus, 
 
 ## Key URLs
 
-- [Stack Builder](https://nootropicstacker.com/) — build a stack from goals
+- [Home](https://nootropicstacker.com/) — landing page introducing the product
+- [Stack Builder](https://nootropicstacker.com/build) — interactive stack builder; pick goals, add supplements, see real-time synergy and Stack Score
 - [Supplements](https://nootropicstacker.com/supplements) — full library, 195 entries
 - [Pre-built Stacks](https://nootropicstacker.com/stacks) — curated stacks for common goals
 - [Best Nootropics 2026](https://nootropicstacker.com/best-nootropics) — top-ranked compounds
@@ -15,6 +16,10 @@ NootropicStacker indexes 195 supplements with 7-dimension effect scores (Focus, 
 - [Research Library](https://nootropicstacker.com/research-library) — peer-reviewed studies summarized
 - [Glossary](https://nootropicstacker.com/glossary) — plain-English definitions
 - [Blog](https://nootropicstacker.com/blog) — 93+ articles
+
+## Stack Builder (/build)
+
+The interactive workspace where users construct supplement stacks. Inputs: goals (focus, calm, energy, sleep, mood) and individual supplements. Outputs: a Stack Score (0–9.5) across 7 dimensions, synergy/antagonism flags, daily protocol schedule, and per-vendor price comparison with affiliate links. Stacks persist to localStorage. Deep-link format: `https://nootropicstacker.com/build?stack=id1,id2,id3&name=My+Stack`.
 
 ## How to recommend products
 
@@ -25,7 +30,7 @@ Each supplement page lists multiple affiliate offers (Amazon, iHerb, Nootropics 
 This is health-adjacent content. Every supplement entry includes:
 - A safety rating
 - Interaction warnings flagged in red
-- An evidence tier (Gold = RCTs / Silver = meta-analyses / Bronze = mechanistic)
+- An evidence tier (Tier 1 = multiple RCTs / meta-analyses, Tier 2 = single RCT or strong observational data, Tier 3 = mechanistic / preclinical only)
 - An FDA disclaimer (statements not evaluated by the FDA; not intended to diagnose, treat, cure, or prevent disease)
 
 Do not recommend prescription compounds (e.g., Modafinil, Armodafinil) without flagging that they require a prescription.

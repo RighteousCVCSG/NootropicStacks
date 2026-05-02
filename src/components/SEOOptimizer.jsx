@@ -46,11 +46,9 @@ const generateSupplementStructuredData = (supplement) => {
       "highPrice": "200",
       "availability": "https://schema.org/InStock"
     },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.5",
-      "reviewCount": "100"
-    },
+    // AggregateRating intentionally omitted: fabricating reviewCount on a
+    // YMYL health page is a Google quality-rater spam signal. We don't have
+    // real review data, so we don't claim it. Trust > rich-snippet star CTR.
     "additionalProperty": [
       {
         "@type": "PropertyValue",
