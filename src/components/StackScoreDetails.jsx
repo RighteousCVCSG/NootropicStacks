@@ -25,33 +25,36 @@ const QUAL_COLORS = {
   Maxed: 'bg-amber-50 text-amber-700 border-amber-300',
 };
 
+// Brand-token-driven dimension colors (Cognitive Lab palette).
+// Resolved via getComputedStyle so we react to dark/light theme switches.
 const DIMENSION_DETAILS = [
-  { key: 'sleep', label: 'Sleep', icon: Moon, color: '#2a6b96', desc: 'Rest, recovery & sleep readiness' },
-  { key: 'energy', label: 'Energy', icon: Zap, color: '#2e7d5b', desc: 'Physical & mental drive' },
-  { key: 'mind', label: 'Mind', icon: Brain, color: '#0f4c46', desc: 'Cognition, focus & mood' },
+  { key: 'sleep',  label: 'Sleep',  icon: Moon,  cssVar: '--color-accent-500',  desc: 'Rest, recovery & sleep readiness' },
+  { key: 'energy', label: 'Energy', icon: Zap,   cssVar: '--color-warn-500',    desc: 'Physical & mental drive' },
+  { key: 'mind',   label: 'Mind',   icon: Brain, cssVar: '--color-primary-500', desc: 'Cognition, focus & mood' },
 ];
 
 function DimensionCircle({ value, qual, config }) {
   const pct = (value / 9.5) * 100;
+  const stroke = `var(${config.cssVar})`;
   return (
     <div className="flex flex-col items-center gap-1">
       <div className="relative w-16 h-16">
         <svg className="w-16 h-16 -rotate-90" viewBox="0 0 36 36">
-          <circle cx="18" cy="18" r="15.5" fill="none" stroke="#e5e7eb" strokeWidth="2.5" />
+          <circle cx="18" cy="18" r="15.5" fill="none" style={{ stroke: 'var(--color-ink-200)' }} strokeWidth="2.5" />
           <circle
             cx="18" cy="18" r="15.5" fill="none"
-            stroke={config.color}
+            style={{ stroke }}
             strokeWidth="2.5"
             strokeDasharray={`${(pct / 100) * 97.4} 97.4`}
             strokeLinecap="round"
             className="transition-all duration-700"
           />
         </svg>
-        <span className="absolute inset-0 flex items-center justify-center text-sm font-bold text-gray-800">
+        <span className="absolute inset-0 flex items-center justify-center text-sm font-bold text-ink-900">
           {value.toFixed(1)}
         </span>
       </div>
-      <div className="flex items-center gap-1 text-xs font-medium text-gray-600">
+      <div className="flex items-center gap-1 text-xs font-medium text-ink-700">
         <config.icon className="w-3 h-3" />
         {config.label}
       </div>
@@ -62,26 +65,27 @@ function DimensionCircle({ value, qual, config }) {
   );
 }
 
-function SubScoreCircle({ value, max, label, icon: Icon, color }) {
+function SubScoreCircle({ value, max, label, icon: Icon, cssVar }) {
   const pct = max > 0 ? (value / max) * 100 : 0;
+  const stroke = `var(${cssVar})`;
   return (
     <div className="flex flex-col items-center gap-1">
       <div className="relative w-16 h-16">
         <svg className="w-16 h-16 -rotate-90" viewBox="0 0 36 36">
-          <circle cx="18" cy="18" r="15.5" fill="none" stroke="#e5e7eb" strokeWidth="2.5" />
+          <circle cx="18" cy="18" r="15.5" fill="none" style={{ stroke: 'var(--color-ink-200)' }} strokeWidth="2.5" />
           <circle
             cx="18" cy="18" r="15.5" fill="none"
-            stroke={color}
+            style={{ stroke }}
             strokeWidth="2.5"
             strokeDasharray={`${(pct / 100) * 97.4} 97.4`}
             strokeLinecap="round"
           />
         </svg>
-        <span className="absolute inset-0 flex items-center justify-center text-sm font-bold">
+        <span className="absolute inset-0 flex items-center justify-center text-sm font-bold text-ink-900">
           {Math.round(value)}
         </span>
       </div>
-      <div className="flex items-center gap-1 text-xs font-medium text-gray-600">
+      <div className="flex items-center gap-1 text-xs font-medium text-ink-700">
         <Icon className="w-3 h-3" />
         {label}
       </div>
@@ -171,10 +175,10 @@ export function StackScoreDetails({ open, onClose, stackScore }) {
         {/* Original sub-score circles */}
         <Separator />
         <div className="flex justify-around py-4">
-          <SubScoreCircle value={synergy.score} max={25} label="Synergy" icon={ZapIcon} color="#a855f7" />
-          <SubScoreCircle value={coverage.score} max={25} label="Coverage" icon={Target} color="#3b82f6" />
-          <SubScoreCircle value={balance.score} max={25} label="Balance" icon={Scale} color="#22c55e" />
-          <SubScoreCircle value={efficiency.score} max={25} label="Efficiency" icon={Gauge} color="#f97316" />
+          <SubScoreCircle value={synergy.score} max={25} label="Synergy" icon={ZapIcon} cssVar="--color-primary-500" />
+          <SubScoreCircle value={coverage.score} max={25} label="Coverage" icon={Target} cssVar="--color-accent-500" />
+          <SubScoreCircle value={balance.score} max={25} label="Balance" icon={Scale} cssVar="--color-success-500" />
+          <SubScoreCircle value={efficiency.score} max={25} label="Efficiency" icon={Gauge} cssVar="--color-warn-500" />
         </div>
 
         <Separator />

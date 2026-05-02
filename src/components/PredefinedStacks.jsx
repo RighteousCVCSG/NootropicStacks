@@ -12,6 +12,8 @@ import { useStack } from '../contexts/StackContext.jsx';
 import { analyzeStackSafety } from '../utils/stackAnalyzer.js';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
 import { withAffiliateUtms } from '@/lib/affiliate.js';
+import { JsonLd } from './JsonLd.jsx';
+import { buildItemListSchema } from '../lib/schema/builders.js';
 
 export function PredefinedStacks() {
   const { loadStack, stack } = useStack();
@@ -347,8 +349,23 @@ export function PredefinedStacks() {
     );
   };
 
+  const itemListItems = predefinedStacks.flatMap((s) =>
+    s.supplements
+      .filter((item) => item.id)
+      .map((item) => ({
+        name: getSupplementName(item.id),
+        url: `https://nootropicstacker.com/supplements/${item.id}`,
+      }))
+  );
+
   return (
     <div className="space-y-6">
+      <JsonLd
+        data={buildItemListSchema({
+          name: 'Pre-Built Nootropic Supplement Stacks',
+          items: itemListItems,
+        })}
+      />
       <div>
         <h2 className="text-2xl font-bold mb-2">Pre-Built Supplement Stacks</h2>
         <p className="text-gray-600">

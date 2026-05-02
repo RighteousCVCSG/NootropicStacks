@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useReducer, useEffect, useMemo } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, useMemo, useState } from 'react';
+import { toast } from 'sonner';
 import { analyzeStackSafety, recommendSupplements, calculateStackScore } from '../utils/stackAnalyzer.js';
 import { track } from '../lib/analytics.js';
 
@@ -93,6 +94,7 @@ function stackReducer(state, action) {
 // Context Provider
 export function StackProvider({ children }) {
   const [state, dispatch] = useReducer(stackReducer, initialState);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   // Persist stack to localStorage whenever it changes
   useEffect(() => {
@@ -123,16 +125,38 @@ export function StackProvider({ children }) {
       return false;
     }
 
-    dispatch({
-      type: ACTIONS.ADD_SUPPLEMENT,
-      payload: {
-        supplementId: supplement.id,
-        dosage: dosage || (supplement.dosage.min + supplement.dosage.max) / 2,
-        timing: supplement.dosage.timing,
-        addedAt: new Date().toISOString()
-      }
-    });
+    const newItem = {
+      supplementId: supplement.id,
+      dosage: dosage || (supplement.dosage.min + supplement.dosage.max) / 2,
+      timing: supplement.dosage.timing,
+      addedAt: new Date().toISOString(),
+    };
+
+    // Compute the score delta synchronously so the toast can show ↑Δ.
+    const oldScore = state.stackScore?.headlineScores?.overall ?? null;
+    const nextStack = [...state.stack, newItem];
+    const nextScore =
+      calculateStackScore(nextStack, state.userGoals)?.headlineScores?.overall ?? null;
+    const delta =
+      oldScore != null && nextScore != null ? nextScore - oldScore : null;
+    const arrow = delta == null ? '' : delta > 0 ? ' ↑' : delta < 0 ? ' ↓' : '';
+    const deltaTxt =
+      delta == null || Math.abs(delta) < 0.05 ? '' : `${arrow}${Math.abs(delta).toFixed(1)}`;
+
+    dispatch({ type: ACTIONS.ADD_SUPPLEMENT, payload: newItem });
     track('stack_add', { supplement_id: supplement.id });
+
+    toast.success(`${supplement.name} added`, {
+      description:
+        nextScore != null
+          ? `Stack Score ${nextScore.toFixed(1)}${deltaTxt}`
+          : 'View your stack to see the synergy analysis.',
+      duration: 2500,
+      action: {
+        label: 'View Stack',
+        onClick: () => setDrawerOpen(true),
+      },
+    });
     return true;
   };
 
@@ -195,7 +219,11 @@ export function StackProvider({ children }) {
     clearStack,
     loadStack,
     hasSupplement,
-    itemCount
+    itemCount,
+    drawerOpen,
+    openDrawer: () => setDrawerOpen(true),
+    closeDrawer: () => setDrawerOpen(false),
+    toggleDrawer: () => setDrawerOpen(prev => !prev)
   };
   return (
     <StackContext.Provider value={value}>

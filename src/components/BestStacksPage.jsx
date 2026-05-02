@@ -6,6 +6,8 @@ import { Badge } from '@/components/ui/badge.jsx';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
 import { withAffiliateUtms } from '@/lib/affiliate.js';
 import { SEOOptimizer } from './SEOOptimizer.jsx';
+import { JsonLd } from './JsonLd.jsx';
+import { buildItemListSchema } from '@/lib/schema/builders.js';
 
 const CURATED_STACKS = [
   {
@@ -147,12 +149,27 @@ export function BestStacksPage() {
     }).catch(() => {});
   };
 
+  const itemListItems = CURATED_STACKS.flatMap((stack) =>
+    stack.supplements
+      .filter((s) => s.id)
+      .map((s) => ({
+        name: s.name,
+        url: `https://nootropicstacker.com/supplements/${s.id}`,
+      }))
+  );
+
   return (
     <>
       <SEOOptimizer
         page="home"
         customTitle="Best Nootropic Stacks 2026: 8 Expert-Curated Combinations | NootropicStacker"
         customDescription="The 8 best nootropic stacks in 2026, curated by goal: focus, memory, energy, stress, sleep, longevity, and budget. Includes exact dosing, cost, and buy links."
+      />
+      <JsonLd
+        data={buildItemListSchema({
+          name: 'Best Nootropic Stacks 2026',
+          items: itemListItems,
+        })}
       />
 
       <div className="max-w-3xl mx-auto">

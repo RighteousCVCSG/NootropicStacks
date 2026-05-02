@@ -12,4 +12,8 @@ nixLibs = []
 cmds = ["npm install -g corepack@0.24.1 && corepack enable", "pnpm install --no-frozen-lockfile"]
 
 [phases.build]
+# Plain build for now — Railpack v0.23 auto-detects Node and runs the
+# package.json `build` script. Switching to `pnpm run build:full` (which
+# adds headless-Chrome prerender for AI-crawler-static HTML) requires
+# Chromium pinned on the build image; tracked as follow-up.
 cmds = ["pnpm run build"]

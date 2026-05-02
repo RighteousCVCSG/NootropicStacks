@@ -8,7 +8,7 @@ import { Progress } from '@/components/ui/progress.jsx';
 import { SEOOptimizer } from './SEOOptimizer.jsx';
 import { supplements } from '../data/supplements.js';
 import { buildAmazonSearchLink, useAffiliateCampaign } from '@/lib/affiliate.js';
-import AffiliateDisclosure from './AffiliateDisclosure.jsx';
+import AffiliateDisclosure, { AffiliateDisclosureInline } from './AffiliateDisclosure.jsx';
 
 // Effect labels with display names for the actual data schema
 const EFFECT_LABELS = {
@@ -70,27 +70,30 @@ function AffiliateButtons({ supplement }) {
   const iherbUrl = `https://www.iherb.com/search?kw=${encodeURIComponent(supplement.name)}`;
 
   return (
-    <div className="flex flex-wrap gap-2">
-      <a
-        href={amazonUrl}
-        target="_blank"
-        rel="noopener noreferrer sponsored"
-        onClick={() => trackClick(supplement.name, 'amazon')}
-        className="flex items-center gap-1.5 text-xs bg-orange-500 hover:bg-orange-600 text-white px-3 py-2 rounded-md font-medium transition-colors"
-      >
-        <ShoppingCart className="w-3 h-3" />
-        Amazon
-      </a>
-      <a
-        href={iherbUrl}
-        target="_blank"
-        rel="noopener noreferrer sponsored"
-        onClick={() => trackClick(supplement.name, 'iherb')}
-        className="flex items-center gap-1.5 text-xs bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-md font-medium transition-colors"
-      >
-        <ExternalLink className="w-3 h-3" />
-        iHerb
-      </a>
+    <div className="flex flex-col gap-1">
+      <div className="flex flex-wrap gap-2">
+        <a
+          href={amazonUrl}
+          target="_blank"
+          rel="noopener noreferrer sponsored"
+          onClick={() => trackClick(supplement.name, 'amazon')}
+          className="flex items-center gap-1.5 text-xs bg-orange-500 hover:bg-orange-600 text-white px-3 py-2 rounded-md font-medium transition-colors"
+        >
+          <ShoppingCart className="w-3 h-3" />
+          Amazon
+        </a>
+        <a
+          href={iherbUrl}
+          target="_blank"
+          rel="noopener noreferrer sponsored"
+          onClick={() => trackClick(supplement.name, 'iherb')}
+          className="flex items-center gap-1.5 text-xs bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-md font-medium transition-colors"
+        >
+          <ExternalLink className="w-3 h-3" />
+          iHerb
+        </a>
+      </div>
+      <AffiliateDisclosureInline />
     </div>
   );
 }

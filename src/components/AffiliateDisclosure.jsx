@@ -60,6 +60,18 @@ const VARIANT_CONFIG = {
   },
 };
 
+export function AffiliateDisclosureInline() {
+  return (
+    <span
+      role="note"
+      aria-label="Affiliate disclosure"
+      className="text-xs text-ink-500 italic"
+    >
+      (we earn a commission, no extra cost to you)
+    </span>
+  );
+}
+
 export default function AffiliateDisclosure({ variant = 'banner' }) {
   const config = VARIANT_CONFIG[variant] || VARIANT_CONFIG.banner;
 

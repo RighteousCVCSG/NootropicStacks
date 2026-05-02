@@ -3,18 +3,18 @@ import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { Routes, Route, Link, useLocation, Navigate, useParams } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext.jsx';
 import { AuthDialog } from './components/AuthDialog.jsx';
-import { StackProvider, useStack } from './contexts/StackContext.jsx';
-import { track, trackPageview } from './lib/analytics.js';
-import { GoalSelector } from './components/GoalSelector.jsx';
-import { StackPanel } from './components/StackPanel.jsx';
-import { RecommendationPanel } from './components/RecommendationPanel.jsx';
+import { StackProvider } from './contexts/StackContext.jsx';
+import { trackPageview } from './lib/analytics.js';
+import { HomePage } from './components/HomePage.jsx';
 import { SupplementLibrary } from './components/SupplementLibrary.jsx';
 import { SupplementModal } from './components/SupplementModal.jsx';
-import { SEOOptimizer, SEOContent } from './components/SEOOptimizer.jsx';
-import { ContextualAd, SmartAdPlacement, AdRevenueTracker } from './components/AdManager.jsx';
+import { SEOOptimizer } from './components/SEOOptimizer.jsx';
 import { StackScoreWidget } from './components/StackScoreWidget.jsx';
-import { StackProtocolBuilder } from './components/StackProtocolBuilder.jsx';
+import { StackDrawer } from './components/StackDrawer.jsx';
+import { Toaster } from './components/ui/sonner.jsx';
 import { NewsletterCapture } from './components/NewsletterCapture.jsx';
+import { JsonLd } from './components/JsonLd.jsx';
+import { buildOrganizationSchema, buildWebsiteSchema } from './lib/schema/builders.js';
 
 // Lazy-loaded route-level components
 const AdminPage = lazy(() => import('./components/AdminPage.jsx').then(m => ({ default: m.AdminPage })));
@@ -42,13 +42,30 @@ const BrandKitSmokeTest = lazy(() => import('./components/BrandKitSmokeTest.jsx'
 const CelebrityStacksPage = lazy(() => import('./components/CelebrityStacksPage.jsx').then(m => ({ default: m.CelebrityStacksPage })));
 const VideosPage = lazy(() => import('./components/VideosPage.jsx').then(m => ({ default: m.VideosPage })));
 const AffiliateDisclosurePage = lazy(() => import('./components/AffiliateDisclosurePage.jsx').then(m => ({ default: m.AffiliateDisclosurePage })));
-import { supplements } from './data/supplements.js';
-import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
+const LearnHub = lazy(() => import('./components/LearnHub.jsx').then(m => ({ default: m.LearnHub })));
 import { Button } from '@/components/ui/button.jsx';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.jsx';
-import { AlertTriangle, Pill, Layers, Library, Newspaper, BookOpen, Home, HelpCircle, LogIn, LogOut, User, PenLine, Award, GitCompare, Star, Users, FlaskConical, Play } from 'lucide-react';
-import AffiliateDisclosure from './components/AffiliateDisclosure.jsx';
+import { Pill, Layers, Library, BookOpen, Home, HelpCircle, LogIn, LogOut, User } from 'lucide-react';
+import { ThemeToggle } from './components/ThemeToggle.jsx';
 import './App.css';
+
+// Medical disclaimer scoped to home, supplement, and stack routes
+function ScopedMedicalDisclaimer() {
+  const { pathname } = useLocation();
+  const show =
+    pathname === '/' ||
+    pathname === '/supplements' ||
+    pathname.startsWith('/supplements/') ||
+    pathname === '/stacks' ||
+    pathname.startsWith('/stacks/');
+  if (!show) return null;
+  return (
+    <div className="callout callout--warn mb-3 py-2">
+      <p className="callout__body text-sm">
+        <strong>Important:</strong> Educational purposes only. Consult healthcare professionals before starting supplements.
+      </p>
+    </div>
+  );
+}
 
 // Scroll to top + fire pageview on route changes
 function ScrollToTop() {
@@ -65,7 +82,7 @@ function NavLink({ to, icon: Icon, children }) {
   const isActive = to === '/' ? location.pathname === '/' : location.pathname.startsWith(to);
 
   return (
-    <Link to={to}>
+    <Link to={to} aria-current={isActive ? 'page' : undefined}>
       <Button
         variant={isActive ? 'default' : 'ghost'}
         size="sm"
@@ -116,202 +133,6 @@ function GuideRedirect() {
   return <Navigate to={`/blog/${slug}`} replace />;
 }
 
-// Home page with stack builder
-function HomePage() {
-  const [selectedSupplement, setSelectedSupplement] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const { stack, userGoals, loadStack } = useStack();
-
-  const articleCount = 93;
-  const featuredArticles = [
-    { slug: 'caffeine-l-theanine-stack-the-ultimate-guide', title: 'Caffeine + L-Theanine: The Ultimate Stack Guide', tags: ['caffeine', 'theanine'], readTime: 8 },
-    { slug: 'best-nootropic-stack-for-focus-2026', title: 'Best Nootropic Stack for Focus 2026', tags: ['focus', 'stack'], readTime: 10 },
-    { slug: 'lions-mane-mushroom-benefits-dosage-complete-guide', title: "Lion's Mane: Benefits, Dosage & Complete Guide", tags: ['lions-mane', 'mushroom'], readTime: 11 },
-    { slug: 'beginners-guide-to-nootropics-2026', title: 'Beginner\'s Guide to Nootropics 2026', tags: ['beginner', 'basics'], readTime: 12 },
-    { slug: 'ashwagandha-benefits-dosage-complete-guide', title: 'Ashwagandha: Benefits & Dosage Guide', tags: ['ashwagandha', 'adaptogen'], readTime: 10 },
-    { slug: 'best-nootropics-for-students-study-stack-2026', title: 'Best Nootropics for Students 2026', tags: ['students', 'studying'], readTime: 11 },
-  ];
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const stackParam = params.get('stack');
-    if (stackParam && stack.length === 0) {
-      const ids = stackParam.split(',');
-      const itemsToLoad = ids
-        .map(id => supplements.find(s => s.id === id))
-        .filter(Boolean)
-        .map(s => ({
-          supplementId: s.id,
-          dosage: (s.dosage.min + s.dosage.max) / 2,
-          timing: s.dosage.timing,
-        }));
-      if (itemsToLoad.length > 0) {
-        loadStack(itemsToLoad);
-        track('stack_view_shared', { supplement_ids: stackParam, stack_size: itemsToLoad.length });
-      }
-    }
-  }, []);
-
-  const handleViewDetails = (supplement) => {
-    setSelectedSupplement(supplement);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedSupplement(null);
-  };
-
-  return (
-    <>
-      <SEOOptimizer page="home" />
-
-      {/* How It Works */}
-      <div className="mb-8 bg-gradient-to-br from-primary-050 via-surface-card to-primary-050 rounded-xl border border-primary-100 p-6 shadow-sm">
-        <h1 className="text-2xl font-bold text-ink-900 text-center mb-2">Build Your Perfect Nootropic Stack</h1>
-        <p className="text-ink-500 text-center mb-6 text-sm">The free nootropic stack builder — 195 supplements, real-time synergy analysis, no account required.</p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="text-center">
-            <div className="w-10 h-10 rounded-full bg-primary-800 text-ink-on-dark font-bold flex items-center justify-center mx-auto mb-3">1</div>
-            <h3 className="font-semibold text-sm mb-1">Set Your Goals</h3>
-            <p className="text-xs text-ink-500">Pick what you want to optimize — focus, energy, mood, memory, or creativity.</p>
-          </div>
-          <div className="text-center">
-            <div className="w-10 h-10 rounded-full bg-primary-800 text-ink-on-dark font-bold flex items-center justify-center mx-auto mb-3">2</div>
-            <h3 className="font-semibold text-sm mb-1">Build Your Stack</h3>
-            <p className="text-xs text-ink-500">Add supplements from 195 compounds. Get real-time synergy analysis and recommendations.</p>
-          </div>
-          <div className="text-center">
-            <div className="w-10 h-10 rounded-full bg-primary-800 text-ink-on-dark font-bold flex items-center justify-center mx-auto mb-3">3</div>
-            <h3 className="font-semibold text-sm mb-1">Optimize with Stack Score</h3>
-            <p className="text-xs text-ink-500">Your stack gets a 0-100 score across synergy, coverage, balance, and efficiency.</p>
-          </div>
-        </div>
-        <div className="flex justify-center gap-6 mt-6 text-xs text-ink-400">
-          <span>195 supplements</span>
-          <span>&middot;</span>
-          <span>60+ interactions mapped</span>
-          <span>&middot;</span>
-          <span>9 mechanism groups</span>
-        </div>
-      </div>
-
-      {/* Trust signals */}
-      <div className="flex flex-wrap justify-center gap-6 text-sm text-ink-500 mb-8 py-4 border-y border-ink-100">
-        {[
-          { stat: '195', label: 'Supplements' },
-          { stat: '93+', label: 'Research Articles' },
-          { stat: '60+', label: 'Interactions Mapped' },
-          { stat: '8', label: 'Curated Stacks' },
-          { stat: 'Free', label: 'No Account Required' },
-        ].map(({ stat, label }) => (
-          <div key={label} className="text-center">
-            <div className="font-bold text-ink-900 text-lg">{stat}</div>
-            <div className="text-xs text-ink-500">{label}</div>
-          </div>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left Column - Goals and Stack */}
-        <div className="lg:col-span-1 space-y-6">
-          <GoalSelector />
-          <StackPanel />
-          <StackProtocolBuilder />
-          <ContextualAd category="nootropics" userGoals={userGoals} position="sidebar" />
-        </div>
-
-        {/* Right Column - Recommendations and Library */}
-        <div className="lg:col-span-2 space-y-6">
-          <RecommendationPanel />
-          <SmartAdPlacement supplements={[]} userGoals={userGoals} stackSize={stack.length} />
-
-          <Tabs defaultValue="library" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="library" className="flex items-center gap-2">
-                <Library className="w-4 h-4" />
-                Supplement Library
-              </TabsTrigger>
-              <TabsTrigger value="stacks" className="flex items-center gap-2">
-                <Layers className="w-4 h-4" />
-                Pre-Built Stacks
-              </TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="library" className="space-y-6">
-              <SupplementLibrary onViewDetails={handleViewDetails} />
-            </TabsContent>
-
-            <TabsContent value="stacks" className="space-y-6">
-              <PredefinedStacks />
-            </TabsContent>
-          </Tabs>
-        </div>
-      </div>
-
-      <SEOContent />
-
-      {/* Trusted Resources */}
-      <div className="mt-8 p-6 bg-surface-card rounded-xl border border-ink-200">
-        <h2 className="text-lg font-semibold text-ink-900 mb-1">Research & References</h2>
-        <p className="text-sm text-ink-500 mb-4">Supplement data cross-referenced with peer-reviewed sources and trusted industry resources.</p>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {[
-            { name: 'Examine.com', desc: 'Supplement research database', url: 'https://examine.com', icon: '🔬' },
-            { name: 'PubMed', desc: 'Clinical research studies', url: 'https://pubmed.ncbi.nlm.nih.gov', icon: '📚' },
-            { name: 'Nootropics Depot', desc: 'Third-party lab tested', url: 'https://nootropicsdepot.com', icon: '🧪' },
-            { name: 'Labdoor', desc: 'Supplement quality rankings', url: 'https://labdoor.com', icon: '⭐' },
-          ].map(resource => (
-            <a
-              key={resource.name}
-              href={resource.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex flex-col p-3 rounded-lg border border-ink-200 hover:border-primary-300 hover:bg-primary-050 transition-all group"
-            >
-              <span className="text-2xl mb-1">{resource.icon}</span>
-              <span className="text-sm font-medium text-ink-900 group-hover:text-primary-700">{resource.name}</span>
-              <span className="text-xs text-ink-500">{resource.desc}</span>
-            </a>
-          ))}
-        </div>
-      </div>
-
-      {/* Popular Articles */}
-      <div className="mt-8">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-ink-900 flex items-center gap-2">
-            <BookOpen className="w-5 h-5 text-primary-800" />
-            Popular Nootropic Guides
-          </h2>
-          <Link to="/blog" className="text-sm text-primary-800 hover:underline">View all {articleCount} articles →</Link>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {featuredArticles.map(article => (
-            <Link key={article.slug} to={`/blog/${article.slug}`}>
-              <div className="p-4 rounded-lg border border-ink-200 hover:border-primary-300 hover:shadow-sm transition-all bg-surface-card">
-                <div className="flex flex-wrap gap-1 mb-2">
-                  {article.tags.slice(0, 2).map(tag => (
-                    <span key={tag} className="text-xs bg-primary-100 text-primary-800 px-2 py-0.5 rounded">{tag}</span>
-                  ))}
-                </div>
-                <p className="text-sm font-medium text-ink-900 hover:text-primary-700 leading-snug">{article.title}</p>
-                <p className="text-xs text-ink-400 mt-1">{article.readTime} min read</p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-
-      <SupplementModal
-        supplement={selectedSupplement}
-        isOpen={isModalOpen}
-        onClose={closeModal}
-      />
-    </>
-  );
-}
-
 // Library page (full-width)
 function LibraryPage() {
   const [selectedSupplement, setSelectedSupplement] = useState(null);
@@ -341,8 +162,6 @@ function LibraryPage() {
 }
 
 function App() {
-  const adRevenue = AdRevenueTracker();
-
   // Track affiliate clicks
   useEffect(() => {
     const handleAffiliateClick = (event) => {
@@ -356,6 +175,8 @@ function App() {
     <AuthProvider>
     <StackProvider>
       <ScrollToTop />
+      <JsonLd data={buildOrganizationSchema()} />
+      <JsonLd data={buildWebsiteSchema()} />
       <div className="min-h-screen bg-surface-page">
         {/* Header */}
         <header className="bg-surface-card shadow-sm border-b border-ink-200">
@@ -372,56 +193,52 @@ function App() {
               </Link>
 
               {/* Navigation */}
-              <nav className="hidden md:flex items-center space-x-2">
-                <NavLink to="/" icon={Home}>Stack Builder</NavLink>
-                <NavLink to="/quiz" icon={HelpCircle}>Quiz</NavLink>
-                <NavLink to="/supplements" icon={Library}>Library</NavLink>
-                <NavLink to="/families" icon={BookOpen}>Families</NavLink>
-                <NavLink to="/news" icon={Newspaper}>News</NavLink>
-                <NavLink to="/blog" icon={PenLine}>Blog</NavLink>
-                <NavLink to="/best-nootropics" icon={Award}>Best Nootropics</NavLink>
-                <NavLink to="/best-stacks" icon={Layers}>Best Stacks</NavLink>
-                <NavLink to="/reviews" icon={Star}>Reviews</NavLink>
-                <NavLink to="/celebrity-stacks" icon={Users}>Celebrity Stacks</NavLink>
-                <NavLink to="/videos" icon={Play}>Videos</NavLink>
-                <NavLink to="/compare-supplements" icon={GitCompare}>Compare</NavLink>
-                <NavLink to="/research-library" icon={FlaskConical}>Research</NavLink>
+              <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
+                <NavLink to="/" icon={Home}>Build</NavLink>
+                <NavLink to="/supplements" icon={Library}>Supplements</NavLink>
+                <NavLink to="/stacks" icon={Layers}>Stacks</NavLink>
+                <NavLink to="/learn" icon={BookOpen}>Learn</NavLink>
+                <Link to="/quiz">
+                  <Button size="sm" className="bg-primary-800 hover:bg-primary-700 text-ink-on-dark ml-2">
+                    <HelpCircle className="w-4 h-4 mr-1" />
+                    Quiz
+                  </Button>
+                </Link>
               </nav>
 
-              <HeaderAuth />
+              <div className="flex items-center gap-2">
+                <ThemeToggle />
+                <HeaderAuth />
+              </div>
             </div>
           </div>
         </header>
 
         {/* Mobile Navigation */}
-        <nav className="md:hidden bg-surface-card border-b border-ink-200 px-4 py-2">
-          <div className="flex items-center gap-2 overflow-x-auto">
-            <NavLink to="/" icon={Home}>Builder</NavLink>
-            <NavLink to="/quiz" icon={HelpCircle}>Quiz</NavLink>
-            <NavLink to="/supplements" icon={Library}>Library</NavLink>
-            <NavLink to="/families" icon={BookOpen}>Families</NavLink>
-            <NavLink to="/news" icon={Newspaper}>News</NavLink>
-            <NavLink to="/blog" icon={PenLine}>Blog</NavLink>
-            <NavLink to="/best-nootropics" icon={Award}>Best</NavLink>
-            <NavLink to="/best-stacks" icon={Layers}>Stacks</NavLink>
-            <NavLink to="/reviews" icon={Star}>Reviews</NavLink>
-            <NavLink to="/celebrity-stacks" icon={Users}>Stacks</NavLink>
-            <NavLink to="/videos" icon={Play}>Videos</NavLink>
-            <NavLink to="/compare-supplements" icon={GitCompare}>Compare</NavLink>
-            <NavLink to="/research-library" icon={FlaskConical}>Research</NavLink>
+        <nav className="md:hidden bg-surface-card border-b border-ink-200" aria-label="Mobile navigation">
+          <div className="flex items-center">
+            <div className="flex items-center gap-2 overflow-x-auto flex-1 min-w-0 px-4 py-2">
+              <NavLink to="/" icon={Home}>Build</NavLink>
+              <NavLink to="/supplements" icon={Library}>Supplements</NavLink>
+              <NavLink to="/stacks" icon={Layers}>Stacks</NavLink>
+              <NavLink to="/learn" icon={BookOpen}>Learn</NavLink>
+              <Link to="/quiz" className="shrink-0">
+                <Button size="sm" className="bg-primary-800 hover:bg-primary-700 text-ink-on-dark">
+                  <HelpCircle className="w-4 h-4 mr-1" />
+                  Quiz
+                </Button>
+              </Link>
+            </div>
+            <div className="shrink-0 px-2 border-l border-ink-200">
+              <ThemeToggle />
+            </div>
           </div>
         </nav>
 
         {/* Main Content */}
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <AffiliateDisclosure variant="banner" />
-
-          {/* Medical Disclaimer */}
-          <div className="callout callout--warn mb-3 py-2">
-            <p className="callout__body text-sm">
-              <strong>Important:</strong> Educational purposes only. Consult healthcare professionals before starting supplements.
-            </p>
-          </div>
+          {/* Medical Disclaimer (scoped to home, supplement, stack routes) */}
+          <ScopedMedicalDisclaimer />
 
           {/* Routes */}
           <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="text-ink-500 text-sm">Loading...</div></div>}>
@@ -477,6 +294,7 @@ function App() {
             <Route path="/compare-supplements" element={<ComparisonPage />} />
             <Route path="/nootropics-for-focus" element={<NootropicsForFocusPage />} />
             <Route path="/nootropics-for-anxiety" element={<NootropicsForAnxietyPage />} />
+            <Route path="/learn" element={<LearnHub />} />
             <Route path="/start-here" element={<Suspense fallback={<div className="flex items-center justify-center py-16"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-800"></div></div>}><StartHerePage /></Suspense>} />
             <Route path="/downloads/10-stacks" element={
               <>
@@ -520,6 +338,12 @@ function App() {
 
         {/* Stack Score Floating Widget */}
         <StackScoreWidget />
+
+        {/* Stack Drawer */}
+        <StackDrawer />
+
+        {/* Toast notifications (used by addSupplement and friends) */}
+        <Toaster />
 
         {/* Footer */}
         <footer className="footer mt-12">

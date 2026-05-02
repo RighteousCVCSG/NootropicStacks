@@ -1,10 +1,148 @@
-export function BrandKitSmokeTest() {
+import { useEffect, useState } from 'react';
+
+/**
+ * Renders a swatch with its CSS variable name and a live-resolved
+ * computed color. Updates when the document `data-theme` changes.
+ */
+function Swatch({ name, varName, themeKey }) {
+  const [resolved, setResolved] = useState('');
+  useEffect(() => {
+    const el = document.documentElement;
+    const v = getComputedStyle(el).getPropertyValue(varName).trim();
+    setResolved(v);
+  }, [varName, themeKey]);
+
   return (
-    <div className="brand-prose max-w-3xl mx-auto py-10 px-4 space-y-10">
-      <header>
-        <h1 className="font-display text-display-md text-ink-900 mb-2">Brand Kit — Smoke Test</h1>
-        <p className="text-ink-500 text-base">NOO-46 visual parity check. All components rendered against the brand-kit spec.</p>
+    <div className="flex items-center gap-3 rounded-md border border-[var(--border)] bg-[var(--surface-card)] p-3">
+      <span
+        className="h-10 w-10 shrink-0 rounded-md border border-[var(--border)]"
+        style={{ background: `var(${varName})` }}
+        aria-hidden="true"
+      />
+      <div className="min-w-0">
+        <div className="text-xs font-mono text-[var(--ink-900)] truncate">{name}</div>
+        <div className="text-xs font-mono text-[var(--ink-500)] truncate">{varName}</div>
+        <div className="text-xs font-mono text-[var(--ink-500)] truncate">{resolved || '—'}</div>
+      </div>
+    </div>
+  );
+}
+
+function SwatchGrid({ items, themeKey }) {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      {items.map(({ name, varName }) => (
+        <Swatch key={varName} name={name} varName={varName} themeKey={themeKey} />
+      ))}
+    </div>
+  );
+}
+
+const SURFACES = [
+  { name: 'Page', varName: '--surface-page' },
+  { name: 'Card', varName: '--surface-card' },
+  { name: 'Raised', varName: '--surface-raised' },
+  { name: 'Modal', varName: '--surface-modal' },
+  { name: 'Border', varName: '--border' },
+];
+
+const INK = [
+  { name: 'Ink 900', varName: '--ink-900' },
+  { name: 'Ink 700', varName: '--ink-700' },
+  { name: 'Ink 500', varName: '--ink-500' },
+  { name: 'Ink on dark', varName: '--ink-on-dark' },
+];
+
+const ACCENTS = [
+  { name: 'Primary (violet)', varName: '--accent-primary' },
+  { name: 'Primary hover', varName: '--accent-primary-hover' },
+  { name: 'Primary soft', varName: '--accent-primary-soft' },
+  { name: 'Secondary (cyan)', varName: '--accent-secondary' },
+  { name: 'Secondary hover', varName: '--accent-secondary-hover' },
+  { name: 'Secondary soft', varName: '--accent-secondary-soft' },
+];
+
+const FUNCTIONAL = [
+  { name: 'Warning', varName: '--warning' },
+  { name: 'Danger', varName: '--danger' },
+];
+
+const PRIMARY_SCALE = [
+  { name: 'Primary 050', varName: '--primary-050' },
+  { name: 'Primary 100', varName: '--primary-100' },
+  { name: 'Primary 300', varName: '--primary-300' },
+  { name: 'Primary 400', varName: '--primary-400' },
+  { name: 'Primary 700', varName: '--primary-700' },
+  { name: 'Primary 800', varName: '--primary-800' },
+  { name: 'Primary 900', varName: '--primary-900' },
+];
+
+export function BrandKitSmokeTest() {
+  const [theme, setTheme] = useState(() => {
+    if (typeof document === 'undefined') return 'dark';
+    return document.documentElement.dataset.theme || 'dark';
+  });
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+  }, [theme]);
+
+  const toggleTheme = () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
+
+  return (
+    <div className="brand-prose max-w-5xl mx-auto py-10 px-4 space-y-10">
+      <header className="flex items-start justify-between gap-4 flex-wrap">
+        <div>
+          <h1 className="font-display text-display-md text-ink-900 mb-2">Brand Kit — Cognitive Lab</h1>
+          <p className="text-ink-500 text-base">
+            Visual parity check for the Cognitive Lab palette. Toggle theme to verify both modes.
+          </p>
+          <p className="text-ink-500 text-sm mt-1">
+            Active theme: <span className="font-mono text-ink-700">{theme}</span>
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={toggleTheme}
+          className="btn btn--primary"
+          aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+        >
+          Toggle theme ({theme === 'dark' ? 'light' : 'dark'})
+        </button>
       </header>
+
+      {/* Surfaces */}
+      <section>
+        <h2 className="font-display text-xl text-ink-700 mb-3">Surfaces</h2>
+        <SwatchGrid items={SURFACES} themeKey={theme} />
+      </section>
+
+      {/* Ink */}
+      <section>
+        <h2 className="font-display text-xl text-ink-700 mb-3">Ink (text)</h2>
+        <SwatchGrid items={INK} themeKey={theme} />
+      </section>
+
+      {/* Brand accents */}
+      <section>
+        <h2 className="font-display text-xl text-ink-700 mb-3">Brand accents</h2>
+        <SwatchGrid items={ACCENTS} themeKey={theme} />
+      </section>
+
+      {/* Functional */}
+      <section>
+        <h2 className="font-display text-xl text-ink-700 mb-3">Functional</h2>
+        <SwatchGrid items={FUNCTIONAL} themeKey={theme} />
+      </section>
+
+      {/* Primary scale (legacy aliases) */}
+      <section>
+        <h2 className="font-display text-xl text-ink-700 mb-3">Primary scale (050–900)</h2>
+        <p className="text-ink-500 text-sm mb-3">
+          Legacy aliases consumed by shadcn/ui &amp; Tailwind utility classes.
+        </p>
+        <SwatchGrid items={PRIMARY_SCALE} themeKey={theme} />
+      </section>
 
       {/* Disclosure */}
       <section>
@@ -136,32 +274,6 @@ export function BrandKitSmokeTest() {
         <div className="empty">
           <p>No supplements in your stack yet.</p>
           <p>Use the Stack Builder to add compounds and get started.</p>
-        </div>
-      </section>
-
-      {/* Color Palette */}
-      <section>
-        <h2 className="font-display text-xl text-ink-700 mb-3">Color Tokens</h2>
-        <div className="grid grid-cols-4 gap-2 text-xs">
-          {[
-            ['bg-primary-800', 'primary-800'],
-            ['bg-primary-700', 'primary-700'],
-            ['bg-primary-500', 'primary-500'],
-            ['bg-primary-100', 'primary-100'],
-            ['bg-accent-500', 'accent-500'],
-            ['bg-accent-300', 'accent-300'],
-            ['bg-accent-100', 'accent-100'],
-            ['bg-ink-900', 'ink-900'],
-            ['bg-ink-500', 'ink-500'],
-            ['bg-ink-100', 'ink-100'],
-            ['bg-surface-page', 'surface-page'],
-            ['bg-surface-sunk', 'surface-sunk'],
-          ].map(([cls, label]) => (
-            <div key={cls} className="flex flex-col gap-1">
-              <div className={`${cls} h-8 rounded border border-black/10`} />
-              <span className="text-ink-500 leading-none">{label}</span>
-            </div>
-          ))}
         </div>
       </section>
 

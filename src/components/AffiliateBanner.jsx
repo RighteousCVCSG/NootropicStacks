@@ -28,7 +28,7 @@ export default function AffiliateBanner({ banner, compact = false }) {
         <div className="flex items-center gap-3">
           <div
             className="w-2 h-8 rounded-full"
-            style={{ backgroundColor: partnerInfo?.color ?? '#22c55e' }}
+            style={{ backgroundColor: partnerInfo?.color ?? 'var(--color-accent-500)' }}
           />
           <div>
             <p className="text-sm font-semibold">{banner.title}</p>
@@ -51,23 +51,23 @@ export default function AffiliateBanner({ banner, compact = false }) {
       <div
         className="absolute inset-0 opacity-5"
         style={{
-          background: `linear-gradient(135deg, ${partnerInfo?.color ?? '#22c55e'}, transparent)`,
+          background: `linear-gradient(135deg, ${partnerInfo?.color ?? 'var(--color-accent-500)'}, transparent)`,
         }}
       />
       <div className="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6">
         <div className="flex items-start gap-4">
           <div
             className="w-1 self-stretch rounded-full shrink-0"
-            style={{ backgroundColor: partnerInfo?.color ?? '#22c55e' }}
+            style={{ backgroundColor: partnerInfo?.color ?? 'var(--color-accent-500)' }}
           />
           <div>
             <div className="flex items-center gap-2 mb-1">
               <Badge
                 className="text-xs"
                 style={{
-                  backgroundColor: `${partnerInfo?.color ?? '#22c55e'}20`,
-                  color: partnerInfo?.color ?? '#22c55e',
-                  borderColor: `${partnerInfo?.color ?? '#22c55e'}40`,
+                  backgroundColor: `${partnerInfo?.color ?? 'var(--color-accent-500)'}20`,
+                  color: partnerInfo?.color ?? 'var(--color-accent-500)',
+                  borderColor: `${partnerInfo?.color ?? 'var(--color-accent-500)'}40`,
                 }}
               >
                 {banner.badge}
@@ -81,9 +81,9 @@ export default function AffiliateBanner({ banner, compact = false }) {
         <Button
           className="shrink-0 whitespace-nowrap"
           style={{
-            backgroundColor: `${partnerInfo?.color ?? '#22c55e'}20`,
-            color: partnerInfo?.color ?? '#22c55e',
-            borderColor: `${partnerInfo?.color ?? '#22c55e'}40`,
+            backgroundColor: `${partnerInfo?.color ?? 'var(--color-accent-500)'}20`,
+            color: partnerInfo?.color ?? 'var(--color-accent-500)',
+            borderColor: `${partnerInfo?.color ?? 'var(--color-accent-500)'}40`,
           }}
           variant="outline"
         >
