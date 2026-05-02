@@ -23,7 +23,7 @@ const MONTHLY_COSTS = {
   'curcumin': 18, 'zinc': 8, 'melatonin': 8, 'glycine': 12,
 };
 
-function buildPosterPayload(stack, stackScore) {
+function buildPosterPayload(stack, stackScore, stackName) {
   const overall = stackScore?.headlineScores?.overall;
   // Headline scores are 0-9.5; rescale to 0-100 for the poster.
   const score100 = overall != null ? Math.round((overall / 9.5) * 100) : null;
@@ -43,7 +43,7 @@ function buildPosterPayload(stack, stackScore) {
   );
 
   return {
-    title: 'My Nootropic Stack',
+    title: (stackName && stackName.trim()) || 'My Nootropic Stack',
     score: score100,
     scoreLabel,
     items,
@@ -52,7 +52,7 @@ function buildPosterPayload(stack, stackScore) {
   };
 }
 
-export function StackPosterButton({ stack, stackScore }) {
+export function StackPosterButton({ stack, stackScore, stackName }) {
   const [open, setOpen] = useState(false);
   const [dataUrl, setDataUrl] = useState(null);
   const [blob, setBlob] = useState(null);
@@ -65,7 +65,7 @@ export function StackPosterButton({ stack, stackScore }) {
     setCopied(false);
     track('stack_poster_open');
     try {
-      const payload = buildPosterPayload(stack, stackScore);
+      const payload = buildPosterPayload(stack, stackScore, stackName);
       const { blob: b, dataUrl: u } = await renderStackPoster(payload);
       setDataUrl(u);
       setBlob(b);
@@ -73,7 +73,7 @@ export function StackPosterButton({ stack, stackScore }) {
       console.error('Poster render failed', err);
     }
     setBusy(false);
-  }, [stack, stackScore]);
+  }, [stack, stackScore, stackName]);
 
   const handleDownload = () => {
     if (!blob) return;

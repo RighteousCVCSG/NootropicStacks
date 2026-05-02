@@ -129,11 +129,11 @@ export function VendorPricesDetailed({ supplementId }) {
                   disabled={disabled}
                   className={`inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-medium transition-colors ${
                     isBest
-                      ? 'bg-primary-800 text-ink-on-dark hover:bg-primary-700'
+                      ? 'bg-accent-500 text-ink-on-dark hover:bg-accent-600'
                       : 'bg-surface-sunk text-ink-700 border border-ink-200 hover:border-primary-300 hover:text-primary-800'
                   } disabled:opacity-50 disabled:cursor-not-allowed`}
                 >
-                  Buy <ExternalLink className="w-3 h-3" />
+                  Buy on {VENDOR_LABEL[p.vendor] || p.vendor} <ExternalLink className="w-3 h-3" />
                 </button>
               </div>
             </li>

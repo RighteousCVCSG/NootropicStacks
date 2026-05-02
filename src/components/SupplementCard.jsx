@@ -6,8 +6,9 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Plus, Info, ShoppingCart } from 'lucide-react';
 import { useStack } from '../contexts/StackContext.jsx';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
-import { withAffiliateUtms, withAffiliateLink } from '@/lib/affiliate.js';
+import { withAffiliateLink, pickPreferredVendor, VENDOR_LABEL_SHORT } from '@/lib/affiliate.js';
 import { TierBadge } from './TierBadge.jsx';
+import { getCheapestVendor } from '../data/priceTable.js';
 
 // One supplement card. Designed to render at a predictable, compact
 // height across the library grid:
@@ -38,13 +39,14 @@ export function SupplementCard({ supplement }) {
     addSupplement(supplement);
   };
 
+  const preferredVendor = pickPreferredVendor(supplement.id, links, getCheapestVendor);
+  const buyLabel = preferredVendor
+    ? `Buy on ${VENDOR_LABEL_SHORT[preferredVendor] || preferredVendor}`
+    : 'Buy';
+
   const handleBuy = () => {
-    if (!links) return;
-    const rawUrl =
-      links.nootropicsdepot ||
-      links.amazon ||
-      links.iherb ||
-      Object.values(links).find((v) => typeof v === 'string');
+    if (!links || !preferredVendor) return;
+    const rawUrl = links[preferredVendor];
     const url = withAffiliateLink(rawUrl, { campaign: `card-${supplement.id}` });
     if (url) window.open(url, '_blank', 'noopener,noreferrer');
   };
@@ -105,11 +107,11 @@ export function SupplementCard({ supplement }) {
           size="sm"
           onClick={handleBuy}
           disabled={!links}
-          className="col-span-1 text-xs px-1 border-accent-500 text-accent-700 hover:bg-accent-050 disabled:opacity-40"
-          title={links ? undefined : 'Vendor links not yet available'}
+          className="col-span-1 text-xs px-1 border-accent-500 text-accent-700 hover:bg-accent-050 disabled:opacity-40 truncate"
+          title={links ? buyLabel : 'Vendor links not yet available'}
         >
-          <ShoppingCart className="w-3.5 h-3.5 mr-0.5" />
-          Buy
+          <ShoppingCart className="w-3.5 h-3.5 mr-0.5 shrink-0" />
+          <span className="truncate">{buyLabel}</span>
         </Button>
       </CardFooter>
     </Card>

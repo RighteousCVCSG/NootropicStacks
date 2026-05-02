@@ -4,20 +4,15 @@ import { Button } from '@/components/ui/button.jsx';
 import { ShoppingCart, ExternalLink, AlertCircle, Truck } from 'lucide-react';
 import { supplements } from '../data/supplements.js';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
-import { withAffiliateUtms, withAffiliateLink } from '@/lib/affiliate.js';
+import {
+  withAffiliateLink,
+  pickPreferredVendor as pickPreferredVendorShared,
+  VENDOR_LABEL,
+} from '@/lib/affiliate.js';
 import { AffiliateDisclosureInline } from './AffiliateDisclosure.jsx';
 import { track } from '../lib/analytics.js';
-import { getCheapestVendor, hasTrackedPrices } from '../data/priceTable.js';
+import { getCheapestVendor } from '../data/priceTable.js';
 
-// Per-vendor display order (matches existing buy-button preference).
-const VENDOR_ORDER = ['nootropicsdepot', 'amazon', 'iherb', 'nordicnaturals', 'buymodafinilonline'];
-const VENDOR_LABEL = {
-  nootropicsdepot: 'Nootropics Depot',
-  amazon: 'Amazon',
-  iherb: 'iHerb',
-  nordicnaturals: 'Nordic Naturals',
-  buymodafinilonline: 'Modafinil Online',
-};
 
 const MONTHLY_COSTS = {
   'coq10': 22, 'ashwagandha': 18, 'l-theanine': 12, 'caffeine': 6,
@@ -40,18 +35,10 @@ const MONTHLY_COSTS = {
   'kanna': 22, 'pramiracetam': 30, 'coluracetam': 32, 'fasoracetam': 28,
 };
 
+// Thin wrapper so the rest of the file reads naturally and shares the
+// canonical "cheapest tracked → preference order" logic with SupplementCard.
 function pickPreferredVendor(supplementId, links) {
-  // If we have tracked prices, prefer the cheapest vendor that ALSO has an
-  // affiliate link wired up. This is the multi-vendor moat in action.
-  if (hasTrackedPrices(supplementId)) {
-    const cheapest = getCheapestVendor(supplementId);
-    if (cheapest && links?.[cheapest.vendor]) return cheapest.vendor;
-  }
-  if (!links) return null;
-  for (const v of VENDOR_ORDER) {
-    if (links[v]) return v;
-  }
-  return Object.keys(links).find((k) => k !== 'commission' && typeof links[k] === 'string') || null;
+  return pickPreferredVendorShared(supplementId, links, getCheapestVendor);
 }
 
 function vendorUrl(supplementId, vendor, links) {

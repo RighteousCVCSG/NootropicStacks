@@ -31,7 +31,7 @@ const FEATURED_STACKS = [
 export function HomePage() {
   const [selectedSupplement, setSelectedSupplement] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { stack, stackScore, loadStack, openDrawer } = useStack();
+  const { stack, stackScore, loadStack, openDrawer, stackName, setStackName } = useStack();
   const isReturning = stack.length > 0;
   const overall = stackScore?.headlineScores?.overall;
   const overallLabel = stackScore?.headlineScores?.dimensionQuals?.overall?.label;
@@ -39,6 +39,7 @@ export function HomePage() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const stackParam = params.get('stack');
+    const nameParam = params.get('name');
     if (stackParam && stack.length === 0) {
       const ids = stackParam.split(',');
       const itemsToLoad = ids
@@ -51,6 +52,9 @@ export function HomePage() {
         }));
       if (itemsToLoad.length > 0) {
         loadStack(itemsToLoad);
+        if (nameParam) {
+          setStackName(nameParam);
+        }
       }
     }
     // One-shot URL hydration on mount; loadStack and stack are stable enough
@@ -99,9 +103,18 @@ export function HomePage() {
               <Activity className="w-4 h-4 text-primary-800 shrink-0" />
               <span className="text-ink-900 flex-1 truncate">
                 Welcome back —{' '}
-                <span className="font-semibold">
-                  {stack.length} supplement{stack.length === 1 ? '' : 's'}
-                </span>
+                {stackName ? (
+                  <>
+                    <span className="font-semibold">{stackName}</span>
+                    <span className="text-ink-500">
+                      {' · '}{stack.length} supplement{stack.length === 1 ? '' : 's'}
+                    </span>
+                  </>
+                ) : (
+                  <span className="font-semibold">
+                    {stack.length} supplement{stack.length === 1 ? '' : 's'}
+                  </span>
+                )}
                 {overall != null && (
                   <>
                     , Stack Score{' '}

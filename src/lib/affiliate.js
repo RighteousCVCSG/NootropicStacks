@@ -73,6 +73,53 @@ export function withAffiliateLink(url, options = {}) {
   return url;
 }
 
+// Shared display labels for vendors. Single source of truth so cards,
+// ship sheet, and price panel all use identical copy.
+export const VENDOR_LABEL = {
+  amazon: 'Amazon',
+  iherb: 'iHerb',
+  nootropicsdepot: 'Nootropics Depot',
+  nordicnaturals: 'Nordic Naturals',
+  buymodafinilonline: 'Modafinil Online',
+};
+
+// Short labels (for compact chips / 3-col footers where space is tight).
+export const VENDOR_LABEL_SHORT = {
+  amazon: 'Amazon',
+  iherb: 'iHerb',
+  nootropicsdepot: 'ND',
+  nordicnaturals: 'Nordic',
+  buymodafinilonline: 'Modafinil',
+};
+
+// Default fallback preference when we don't have a tracked-price winner.
+const VENDOR_PREF_ORDER = [
+  'nootropicsdepot',
+  'amazon',
+  'iherb',
+  'nordicnaturals',
+  'buymodafinilonline',
+];
+
+// Picks the vendor key the Buy button should route to. If we track prices
+// for the supplement, prefer the cheapest vendor that ALSO has an affiliate
+// link. Otherwise fall back to the canonical preference order. Cards, the
+// Ship This Build sheet, and the price comparison panel all funnel through
+// this so the user sees consistent "best price" routing across the site.
+export function pickPreferredVendor(supplementId, links, getCheapest) {
+  if (!links) return null;
+  if (typeof getCheapest === 'function') {
+    const cheapest = getCheapest(supplementId);
+    if (cheapest && links[cheapest.vendor]) return cheapest.vendor;
+  }
+  for (const v of VENDOR_PREF_ORDER) {
+    if (links[v]) return v;
+  }
+  return (
+    Object.keys(links).find((k) => k !== 'commission' && typeof links[k] === 'string') || null
+  );
+}
+
 function slugify(value) {
   return String(value)
     .toLowerCase()
