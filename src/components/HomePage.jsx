@@ -11,7 +11,8 @@ import { PredefinedStacks } from './PredefinedStacks.jsx';
 import { supplements } from '../data/supplements.js';
 import { Button } from '@/components/ui/button.jsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.jsx';
-import { Layers, Library, BookOpen, ArrowRight, Sparkles, HelpCircle } from 'lucide-react';
+import { Layers, Library, BookOpen, ArrowRight, Sparkles, HelpCircle, Activity } from 'lucide-react';
+import { HeroStackGauge } from './HeroStackGauge.jsx';
 
 const ARTICLE_COUNT = 93;
 
@@ -31,7 +32,10 @@ const FEATURED_STACKS = [
 export function HomePage() {
   const [selectedSupplement, setSelectedSupplement] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { stack, loadStack } = useStack();
+  const { stack, stackScore, loadStack, openDrawer } = useStack();
+  const isReturning = stack.length > 0;
+  const overall = stackScore?.headlineScores?.overall;
+  const overallLabel = stackScore?.headlineScores?.dimensionQuals?.overall?.label;
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -71,21 +75,72 @@ export function HomePage() {
 
       {/* Hero */}
       <section className="mb-10">
-        <div className="text-center max-w-3xl mx-auto mb-8">
-          <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary-800 bg-primary-100 px-3 py-1 rounded-full mb-4">
-            Free Nootropic Stack Builder
-          </span>
-          <h1
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-ink-900 leading-tight mb-4"
-            style={{ fontFamily: 'var(--font-display)' }}
-          >
-            Build smarter nootropic stacks,<br />
-            <span className="text-primary-800">backed by science.</span>
-          </h1>
-          <p className="text-ink-700 text-base sm:text-lg max-w-2xl mx-auto">
-            The PCPartPicker for nootropics. 195 supplements, 60+ interactions mapped, every claim cites PubMed.
-          </p>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center mb-8 max-w-5xl mx-auto">
+          <div className="md:col-span-7 text-center md:text-left">
+            <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary-800 bg-primary-100 px-3 py-1 rounded-full mb-4">
+              Free Nootropic Stack Builder
+            </span>
+            <h1
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-ink-900 leading-tight mb-4"
+              style={{ fontFamily: 'var(--font-display)' }}
+            >
+              Build smarter nootropic stacks,<br />
+              <span className="text-primary-800">backed by science.</span>
+            </h1>
+            <p className="text-ink-700 text-base sm:text-lg max-w-xl">
+              The PCPartPicker for nootropics. 195 supplements, 60+ interactions mapped, every claim cites PubMed.
+            </p>
+          </div>
+          <div className="md:col-span-5 flex justify-center pb-12 md:pb-14">
+            <HeroStackGauge />
+          </div>
         </div>
+
+        {/* Returning-user welcome — only renders when localStorage already has a stack */}
+        {isReturning && (
+          <div className="max-w-4xl mx-auto mb-4">
+            <div className="rounded-xl border border-primary-300 bg-primary-050 p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
+              <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary-800 text-ink-on-dark shrink-0">
+                <Activity className="w-5 h-5" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="text-xs uppercase tracking-widest font-semibold text-primary-800 mb-0.5">
+                  Welcome back
+                </div>
+                <div className="text-sm text-ink-900">
+                  Your stack has{' '}
+                  <span className="font-semibold">
+                    {stack.length} supplement{stack.length === 1 ? '' : 's'}
+                  </span>
+                  {overall != null && (
+                    <>
+                      {' '}— Stack Score{' '}
+                      <span className="font-semibold">{overall.toFixed(1)}</span>
+                      {overallLabel && (
+                        <span className="text-ink-500"> ({overallLabel})</span>
+                      )}
+                    </>
+                  )}
+                </div>
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={openDrawer}
+                  className="text-xs"
+                >
+                  View Stack
+                </Button>
+                <Link to="/stacks">
+                  <Button size="sm" className="text-xs bg-primary-800 hover:bg-primary-700 text-ink-on-dark">
+                    Optimize
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Three-door entry — pick your readiness level */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
