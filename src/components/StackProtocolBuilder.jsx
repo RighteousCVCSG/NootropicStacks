@@ -5,7 +5,7 @@ import { Clock, Sun, Coffee, Moon } from 'lucide-react';
 import { useStack } from '../contexts/StackContext.jsx';
 import { supplements } from '../data/supplements.js';
 
-const TIMING_MAP = {
+export const TIMING_MAP = {
   // Morning (with breakfast)
   morning: ['lions-mane', 'lion-mane', 'ashwagandha', 'vitamin-d', 'vitamin-d3', 'omega3',
             'fish-oil', 'coq10', 'creatine', 'bacopa', 'phosphatidylserine', 'alpha-gpc',
@@ -22,18 +22,24 @@ const TIMING_MAP = {
   bedtime: ['melatonin', 'magnesium', 'magnesium-glycinate', 'glycine', 'l-theanine'],
 };
 
-function getSupplementTiming(supplementId) {
+export function getSupplementTiming(supplementId) {
   if (TIMING_MAP.bedtime.includes(supplementId)) return 'bedtime';
   if (TIMING_MAP.prework.includes(supplementId)) return 'prework';
   if (TIMING_MAP.evening.includes(supplementId)) return 'evening';
   return 'morning'; // default to morning
 }
 
-const TIMING_CONFIG = {
-  morning: { label: 'Morning', subtitle: 'With breakfast', icon: Sun, color: 'text-orange-500', bg: 'bg-orange-50', border: 'border-orange-200' },
-  prework: { label: 'Pre-Work', subtitle: '30 min before focus session', icon: Coffee, color: 'text-blue-500', bg: 'bg-blue-50', border: 'border-blue-200' },
-  evening: { label: 'Evening', subtitle: 'With dinner', icon: Clock, color: 'text-purple-500', bg: 'bg-purple-50', border: 'border-purple-200' },
-  bedtime: { label: 'Bedtime', subtitle: '30-60 min before sleep', icon: Moon, color: 'text-indigo-500', bg: 'bg-indigo-50', border: 'border-indigo-200' },
+// Token-driven (Cognitive Lab) palette so the schedule view tracks
+// dark/light theme. Each phase maps to one of the brand accents:
+//   morning  → warn (amber sun)
+//   prework  → primary (violet focus)
+//   evening  → accent (cyan calm)
+//   bedtime  → primary-soft (deep violet)
+export const TIMING_CONFIG = {
+  morning: { label: 'Morning',  subtitle: 'With breakfast',            icon: Sun,    color: 'text-warn-500',    bg: 'bg-warn-100',    border: 'border-warn-500' },
+  prework: { label: 'Pre-Work', subtitle: '30 min before focus',       icon: Coffee, color: 'text-primary-800', bg: 'bg-primary-050', border: 'border-primary-300' },
+  evening: { label: 'Evening',  subtitle: 'With dinner',               icon: Clock,  color: 'text-accent-700',  bg: 'bg-accent-050',  border: 'border-accent-500' },
+  bedtime: { label: 'Bedtime',  subtitle: '30-60 min before sleep',    icon: Moon,   color: 'text-primary-900', bg: 'bg-primary-050', border: 'border-primary-800' },
 };
 
 export function StackProtocolBuilder() {
@@ -49,7 +55,7 @@ export function StackProtocolBuilder() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-gray-500 text-center py-4">Add supplements to your stack to see your daily dosing protocol.</p>
+          <p className="text-sm text-ink-500 text-center py-4">Add supplements to your stack to see your daily dosing protocol.</p>
         </CardContent>
       </Card>
     );
@@ -74,7 +80,7 @@ export function StackProtocolBuilder() {
           <Clock className="w-4 h-4" />
           Daily Protocol
         </CardTitle>
-        <p className="text-xs text-gray-500">Optimal timing based on your stack</p>
+        <p className="text-xs text-ink-500">Optimal timing based on your stack</p>
       </CardHeader>
       <CardContent className="space-y-3">
         {activeTimes.map(timing => {
@@ -84,21 +90,21 @@ export function StackProtocolBuilder() {
             <div key={timing} className={`p-3 rounded-lg border ${config.bg} ${config.border}`}>
               <div className="flex items-center gap-2 mb-2">
                 <Icon className={`w-4 h-4 ${config.color}`} />
-                <span className="text-sm font-semibold text-gray-800">{config.label}</span>
-                <span className="text-xs text-gray-500">{config.subtitle}</span>
+                <span className="text-sm font-semibold text-ink-900">{config.label}</span>
+                <span className="text-xs text-ink-500">{config.subtitle}</span>
               </div>
               <div className="flex flex-wrap gap-1.5">
                 {protocol[timing].map(sup => (
-                  <Badge key={sup.id} variant="outline" className="text-xs bg-white">
+                  <Badge key={sup.id} variant="outline" className="text-xs bg-surface-card">
                     {sup.name}
-                    {sup.dosage && <span className="ml-1 text-gray-400">{sup.dosage.min}{sup.dosage.unit}</span>}
+                    {sup.dosage && <span className="ml-1 text-ink-500">{sup.dosage.min}{sup.dosage.unit}</span>}
                   </Badge>
                 ))}
               </div>
             </div>
           );
         })}
-        <p className="text-xs text-gray-400 pt-1">
+        <p className="text-xs text-ink-500 pt-1">
           * Timing suggestions are general guidelines. Take fat-soluble supplements with food. Stimulants before 2pm to protect sleep.
         </p>
       </CardContent>

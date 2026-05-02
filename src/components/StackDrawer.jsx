@@ -9,10 +9,13 @@ import { AffiliateDisclosureInline } from './AffiliateDisclosure.jsx';
 import { track } from '../lib/analytics.js';
 import { Button } from '@/components/ui/button.jsx';
 import { Drawer, DrawerContent, DrawerTrigger, DrawerHeader, DrawerTitle, DrawerDescription, DrawerClose } from '@/components/ui/drawer.jsx';
+import { ShipBuildSheet } from './ShipBuildSheet.jsx';
+import { TIMING_CONFIG, getSupplementTiming } from './StackProtocolBuilder.jsx';
 import {
   Trash2, AlertTriangle, CheckCircle, XCircle,
   Save, ShoppingCart, ExternalLink, Share2, X, Layers,
-  Moon, Zap, Brain, Activity, ChevronDown, ChevronUp
+  Moon, Zap, Brain, Activity, ChevronDown, ChevronUp, Truck,
+  List, Clock
 } from 'lucide-react';
 
 const MONTHLY_COSTS = {
@@ -235,8 +238,53 @@ function ShareButton({ onShare, shareCopied }) {
   );
 }
 
+function ScheduleView({ stack }) {
+  const groups = { morning: [], prework: [], evening: [], bedtime: [] };
+  stack.forEach((item) => {
+    const supplement = supplements.find((s) => s.id === item.supplementId);
+    if (!supplement) return;
+    const timing = getSupplementTiming(item.supplementId);
+    groups[timing].push({ supplement, item });
+  });
+  const active = Object.keys(groups).filter((k) => groups[k].length > 0);
+
+  return (
+    <div className="space-y-2">
+      {active.map((timing) => {
+        const config = TIMING_CONFIG[timing];
+        const Icon = config.icon;
+        return (
+          <div key={timing} className={`p-2.5 rounded-lg border ${config.bg} ${config.border}`}>
+            <div className="flex items-center gap-1.5 mb-1.5">
+              <Icon className={`w-3.5 h-3.5 ${config.color}`} />
+              <span className="text-xs font-semibold text-ink-900">{config.label}</span>
+              <span className="text-[10px] text-ink-500">{config.subtitle}</span>
+            </div>
+            <div className="flex flex-wrap gap-1">
+              {groups[timing].map(({ supplement, item }) => (
+                <span
+                  key={supplement.id}
+                  className="text-[11px] px-1.5 py-0.5 rounded bg-surface-card border border-ink-200 text-ink-700"
+                >
+                  {supplement.name}{' '}
+                  <span className="text-ink-500">
+                    {item.dosage}
+                    {supplement.dosage.unit}
+                  </span>
+                </span>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 function DrawerBody({ stack, safetyAnalysis, stackScore, user, onRemove, onDosageChange, onClear, onSave, showSaveDialog, setShowSaveDialog }) {
   const [shareCopied, setShareCopied] = useState(false);
+  const [shipOpen, setShipOpen] = useState(false);
+  const [view, setView] = useState('list'); // 'list' | 'schedule'
 
   const handleShare = () => {
     const ids = stack.map(s => s.supplementId).join(',');
@@ -260,18 +308,60 @@ function DrawerBody({ stack, safetyAnalysis, stackScore, user, onRemove, onDosag
 
   return (
     <div className="space-y-4">
+      <Button
+        size="sm"
+        onClick={() => setShipOpen(true)}
+        className="w-full bg-primary-800 hover:bg-primary-700 text-ink-on-dark"
+      >
+        <Truck className="w-4 h-4 mr-1.5" />
+        Ship This Build
+      </Button>
+      <ShipBuildSheet open={shipOpen} onOpenChange={setShipOpen} stack={stack} />
+
       <StackScoreMini stackScore={stackScore} />
       <StackWarnings safetyAnalysis={safetyAnalysis} />
-      <div className="space-y-2">
-        {stack.map(item => (
-          <StackItemRow
-            key={item.supplementId}
-            item={item}
-            onRemove={onRemove}
-            onDosageChange={onDosageChange}
-          />
-        ))}
+
+      <div className="flex items-center gap-1 p-0.5 rounded-md bg-surface-sunk text-xs">
+        <button
+          type="button"
+          onClick={() => setView('list')}
+          aria-pressed={view === 'list'}
+          className={`flex-1 inline-flex items-center justify-center gap-1.5 py-1 rounded transition-colors ${
+            view === 'list'
+              ? 'bg-surface-card text-ink-900 font-medium shadow-1'
+              : 'text-ink-500 hover:text-ink-700'
+          }`}
+        >
+          <List className="w-3 h-3" /> List
+        </button>
+        <button
+          type="button"
+          onClick={() => setView('schedule')}
+          aria-pressed={view === 'schedule'}
+          className={`flex-1 inline-flex items-center justify-center gap-1.5 py-1 rounded transition-colors ${
+            view === 'schedule'
+              ? 'bg-surface-card text-ink-900 font-medium shadow-1'
+              : 'text-ink-500 hover:text-ink-700'
+          }`}
+        >
+          <Clock className="w-3 h-3" /> Schedule
+        </button>
       </div>
+
+      {view === 'list' ? (
+        <div className="space-y-2">
+          {stack.map(item => (
+            <StackItemRow
+              key={item.supplementId}
+              item={item}
+              onRemove={onRemove}
+              onDosageChange={onDosageChange}
+            />
+          ))}
+        </div>
+      ) : (
+        <ScheduleView stack={stack} />
+      )}
       <StackShopLinks stack={stack} />
       <div className="border-t border-ink-200" />
       <StackCost stack={stack} />
