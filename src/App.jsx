@@ -11,6 +11,7 @@ import { SupplementModal } from './components/SupplementModal.jsx';
 import { SEOOptimizer } from './components/SEOOptimizer.jsx';
 import { StackScoreWidget } from './components/StackScoreWidget.jsx';
 import { StackDrawer } from './components/StackDrawer.jsx';
+import { CommandPalette } from './components/CommandPalette.jsx';
 import { Toaster } from './components/ui/sonner.jsx';
 import { NewsletterCapture } from './components/NewsletterCapture.jsx';
 import { JsonLd } from './components/JsonLd.jsx';
@@ -341,6 +342,9 @@ function App() {
 
         {/* Stack Drawer */}
         <StackDrawer />
+
+        {/* Cmd+K / Ctrl+K command palette */}
+        <CommandPalette />
 
         {/* Toast notifications (used by addSupplement and friends) */}
         <Toaster />

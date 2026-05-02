@@ -10,6 +10,7 @@ import { track } from '../lib/analytics.js';
 import { Button } from '@/components/ui/button.jsx';
 import { Drawer, DrawerContent, DrawerTrigger, DrawerHeader, DrawerTitle, DrawerDescription, DrawerClose } from '@/components/ui/drawer.jsx';
 import { ShipBuildSheet } from './ShipBuildSheet.jsx';
+import { StackPosterButton } from './StackPosterButton.jsx';
 import { TIMING_CONFIG, getSupplementTiming } from './StackProtocolBuilder.jsx';
 import {
   Trash2, AlertTriangle, CheckCircle, XCircle,
@@ -365,20 +366,21 @@ function DrawerBody({ stack, safetyAnalysis, stackScore, user, onRemove, onDosag
       <StackShopLinks stack={stack} />
       <div className="border-t border-ink-200" />
       <StackCost stack={stack} />
-      <div className="flex items-center gap-2 pt-2">
+      <div className="flex items-center gap-2 pt-2 flex-wrap">
         {user && (
           <Button variant="outline" size="sm" onClick={() => setShowSaveDialog(true)} className="flex-1 text-xs">
             <Save className="w-3.5 h-3.5 mr-1" />
-            Save Stack
+            Save
           </Button>
         )}
+        <StackPosterButton stack={stack} stackScore={stackScore} />
         <Button
           variant="tertiary"
           size="sm"
           onClick={onClear}
           className="flex-1 text-danger-500 hover:text-danger-700 text-xs"
         >
-          Clear Stack
+          Clear
         </Button>
         <ShareButton onShare={handleShare} shareCopied={shareCopied} />
       </div>
