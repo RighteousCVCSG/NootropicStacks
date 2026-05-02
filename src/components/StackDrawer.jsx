@@ -6,6 +6,7 @@ import { SaveStackDialog } from './SaveStackDialog.jsx';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
 import { withAffiliateUtms } from '@/lib/affiliate.js';
 import { AffiliateDisclosureInline } from './AffiliateDisclosure.jsx';
+import { track } from '../lib/analytics.js';
 import { Button } from '@/components/ui/button.jsx';
 import { Drawer, DrawerContent, DrawerTrigger, DrawerHeader, DrawerTitle, DrawerDescription, DrawerClose } from '@/components/ui/drawer.jsx';
 import {
@@ -244,6 +245,7 @@ function DrawerBody({ stack, safetyAnalysis, stackScore, user, onRemove, onDosag
       setShareCopied(true);
       setTimeout(() => setShareCopied(false), 2000);
     });
+    track('stack_share', { stack_size: stack.length, supplement_ids: ids });
   };
 
   if (stack.length === 0) {

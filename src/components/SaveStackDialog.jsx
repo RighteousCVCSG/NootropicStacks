@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useStack } from '../contexts/StackContext.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
+import { track } from '../lib/analytics.js';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog.jsx';
 import { Input } from '@/components/ui/input.jsx';
 import { Label } from '@/components/ui/label.jsx';
@@ -32,6 +33,7 @@ export function SaveStackDialog({ open, onOpenChange, onSaved }) {
       if (!res.ok) throw new Error(data.error || 'Failed to save');
       setName('');
       onOpenChange(false);
+      track('stack_save', { stack_size: stack.length, stack_name: name.trim() });
       if (onSaved) onSaved(data);
     } catch (err) {
       setError(err.message);
