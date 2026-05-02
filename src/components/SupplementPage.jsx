@@ -100,7 +100,7 @@ export function SupplementPage() {
             </div>
           </div>
           <Button
-            size="lg"
+            size="sm"
             onClick={handleAddToStack}
             disabled={isInStack}
           >

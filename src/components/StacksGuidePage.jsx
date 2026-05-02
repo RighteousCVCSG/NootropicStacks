@@ -136,7 +136,7 @@ export function StacksGuidePage() {
             />
             <Button
               type="submit"
-              size="lg"
+              size="sm"
               disabled={status === 'loading' || !email}
               className="shrink-0"
             >
