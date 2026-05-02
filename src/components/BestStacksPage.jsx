@@ -275,11 +275,11 @@ export function BestStacksPage() {
           })}
         </div>
 
-        <div className="mt-10 p-3 bg-primary-700 rounded-md text-white text-center">
+        <div className="mt-10 p-3 bg-primary-050 border border-primary-300 rounded-md text-primary-900 text-center">
           <Brain className="w-8 h-8 mx-auto mb-2 opacity-90" />
           <h2 className="text-xl font-semibold mb-2">Customize Any Stack</h2>
-          <p className="text-primary-100 text-sm mb-4">Use the free Stack Builder to swap supplements, check interactions, adjust doses, and get a personalized Stack Score.</p>
-          <Link to="/" className="inline-block bg-white text-primary-800 font-semibold px-6 py-2.5 rounded-md hover:bg-primary-050 transition-colors">
+          <p className="text-primary-700 text-sm mb-4">Use the free Stack Builder to swap supplements, check interactions, adjust doses, and get a personalized Stack Score.</p>
+          <Link to="/build" className="inline-block bg-primary-700 text-white font-semibold px-6 py-2.5 rounded-md hover:bg-primary-800 transition-colors">
             Open Stack Builder →
           </Link>
         </div>

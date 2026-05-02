@@ -447,7 +447,7 @@ export function MonetizationManager() {
             </div>
             <div className="w-full bg-ink-200 rounded-full h-2">
               <div 
-                className="bg-accent-0500 h-2 rounded-full transition-all duration-300"
+                className="bg-accent-500 h-2 rounded-full transition-all duration-300"
                 style={{ width: `${Math.min(getDailyProgress(), 100)}%` }}
               ></div>
             </div>

@@ -69,7 +69,7 @@ export function StacksGuidePage() {
           <a
             href="/lead-magnet-v2.pdf"
             download
-            className="inline-flex items-center gap-2 bg-accent-600 hover:bg-accent-0500 text-white px-6 py-3 rounded-md font-medium transition-colors text-base"
+            className="inline-flex items-center gap-2 bg-accent-600 hover:bg-accent-500 text-white px-6 py-3 rounded-md font-medium transition-colors text-base"
           >
             <Download className="w-5 h-5" />
             Download the PDF

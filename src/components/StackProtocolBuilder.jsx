@@ -32,9 +32,9 @@ export function getSupplementTiming(supplementId) {
 // Token-driven (Cognitive Lab) palette so the schedule view tracks
 // dark/light theme. Each phase maps to one of the brand accents:
 //   morning  → warn (amber sun)
-//   prework  → primary (violet focus)
+// prework  → primary (navy focus)
 //   evening  → accent (cyan calm)
-//   bedtime  → primary-soft (deep violet)
+// bedtime  → primary-soft (deep navy)
 export const TIMING_CONFIG = {
   morning: { label: 'Morning',  subtitle: 'With breakfast',            icon: Sun,    color: 'text-warn-500',    bg: 'bg-warn-100',    border: 'border-warn-500' },
   prework: { label: 'Pre-Work', subtitle: '30 min before focus',       icon: Coffee, color: 'text-primary-800', bg: 'bg-primary-050', border: 'border-primary-300' },

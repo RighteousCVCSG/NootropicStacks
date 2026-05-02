@@ -345,7 +345,7 @@ export function CelebrityStacksPage() {
             actually works for you.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link to="/">
+            <Link to="/build">
               <Button className="gap-2 w-full sm:w-auto">
                 Open Stack Builder <ArrowRight className="w-4 h-4" />
               </Button>

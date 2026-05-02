@@ -234,7 +234,7 @@ export function NootropicsForAnxietyPage() {
             <p className="text-xs text-primary-800">Use the free Stack Builder to combine supplements, check interactions, and get a Stack Score.</p>
           </div>
           <Link
-            to="/"
+            to="/build"
             className="flex-shrink-0 inline-flex items-center gap-1.5 bg-primary-700 hover:bg-primary-800 text-white text-sm font-medium px-4 py-2 rounded-md transition-colors"
           >
             <Brain className="w-4 h-4" /> Build My Stack
@@ -248,7 +248,7 @@ export function NootropicsForAnxietyPage() {
             <Card key={s.id} className="border-ink-200 hover:shadow-1 transition-shadow">
               <CardContent className="pt-5">
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-9 h-9 rounded-full bg-primary-100 border border-indigo-200 flex items-center justify-center font-semibold text-sm text-primary-800">
+                  <div className="flex-shrink-0 w-9 h-9 rounded-full bg-primary-100 border border-primary-300 flex items-center justify-center font-semibold text-sm text-primary-800">
                     {s.rank}
                   </div>
                   <div className="flex-1 min-w-0">
@@ -349,15 +349,15 @@ export function NootropicsForAnxietyPage() {
         </div>
 
         {/* CTA to Stack Builder */}
-        <div className="mb-6 p-3 bg-primary-700 rounded-md text-white text-center">
+        <div className="mb-6 p-3 bg-primary-050 border border-primary-300 rounded-md text-primary-900 text-center">
           <Brain className="w-8 h-8 mx-auto mb-2 opacity-90" />
           <h2 className="text-xl font-semibold mb-2">Build Your Anxiety Stack</h2>
-          <p className="text-primary-100 text-sm mb-4 max-w-md mx-auto">
+          <p className="text-primary-700 text-sm mb-4 max-w-md mx-auto">
             Use the free Stack Builder to combine these supplements, check for interactions, and get a personalized Stack Score based on your goals.
           </p>
           <Link
-            to="/"
-            className="inline-block bg-white text-primary-800 font-semibold px-6 py-2.5 rounded-md hover:bg-primary-050 transition-colors"
+            to="/build"
+            className="inline-block bg-primary-700 text-white font-semibold px-6 py-2.5 rounded-md hover:bg-primary-800 transition-colors"
           >
             Open Stack Builder →
           </Link>

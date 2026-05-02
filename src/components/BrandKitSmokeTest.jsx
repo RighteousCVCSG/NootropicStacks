@@ -54,7 +54,7 @@ const INK = [
 ];
 
 const ACCENTS = [
-  { name: 'Primary (violet)', varName: '--accent-primary' },
+  { name: 'Primary (navy)', varName: '--accent-primary' },
   { name: 'Primary hover', varName: '--accent-primary-hover' },
   { name: 'Primary soft', varName: '--accent-primary-soft' },
   { name: 'Secondary (cyan)', varName: '--accent-secondary' },

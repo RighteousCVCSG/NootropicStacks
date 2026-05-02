@@ -13,7 +13,7 @@ const VARIANT_STYLES = {
     successIcon: CheckCircle,
   },
   save_gate: {
-    wrapper: 'bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-200 rounded-md p-3',
+    wrapper: 'bg-gradient-to-br from-primary-050 to-info-050 border border-primary-300 rounded-md p-3',
     headline: 'text-base font-semibold text-primary-900',
     subtext: 'text-xs text-primary-700',
     inputClass: 'text-sm h-9',

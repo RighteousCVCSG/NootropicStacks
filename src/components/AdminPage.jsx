@@ -17,7 +17,7 @@ function StatCard({ icon: Icon, label, value, color = 'blue' }) {
   const colors = {
     blue: 'bg-primary-050 text-primary-700 border-blue-100',
     green: 'bg-accent-050 text-accent-700 border-green-100',
-    purple: 'bg-primary-050 text-primary-700 border-purple-100',
+    purple: 'bg-primary-050 text-primary-700 border-primary-300',
     orange: 'bg-warn-100 text-warn-700 border-orange-100',
   };
   return (

@@ -238,7 +238,7 @@ export function NootropicsForFocusPage() {
           </div>
 
           <Link
-            to="/"
+            to="/build"
             className="inline-flex items-center gap-2 bg-primary-700 hover:bg-primary-800 text-white font-semibold px-6 py-3 rounded-md transition-colors text-sm sm:text-base"
           >
             <Brain className="w-4 h-4" />
@@ -282,7 +282,7 @@ export function NootropicsForFocusPage() {
                           </div>
                           <div className="h-2 bg-surface-sunk rounded-full overflow-hidden">
                             <div
-                              className="h-full bg-primary-0500 rounded-full transition-all"
+                              className="h-full bg-primary-500 rounded-full transition-all"
                               style={{ width: scoreBarWidth }}
                             />
                           </div>
@@ -423,7 +423,7 @@ export function NootropicsForFocusPage() {
         </section>
 
         {/* ── CTA ── */}
-        <div className="mb-6 p-3 sm:p-4 bg-primary-700 rounded-md text-white text-center">
+        <div className="mb-6 p-3 sm:p-4 bg-primary-050 border border-primary-300 rounded-md text-primary-900 text-center">
           <Brain className="w-9 h-9 mx-auto mb-3 opacity-90" />
           <h2 className="text-xl sm:text-2xl font-semibold mb-2">Build Your Personal Focus Stack — Free</h2>
           <p className="text-primary-100 text-sm mb-5 max-w-md mx-auto">
@@ -431,7 +431,7 @@ export function NootropicsForFocusPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
-              to="/"
+              to="/build"
               className="inline-flex items-center justify-center gap-2 bg-white text-primary-800 font-semibold px-6 py-3 rounded-md hover:bg-primary-050 transition-colors"
             >
               <Brain className="w-4 h-4" />
@@ -439,7 +439,7 @@ export function NootropicsForFocusPage() {
             </Link>
             <Link
               to="/quiz"
-              className="inline-flex items-center justify-center gap-2 bg-primary-0500 hover:bg-primary-400 text-white font-semibold px-6 py-3 rounded-md transition-colors border border-blue-400"
+              className="inline-flex items-center justify-center gap-2 bg-primary-500 hover:bg-primary-400 text-white font-semibold px-6 py-3 rounded-md transition-colors border border-primary-300"
             >
               Take the Stack Quiz
             </Link>

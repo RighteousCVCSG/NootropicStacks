@@ -7,7 +7,6 @@ import { StackProvider } from './contexts/StackContext.jsx';
 import { trackPageview } from './lib/analytics.js';
 import { HomePage } from './components/HomePage.jsx';
 import { SupplementLibrary } from './components/SupplementLibrary.jsx';
-import { SupplementModal } from './components/SupplementModal.jsx';
 import { SEOOptimizer } from './components/SEOOptimizer.jsx';
 import { StackScoreWidget } from './components/StackScoreWidget.jsx';
 import { StackDrawer } from './components/StackDrawer.jsx';
@@ -126,30 +125,13 @@ function GuideRedirect() {
   return <Navigate to={`/blog/${slug}`} replace />;
 }
 
-// Library page (full-width)
+// Library page (full-width). Cards link straight to /supplements/<id> —
+// no inline modal, so we don't need any local state here.
 function LibraryPage() {
-  const [selectedSupplement, setSelectedSupplement] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleViewDetails = (supplement) => {
-    setSelectedSupplement(supplement);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedSupplement(null);
-  };
-
   return (
     <>
       <SEOOptimizer page="supplements" />
-      <SupplementLibrary onViewDetails={handleViewDetails} />
-      <SupplementModal
-        supplement={selectedSupplement}
-        isOpen={isModalOpen}
-        onClose={closeModal}
-      />
+      <SupplementLibrary />
     </>
   );
 }

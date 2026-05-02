@@ -138,9 +138,9 @@ const CATEGORY_TABS = [
 
 const CATEGORY_COLORS = {
   'Supplement Deep Dives': 'bg-primary/10 text-primary border-primary/20',
-  'Stack Building': 'bg-accent-0500/10 text-accent-300 border-green-500/20',
-  'Science & Research': 'bg-primary-0500/10 text-primary-500 border-primary-500/20',
-  'Lifestyle': 'bg-primary-0500/10 text-primary-500 border-purple-500/20',
+  'Stack Building': 'bg-accent-500/10 text-accent-300 border-accent-500/30',
+  'Science & Research': 'bg-primary-500/10 text-primary-500 border-primary-500/20',
+  'Lifestyle': 'bg-primary-500/10 text-primary-500 border-primary-500/30',
 };
 
 function VideoCard({ video }) {
@@ -288,7 +288,7 @@ export default function VideosPage() {
             Use the Stack Builder to combine the supplements you've researched into a personalized, interaction-checked protocol.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link to="/">
+            <Link to="/build">
               <Button className="gap-2">
                 Build Your Stack <ArrowRight className="w-4 h-4" />
               </Button>

@@ -188,7 +188,7 @@ export function ShipBuildSheet({ open, onOpenChange, stack }) {
             type="button"
             onClick={handleOpenAll}
             disabled={shippableRows.length === 0}
-            className="w-full inline-flex items-center justify-center gap-1.5 h-10 rounded-md text-sm font-medium bg-primary-050 hover:bg-primary-100 text-primary-800 border border-primary-300 hover:border-primary-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full inline-flex items-center justify-center gap-1.5 h-9 rounded-md text-sm font-medium bg-primary-050 hover:bg-primary-100 text-primary-800 border border-primary-300 hover:border-primary-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <ShoppingCart className="w-4 h-4" />
             Open all carts ({shippableRows.length}{' '}

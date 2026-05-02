@@ -253,10 +253,10 @@ export function SupplementCompare() {
           <CardContent>
             <p className="text-accent-700 mb-4">
               {supplementA.name} and {supplementB.name} can often be combined in a stack for complementary effects.
-              Use our <Link to="/" className="font-semibold underline">Stack Builder</Link> to check for interactions
+              Use our <Link to="/build" className="font-semibold underline">Stack Builder</Link> to check for interactions
               and optimize your dosages.
             </p>
-            <Link to="/">
+            <Link to="/build">
               <Button variant="outline" className="border-green-600 text-accent-700 hover:bg-accent-100">
                 Open Stack Builder
               </Button>

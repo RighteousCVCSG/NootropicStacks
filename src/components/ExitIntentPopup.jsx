@@ -52,7 +52,7 @@ export function ExitIntentPopup({ articleSlug }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      <div className="relative w-full max-w-md bg-white rounded-md shadow-2xl p-3 sm:p-4 animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-md bg-white rounded-md shadow-2 border border-ink-200 p-3 sm:p-4 animate-in fade-in zoom-in-95 duration-200">
         <button
           onClick={handleDismiss}
           className="absolute top-3 right-3 p-1.5 rounded-md text-ink-400 hover:text-ink-700 hover:bg-surface-sunk transition-colors"

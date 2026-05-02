@@ -193,7 +193,7 @@ export function LeadMagnetDownloadPage() {
           <p className="text-sm text-ink-700 mb-4">
             Use the free stack builder to combine any of 195 supplements, check interactions, and optimize your Stack Score.
           </p>
-          <Link to="/">
+          <Link to="/build">
             <Button size="sm" className="gap-2">
               <Pill className="w-4 h-4" />
               Open Stack Builder

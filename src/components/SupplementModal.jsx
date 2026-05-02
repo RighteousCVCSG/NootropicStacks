@@ -33,7 +33,7 @@ export function SupplementModal({ supplement, isOpen, onClose }) {
       'amino-acid': 'bg-pink-100 text-pink-800',
       'antioxidant': 'bg-danger-100 text-danger-700',
       'anti-inflammatory': 'bg-primary-100 text-primary-800',
-      'sleep': 'bg-violet-100 text-violet-800',
+      'sleep': 'bg-info-050 text-info-700 border border-info-300',
       'performance': 'bg-emerald-100 text-emerald-800',
       'essential': 'bg-teal-100 text-teal-800',
       'gut-health': 'bg-lime-100 text-lime-800',

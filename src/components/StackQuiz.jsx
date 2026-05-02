@@ -299,7 +299,7 @@ export function StackQuiz() {
             <Sparkles className="h-4 w-4 text-primary-700" />
             <AlertDescription className="text-primary-800">
               <strong>Next step:</strong> Add these supplements to your stack using the buttons above,
-              then visit the <Link to="/" className="font-semibold underline">Stack Builder</Link> to
+              then visit the <Link to="/build" className="font-semibold underline">Stack Builder</Link> to
               see real-time effects, interaction warnings, and fine-tune your dosages.
             </AlertDescription>
           </Alert>
@@ -316,7 +316,7 @@ export function StackQuiz() {
             <Button variant="outline" onClick={() => { setShowResults(false); setStep(0); setAnswers({}); }}>
               Retake Quiz
             </Button>
-            <Link to="/">
+            <Link to="/build">
               <Button>
                 <Sparkles className="w-4 h-4 mr-2" />
                 Open Stack Builder
@@ -397,7 +397,7 @@ export function StackQuiz() {
           >
             <ArrowLeft className="w-4 h-4 mr-1" /> Back
           </Button>
-          <Link to="/" className="text-sm text-ink-500 hover:text-ink-700 flex items-center">
+          <Link to="/build" className="text-sm text-ink-500 hover:text-ink-700 flex items-center">
             Skip quiz → use Stack Builder
           </Link>
         </div>

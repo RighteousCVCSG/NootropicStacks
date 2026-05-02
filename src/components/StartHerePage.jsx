@@ -56,7 +56,7 @@ const STEPS = [
     description: 'Resist the urge to stack 8 things on day one. Start with 2–3 proven compounds. Give them 4–8 weeks. Track effects. Then add or adjust. More isn\'t better — targeted is better.',
     icon: Layers,
     color: 'bg-primary-100 text-primary-800',
-    action: { label: 'Open Stack Builder →', to: '/' }
+    action: { label: 'Open Stack Builder →', to: '/build' }
   },
   {
     number: '03',
@@ -177,7 +177,7 @@ export function StartHerePage() {
             <HelpCircle className="w-4 h-4" />
             Take the Quiz
           </Link>
-          <Link to="/" className="inline-flex items-center gap-2 bg-white border border-ink-200 hover:border-primary-300 text-ink-700 px-5 py-2.5 rounded-md font-medium transition-colors">
+          <Link to="/build" className="inline-flex items-center gap-2 bg-white border border-ink-200 hover:border-primary-300 text-ink-700 px-5 py-2.5 rounded-md font-medium transition-colors">
             <Layers className="w-4 h-4" />
             Open Stack Builder
           </Link>
@@ -324,11 +324,11 @@ export function StartHerePage() {
           and get a real-time Stack Score across synergy, coverage, balance, and efficiency.
         </p>
         <div className="flex flex-wrap gap-3 justify-center">
-          <Link to="/" className="inline-flex items-center gap-2 bg-white text-primary-800 hover:bg-primary-050 px-5 py-2.5 rounded-md font-semibold transition-colors">
+          <Link to="/build" className="inline-flex items-center gap-2 bg-white text-primary-800 hover:bg-primary-050 px-5 py-2.5 rounded-md font-semibold transition-colors">
             <Layers className="w-4 h-4" />
             Open Stack Builder
           </Link>
-          <Link to="/quiz" className="inline-flex items-center gap-2 bg-primary-0500 hover:bg-primary-400 text-white border border-blue-400 px-5 py-2.5 rounded-md font-medium transition-colors">
+          <Link to="/quiz" className="inline-flex items-center gap-2 bg-primary-500 hover:bg-primary-400 text-white border border-primary-300 px-5 py-2.5 rounded-md font-medium transition-colors">
             <HelpCircle className="w-4 h-4" />
             Take the Quiz
           </Link>

@@ -493,7 +493,7 @@ function DrawerBody({ stack, stackName, safetyAnalysis, stackScore, user, onRemo
         ref={shipBtnRef}
         type="button"
         onClick={() => setShipOpen(true)}
-        className="w-full inline-flex items-center justify-center gap-1.5 h-9 rounded-md text-sm font-medium bg-primary-050 hover:bg-primary-100 text-primary-800 border border-primary-300 hover:border-primary-500 transition-colors"
+        className="w-full inline-flex items-center justify-center gap-1.5 h-8 rounded-md text-sm font-medium bg-primary-050 hover:bg-primary-100 text-primary-800 border border-primary-300 hover:border-primary-500 transition-colors"
       >
         <Truck className="w-4 h-4" />
         Ship This Build

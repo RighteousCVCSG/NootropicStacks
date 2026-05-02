@@ -32,8 +32,8 @@ const EFFECT_ICONS = {
 };
 
 function getEffectBarColor(value) {
-  if (value >= 7) return 'bg-accent-0500';
-  if (value >= 4) return 'bg-primary-0500';
+  if (value >= 7) return 'bg-accent-500';
+  if (value >= 4) return 'bg-primary-500';
   if (value >= 1) return 'bg-ink-400';
   if (value < 0) return 'bg-danger-500';
   return 'bg-ink-200';
@@ -50,7 +50,7 @@ function getCategoryColor(category) {
     essential: 'bg-teal-100 text-teal-800',
     longevity: 'bg-primary-100 text-primary-800',
     performance: 'bg-emerald-100 text-emerald-800',
-    sleep: 'bg-violet-100 text-violet-800',
+    sleep: 'bg-info-050 text-info-700 border border-info-300',
   };
   return colors[category] || 'bg-surface-sunk text-ink-900';
 }
@@ -124,7 +124,7 @@ function SupplementSelect({ label, selected, onChange, exclude }) {
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="w-full text-left flex items-center justify-between gap-2 px-3 py-2.5 border border-ink-300 rounded-md bg-white hover:border-blue-400 focus:outline-none focus:border-primary-500 transition-colors"
+        className="w-full text-left flex items-center justify-between gap-2 px-3 py-2.5 border border-ink-300 rounded-md bg-white hover:border-primary-500 focus:outline-none focus:border-primary-500 transition-colors"
       >
         <span className={selected ? 'text-ink-900 font-medium' : 'text-ink-400'}>
           {selected ? selected.name : 'Search supplements…'}
@@ -143,7 +143,7 @@ function SupplementSelect({ label, selected, onChange, exclude }) {
               value={query}
               onChange={e => setQuery(e.target.value)}
               placeholder="Type to search…"
-              className="w-full px-2 py-1.5 text-sm border border-ink-200 rounded focus:outline-none focus:border-blue-400"
+              className="w-full px-2 py-1.5 text-sm border border-ink-200 rounded focus:outline-none focus:border-primary-500"
             />
           </div>
           <ul className="max-h-52 overflow-y-auto">

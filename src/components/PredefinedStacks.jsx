@@ -179,7 +179,7 @@ export function PredefinedStacks() {
             <span className="text-sm font-medium">Safety Score</span>
             <div className="flex items-center gap-2">
               <div className={`w-2 h-2 rounded-full ${
-                analysis.safetyScore >= 80 ? 'bg-accent-0500' : 
+                analysis.safetyScore >= 80 ? 'bg-accent-500' : 
                 analysis.safetyScore >= 60 ? 'bg-warn-1000' : 'bg-danger-1000'
               }`} />
               <span className="text-sm">{analysis.safetyScore}/100</span>
@@ -325,7 +325,7 @@ export function PredefinedStacks() {
                     <span className="font-medium">Overall Safety Score</span>
                     <div className="flex items-center gap-2">
                       <div className={`w-3 h-3 rounded-full ${
-                        analysis.safetyScore >= 80 ? 'bg-accent-0500' : 
+                        analysis.safetyScore >= 80 ? 'bg-accent-500' : 
                         analysis.safetyScore >= 60 ? 'bg-warn-1000' : 'bg-danger-1000'
                       }`} />
                       <span className="font-semibold">{analysis.safetyScore}/100</span>

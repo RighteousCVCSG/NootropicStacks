@@ -39,7 +39,7 @@ export function HeroStackGauge() {
     score >= 80
       ? 'var(--color-accent-500)'   // strong = cyan
       : score >= 60
-      ? 'var(--color-primary-500)'  // moderate = violet
+      ? 'var(--color-primary-500)'  // moderate = primary navy
       : 'var(--color-ink-400)';     // low = muted
 
   return (

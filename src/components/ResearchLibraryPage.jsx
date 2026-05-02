@@ -394,7 +394,7 @@ export function ResearchLibraryPage() {
             Start Here <ArrowRight className="w-3.5 h-3.5" />
           </span>
         </Link>
-        <Link to="/" className="p-3 rounded-md border border-primary-300 bg-primary-050 text-center hover:border-blue-400 hover:shadow-sm transition-all">
+        <Link to="/build" className="p-3 rounded-md border border-primary-300 bg-primary-050 text-center hover:border-primary-500 hover:shadow-sm transition-all">
           <FlaskConical className="w-6 h-6 text-primary-700 mx-auto mb-3" />
           <h2 className="font-semibold text-ink-900 mb-2">Build your stack</h2>
           <p className="text-xs text-ink-500 mb-4">

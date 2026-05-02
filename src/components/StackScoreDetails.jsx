@@ -215,7 +215,7 @@ export function StackScoreDetails({ open, onClose, stackScore }) {
                   <span className="w-20 capitalize text-ink-700">{goal}</span>
                   <div className="flex-1 h-2 bg-ink-200 rounded-full overflow-hidden">
                     <div
-                      className={`h-full rounded-full transition-all ${value > 6 ? 'bg-accent-0500' : value > 4 ? 'bg-primary-0500' : 'bg-danger-500'}`}
+                      className={`h-full rounded-full transition-all ${value > 6 ? 'bg-accent-500' : value > 4 ? 'bg-primary-500' : 'bg-danger-500'}`}
                       style={{ width: `${Math.min(100, (value / 9.5) * 100)}%` }}
                     />
                   </div>
