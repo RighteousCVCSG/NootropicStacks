@@ -4,11 +4,17 @@ import { Button } from '@/components/ui/button.jsx';
 
 const STORAGE_KEY = 'noo-theme';
 
+function readInitialTheme() {
+  if (typeof window === 'undefined') return 'dark';
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (stored === 'dark' || stored === 'light') return stored;
+  // First visit: honor OS preference; fall back to dark.
+  if (window.matchMedia?.('(prefers-color-scheme: light)').matches) return 'light';
+  return 'dark';
+}
+
 export function ThemeToggle() {
-  const [theme, setTheme] = useState(() => {
-    if (typeof window === 'undefined') return 'dark';
-    return localStorage.getItem(STORAGE_KEY) || 'dark';
-  });
+  const [theme, setTheme] = useState(readInitialTheme);
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;

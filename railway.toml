@@ -12,4 +12,7 @@ nixLibs = []
 cmds = ["npm install -g corepack@0.24.1 && corepack enable", "pnpm install --no-frozen-lockfile"]
 
 [phases.build]
-cmds = ["pnpm run build"]
+# build:full = build + prerender via headless Chrome so JSON-LD/OG/canonical
+# ship in static HTML for non-JS-executing AI crawlers (GPTBot, ClaudeBot,
+# PerplexityBot). Chromium is provided by aptPkgs in [phases.setup].
+cmds = ["pnpm run build:full"]
