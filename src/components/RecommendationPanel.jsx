@@ -93,7 +93,7 @@ export function RecommendationPanel() {
                 <button
                   type="button"
                   onClick={() => addSupplement(supplement)}
-                  className="inline-flex items-center gap-1 h-7 px-2 rounded-md text-xs font-medium bg-primary-800 hover:bg-primary-700 text-ink-on-dark transition-colors shrink-0"
+                  className="inline-flex items-center gap-1 h-7 px-2 rounded-md text-xs font-medium bg-primary-050 hover:bg-primary-100 text-primary-800 border border-primary-300 hover:border-primary-500 transition-colors shrink-0"
                   aria-label={`Add ${supplement.name} to stack`}
                 >
                   <Plus className="w-3 h-3" />

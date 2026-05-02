@@ -390,15 +390,15 @@ function DrawerBody({ stack, stackName, safetyAnalysis, stackScore, user, onRemo
       {/* Primary "ship the whole build" CTA lives BELOW the list so the
           drawer answers "what's in my stack?" before "do you want to buy?".
           The top inline anchor (when stack.length >= 3) scrolls here. */}
-      <Button
+      <button
         ref={shipBtnRef}
-        size="sm"
+        type="button"
         onClick={() => setShipOpen(true)}
-        className="w-full bg-primary-800 hover:bg-primary-700 text-ink-on-dark"
+        className="w-full inline-flex items-center justify-center gap-1.5 h-9 rounded-md text-sm font-medium bg-primary-050 hover:bg-primary-100 text-primary-800 border border-primary-300 hover:border-primary-500 transition-colors"
       >
-        <Truck className="w-4 h-4 mr-1.5" />
+        <Truck className="w-4 h-4" />
         Ship This Build
-      </Button>
+      </button>
 
       <div className="flex items-center gap-2 pt-2 flex-wrap">
         {user && (
@@ -457,7 +457,7 @@ function TabHandle({ count, onClick }) {
   return (
     <button
       onClick={onClick}
-      className="fixed right-0 top-1/2 -translate-y-1/2 z-[900] w-10 h-10 flex items-center justify-center rounded-l-lg bg-primary-800 text-ink-on-dark shadow-2 hover:bg-primary-700 transition-colors"
+      className="fixed right-0 top-1/2 -translate-y-1/2 z-[900] w-10 h-10 flex items-center justify-center rounded-l-lg bg-surface-card border border-r-0 border-primary-300 text-primary-800 shadow-2 hover:border-primary-500 hover:bg-primary-050 transition-colors"
       aria-label="Toggle stack drawer"
       aria-expanded={false}
     >
@@ -537,7 +537,7 @@ export function StackDrawer() {
           <Drawer open={drawerOpen} onOpenChange={(open) => open ? openDrawer() : closeDrawer()}>
             <DrawerTrigger asChild>
               <button
-                className="fixed bottom-4 left-4 z-50 flex items-center gap-1.5 px-3 py-2 rounded-full bg-primary-800 text-ink-on-dark shadow-2 text-xs font-medium hover:bg-primary-700 transition-colors"
+                className="fixed bottom-4 left-4 z-50 flex items-center gap-1.5 px-3 py-2 rounded-full bg-surface-card border border-primary-300 text-primary-800 shadow-2 text-xs font-medium hover:border-primary-500 hover:bg-primary-050 transition-colors"
                 aria-label="Toggle stack drawer"
               >
                 <Layers className="w-4 h-4" />

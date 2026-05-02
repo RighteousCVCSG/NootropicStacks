@@ -51,7 +51,7 @@ export function GoalSelector() {
     const isSelected = userGoals.includes(goal.id);
     const base = 'inline-flex items-center gap-1.5 h-8 px-2.5 rounded-md text-xs font-medium transition-colors w-full';
     const styled = isSelected
-      ? 'bg-primary-800 text-ink-on-dark hover:bg-primary-700'
+      ? 'bg-primary-100 text-primary-800 border border-primary-500 hover:bg-primary-050'
       : 'bg-surface-card border border-ink-200 text-ink-700 hover:border-primary-300 hover:text-ink-900';
     return (
       <button

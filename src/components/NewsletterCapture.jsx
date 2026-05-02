@@ -1,16 +1,12 @@
 import React, { useState, useRef } from 'react';
-import { Button } from '@/components/ui/button.jsx';
-import { Input } from '@/components/ui/input.jsx';
 import { Mail, CheckCircle } from 'lucide-react';
 import { track } from '../lib/analytics.js';
-import { useLocation } from 'react-router-dom';
 
 export function NewsletterCapture({ source = 'footer' }) {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle');
   const [message, setMessage] = useState('');
   const honeypotRef = useRef(null);
-  const location = useLocation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,54 +41,48 @@ export function NewsletterCapture({ source = 'footer' }) {
 
   if (status === 'success') {
     return (
-      <div className="flex items-center justify-center gap-2 py-3 text-sm text-green-700 bg-green-50 rounded-lg px-4">
-        <CheckCircle className="w-4 h-4" />
+      <div className="inline-flex items-center gap-1.5 text-xs text-accent-700">
+        <CheckCircle className="w-3.5 h-3.5" />
         <span>{message}</span>
       </div>
     );
   }
 
   return (
-    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-        <div className="flex items-center gap-2 flex-1">
-          <Mail className="w-4 h-4 text-blue-600 shrink-0" />
-          <div>
-            <p className="text-sm font-medium text-blue-900">Get the weekly nootropic research digest</p>
-            <p className="text-xs text-blue-700">Stack tips, new research, and what's working. No spam.</p>
-          </div>
-        </div>
-        <form onSubmit={handleSubmit} className="flex gap-2 w-full sm:w-auto">
-          <input
-            ref={honeypotRef}
-            type="text"
-            name="hp_field"
-            tabIndex={-1}
-            autoComplete="off"
-            className="absolute left-[-9999px]"
-            aria-hidden="true"
-          />
-          <Input
-            type="email"
-            placeholder="your@email.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="text-sm h-8 min-w-0 w-full sm:w-48"
-            disabled={status === 'loading'}
-          />
-          <Button
-            type="submit"
-            size="sm"
-            className="h-8 shrink-0"
-            disabled={status === 'loading' || !email}
-          >
-            {status === 'loading' ? '...' : 'Subscribe'}
-          </Button>
-        </form>
-        {status === 'error' && (
-          <p className="text-xs text-red-600 w-full sm:w-auto">{message}</p>
-        )}
-      </div>
+    <div>
+      <p className="text-xs text-ink-500 mb-1.5 inline-flex items-center gap-1">
+        <Mail className="w-3 h-3" />
+        Weekly research digest. No spam.
+      </p>
+      <form onSubmit={handleSubmit} className="flex gap-1.5 max-w-sm">
+        <input
+          ref={honeypotRef}
+          type="text"
+          name="hp_field"
+          tabIndex={-1}
+          autoComplete="off"
+          className="absolute left-[-9999px]"
+          aria-hidden="true"
+        />
+        <input
+          type="email"
+          placeholder="your@email.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          disabled={status === 'loading'}
+          className="flex-1 min-w-0 h-7 px-2 rounded-md text-xs bg-surface-card border border-ink-200 text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-primary-500"
+        />
+        <button
+          type="submit"
+          disabled={status === 'loading' || !email}
+          className="shrink-0 inline-flex items-center justify-center h-7 px-2.5 rounded-md text-xs font-medium bg-primary-050 hover:bg-primary-100 text-primary-800 border border-primary-300 hover:border-primary-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {status === 'loading' ? '…' : 'Subscribe'}
+        </button>
+      </form>
+      {status === 'error' && (
+        <p className="text-[11px] text-warn-700 mt-1">{message}</p>
+      )}
     </div>
   );
 }

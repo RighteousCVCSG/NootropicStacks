@@ -184,17 +184,17 @@ export function ShipBuildSheet({ open, onOpenChange, stack }) {
             </div>
           </div>
 
-          <Button
-            size="lg"
+          <button
+            type="button"
             onClick={handleOpenAll}
             disabled={shippableRows.length === 0}
-            className="w-full bg-primary-800 hover:bg-primary-700 text-ink-on-dark"
+            className="w-full inline-flex items-center justify-center gap-1.5 h-10 rounded-md text-sm font-medium bg-primary-050 hover:bg-primary-100 text-primary-800 border border-primary-300 hover:border-primary-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <ShoppingCart className="w-4 h-4 mr-2" />
+            <ShoppingCart className="w-4 h-4" />
             Open all carts ({shippableRows.length}{' '}
             {shippableRows.length === 1 ? 'tab' : 'tabs'})
-            <ExternalLink className="w-4 h-4 ml-1" />
-          </Button>
+            <ExternalLink className="w-4 h-4" />
+          </button>
 
           <div className="text-center">
             <AffiliateDisclosureInline />

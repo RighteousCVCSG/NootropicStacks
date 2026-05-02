@@ -108,7 +108,7 @@ export function SupplementCard({ supplement }) {
           type="button"
           onClick={handleAdd}
           disabled={isInStack}
-          className="inline-flex items-center justify-center gap-1 h-7 px-2 rounded-md text-[11px] font-medium bg-primary-800 hover:bg-primary-700 text-ink-on-dark transition-colors flex-1 min-w-0 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex items-center justify-center gap-1 h-7 px-2 rounded-md text-[11px] font-medium bg-primary-050 hover:bg-primary-100 text-primary-800 border border-primary-300 hover:border-primary-500 transition-colors flex-1 min-w-0 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <Plus className="w-3 h-3 shrink-0" />
           <span className="truncate">{isInStack ? 'Added' : 'Add'}</span>

@@ -96,13 +96,6 @@ export function HomePage() {
                   </>
                 )}
               </span>
-              <button
-                type="button"
-                onClick={openDrawer}
-                className="text-xs font-medium text-primary-800 hover:text-primary-700 shrink-0"
-              >
-                View →
-              </button>
               <Link
                 to="/build"
                 className="text-xs font-semibold text-primary-800 hover:text-primary-700 shrink-0"
