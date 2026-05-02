@@ -79,20 +79,26 @@ function ScrollToTop() {
   return null;
 }
 
+// Header nav link. Uses Button.asChild so the rendered DOM is a single
+// styled anchor (not the invalid <a><button> nesting that was making the
+// header buttons inflate / overflow). Custom h-8 sizing reads as a nav
+// item, not a primary CTA — the Quiz button stays the only chunky CTA in
+// the header.
 function NavLink({ to, icon: Icon, children }) {
   const location = useLocation();
   const isActive = to === '/' ? location.pathname === '/' : location.pathname.startsWith(to);
+  const activeClass = isActive
+    ? 'text-primary-800 bg-primary-050'
+    : 'text-ink-700 hover:text-ink-900 hover:bg-surface-sunk';
 
   return (
-    <Link to={to} aria-current={isActive ? 'page' : undefined}>
-      <Button
-        variant={isActive ? 'default' : 'ghost'}
-        size="sm"
-        className="flex items-center gap-2"
-      >
-        <Icon className="w-4 h-4" />
-        {children}
-      </Button>
+    <Link
+      to={to}
+      aria-current={isActive ? 'page' : undefined}
+      className={`inline-flex items-center gap-1.5 h-8 px-2.5 rounded-md text-sm font-medium transition-colors ${activeClass}`}
+    >
+      <Icon className="w-3.5 h-3.5" />
+      {children}
     </Link>
   );
 }
@@ -200,11 +206,12 @@ function App() {
                 <NavLink to="/supplements" icon={Library}>Supplements</NavLink>
                 <NavLink to="/stacks" icon={Layers}>Stacks</NavLink>
                 <NavLink to="/learn" icon={BookOpen}>Learn</NavLink>
-                <Link to="/quiz">
-                  <Button size="sm" className="bg-primary-800 hover:bg-primary-700 text-ink-on-dark ml-2">
-                    <HelpCircle className="w-4 h-4 mr-1" />
-                    Quiz
-                  </Button>
+                <Link
+                  to="/quiz"
+                  className="ml-1 inline-flex items-center gap-1 h-8 px-3 rounded-md text-sm font-semibold bg-primary-800 hover:bg-primary-700 text-ink-on-dark transition-colors"
+                >
+                  <HelpCircle className="w-3.5 h-3.5" />
+                  Quiz
                 </Link>
               </nav>
 
@@ -224,11 +231,12 @@ function App() {
               <NavLink to="/supplements" icon={Library}>Supplements</NavLink>
               <NavLink to="/stacks" icon={Layers}>Stacks</NavLink>
               <NavLink to="/learn" icon={BookOpen}>Learn</NavLink>
-              <Link to="/quiz" className="shrink-0">
-                <Button size="sm" className="bg-primary-800 hover:bg-primary-700 text-ink-on-dark">
-                  <HelpCircle className="w-4 h-4 mr-1" />
-                  Quiz
-                </Button>
+              <Link
+                to="/quiz"
+                className="shrink-0 inline-flex items-center gap-1 h-8 px-3 rounded-md text-sm font-semibold bg-primary-800 hover:bg-primary-700 text-ink-on-dark transition-colors"
+              >
+                <HelpCircle className="w-3.5 h-3.5" />
+                Quiz
               </Link>
             </div>
             <div className="shrink-0 px-2 border-l border-ink-200">
