@@ -87,27 +87,31 @@ export function SupplementCard({ supplement }) {
         </div>
       </CardContent>
 
-      <CardFooter className="pt-0 pb-3 px-4 grid grid-cols-3 gap-1.5">
-        <Link to={`/supplements/${supplement.id}`} className="col-span-1">
-          <Button variant="outline" size="sm" className="w-full text-xs px-1">
+      {/* Footer is a 3-equal-column flex row. Each button uses w-full to fill
+          its column. We use Button.asChild for the Details link so the rendered
+          DOM is a single <a> styled as a button (not a nested <a><button>,
+          which renders incorrectly and was making +Add spill outside the card). */}
+      <CardFooter className="pt-0 pb-3 px-3 flex items-stretch gap-1.5">
+        <Button asChild variant="outline" size="sm" className="flex-1 min-w-0 text-xs px-1">
+          <Link to={`/supplements/${supplement.id}`} aria-label="Details">
             <Info className="w-3.5 h-3.5" />
-          </Button>
-        </Link>
+          </Link>
+        </Button>
         <Button
           size="sm"
           onClick={handleAdd}
           disabled={isInStack}
-          className="col-span-1 text-xs px-1"
+          className="flex-1 min-w-0 text-xs px-1"
         >
-          <Plus className="w-3.5 h-3.5 mr-0.5" />
-          {isInStack ? 'Added' : 'Add'}
+          <Plus className="w-3.5 h-3.5 mr-0.5 shrink-0" />
+          <span className="truncate">{isInStack ? 'Added' : 'Add'}</span>
         </Button>
         <Button
           variant="outline"
           size="sm"
           onClick={handleBuy}
           disabled={!links}
-          className="col-span-1 text-xs px-1 border-accent-500 text-accent-700 hover:bg-accent-050 disabled:opacity-40 truncate"
+          className="flex-1 min-w-0 text-xs px-1 border-accent-500 text-accent-700 hover:bg-accent-050 disabled:opacity-40"
           title={links ? buyLabel : 'Vendor links not yet available'}
         >
           <ShoppingCart className="w-3.5 h-3.5 mr-0.5 shrink-0" />
