@@ -15,7 +15,7 @@ const PALETTE = {
   ink900:    '#FFFFFF',
   ink700:    '#C8CDD9',
   ink500:    '#8990A3',
-  primary:   '#8A6EFF',
+  primary:   '#5B8BFF',
   secondary: '#22D3EE',
   warn:      '#FFC53D',
   danger:    '#FF5A8C',

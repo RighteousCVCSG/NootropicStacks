@@ -589,7 +589,8 @@ export function StackDrawer() {
 
   return (
     <>
-      <TabHandle count={itemCount} onClick={toggleDrawer} />
+      {/* TabHandle removed — StackScoreWidget on the right edge now serves
+          double-duty as the desktop drawer opener. */}
       <DesktopDrawer open={drawerOpen} onClose={closeDrawer}>
         <div className="flex flex-col h-full">
           <div className="flex items-start justify-between gap-2 px-4 pt-4 pb-3 border-b border-ink-200">

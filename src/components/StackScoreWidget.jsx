@@ -2,19 +2,23 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useStack } from '../contexts/StackContext.jsx';
 
-// Route allow-list: pill shows only on stack-relevant routes.
+// Route allow-list: pill shows only on stack-relevant routes. Landing
+// page (/) is intentionally excluded — it's a marketing surface, not a
+// workspace, and the floating widget would be noise there.
 const STACK_ROUTES = new Set([
-  '/', '/build', '/quiz', '/stacks', '/celebrity-stacks', '/best-stacks',
+  '/build', '/quiz', '/stacks', '/celebrity-stacks', '/best-stacks',
 ]);
 
 /**
- * Compact persistent score pill. Replaces the previous full-size card
- * that duplicated everything the StackDrawer already shows. Renders only
- * when there's a stack to score and we're on a stack-relevant route.
+ * Compact persistent score widget. Lives on the right edge (vertical),
+ * mid-height — same affordance the previous TabHandle occupied — so it
+ * doubles as the desktop drawer opener.
  *
- * Tap → opens the drawer where the full breakdown lives.
- * Hidden on mobile (the mobile drawer pill already lives at bottom-left
- * and shows the same item count).
+ * Layout: small score ring with the number inside, "Stack" label
+ * underneath. Tap → opens the drawer.
+ *
+ * Hidden on mobile; the mobile drawer pill at bottom-left handles the
+ * same role on small screens.
  */
 export function StackScoreWidget() {
   const { pathname } = useLocation();
@@ -40,11 +44,11 @@ export function StackScoreWidget() {
       type="button"
       onClick={openDrawer}
       aria-label={`Stack Score ${overall.toFixed(1)} — open stack drawer`}
-      className="hidden md:inline-flex fixed bottom-4 left-4 z-50 items-center gap-2 h-9 pl-1.5 pr-3 rounded-full bg-surface-card border border-ink-200 text-ink-900 shadow-2 hover:border-primary-300 transition-colors"
+      className="hidden md:flex fixed right-0 top-1/2 -translate-y-1/2 z-[900] flex-col items-center gap-0.5 px-2 py-2 rounded-l-md bg-surface-card border border-r-0 border-ink-200 hover:border-primary-300 text-ink-900 shadow-2 transition-colors"
     >
-      <span className="relative w-6 h-6 shrink-0">
-        <svg className="w-6 h-6 -rotate-90" viewBox="0 0 36 36">
-          <circle cx="18" cy="18" r="15.5" fill="none" style={{ stroke: 'var(--color-ink-200)' }} strokeWidth="4" />
+      <span className="relative w-7 h-7">
+        <svg className="w-7 h-7 -rotate-90 absolute inset-0" viewBox="0 0 36 36">
+          <circle cx="18" cy="18" r="15.5" fill="none" style={{ stroke: 'var(--color-ink-100)' }} strokeWidth="4" />
           <circle
             cx="18" cy="18" r="15.5" fill="none"
             style={{ stroke: `var(${ringVar})`, transition: 'stroke-dasharray 0.7s' }}
@@ -53,11 +57,11 @@ export function StackScoreWidget() {
             strokeLinecap="round"
           />
         </svg>
+        <span className="absolute inset-0 flex items-center justify-center font-mono text-[10px] font-semibold tabular-nums text-ink-900">
+          {overall.toFixed(1)}
+        </span>
       </span>
-      <span className="font-mono text-xs font-semibold tabular-nums">
-        {overall.toFixed(1)}
-      </span>
-      <span className="text-[10px] uppercase tracking-widest text-ink-500 font-medium">
+      <span className="text-[9px] uppercase tracking-widest text-ink-500 font-medium">
         Stack
       </span>
     </button>

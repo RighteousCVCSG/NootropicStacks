@@ -30,9 +30,9 @@
   --ink-on-dark: #FFFFFF;
 
   /* ---------- Brand accents ---------- */
-  --accent-primary:       #8A6EFF;  /* electric violet */
-  --accent-primary-hover: #A285FF;
-  --accent-primary-soft:  #2A2247;
+  --accent-primary:       #5B8BFF;  /* vibrant azure / navy-blue */
+  --accent-primary-hover: #7DA5FF;
+  --accent-primary-soft:  #1A2547;
 
   /* Secondary / synergy / positive (electric cyan, NOT green) */
   --accent-secondary:       #22D3EE;
@@ -48,12 +48,12 @@
    * these `--color-*` names; tailwind-theme.css exposes them as utility
    * classes (e.g. bg-primary-800, text-ink-on-dark). */
   --primary-050: var(--accent-primary-soft);
-  --primary-100: #322861;
-  --primary-300: #6B47FF;
+  --primary-100: #1F2A52;
+  --primary-300: #3B5BFF;
   --primary-400: var(--accent-primary);
   --primary-700: var(--accent-primary-hover);
   --primary-800: var(--accent-primary-hover);
-  --primary-900: #C5B5FF;
+  --primary-900: #B8C7FF;
 
   /* ---------- Color: brand (prefixed aliases for shadcn/Tailwind bridge) ---------- */
   --color-primary-050: var(--primary-050);
@@ -102,15 +102,15 @@
   --color-danger-500: var(--danger);
   --color-danger-100: #3D1A2A;
 
-  --color-info-700: #5B47B8;
+  --color-info-700: #3B5BFF;
   --color-info-500: var(--accent-primary);
   --color-info-100: var(--accent-primary-soft);
 
   /* ---------- Color: evidence tiers (YMYL trust signals) ---------- */
-  /* Tier-1 = systematic review / multiple RCTs - violet authority */
-  --color-tier-1-bg:    #2A2247;
-  --color-tier-1-fg:    #C5B5FF;
-  --color-tier-1-rule:  #8A6EFF;
+  /* Tier-1 = systematic review / multiple RCTs - navy authority */
+  --color-tier-1-bg:    #1A2547;
+  --color-tier-1-fg:    #B8C7FF;
+  --color-tier-1-rule:  #5B8BFF;
   /* Tier-2 = multiple cohort / single high-quality RCT - cyan measured */
   --color-tier-2-bg:    #0E3B47;
   --color-tier-2-fg:    #67E8F9;
@@ -231,9 +231,9 @@
   --ink-500: #5B6478;          /* raised from #707888 for ≥4.5:1 on --surface-page (#FAFAFB) */
   --ink-on-dark: #FFFFFF;
 
-  --accent-primary:       #7C5CFF;
-  --accent-primary-hover: #6B47FF;
-  --accent-primary-soft:  #EFEAFF;
+  --accent-primary:       #2563EB;  /* navy / blue-600 */
+  --accent-primary-hover: #1D4ED8;
+  --accent-primary-soft:  #EFF6FF;
 
   --accent-secondary:       #0891B2;
   --accent-secondary-hover: #0E7490;
@@ -243,12 +243,12 @@
   --danger:  #E11D48;
 
   --primary-050: var(--accent-primary-soft);
-  --primary-100: #DDD6FE;
-  --primary-300: #A78BFA;
+  --primary-100: #DBEAFE;
+  --primary-300: #93C5FD;
   --primary-400: var(--accent-primary);
   --primary-700: var(--accent-primary-hover);
   --primary-800: var(--accent-primary-hover);
-  --primary-900: #5B21B6;
+  --primary-900: #1E3A8A;
 
   /* Prefixed aliases re-bound for light mode */
   --color-primary-050: var(--primary-050);
@@ -295,13 +295,13 @@
   --color-danger-500: var(--danger);
   --color-danger-100: #FCE7F3;
 
-  --color-info-700: #5B21B6;
+  --color-info-700: #1E40AF;
   --color-info-500: var(--accent-primary);
   --color-info-100: var(--accent-primary-soft);
 
-  --color-tier-1-bg:    #EFEAFF;
-  --color-tier-1-fg:    #5B21B6;
-  --color-tier-1-rule:  #7C5CFF;
+  --color-tier-1-bg:    #EFF6FF;
+  --color-tier-1-fg:    #1E3A8A;
+  --color-tier-1-rule:  #2563EB;
   --color-tier-2-bg:    #CFFAFE;
   --color-tier-2-fg:    #155E75;
   --color-tier-2-rule:  #0891B2;

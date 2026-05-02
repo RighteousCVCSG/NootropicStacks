@@ -162,8 +162,10 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* Featured Stacks */}
-      <section className="mb-8">
+      {/* Featured Stacks — divider above gives rhythm without wrapping
+          each section in a card. The three doors connect tightly to the
+          hero, then content sections start visually separating. */}
+      <section className="border-t border-ink-100 pt-8 mb-8">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-sm font-semibold text-ink-900">Featured stacks</h2>
           <Link to="/stacks" className="text-xs text-primary-800 hover:underline">
@@ -183,7 +185,7 @@ export function HomePage() {
       </section>
 
       {/* Popular Articles */}
-      <section className="mb-8">
+      <section className="border-t border-ink-100 pt-8 mb-8">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-sm font-semibold text-ink-900 inline-flex items-center gap-1.5">
             <BookOpen className="w-3.5 h-3.5 text-primary-800" />
