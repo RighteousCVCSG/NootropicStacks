@@ -34,10 +34,68 @@
     <meta name="twitter:title" content="NootropicStacker — Free Nootropic Stack Builder | 195 Supplements" />
     <meta name="twitter:description" content="Build and optimize nootropic supplement stacks. Free Stack Score, 195 supplements, interaction warnings." />
     <meta name="twitter:image" content="https://nootropicstacker.com/og-image.png" />
-    <!-- WebSite + Organization JSON-LD are injected at runtime from App.jsx
-         (single source of truth via buildWebsiteSchema/buildOrganizationSchema).
-         Keeping only the SoftwareApplication node inline so a non-JS crawler
-         still sees the product entity. -->
+    <!-- Static JSON-LD fallback for non-JS crawlers (GPTBot, ClaudeBot,
+         PerplexityBot, Google-Extended without JS execution).
+         The runtime React app ALSO injects schemas via JsonLd/Helmet, so
+         JS-aware crawlers see fresher, route-specific data. The blocks
+         below are the homepage-stable subset that doesn't need to mutate
+         per route. -->
+
+    <!-- Organization (kept inline so even with no JS, AI agents can
+         resolve the publisher entity). -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "NootropicStacker",
+      "url": "https://nootropicstacker.com/",
+      "logo": "https://nootropicstacker.com/favicon.svg",
+      "sameAs": [
+        "https://twitter.com/nootropicstacker"
+      ]
+    }
+    </script>
+
+    <!-- MedicalWebPage with reviewedBy (E-E-A-T) and dateModified for the
+         home / landing page. Provides citability scaffolding for AI
+         answer engines on YMYL queries. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MedicalWebPage",
+      "name": "NootropicStacker — Free Nootropic Stack Builder",
+      "url": "https://nootropicstacker.com/",
+      "description": "Free tool to plan, score, and check supplement stacks. 195 compounds, 60+ pairwise interactions, every claim cited to PubMed.",
+      "inLanguage": "en-US",
+      "medicalAudience": { "@type": "MedicalAudience", "audienceType": "Patient" },
+      "about": {
+        "@type": "MedicalEntity",
+        "name": "Nootropic supplementation"
+      },
+      "reviewedBy": {
+        "@type": "Person",
+        "name": "Vera Huang",
+        "jobTitle": "CMO, NootropicStacker",
+        "description": "Neuroscience researcher (UCSD) and editorial reviewer for NootropicStacker."
+      },
+      "mainEntityOfPage": "https://nootropicstacker.com/build"
+    }
+    </script>
+
+    <!-- BreadcrumbList for the homepage. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://nootropicstacker.com/"
+      }]
+    }
+    </script>
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -63,7 +121,37 @@
     </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Static fallback content for non-JS crawlers. React replaces
+           this on hydration. Mirrors the homepage hero copy so AI agents
+           extract the same headline + credentials + author signal even
+           when prerender is unavailable. -->
+      <noscript>
+        <main style="max-width:48rem;margin:2rem auto;padding:1rem;font-family:Inter,system-ui,sans-serif;color:#FFFFFF;background:#0B0F1A;">
+          <h1 style="font-size:2rem;font-weight:600;line-height:1.2;margin:0 0 0.75rem;">
+            Know exactly what you're stacking — and why it works.
+          </h1>
+          <p style="color:#8990A3;margin:0 0 1rem;">
+            A stack is the supplements you take together. We score how well they work as a combo, flag risky pairs, and link every claim to PubMed.
+          </p>
+          <p style="color:#8990A3;font-size:0.875rem;margin:0 0 1rem;">
+            <strong style="color:#C8CDD9;">195</strong> compounds &middot;
+            <strong style="color:#C8CDD9;">60+</strong> interactions mapped &middot;
+            Every claim links to PubMed.
+          </p>
+          <p style="color:#6F768A;font-size:0.75rem;font-style:italic;margin:0 0 0.5rem;">
+            Educational tool &middot; not medical advice. Reviewed by Vera Huang, UCSD Neuroscience.
+          </p>
+          <p style="font-size:0.875rem;">
+            <a href="/build" style="color:#5B8BFF;">Build a stack →</a>
+            &nbsp;&nbsp;
+            <a href="/quiz" style="color:#5B8BFF;">Take the quiz →</a>
+            &nbsp;&nbsp;
+            <a href="/stacks" style="color:#5B8BFF;">Browse top stacks →</a>
+          </p>
+        </main>
+      </noscript>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
