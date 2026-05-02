@@ -162,35 +162,6 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* Inside the stack builder — describes the /build flow.
-          Compact horizontal cards: small numbered badge + title + 1 sentence. */}
-      <section className="mb-8">
-        <div className="mb-4">
-          <h2 className="text-sm font-semibold text-ink-900">Inside the stack builder</h2>
-          <p className="text-xs text-ink-500 mt-0.5">How the builder works, step by step.</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 max-w-4xl">
-          {[
-            { n: 1, title: 'Set your goals', desc: 'Focus, calm, energy, sleep, mood.' },
-            { n: 2, title: 'Add supplements', desc: 'Watch the Stack Score react in real time.' },
-            { n: 3, title: 'Ship your build', desc: 'Compare prices, open all carts.' },
-          ].map((s) => (
-            <div
-              key={s.n}
-              className="p-3 rounded-md bg-surface-card border border-ink-200 flex items-start gap-3"
-            >
-              <span className="w-5 h-5 rounded-full bg-primary-050 text-primary-800 inline-flex items-center justify-center text-[11px] font-semibold shrink-0">
-                {s.n}
-              </span>
-              <div className="flex-1 min-w-0">
-                <h3 className="text-sm font-semibold text-ink-900">{s.title}</h3>
-                <p className="text-xs text-ink-500 mt-0.5">{s.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* Featured Stacks */}
       <section className="mb-8">
         <div className="flex items-center justify-between mb-3">
