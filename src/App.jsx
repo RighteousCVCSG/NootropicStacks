@@ -10,6 +10,7 @@ import { SupplementLibrary } from './components/SupplementLibrary.jsx';
 import { SupplementModal } from './components/SupplementModal.jsx';
 import { SEOOptimizer } from './components/SEOOptimizer.jsx';
 import { StackScoreWidget } from './components/StackScoreWidget.jsx';
+import { StackDrawer } from './components/StackDrawer.jsx';
 import { NewsletterCapture } from './components/NewsletterCapture.jsx';
 import { JsonLd } from './components/JsonLd.jsx';
 import { buildOrganizationSchema, buildWebsiteSchema } from './lib/schema/builders.js';
@@ -336,6 +337,9 @@ function App() {
 
         {/* Stack Score Floating Widget */}
         <StackScoreWidget />
+
+        {/* Stack Drawer */}
+        <StackDrawer />
 
         {/* Footer */}
         <footer className="footer mt-12">

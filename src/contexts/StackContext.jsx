@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, useEffect, useMemo } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, useMemo, useState } from 'react';
 import { analyzeStackSafety, recommendSupplements, calculateStackScore } from '../utils/stackAnalyzer.js';
 import { track } from '../lib/analytics.js';
 
@@ -93,6 +93,7 @@ function stackReducer(state, action) {
 // Context Provider
 export function StackProvider({ children }) {
   const [state, dispatch] = useReducer(stackReducer, initialState);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   // Persist stack to localStorage whenever it changes
   useEffect(() => {
@@ -132,6 +133,7 @@ export function StackProvider({ children }) {
         addedAt: new Date().toISOString()
       }
     });
+    setDrawerOpen(true);
     track('stack_add', { supplement_id: supplement.id });
     return true;
   };
@@ -195,7 +197,11 @@ export function StackProvider({ children }) {
     clearStack,
     loadStack,
     hasSupplement,
-    itemCount
+    itemCount,
+    drawerOpen,
+    openDrawer: () => setDrawerOpen(true),
+    closeDrawer: () => setDrawerOpen(false),
+    toggleDrawer: () => setDrawerOpen(prev => !prev)
   };
   return (
     <StackContext.Provider value={value}>

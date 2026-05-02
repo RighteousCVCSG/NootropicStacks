@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useStack } from '../contexts/StackContext.jsx';
 import { GoalSelector } from './GoalSelector.jsx';
-import { StackPanel } from './StackPanel.jsx';
 import { RecommendationPanel } from './RecommendationPanel.jsx';
 import { SupplementLibrary } from './SupplementLibrary.jsx';
 import { SupplementModal } from './SupplementModal.jsx';
@@ -90,7 +89,6 @@ export function HomePage() {
         {/* Left Column - Goals and Stack */}
         <div className="lg:col-span-2 space-y-6">
           <GoalSelector />
-          <StackPanel />
           <StackProtocolBuilder />
         </div>
 
