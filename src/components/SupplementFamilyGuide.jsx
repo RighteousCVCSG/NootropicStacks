@@ -42,7 +42,7 @@ export function SupplementFamilyGuide() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-3">
       <div className="text-center">
         <h2 className="text-3xl font-semibold mb-2">Supplement Family Guide</h2>
         <p className="text-ink-700">Comprehensive guides to supplement families, mechanisms, and usage</p>

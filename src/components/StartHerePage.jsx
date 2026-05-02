@@ -150,7 +150,7 @@ const MYTHS = [
 
 export function StartHerePage() {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8 space-y-16">
+    <div className="max-w-4xl mx-auto px-4 py-4 space-y-16">
       <SEOOptimizer
         page="home"
         customTitle="Nootropics Guide for Beginners 2026 — How to Start Safely | NootropicStacker"
@@ -187,7 +187,7 @@ export function StartHerePage() {
       {/* 5 Steps */}
       <section>
         <h2 className="text-2xl font-semibold text-ink-900 mb-2">The 5-Step Framework</h2>
-        <p className="text-ink-700 mb-8">Every successful nootropic protocol follows these steps, whether you're a first-timer or a veteran biohacker.</p>
+        <p className="text-ink-700 mb-4">Every successful nootropic protocol follows these steps, whether you're a first-timer or a veteran biohacker.</p>
         <div className="space-y-4">
           {STEPS.map((step) => {
             const Icon = step.icon;
@@ -215,7 +215,7 @@ export function StartHerePage() {
       {/* Beginner Stacks */}
       <section>
         <h2 className="text-2xl font-semibold text-ink-900 mb-2">3 Proven Starter Stacks</h2>
-        <p className="text-ink-700 mb-6">These combinations are well-researched, beginner-safe, and cover the three most common goals. Pick one and run it for 30 days before adding anything.</p>
+        <p className="text-ink-700 mb-3">These combinations are well-researched, beginner-safe, and cover the three most common goals. Pick one and run it for 30 days before adding anything.</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {BEGINNER_STACKS.map((stack) => (
             <Card key={stack.name} className="border-ink-200 hover:border-primary-300 transition-colors">
@@ -250,7 +250,7 @@ export function StartHerePage() {
       {/* Categories */}
       <section>
         <h2 className="text-2xl font-semibold text-ink-900 mb-2">Nootropic Categories Explained</h2>
-        <p className="text-ink-700 mb-6">Every nootropic belongs to a mechanism family. Understanding these helps you build non-redundant stacks.</p>
+        <p className="text-ink-700 mb-3">Every nootropic belongs to a mechanism family. Understanding these helps you build non-redundant stacks.</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {CATEGORIES.map((cat) => (
             <Link key={cat.name} to={cat.link} className="flex gap-3 p-4 bg-white border border-gray-100 rounded-md hover:border-primary-300 hover:shadow-sm transition-all group">
@@ -270,7 +270,7 @@ export function StartHerePage() {
 
       {/* Myths */}
       <section>
-        <h2 className="text-2xl font-semibold text-ink-900 mb-6">4 Common Myths (Debunked)</h2>
+        <h2 className="text-2xl font-semibold text-ink-900 mb-3">4 Common Myths (Debunked)</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {MYTHS.map((item) => (
             <div key={item.myth} className="p-4 bg-white border border-gray-100 rounded-md">
@@ -288,7 +288,7 @@ export function StartHerePage() {
       </section>
 
       {/* Popular reads */}
-      <section className="bg-surface-card rounded-md p-6">
+      <section className="bg-surface-card rounded-md p-3">
         <h2 className="text-xl font-semibold text-ink-900 mb-4 flex items-center gap-2">
           <Star className="w-5 h-5 text-warn-500" />
           Most Popular Guides
@@ -316,7 +316,7 @@ export function StartHerePage() {
       </section>
 
       {/* CTA */}
-      <section className="text-center bg-gradient-to-br from-blue-600 to-indigo-700 rounded-md p-8 text-white space-y-4">
+      <section className="text-center bg-gradient-to-br from-blue-600 to-indigo-700 rounded-md p-4 text-white space-y-4">
         <Brain className="w-10 h-10 mx-auto opacity-90" />
         <h2 className="text-2xl font-semibold">Ready to Build Your Stack?</h2>
         <p className="text-blue-100 max-w-lg mx-auto text-sm">

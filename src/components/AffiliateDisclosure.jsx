@@ -41,14 +41,14 @@ const VARIANT_CONFIG = {
     role: 'note',
     testId: 'affiliate-disclosure-inline',
     className:
-      'flex items-start gap-3 p-4 mb-6 bg-surface-card border border-ink-200 rounded-md text-sm leading-normal text-ink-700',
+      'flex items-start gap-3 p-4 mb-3 bg-surface-card border border-ink-200 rounded-md text-sm leading-normal text-ink-700',
     children: INLINE_TEXT,
   },
   stacks: {
     role: 'note',
     testId: 'affiliate-disclosure-stacks',
     className:
-      'p-4 bg-surface-card rounded-md border border-ink-200 text-sm text-ink-700 mb-8',
+      'p-4 bg-surface-card rounded-md border border-ink-200 text-sm text-ink-700 mb-4',
     children: STACKS_TEXT,
   },
   compare: {

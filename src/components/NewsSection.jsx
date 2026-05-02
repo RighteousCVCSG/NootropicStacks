@@ -244,7 +244,7 @@ export function NewsSection() {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-3">
       <div className="text-center">
         <h2 className="text-3xl font-semibold mb-2">Nootropics & Supplement News</h2>
         <p className="text-ink-700">Stay updated with the latest research, trends, and developments</p>
@@ -302,7 +302,7 @@ export function NewsSection() {
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="recent" className="space-y-6">
+        <TabsContent value="recent" className="space-y-3">
           <div className="text-sm text-ink-700 mb-4">
             <Clock className="w-4 h-4 inline mr-1" />
             Showing news from the last 4 weeks
@@ -310,12 +310,12 @@ export function NewsSection() {
           
           {filteredRecentNews.length === 0 ? (
             <Card>
-              <CardContent className="text-center py-8">
+              <CardContent className="text-center py-4">
                 <p className="text-ink-500">No recent news found matching your criteria.</p>
               </CardContent>
             </Card>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {filteredRecentNews.map(article => (
                 <NewsCard key={article.id} article={article} showTrending={true} />
               ))}
@@ -323,7 +323,7 @@ export function NewsSection() {
           )}
         </TabsContent>
 
-        <TabsContent value="archived" className="space-y-6">
+        <TabsContent value="archived" className="space-y-3">
           <div className="text-sm text-ink-700 mb-4">
             <Archive className="w-4 h-4 inline mr-1" />
             Showing archived news older than 4 weeks
@@ -331,12 +331,12 @@ export function NewsSection() {
           
           {filteredArchivedNews.length === 0 ? (
             <Card>
-              <CardContent className="text-center py-8">
+              <CardContent className="text-center py-4">
                 <p className="text-ink-500">No archived news found matching your criteria.</p>
               </CardContent>
             </Card>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {filteredArchivedNews.map(article => (
                 <NewsCard key={article.id} article={article} showTrending={false} />
               ))}

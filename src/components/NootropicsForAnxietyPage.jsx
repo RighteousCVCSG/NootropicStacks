@@ -195,7 +195,7 @@ export function NootropicsForAnxietyPage() {
       <div className="max-w-3xl mx-auto">
 
         {/* Hero */}
-        <div className="mb-8">
+        <div className="mb-4">
           <div className="flex flex-wrap gap-2 mb-3 text-xs text-ink-500">
             <span>Updated April 2026</span>
             <span>·</span>
@@ -228,7 +228,7 @@ export function NootropicsForAnxietyPage() {
         </div>
 
         {/* CTA to stack builder */}
-        <div className="mb-8 p-4 bg-primary-050 border border-primary-300 rounded-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div className="mb-4 p-4 bg-primary-050 border border-primary-300 rounded-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div>
             <p className="text-sm font-semibold text-primary-900">Want a personalized anxiety stack?</p>
             <p className="text-xs text-primary-800">Use the free Stack Builder to combine supplements, check interactions, and get a Stack Score.</p>
@@ -243,7 +243,7 @@ export function NootropicsForAnxietyPage() {
 
         {/* Top 8 Supplements */}
         <h2 className="text-xl font-semibold text-ink-900 mb-4">Top 8 Nootropics for Anxiety</h2>
-        <div className="space-y-5 mb-12">
+        <div className="space-y-5 mb-6">
           {ANXIETY_SUPPLEMENTS.map((s) => (
             <Card key={s.id} className="border-ink-200 hover:shadow-1 transition-shadow">
               <CardContent className="pt-5">
@@ -285,7 +285,7 @@ export function NootropicsForAnxietyPage() {
         </div>
 
         {/* What Type of Anxiety? */}
-        <div className="mb-12">
+        <div className="mb-6">
           <h2 className="text-xl font-semibold text-ink-900 mb-2">What Type of Anxiety Do You Have?</h2>
           <p className="text-ink-700 text-sm mb-5">Different anxiety patterns respond to different mechanisms. Match your situation to the right stack.</p>
 
@@ -329,7 +329,7 @@ export function NootropicsForAnxietyPage() {
         </div>
 
         {/* What to Avoid */}
-        <div className="mb-12">
+        <div className="mb-6">
           <h2 className="text-xl font-semibold text-ink-900 mb-2">What to Avoid If You Have Anxiety</h2>
           <p className="text-ink-700 text-sm mb-4">Some popular nootropics can actively worsen anxiety. Knowing what to skip is just as important as knowing what to take.</p>
 
@@ -349,7 +349,7 @@ export function NootropicsForAnxietyPage() {
         </div>
 
         {/* CTA to Stack Builder */}
-        <div className="mb-12 p-6 bg-indigo-600 rounded-md text-white text-center">
+        <div className="mb-6 p-3 bg-indigo-600 rounded-md text-white text-center">
           <Brain className="w-8 h-8 mx-auto mb-2 opacity-90" />
           <h2 className="text-xl font-semibold mb-2">Build Your Anxiety Stack</h2>
           <p className="text-indigo-100 text-sm mb-4 max-w-md mx-auto">
@@ -364,7 +364,7 @@ export function NootropicsForAnxietyPage() {
         </div>
 
         {/* Related Articles */}
-        <div className="mb-8">
+        <div className="mb-4">
           <h2 className="text-lg font-semibold text-ink-900 mb-4 flex items-center gap-2">
             <BookOpen className="w-5 h-5 text-indigo-600" />
             Related Research & Guides

@@ -244,7 +244,7 @@ export function ResearchLibraryPage() {
   }, [query, supplementFilter, evidenceFilter]);
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
+    <div className="max-w-4xl mx-auto space-y-4">
       <div>
         <div className="flex items-center gap-2 mb-2">
           <FlaskConical className="w-5 h-5 text-primary-700" />
@@ -384,7 +384,7 @@ export function ResearchLibraryPage() {
       <Separator className="bg-ink-200" />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <Link to="/start-here" className="p-6 rounded-md border border-ink-200 bg-white text-center hover:border-primary-300 hover:shadow-sm transition-all">
+        <Link to="/start-here" className="p-3 rounded-md border border-ink-200 bg-white text-center hover:border-primary-300 hover:shadow-sm transition-all">
           <BookOpenCheck className="w-6 h-6 text-primary-700 mx-auto mb-3" />
           <h2 className="font-semibold text-ink-900 mb-2">New to nootropics?</h2>
           <p className="text-xs text-ink-500 mb-4">
@@ -394,7 +394,7 @@ export function ResearchLibraryPage() {
             Start Here <ArrowRight className="w-3.5 h-3.5" />
           </span>
         </Link>
-        <Link to="/" className="p-6 rounded-md border border-primary-300 bg-primary-050 text-center hover:border-blue-400 hover:shadow-sm transition-all">
+        <Link to="/" className="p-3 rounded-md border border-primary-300 bg-primary-050 text-center hover:border-blue-400 hover:shadow-sm transition-all">
           <FlaskConical className="w-6 h-6 text-primary-700 mx-auto mb-3" />
           <h2 className="font-semibold text-ink-900 mb-2">Build your stack</h2>
           <p className="text-xs text-ink-500 mb-4">

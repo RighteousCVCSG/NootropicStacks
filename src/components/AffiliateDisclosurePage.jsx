@@ -9,11 +9,11 @@ export function AffiliateDisclosurePage() {
         customTitle="Affiliate Disclosure Policy | NootropicStacker"
         customDescription="Learn about how NootropicStacker earns commissions through affiliate partnerships while maintaining editorial independence."
       />
-      <div className="max-w-3xl mx-auto px-4 py-12">
-        <h1 className="text-3xl font-semibold mb-6">Affiliate Disclosure Policy</h1>
-        <p className="text-sm text-ink-500 mb-8">Last updated: April 2026</p>
+      <div className="max-w-3xl mx-auto px-4 py-6">
+        <h1 className="text-3xl font-semibold mb-3">Affiliate Disclosure Policy</h1>
+        <p className="text-sm text-ink-500 mb-4">Last updated: April 2026</p>
 
-        <section className="space-y-6 text-ink-700 leading-relaxed">
+        <section className="space-y-3 text-ink-700 leading-relaxed">
           <p>
             NootropicStacker is committed to transparency. We want you to understand
             how we sustain our operations while maintaining editorial independence.

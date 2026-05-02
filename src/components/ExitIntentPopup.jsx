@@ -52,7 +52,7 @@ export function ExitIntentPopup({ articleSlug }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      <div className="relative w-full max-w-md bg-white rounded-md shadow-2xl p-6 sm:p-8 animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-md bg-white rounded-md shadow-2xl p-3 sm:p-4 animate-in fade-in zoom-in-95 duration-200">
         <button
           onClick={handleDismiss}
           className="absolute top-3 right-3 p-1.5 rounded-md text-ink-400 hover:text-ink-700 hover:bg-surface-sunk transition-colors"
@@ -61,7 +61,7 @@ export function ExitIntentPopup({ articleSlug }) {
           <X className="w-5 h-5" />
         </button>
 
-        <div className="flex flex-col items-center text-center mb-6">
+        <div className="flex flex-col items-center text-center mb-3">
           <div className="w-12 h-12 rounded-full bg-primary-100 flex items-center justify-center mb-4">
             <Mail className="w-6 h-6 text-primary-700" />
           </div>

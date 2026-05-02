@@ -44,7 +44,7 @@ export function SupplementPage() {
     return (
       <div className="text-center py-20">
         <h2 className="text-2xl font-semibold mb-4">Supplement Not Found</h2>
-        <p className="text-ink-700 mb-6">The supplement you're looking for doesn't exist in our database.</p>
+        <p className="text-ink-700 mb-3">The supplement you're looking for doesn't exist in our database.</p>
         <Link to="/supplements">
           <Button><ArrowLeft className="w-4 h-4 mr-2" /> Back to Library</Button>
         </Link>
@@ -76,7 +76,7 @@ export function SupplementPage() {
       <SEOOptimizer page="supplements" supplement={supplement} />
       <JsonLd data={buildProductSchema(productSchemaSource)} />
 
-      <div className="space-y-6">
+      <div className="space-y-3">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-sm text-ink-500">
           <Link to="/" className="hover:text-ink-900">Home</Link>
@@ -110,9 +110,9 @@ export function SupplementPage() {
         </div>
 
         {/* Main content grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
           {/* Left column — details */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-3">
             {/* Description */}
             <Card>
               <CardHeader>
@@ -202,7 +202,7 @@ export function SupplementPage() {
           </div>
 
           {/* Right column — dosage, buy, related */}
-          <div className="space-y-6">
+          <div className="space-y-3">
             {/* Dosage Card */}
             <Card>
               <CardHeader>

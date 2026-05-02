@@ -66,7 +66,7 @@ export function BlogSection() {
   const allTags = [...new Set(articles.flatMap(a => a.tags))].sort();
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-3">
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-semibold text-ink-900 flex items-center gap-2">
@@ -126,13 +126,13 @@ export function BlogSection() {
 
       {/* Article list */}
       {filtered.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {filtered.map(article => (
             <ArticleCard key={article.slug} article={article} />
           ))}
         </div>
       ) : (
-        <Card className="p-8 text-center">
+        <Card className="p-4 text-center">
           <p className="text-ink-500">
             {articles.length === 0
               ? 'Articles coming soon. Check back shortly.'

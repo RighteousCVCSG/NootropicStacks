@@ -232,7 +232,7 @@ export function StackQuiz() {
           customTitle="Your Personalized Nootropic Stack | NootropicStacker"
           customDescription="Get a personalized supplement stack recommendation based on your goals, experience, and sensitivities."
         />
-        <div className="max-w-3xl mx-auto space-y-6">
+        <div className="max-w-3xl mx-auto space-y-3">
           <div className="text-center">
             <Sparkles className="w-12 h-12 text-primary-700 mx-auto mb-4" />
             <h2 className="text-3xl font-semibold mb-2">Your Personalized Stack</h2>
@@ -335,7 +335,7 @@ export function StackQuiz() {
         customTitle="Nootropic Stack Quiz — Find Your Perfect Stack | NootropicStacker"
         customDescription="Answer 5 quick questions to get a personalized nootropic supplement stack recommendation based on your goals and experience."
       />
-      <div className="max-w-2xl mx-auto space-y-6">
+      <div className="max-w-2xl mx-auto space-y-3">
         {/* Progress */}
         <div>
           <div className="flex justify-between text-sm text-ink-500 mb-2">

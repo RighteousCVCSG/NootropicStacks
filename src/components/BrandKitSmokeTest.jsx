@@ -290,7 +290,7 @@ export function BrandKitSmokeTest() {
       </section>
 
       {/* Footer */}
-      <footer className="footer -mx-4 px-6 py-8 mt-10">
+      <footer className="footer -mx-4 px-6 py-4 mt-10">
         <div className="max-w-3xl mx-auto text-center">
           <p className="font-display text-lg mb-1">NootropicStacker</p>
           <p className="text-sm opacity-70">Educational information only. Consult a healthcare professional.</p>

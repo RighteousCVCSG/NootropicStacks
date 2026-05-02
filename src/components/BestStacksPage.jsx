@@ -173,7 +173,7 @@ export function BestStacksPage() {
       />
 
       <div className="max-w-3xl mx-auto">
-        <div className="mb-8">
+        <div className="mb-4">
           <h1 className="text-3xl font-semibold text-ink-900 mb-3">Best Nootropic Stacks 2026</h1>
           <p className="text-ink-700 leading-relaxed mb-4">
             Individual supplements are powerful. Combined correctly, they're transformative. These 8 stacks are curated by goal — each one built around proven synergies, evidence-ranked ingredients, and real-world cost. Find your stack, build it yourself, or use the Stack Builder to customize further.
@@ -187,7 +187,7 @@ export function BestStacksPage() {
           </div>
         </div>
 
-        <div className="space-y-8">
+        <div className="space-y-4">
           {CURATED_STACKS.map((stack) => {
             const StackIcon = stack.icon;
             const stackIds = stack.supplements
@@ -275,7 +275,7 @@ export function BestStacksPage() {
           })}
         </div>
 
-        <div className="mt-10 p-6 bg-primary-700 rounded-md text-white text-center">
+        <div className="mt-10 p-3 bg-primary-700 rounded-md text-white text-center">
           <Brain className="w-8 h-8 mx-auto mb-2 opacity-90" />
           <h2 className="text-xl font-semibold mb-2">Customize Any Stack</h2>
           <p className="text-blue-100 text-sm mb-4">Use the free Stack Builder to swap supplements, check interactions, adjust doses, and get a personalized Stack Score.</p>

@@ -63,7 +63,7 @@ export function SupplementCompare() {
     return (
       <div className="text-center py-20">
         <h2 className="text-2xl font-semibold mb-4">Comparison Not Found</h2>
-        <p className="text-ink-700 mb-6">
+        <p className="text-ink-700 mb-3">
           One or both supplements could not be found. Try comparing from the{' '}
           <Link to="/supplements" className="text-primary-700 hover:underline">supplement library</Link>.
         </p>
@@ -105,7 +105,7 @@ export function SupplementCompare() {
         customDescription={`Compare ${supplementA.name} and ${supplementB.name} side-by-side. See effects, dosage, safety, and which is better for your goals.`}
       />
 
-      <div className="space-y-6">
+      <div className="space-y-3">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-sm text-ink-700">
           <Link to="/" className="hover:text-ink-900">Home</Link>
@@ -189,7 +189,7 @@ export function SupplementCompare() {
         </Card>
 
         {/* Dosage Comparison */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <Card>
             <CardHeader>
               <CardTitle>{supplementA.name} — Dosage</CardTitle>
@@ -240,7 +240,7 @@ export function SupplementCompare() {
         </div>
 
         {/* Where to Buy */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <AffiliateLinks supplementId={supplementA.id} supplementName={supplementA.name} />
           <AffiliateLinks supplementId={supplementB.id} supplementName={supplementB.name} />
         </div>

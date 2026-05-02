@@ -145,7 +145,7 @@ export function BestNootropicsPage() {
       />
 
       <div className="max-w-3xl mx-auto">
-        <div className="mb-8">
+        <div className="mb-4">
           <h1 className="text-3xl font-semibold text-ink-900 mb-3">Best Nootropics 2026</h1>
           <p className="text-ink-700 leading-relaxed mb-4">
             We evaluated 195 nootropic compounds across clinical evidence quality, safety profile, dose-response consistency, and real-world results. These 10 earn a place in any serious cognitive enhancement protocol — whether you're a beginner or an experienced biohacker.
@@ -159,7 +159,7 @@ export function BestNootropicsPage() {
           </div>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-3">
           {TOP_NOOTROPICS.map((nootropic) => {
             const links = AFFILIATE_LINKS[nootropic.id];
             return (
@@ -213,7 +213,7 @@ export function BestNootropicsPage() {
           })}
         </div>
 
-        <div className="mt-10 p-6 bg-primary-700 rounded-md text-white text-center">
+        <div className="mt-10 p-3 bg-primary-700 rounded-md text-white text-center">
           <Brain className="w-8 h-8 mx-auto mb-2 opacity-90" />
           <h2 className="text-xl font-semibold mb-2">Build Your Stack from These 10</h2>
           <p className="text-blue-100 text-sm mb-4">Use our free Stack Builder to combine the supplements that match your goals, check interactions, and get a personalized Stack Score.</p>

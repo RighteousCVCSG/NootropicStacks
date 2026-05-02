@@ -90,7 +90,7 @@ export function CelebrityStacksPage() {
             What 8 Biohacking Experts<br />
             <span className="text-primary-800">Actually Take</span>
           </h1>
-          <p className="text-ink-700 max-w-2xl mx-auto mb-8">
+          <p className="text-ink-700 max-w-2xl mx-auto mb-4">
             We mapped every supplement to the exact podcast episode, newsletter, or book where they
             mentioned it. Verify it yourself.
           </p>
@@ -174,7 +174,7 @@ export function CelebrityStacksPage() {
         {/* Key Findings */}
         <section>
           <Card className="border-primary-200 bg-primary-050">
-            <CardContent className="p-6">
+            <CardContent className="p-3">
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0 w-10 h-10 rounded-md bg-primary-100 border border-primary-200 flex items-center justify-center">
                   <Shield className="w-5 h-5 text-primary-800" />
@@ -213,7 +213,7 @@ export function CelebrityStacksPage() {
             {CELEBRITIES.map((celeb) => (
               <div
                 key={celeb.name}
-                className="p-6 rounded-md border border-ink-200 bg-surface-card flex flex-col"
+                className="p-3 rounded-md border border-ink-200 bg-surface-card flex flex-col"
               >
                 <div className="flex items-start justify-between gap-3 mb-3">
                   <div className="min-w-0 flex-1">
@@ -296,7 +296,7 @@ export function CelebrityStacksPage() {
         {/* Source Transparency */}
         <section>
           <Card>
-            <CardContent className="p-6">
+            <CardContent className="p-3">
               <div className="flex items-start gap-3">
                 <Shield className="w-5 h-5 text-primary-800 flex-shrink-0 mt-0.5" />
                 <div>
@@ -335,12 +335,12 @@ export function CelebrityStacksPage() {
         </section>
 
         {/* CTA */}
-        <section className="p-8 rounded-md border border-primary-200 bg-primary-050 text-center">
+        <section className="p-4 rounded-md border border-primary-200 bg-primary-050 text-center">
           <Brain className="w-8 h-8 text-primary-800 mx-auto mb-3" />
           <h2 className="text-2xl font-semibold text-ink-900 mb-2">
             Build Your Own Evidence-Based Stack
           </h2>
-          <p className="text-ink-700 mb-6 max-w-md mx-auto text-sm">
+          <p className="text-ink-700 mb-3 max-w-md mx-auto text-sm">
             Don't copy a celebrity. Start from your goals, build progressively, and verify what
             actually works for you.
           </p>

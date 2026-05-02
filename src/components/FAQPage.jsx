@@ -154,7 +154,7 @@ export function FAQPage() {
   );
 
   return (
-    <div className="max-w-3xl mx-auto space-y-8">
+    <div className="max-w-3xl mx-auto space-y-4">
       <JsonLd data={buildFAQSchema(flatFaqs)} />
 
       <div>

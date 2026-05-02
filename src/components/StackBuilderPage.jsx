@@ -74,7 +74,7 @@ export function StackBuilderPage() {
       {/* Page header — single h1 + tagline. The header nav already shows
           the user is on the Build page; breadcrumb + eyebrow chrome was
           dead vertical space. */}
-      <section className="mb-6">
+      <section className="mb-3">
         <h1 className="text-xl sm:text-2xl font-semibold text-ink-900 tracking-tight">
           Build your stack
         </h1>
@@ -85,7 +85,7 @@ export function StackBuilderPage() {
 
       {/* Returning-user status (single line, only when stack exists) */}
       {stack.length > 0 && (
-        <div className="mb-6 rounded-md border border-primary-300 bg-primary-050 px-3 py-2 flex items-center gap-3 text-sm">
+        <div className="mb-3 rounded-md border border-primary-300 bg-primary-050 px-3 py-2 flex items-center gap-3 text-sm">
           <Activity className="w-4 h-4 text-primary-800 shrink-0" />
           <span className="text-ink-900 flex-1 truncate">
             {stackName ? (
@@ -122,12 +122,12 @@ export function StackBuilderPage() {
       )}
 
       {/* Working grid — 1/3 goals · 2/3 recommendations + library */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-10 items-start">
         <div className="lg:col-span-1">
           <GoalSelector />
         </div>
 
-        <div className="lg:col-span-2 space-y-6">
+        <div className="lg:col-span-2 space-y-3">
           <RecommendationPanel />
 
           <Tabs defaultValue="library" className="w-full">
@@ -142,11 +142,11 @@ export function StackBuilderPage() {
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="library" className="space-y-6 mt-4">
+            <TabsContent value="library" className="space-y-3 mt-4">
               <SupplementLibrary onViewDetails={handleViewDetails} />
             </TabsContent>
 
-            <TabsContent value="stacks" className="space-y-6 mt-4">
+            <TabsContent value="stacks" className="space-y-3 mt-4">
               <PredefinedStacks />
             </TabsContent>
           </Tabs>

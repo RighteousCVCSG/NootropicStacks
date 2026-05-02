@@ -13,7 +13,7 @@ const VARIANT_STYLES = {
     successIcon: CheckCircle,
   },
   save_gate: {
-    wrapper: 'bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-200 rounded-md p-6',
+    wrapper: 'bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-200 rounded-md p-3',
     headline: 'text-base font-semibold text-indigo-900',
     subtext: 'text-xs text-indigo-600',
     inputClass: 'text-sm h-9',
@@ -21,7 +21,7 @@ const VARIANT_STYLES = {
     successIcon: Lock,
   },
   lead_magnet: {
-    wrapper: 'bg-gradient-to-br from-blue-600 to-indigo-700 rounded-md p-6 sm:p-8 shadow-2',
+    wrapper: 'bg-gradient-to-br from-blue-600 to-indigo-700 rounded-md p-3 sm:p-4 shadow-2',
     headline: 'text-lg font-semibold text-white',
     subtext: 'text-xs text-blue-200',
     inputClass: 'text-sm h-9 bg-white/95',

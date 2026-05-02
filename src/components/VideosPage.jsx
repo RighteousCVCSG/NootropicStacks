@@ -237,7 +237,7 @@ function VideoCard({ video }) {
 
 export default function VideosPage() {
   return (
-    <main className="min-h-screen py-12">
+    <main className="min-h-screen py-6">
       <div className="container max-w-6xl">
 
         <div className="mb-10 text-center">
@@ -254,7 +254,7 @@ export default function VideosPage() {
         </div>
 
         <Tabs defaultValue="all" className="mb-14">
-          <TabsList className="mb-8 flex-wrap h-auto gap-1 bg-card border border-border/50 p-1">
+          <TabsList className="mb-4 flex-wrap h-auto gap-1 bg-card border border-border/50 p-1">
             {CATEGORY_TABS.map((tab) => (
               <TabsTrigger key={tab.key} value={tab.key} className="text-xs">
                 {tab.label}
@@ -263,14 +263,14 @@ export default function VideosPage() {
           </TabsList>
 
           <TabsContent value="all">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {ALL_VIDEOS.map((v) => <VideoCard key={v.id} video={v} />)}
             </div>
           </TabsContent>
 
           {['deep-dives', 'stack-building', 'science', 'lifestyle'].map((key) => (
             <TabsContent key={key} value={key}>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {ALL_VIDEOS.filter((v) => v.categoryKey === key).map((v) => (
                   <VideoCard key={v.id} video={v} />
                 ))}
@@ -279,12 +279,12 @@ export default function VideosPage() {
           ))}
         </Tabs>
 
-        <div className="p-8 rounded-md border border-primary/20 bg-primary/5 text-center">
+        <div className="p-4 rounded-md border border-primary/20 bg-primary/5 text-center">
           <PlayCircle className="w-8 h-8 text-primary mx-auto mb-3" />
           <h2 className="font-display text-2xl font-semibold text-foreground mb-2">
             Ready to apply what you've learned?
           </h2>
-          <p className="text-ink-500 text-sm mb-6 max-w-md mx-auto">
+          <p className="text-ink-500 text-sm mb-3 max-w-md mx-auto">
             Use the Stack Builder to combine the supplements you've researched into a personalized, interaction-checked protocol.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">

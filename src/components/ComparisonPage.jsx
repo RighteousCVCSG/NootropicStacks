@@ -382,9 +382,9 @@ export function ComparisonPage() {
         customDescription={pageDesc}
       />
 
-      <div className="max-w-4xl mx-auto space-y-6">
+      <div className="max-w-4xl mx-auto space-y-3">
         {/* Header */}
-        <div className="mb-6">
+        <div className="mb-3">
           <div className="flex items-center gap-2 mb-2">
             <GitCompare className="w-6 h-6 text-primary-700" />
             <h1 className="text-3xl font-semibold text-ink-900">Nootropic Comparison</h1>
@@ -397,7 +397,7 @@ export function ComparisonPage() {
         {/* Supplement selectors */}
         <Card className="border-ink-200">
           <CardContent className="pt-5">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <SupplementSelect
                 label="Supplement A"
                 selected={suppA}
@@ -619,7 +619,7 @@ export function ComparisonPage() {
             <VerdictSection suppA={suppA} suppB={suppB} />
 
             {/* Stack Together CTA */}
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-md p-6 text-white text-center">
+            <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-md p-3 text-white text-center">
               <Layers className="w-8 h-8 mx-auto mb-2 opacity-90" />
               <h2 className="text-xl font-semibold mb-2">Stack These Together</h2>
               <p className="text-blue-100 text-sm mb-4 max-w-md mx-auto">

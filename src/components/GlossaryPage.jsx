@@ -144,7 +144,7 @@ export function GlossaryPage() {
   const letters = Object.keys(grouped).sort();
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6">
+    <div className="max-w-3xl mx-auto space-y-3">
       <div>
         <h1 className="text-2xl font-semibold text-ink-900 flex items-center gap-2">
           <BookOpen className="w-6 h-6" />
@@ -203,7 +203,7 @@ export function GlossaryPage() {
       ))}
 
       {filtered.length === 0 && (
-        <p className="text-center text-ink-500 py-8">No terms match your search.</p>
+        <p className="text-center text-ink-500 py-4">No terms match your search.</p>
       )}
     </div>
   );

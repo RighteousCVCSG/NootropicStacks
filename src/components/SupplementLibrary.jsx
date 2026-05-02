@@ -65,7 +65,7 @@ export function SupplementLibrary({ onViewDetails }) {
           Supplement Library ({filteredAndSortedSupplements.length} supplements)
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-3">
         {/* Search and Filters */}
         <div className="space-y-4">
           {/* Search */}
@@ -125,7 +125,7 @@ export function SupplementLibrary({ onViewDetails }) {
 
         {/* Results */}
         {filteredAndSortedSupplements.length === 0 ? (
-          <div className="text-center py-12">
+          <div className="text-center py-6">
             <p className="text-ink-500 mb-2">No supplements found</p>
             <p className="text-sm text-ink-400">
               Try adjusting your search terms or filters

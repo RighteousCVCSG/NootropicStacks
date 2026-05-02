@@ -230,7 +230,7 @@ export function NootropicsForFocusPage() {
             We ranked the 8 most effective nootropics for focus by combining clinical trial data, mechanism strength, and real-world user evidence. Each entry includes exact dosage ranges, optimal timing, and the neuroscience behind why it works — so you can build a stack that matches your specific focus goals.
           </p>
 
-          <div className="flex flex-wrap gap-4 text-sm text-ink-500 mb-6">
+          <div className="flex flex-wrap gap-4 text-sm text-ink-500 mb-3">
             <span className="flex items-center gap-1"><span className="text-green-500 font-semibold">✓</span> 8 supplements ranked</span>
             <span className="flex items-center gap-1"><span className="text-green-500 font-semibold">✓</span> Clinical evidence cited</span>
             <span className="flex items-center gap-1"><span className="text-green-500 font-semibold">✓</span> 3 curated stacks</span>
@@ -248,11 +248,11 @@ export function NootropicsForFocusPage() {
         </div>
 
         {/* ── Top 8 Focus Supplements ── */}
-        <section className="mb-12">
+        <section className="mb-6">
           <h2 className="text-2xl font-semibold text-ink-900 mb-2">Top 8 Nootropics for Focus in 2026</h2>
-          <p className="text-ink-500 text-sm mb-6">Ranked by a composite focus score combining clinical evidence strength, mechanism clarity, and dose-response reliability.</p>
+          <p className="text-ink-500 text-sm mb-3">Ranked by a composite focus score combining clinical evidence strength, mechanism clarity, and dose-response reliability.</p>
 
-          <div className="space-y-6">
+          <div className="space-y-3">
             {TOP_FOCUS_SUPPLEMENTS.map((s) => {
               const amazonUrl = buildAmazonSearchLink(`${s.name} supplement`, { campaign: 'nootropics-for-focus' });
               const iherbUrl = `https://www.iherb.com/search?kw=${encodeURIComponent(s.name)}`;
@@ -350,9 +350,9 @@ export function NootropicsForFocusPage() {
         </section>
 
         {/* ── Best Stacks for Focus ── */}
-        <section className="mb-12">
+        <section className="mb-6">
           <h2 className="text-2xl font-semibold text-ink-900 mb-2">Best Stacks for Focus</h2>
-          <p className="text-ink-500 text-sm mb-6">
+          <p className="text-ink-500 text-sm mb-3">
             Individual supplements are good. Stacks are better — the right combinations create synergies that single compounds can't match. Click "Build This Stack" to load any stack into our free Stack Builder and customize it.
           </p>
 
@@ -398,9 +398,9 @@ export function NootropicsForFocusPage() {
         </section>
 
         {/* ── Focus Mechanism Explainer ── */}
-        <section className="mb-12">
+        <section className="mb-6">
           <h2 className="text-2xl font-semibold text-ink-900 mb-2">How Nootropics Actually Improve Focus</h2>
-          <p className="text-ink-500 text-sm mb-6">
+          <p className="text-ink-500 text-sm mb-3">
             Most people think of focus as a single thing, but it's actually three overlapping systems. The best stacks address all three simultaneously.
           </p>
 
@@ -423,7 +423,7 @@ export function NootropicsForFocusPage() {
         </section>
 
         {/* ── CTA ── */}
-        <div className="mb-12 p-6 sm:p-8 bg-primary-700 rounded-md text-white text-center">
+        <div className="mb-6 p-3 sm:p-4 bg-primary-700 rounded-md text-white text-center">
           <Brain className="w-9 h-9 mx-auto mb-3 opacity-90" />
           <h2 className="text-xl sm:text-2xl font-semibold mb-2">Build Your Personal Focus Stack — Free</h2>
           <p className="text-blue-100 text-sm mb-5 max-w-md mx-auto">

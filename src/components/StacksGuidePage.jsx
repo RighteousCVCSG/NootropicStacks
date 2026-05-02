@@ -61,7 +61,7 @@ export function StacksGuidePage() {
       />
 
       {status === 'success' && (
-        <div className="mb-6 p-4 bg-accent-050 border border-accent-300 rounded-md">
+        <div className="mb-3 p-4 bg-accent-050 border border-accent-300 rounded-md">
           <div className="flex items-center gap-2 text-accent-700 font-semibold mb-2">
             <CheckCircle className="w-5 h-5" />
             {message}
@@ -79,7 +79,7 @@ export function StacksGuidePage() {
       )}
 
       <div className="max-w-4xl mx-auto">
-        <div className="mb-8">
+        <div className="mb-4">
           <div className="flex items-center gap-2 text-sm text-primary-700 font-semibold mb-3">
             <FileText className="w-4 h-4" />
             Free PDF · Edition 01
@@ -87,13 +87,13 @@ export function StacksGuidePage() {
           <h1 className="text-3xl sm:text-4xl font-semibold text-ink-900 mb-3 leading-tight">
             10 Evidence-Backed Nootropic Stacks
           </h1>
-          <p className="text-lg text-ink-700 mb-6 max-w-2xl">
+          <p className="text-lg text-ink-700 mb-3 max-w-2xl">
             Ten combinations the literature actually supports — each graded by trial design,
             replication, and population. 28 PubMed citations, 13 pages, no hype.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
           {STACK_PREVIEWS.map((stack, i) => (
             <div key={i} className="flex items-center gap-3 p-3 bg-white rounded-md border border-ink-200">
               <div className="w-8 h-8 rounded-full bg-primary-100 text-primary-800 flex items-center justify-center text-xs font-semibold shrink-0">
@@ -114,7 +114,7 @@ export function StacksGuidePage() {
           ))}
         </div>
 
-        <div className="bg-primary-050 border border-primary-300 rounded-md p-6 mb-8">
+        <div className="bg-primary-050 border border-primary-300 rounded-md p-3 mb-4">
           <h2 className="text-lg font-semibold text-ink-900 mb-3 flex items-center gap-2">
             <Mail className="w-5 h-5 text-primary-700" />
             Get the full guide
@@ -149,7 +149,7 @@ export function StacksGuidePage() {
           )}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
           {[
             { icon: BookOpen, label: '28 citations', desc: 'All linked to PubMed' },
             { icon: Layers, label: '10 stacks', desc: 'Dosed and evidence-graded' },

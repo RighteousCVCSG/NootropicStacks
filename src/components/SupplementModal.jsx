@@ -78,7 +78,7 @@ export function SupplementModal({ supplement, isOpen, onClose }) {
           </DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-6">
+        <div className="space-y-3">
           {/* Description */}
           <div>
             <h3 className="font-semibold mb-2">Description</h3>

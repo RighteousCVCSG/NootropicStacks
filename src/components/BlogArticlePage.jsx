@@ -44,7 +44,7 @@ function ArticleContent({ sections, showNewsletter = false, articleSlug }) {
     <div className="prose prose-gray max-w-none">
       {sections.map((section, i) => (
         <React.Fragment key={i}>
-          <div className="mb-8">
+          <div className="mb-4">
             {section.heading && <h2 className="text-xl font-semibold text-ink-900 mb-3">{section.heading}</h2>}
             {section.paragraphs.map((p, j) => (
               <p key={j} className="text-ink-700 leading-relaxed mb-4">{p}</p>
@@ -131,14 +131,14 @@ export function BlogArticlePage() {
 
       <div className="max-w-3xl mx-auto">
         {/* Back link */}
-        <Link to="/blog" className="inline-flex items-center gap-1 text-sm text-ink-500 hover:text-ink-900 mb-6">
+        <Link to="/blog" className="inline-flex items-center gap-1 text-sm text-ink-500 hover:text-ink-900 mb-3">
           <ArrowLeft className="w-4 h-4" />
           Back to Blog
         </Link>
 
         {/* Article header */}
         <article>
-          <div className="mb-8">
+          <div className="mb-4">
             <div className="flex flex-wrap gap-2 mb-3">
               {article.tags.map(tag => (
                 <Badge key={tag} variant="outline" className="text-xs">{tag}</Badge>
@@ -161,7 +161,7 @@ export function BlogArticlePage() {
             </div>
           </div>
 
-          <Separator className="mb-8" />
+          <Separator className="mb-4" />
 
           {/* Article body */}
           <ArticleContent sections={article.sections} showNewsletter={true} articleSlug={slug} />
@@ -178,7 +178,7 @@ export function BlogArticlePage() {
         </article>
 
         {articleSupplements.length > 0 && (
-          <div className="mt-8 p-6 bg-accent-050 border border-accent-300 rounded-md">
+          <div className="mt-8 p-3 bg-accent-050 border border-accent-300 rounded-md">
             <h3 className="font-semibold text-accent-700 mb-1 flex items-center gap-2">
               <ShoppingCart className="w-5 h-5" />
               Shop Supplements in This Article
@@ -216,7 +216,7 @@ export function BlogArticlePage() {
           </div>
         )}
 
-        <div className="mt-6 p-6 bg-primary-700 rounded-md text-white text-center">
+        <div className="mt-6 p-3 bg-primary-700 rounded-md text-white text-center">
           <Beaker className="w-8 h-8 mx-auto mb-2 opacity-90" />
           <h3 className="text-xl font-semibold mb-2">Build Your Personalized Stack</h3>
           <p className="text-blue-100 text-sm mb-4">Use our free Stack Builder to combine these supplements, check interactions, and get a Stack Score rating.</p>

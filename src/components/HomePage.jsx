@@ -114,7 +114,7 @@ export function HomePage() {
 
           {/* Three doors — the primary action, sitting where the old
               "Start building" CTA used to be. */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-4xl mx-auto text-left mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-4xl mx-auto text-left mb-3">
             <Link
               to="/build"
               onClick={() => track('door_click', { door: 'build' })}
@@ -271,7 +271,7 @@ export function HomePage() {
       {/* Featured Stacks — divider above gives rhythm without wrapping
           each section in a card. The three doors connect tightly to the
           hero, then content sections start visually separating. */}
-      <section className="border-t border-ink-100 pt-8 mb-8">
+      <section className="border-t border-ink-100 pt-8 mb-4">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-[11px] font-semibold uppercase tracking-widest text-ink-500">
             Featured stacks
@@ -306,7 +306,7 @@ export function HomePage() {
       </section>
 
       {/* Popular Articles */}
-      <section className="border-t border-ink-100 pt-8 mb-8">
+      <section className="border-t border-ink-100 pt-8 mb-4">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-[11px] font-semibold uppercase tracking-widest text-ink-500 inline-flex items-center gap-1.5">
             <BookOpen className="w-3 h-3 text-ink-500" />

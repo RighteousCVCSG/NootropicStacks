@@ -228,7 +228,7 @@ export function PredefinedStacks() {
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
         <div className="bg-white rounded-md max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-          <div className="p-6">
+          <div className="p-3">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-2xl font-semibold">{stackData.name}</h2>
               <Button variant="outline" size="sm" onClick={onClose}>
@@ -236,7 +236,7 @@ export function PredefinedStacks() {
               </Button>
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-3">
               {/* Description */}
               <div>
                 <h3 className="font-semibold mb-2">Description</h3>
@@ -395,7 +395,7 @@ export function PredefinedStacks() {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-3">
       <JsonLd
         data={buildItemListSchema({
           name: 'Pre-Built Nootropic Supplement Stacks',

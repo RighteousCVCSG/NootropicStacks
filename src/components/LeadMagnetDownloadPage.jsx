@@ -107,7 +107,7 @@ export function LeadMagnetDownloadPage() {
           </p>
 
           {/* Author badge */}
-          <div className="flex items-center justify-center gap-3 mb-6">
+          <div className="flex items-center justify-center gap-3 mb-3">
             <div className="w-10 h-10 rounded-full bg-primary-700 flex items-center justify-center text-white font-semibold text-sm">
               VH
             </div>
@@ -118,7 +118,7 @@ export function LeadMagnetDownloadPage() {
           </div>
 
           {/* Evidence tier legend */}
-          <div className="flex flex-wrap justify-center gap-3 mb-8">
+          <div className="flex flex-wrap justify-center gap-3 mb-4">
             {EVIDENCE_TIER_LEGEND.map(({ tier, label, color }) => (
               <div key={tier} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs ${color}`}>
                 <span className="font-semibold">{tier}</span>
@@ -139,7 +139,7 @@ export function LeadMagnetDownloadPage() {
         </div>
 
         {/* Why this guide exists */}
-        <div className="bg-white rounded-md border p-6 mb-8">
+        <div className="bg-white rounded-md border p-3 mb-4">
           <h2 className="text-lg font-semibold text-ink-900 mb-3">Why This Guide Exists</h2>
           <div className="space-y-3 text-sm text-ink-700 leading-relaxed">
             <p>
@@ -163,7 +163,7 @@ export function LeadMagnetDownloadPage() {
 
         {/* Stack previews */}
         <div className="mb-10">
-          <h2 className="text-xl font-semibold text-ink-900 mb-6">The 10 Stacks</h2>
+          <h2 className="text-xl font-semibold text-ink-900 mb-3">The 10 Stacks</h2>
           <div className="grid gap-4">
             {STACKS.map((stack, i) => (
               <div key={i} className="bg-white rounded-md border p-5 hover:border-primary-300 hover:shadow-sm transition-all">
@@ -188,7 +188,7 @@ export function LeadMagnetDownloadPage() {
         </div>
 
         {/* CTA to stack builder */}
-        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-md border border-blue-100 p-6 text-center mb-8">
+        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-md border border-blue-100 p-3 text-center mb-4">
           <h2 className="text-lg font-semibold text-ink-900 mb-2">Build Your Own Stack</h2>
           <p className="text-sm text-ink-700 mb-4">
             Use the free stack builder to combine any of 195 supplements, check interactions, and optimize your Stack Score.
@@ -203,7 +203,7 @@ export function LeadMagnetDownloadPage() {
         </div>
 
         {/* FAQ */}
-        <div className="mb-8">
+        <div className="mb-4">
           <h2 className="text-lg font-semibold text-ink-900 mb-4">Frequently Asked Questions</h2>
           <div className="space-y-3">
             {[

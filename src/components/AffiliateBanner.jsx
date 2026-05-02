@@ -54,7 +54,7 @@ export default function AffiliateBanner({ banner, compact = false }) {
           background: `linear-gradient(135deg, ${partnerInfo?.color ?? 'var(--color-accent-500)'}, transparent)`,
         }}
       />
-      <div className="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6">
+      <div className="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-3">
         <div className="flex items-start gap-4">
           <div
             className="w-1 self-stretch rounded-full shrink-0"

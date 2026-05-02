@@ -90,8 +90,8 @@ export function AdminPage() {
   if (!authed) {
     return (
       <div className="max-w-sm mx-auto mt-20">
-        <div className="rounded-md border border-ink-200 bg-white p-8 shadow-sm">
-          <div className="flex items-center gap-3 mb-6">
+        <div className="rounded-md border border-ink-200 bg-white p-4 shadow-sm">
+          <div className="flex items-center gap-3 mb-3">
             <div className="w-9 h-9 rounded-md bg-gray-900 flex items-center justify-center">
               <ShieldCheck className="w-5 h-5 text-white" />
             </div>
@@ -120,7 +120,7 @@ export function AdminPage() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6">
+    <div className="max-w-5xl mx-auto space-y-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <ShieldCheck className="w-5 h-5 text-ink-700" />
@@ -160,7 +160,7 @@ export function AdminPage() {
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {leads.length === 0 && (
-                  <tr><td colSpan={3} className="px-4 py-8 text-center text-ink-400">No subscribers yet</td></tr>
+                  <tr><td colSpan={3} className="px-4 py-4 text-center text-ink-400">No subscribers yet</td></tr>
                 )}
                 {leads.map(l => (
                   <tr key={l.id} className="hover:bg-surface-card">
@@ -187,7 +187,7 @@ export function AdminPage() {
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {users.length === 0 && (
-                  <tr><td colSpan={4} className="px-4 py-8 text-center text-ink-400">No users yet</td></tr>
+                  <tr><td colSpan={4} className="px-4 py-4 text-center text-ink-400">No users yet</td></tr>
                 )}
                 {users.map(u => (
                   <tr key={u.id} className="hover:bg-surface-card">
@@ -215,7 +215,7 @@ export function AdminPage() {
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {clicks.length === 0 && (
-                  <tr><td colSpan={4} className="px-4 py-8 text-center text-ink-400">No clicks recorded yet</td></tr>
+                  <tr><td colSpan={4} className="px-4 py-4 text-center text-ink-400">No clicks recorded yet</td></tr>
                 )}
                 {clicks.map((c, i) => (
                   <tr key={i} className="hover:bg-surface-card">
