@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Navy rounded square background, matching the in-app brand mark. -->
+  <rect width="32" height="32" rx="7" fill="#5B8BFF"/>
+  <!-- Three stacked rounded bars in white. -->
+  <rect x="9" y="7" width="15" height="4" rx="2" fill="#FFFFFF"/>
+  <rect x="5" y="14" width="22" height="4" rx="2" fill="#FFFFFF"/>
+  <rect x="8" y="21" width="16" height="4" rx="2" fill="#FFFFFF"/>
+</svg>

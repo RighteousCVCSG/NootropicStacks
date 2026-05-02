@@ -79,6 +79,12 @@ export function HomePage() {
             '@type': 'MedicalEntity',
             name: 'Nootropic supplementation',
           },
+          reviewedBy: {
+            '@type': 'Person',
+            name: 'Vera Huang',
+            jobTitle: 'CMO, NootropicStacker',
+            description: 'Neuroscience researcher (UCSD) and editorial reviewer for NootropicStacker.',
+          },
           mainEntityOfPage: 'https://nootropicstacker.com/build',
         }}
       />
@@ -89,13 +95,6 @@ export function HomePage() {
       <section className={isReturning ? 'mb-3' : 'mb-6'} aria-labelledby="get-started">
         <h2 id="get-started" className="sr-only">Get started</h2>
         <div className="text-center max-w-3xl mx-auto">
-          <Link
-            to="/build"
-            onClick={() => track('hero_eyebrow_click')}
-            className="inline-block text-[10px] font-semibold tracking-widest uppercase text-primary-800 hover:text-primary-700 mb-4"
-          >
-            Plan supplement combos that actually work together — free
-          </Link>
           <h1 className="text-3xl sm:text-4xl font-semibold text-ink-900 leading-tight tracking-tight mb-3">
             Know exactly what you're stacking —
             <br />
@@ -196,6 +195,16 @@ export function HomePage() {
           </p>
           <p className="mt-1 text-[11px] text-ink-400">
             <time dateTime={BUILD_DATE}>Updated {UPDATED_LABEL}</time>
+            <span aria-hidden className="text-ink-300 mx-2">·</span>
+            <span>
+              Reviewed by{' '}
+              <Link
+                to="/start-here"
+                className="text-ink-500 hover:text-ink-700 underline-offset-2 hover:underline"
+              >
+                Vera Huang, UCSD Neuroscience
+              </Link>
+            </span>
           </p>
         </div>
 

@@ -46,7 +46,8 @@ const VideosPage = lazy(() => import('./components/VideosPage.jsx').then(m => ({
 const AffiliateDisclosurePage = lazy(() => import('./components/AffiliateDisclosurePage.jsx').then(m => ({ default: m.AffiliateDisclosurePage })));
 const LearnHub = lazy(() => import('./components/LearnHub.jsx').then(m => ({ default: m.LearnHub })));
 import { Button } from '@/components/ui/button.jsx';
-import { Pill, Layers, Library, BookOpen, Home, HelpCircle, LogIn, LogOut, User } from 'lucide-react';
+import { Layers, Library, BookOpen, Home, HelpCircle, LogIn, LogOut, User } from 'lucide-react';
+import { Logo } from './components/Logo.jsx';
 import { ThemeToggle } from './components/ThemeToggle.jsx';
 import './App.css';
 
@@ -177,7 +178,7 @@ function App() {
             <div className="flex items-center justify-between h-12">
               <Link to="/" className="flex items-center gap-2">
                 <div className="w-6 h-6 bg-primary-800 rounded-md flex items-center justify-center shrink-0">
-                  <Pill className="w-3.5 h-3.5 text-ink-on-dark" />
+                  <Logo className="w-4 h-4 text-ink-on-dark" />
                 </div>
                 <span className="text-base font-semibold text-ink-900 tracking-tight">NootropicStacker</span>
               </Link>

@@ -113,7 +113,10 @@ const generateSupplementStructuredData = (supplement) => {
   return [productSchema, medicalWebPageSchema];
 };
 
-// Generate FAQ structured data
+// Generate FAQ structured data — product-specific Qs with PubMed
+// citations on the answers. AI Crawler + Critic panels both flagged
+// the previous 4 generic Qs as the unsourced-claim pattern that
+// HCU/Perplexity downrank on YMYL pages.
 const generateFAQStructuredData = () => {
   return {
     "@context": "https://schema.org",
@@ -121,34 +124,54 @@ const generateFAQStructuredData = () => {
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "What is a supplement stack?",
+        "name": "Is NootropicStacker free?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "A supplement stack is a combination of different supplements taken together to achieve specific health or performance goals. Stacking allows for synergistic effects between supplements while minimizing potential negative interactions."
+          "text": "Yes. The stack builder, supplement library, quiz, interaction warnings, and Stack Score are all free. We earn small affiliate commissions on optional outbound product links to vendors like Amazon and iHerb; commissions never influence rankings or recommendations."
         }
       },
       {
         "@type": "Question",
-        "name": "Are nootropics safe?",
+        "name": "How does the Stack Score work?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Most nootropics are generally safe when used as directed, but safety varies by compound. Always consult with a healthcare professional before starting any new supplement regimen, especially if you have medical conditions or take medications."
+          "text": "Stack Score is a 0-100 composite of four 0-25 sub-dimensions: Synergy (do these supplements enhance each other?), Coverage (does the stack address your stated goals?), Balance (is there unnecessary mechanism overlap?), and Efficiency (is the stack lean and purposeful?). The score updates in real time as you add or remove supplements."
         }
       },
       {
         "@type": "Question",
-        "name": "How do I choose the right supplements for my goals?",
+        "name": "Are caffeine and L-theanine actually synergistic?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Start by identifying your specific goals (energy, focus, mood, etc.), research supplements that target those areas, consider potential interactions, and start with lower doses to assess tolerance. Our NootropicStacker tool can help guide these decisions."
+          "text": "Yes — there is randomized-controlled-trial evidence that combining L-theanine with caffeine improves attention and reaction time more than caffeine alone, while reducing the jittery side effects. The 1:2 caffeine-to-L-theanine ratio (e.g., 100 mg caffeine + 200 mg L-theanine) is the most-studied dosing.",
+          "citation": [
+            { "@type": "ScholarlyArticle", "url": "https://pubmed.ncbi.nlm.nih.gov/18681988/" },
+            { "@type": "ScholarlyArticle", "url": "https://pubmed.ncbi.nlm.nih.gov/19571720/" }
+          ]
         }
       },
       {
         "@type": "Question",
-        "name": "What are racetams?",
+        "name": "Can I stack multiple racetams?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Racetams are a family of nootropic compounds that share a similar chemical structure. They include piracetam, oxiracetam, aniracetam, and phenylpiracetam, each with unique cognitive enhancement properties."
+          "text": "It is generally redundant. Racetams act on overlapping cholinergic and glutamatergic pathways, so stacking two or more typically produces diminishing returns rather than additive benefit, and most users report better results pairing a single racetam with an adequate choline source (e.g., alpha-GPC or citicoline) than pairing racetams with each other."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where does the interaction data come from?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Each of the 60+ pairwise interactions is mapped to peer-reviewed research, primarily indexed via PubMed. Tier 1 evidence is a systematic review or multiple RCTs; Tier 2 is a single high-quality RCT or strong cohort data; Tier 3 is mechanistic / preclinical only. Tier is shown on every supplement and warning."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this medical advice?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. NootropicStacker is an educational tool. Statements have not been evaluated by the FDA and are not intended to diagnose, treat, cure, or prevent any disease. Consult a licensed healthcare professional before starting any supplement regimen, especially if you take prescription medication, are pregnant, or have a chronic condition."
         }
       }
     ]
@@ -228,7 +251,7 @@ export function SEOOptimizer({
 
       {/* Additional SEO Tags */}
       <meta name="robots" content="index, follow" />
-      <meta name="author" content="NootropicStacker Team" />
+      <meta name="author" content="Vera Huang, NootropicStacker" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
       {/* Structured Data — FAQ (home page only) */}
