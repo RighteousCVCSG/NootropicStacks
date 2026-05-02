@@ -114,103 +114,104 @@ export function HomePage() {
         )}
       </section>
 
-      {/* Three-door entry — the homepage's core navigation pattern. */}
-      <section className="mb-12">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-5xl mx-auto">
+      {/* Three-door entry — compact MeasureBoard-style cards (icon + title +
+          1 sentence + arrow). No eyebrow label, no extra paragraph, no
+          uppercase. Reads as quick navigation, not marketing blocks. */}
+      <section className="mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-4xl mx-auto">
           <Link
             to="/build"
-            className="group rounded-md bg-primary-050 border border-primary-300 hover:border-primary-800 p-4 transition-colors flex flex-col"
+            className="group rounded-md bg-primary-050 border border-primary-300 hover:border-primary-800 p-3 transition-colors flex items-start gap-3"
           >
-            <div className="flex items-center gap-2 mb-2">
-              <Layers className="w-5 h-5 text-primary-800" />
-              <span className="text-xs uppercase tracking-widest font-semibold text-primary-800">Build</span>
+            <Layers className="w-4 h-4 text-primary-800 mt-0.5 shrink-0" />
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center justify-between gap-1">
+                <h3 className="text-sm font-semibold text-ink-900">Build my stack</h3>
+                <ArrowRight className="w-3.5 h-3.5 text-primary-800 group-hover:translate-x-0.5 transition-transform shrink-0" />
+              </div>
+              <p className="text-xs text-ink-500 mt-0.5">
+                Pick goals, see synergy in real time.
+              </p>
             </div>
-            <h3 className="text-base font-semibold text-ink-900 mb-1">I'll build my own</h3>
-            <p className="text-xs text-ink-700 mb-3 flex-1">
-              Pick goals, browse 195 supplements, see real-time synergy and Stack Score.
-            </p>
-            <span className="inline-flex items-center gap-1 text-sm font-medium text-primary-800 group-hover:translate-x-0.5 transition-transform">
-              Start building <ArrowRight className="w-4 h-4" />
-            </span>
           </Link>
 
           <Link
             to="/quiz"
-            className="group rounded-md bg-surface-card border border-ink-200 hover:border-accent-500 hover:bg-accent-050 p-4 transition-colors flex flex-col"
+            className="group rounded-md bg-surface-card border border-ink-200 hover:border-accent-500 p-3 transition-colors flex items-start gap-3"
           >
-            <div className="flex items-center gap-2 mb-2">
-              <HelpCircle className="w-5 h-5 text-accent-700" />
-              <span className="text-xs uppercase tracking-widest font-semibold text-accent-700">Quiz</span>
+            <HelpCircle className="w-4 h-4 text-accent-700 mt-0.5 shrink-0" />
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center justify-between gap-1">
+                <h3 className="text-sm font-semibold text-ink-900">Take the quiz</h3>
+                <ArrowRight className="w-3.5 h-3.5 text-accent-700 group-hover:translate-x-0.5 transition-transform shrink-0" />
+              </div>
+              <p className="text-xs text-ink-500 mt-0.5">
+                Six questions, one suggested stack.
+              </p>
             </div>
-            <h3 className="text-base font-semibold text-ink-900 mb-1">Not sure where to start</h3>
-            <p className="text-xs text-ink-700 mb-3 flex-1">
-              Answer 6 questions and we'll suggest a stack tuned to your goals.
-            </p>
-            <span className="inline-flex items-center gap-1 text-sm font-medium text-accent-700 group-hover:translate-x-0.5 transition-transform">
-              Take the quiz <ArrowRight className="w-4 h-4" />
-            </span>
           </Link>
 
           <Link
             to="/stacks"
-            className="group rounded-md bg-surface-card border border-ink-200 hover:border-warn-500 hover:bg-warn-100 p-4 transition-colors flex flex-col"
+            className="group rounded-md bg-surface-card border border-ink-200 hover:border-warn-500 p-3 transition-colors flex items-start gap-3"
           >
-            <div className="flex items-center gap-2 mb-2">
-              <Sparkles className="w-5 h-5 text-warn-700" />
-              <span className="text-xs uppercase tracking-widest font-semibold text-warn-700">Browse</span>
+            <Sparkles className="w-4 h-4 text-warn-700 mt-0.5 shrink-0" />
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center justify-between gap-1">
+                <h3 className="text-sm font-semibold text-ink-900">Browse top stacks</h3>
+                <ArrowRight className="w-3.5 h-3.5 text-warn-700 group-hover:translate-x-0.5 transition-transform shrink-0" />
+              </div>
+              <p className="text-xs text-ink-500 mt-0.5">
+                Curated, evidence-backed picks.
+              </p>
             </div>
-            <h3 className="text-base font-semibold text-ink-900 mb-1">Show me what works</h3>
-            <p className="text-xs text-ink-700 mb-3 flex-1">
-              Curated, evidence-backed stacks for focus, sleep, energy, mood, and more.
-            </p>
-            <span className="inline-flex items-center gap-1 text-sm font-medium text-warn-700 group-hover:translate-x-0.5 transition-transform">
-              See top stacks <ArrowRight className="w-4 h-4" />
-            </span>
           </Link>
         </div>
       </section>
 
-      {/* Inside the stack builder — describes the /build flow specifically,
-          so the numbered steps don't imply the whole site is one funnel. */}
-      <section className="mb-12">
-        <div className="text-center mb-6">
-          <h2 className="text-lg font-semibold text-ink-900">Inside the stack builder</h2>
-          <p className="text-xs text-ink-500 mt-1">How the builder works, step by step.</p>
+      {/* Inside the stack builder — describes the /build flow.
+          Compact horizontal cards: small numbered badge + title + 1 sentence. */}
+      <section className="mb-8">
+        <div className="mb-4">
+          <h2 className="text-sm font-semibold text-ink-900">Inside the stack builder</h2>
+          <p className="text-xs text-ink-500 mt-0.5">How the builder works, step by step.</p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 max-w-4xl">
           {[
-            { n: 1, title: 'Set your goals', desc: 'Focus, calm, energy, sleep, mood — pick what you want to optimize for.' },
-            { n: 2, title: 'Add supplements', desc: 'Browse 195 compounds with evidence tiers. Watch the Stack Score react in real time.' },
-            { n: 3, title: 'Ship your build', desc: 'Compare prices across vendors. Open all carts in one click. Save and share.' },
+            { n: 1, title: 'Set your goals', desc: 'Focus, calm, energy, sleep, mood.' },
+            { n: 2, title: 'Add supplements', desc: 'Watch the Stack Score react in real time.' },
+            { n: 3, title: 'Ship your build', desc: 'Compare prices, open all carts.' },
           ].map((s) => (
             <div
               key={s.n}
-              className="p-4 rounded-md bg-surface-card border border-ink-200"
+              className="p-3 rounded-md bg-surface-card border border-ink-200 flex items-start gap-3"
             >
-              <div className="w-7 h-7 rounded-full bg-primary-050 text-primary-800 flex items-center justify-center text-sm font-bold mb-3">
+              <span className="w-5 h-5 rounded-full bg-primary-050 text-primary-800 inline-flex items-center justify-center text-[11px] font-semibold shrink-0">
                 {s.n}
+              </span>
+              <div className="flex-1 min-w-0">
+                <h3 className="text-sm font-semibold text-ink-900">{s.title}</h3>
+                <p className="text-xs text-ink-500 mt-0.5">{s.desc}</p>
               </div>
-              <h3 className="text-base font-semibold text-ink-900 mb-1">{s.title}</h3>
-              <p className="text-sm text-ink-700">{s.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* Featured Stacks */}
-      <section className="mb-12">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-ink-900">Featured stacks</h2>
-          <Link to="/stacks" className="text-sm text-primary-800 hover:underline">
-            View all stacks →
+      <section className="mb-8">
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-sm font-semibold text-ink-900">Featured stacks</h2>
+          <Link to="/stacks" className="text-xs text-primary-800 hover:underline">
+            View all →
           </Link>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {FEATURED_STACKS.map((s) => (
             <Link key={s.slug} to={s.href}>
-              <div className="p-4 rounded-md bg-surface-card border border-ink-200 hover:border-primary-300 transition-colors h-full">
-                <h3 className="font-semibold text-ink-900 mb-1">{s.title}</h3>
-                <p className="text-sm text-ink-500">{s.desc}</p>
+              <div className="p-3 rounded-md bg-surface-card border border-ink-200 hover:border-primary-300 transition-colors h-full">
+                <h3 className="text-sm font-semibold text-ink-900">{s.title}</h3>
+                <p className="text-xs text-ink-500 mt-0.5">{s.desc}</p>
               </div>
             </Link>
           ))}
@@ -218,27 +219,27 @@ export function HomePage() {
       </section>
 
       {/* Popular Articles */}
-      <section className="mb-12">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-ink-900 flex items-center gap-2">
-            <BookOpen className="w-5 h-5 text-primary-800" />
+      <section className="mb-8">
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-sm font-semibold text-ink-900 inline-flex items-center gap-1.5">
+            <BookOpen className="w-3.5 h-3.5 text-primary-800" />
             Popular guides
           </h2>
-          <Link to="/blog" className="text-sm text-primary-800 hover:underline">
-            View all {ARTICLE_COUNT} articles →
+          <Link to="/blog" className="text-xs text-primary-800 hover:underline">
+            View all {ARTICLE_COUNT} →
           </Link>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {FEATURED_ARTICLES.map((article) => (
             <Link key={article.slug} to={`/blog/${article.slug}`}>
-              <div className="p-4 rounded-lg border border-ink-200 hover:border-primary-300 hover:shadow-sm transition-all bg-surface-card h-full">
-                <div className="flex flex-wrap gap-1 mb-2">
+              <div className="p-3 rounded-md border border-ink-200 hover:border-primary-300 transition-colors bg-surface-card h-full">
+                <div className="flex flex-wrap gap-1 mb-1.5">
                   {article.tags.slice(0, 2).map((tag) => (
-                    <span key={tag} className="text-xs bg-primary-050 text-primary-800 px-2 py-0.5 rounded">{tag}</span>
+                    <span key={tag} className="text-[10px] bg-primary-050 text-primary-800 px-1.5 py-0.5 rounded">{tag}</span>
                   ))}
                 </div>
-                <p className="text-sm font-medium text-ink-900 hover:text-primary-700 leading-snug">{article.title}</p>
-                <p className="text-xs text-ink-400 mt-1">{article.readTime} min read</p>
+                <p className="text-xs font-medium text-ink-900 hover:text-primary-700 leading-snug">{article.title}</p>
+                <p className="text-[10px] text-ink-400 mt-0.5">{article.readTime} min read</p>
               </div>
             </Link>
           ))}
