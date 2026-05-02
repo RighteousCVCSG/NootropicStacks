@@ -35,8 +35,10 @@ export function HomePage() {
     <>
       <SEOOptimizer page="home" />
 
-      {/* Hero — benefit-led headline + tight credential bar above fold. */}
-      <section className="mb-10">
+      {/* Hero — benefit-led headline + tight credential bar above fold.
+          When the returning-user strip renders below, we tighten the
+          bottom margin so the strip + doors read as one entry block. */}
+      <section className={isReturning ? 'mb-3' : 'mb-10'}>
         <div className="text-center max-w-3xl mx-auto">
           <span className="inline-block text-[10px] font-semibold tracking-widest uppercase text-primary-900 bg-primary-050 border border-primary-300 px-2.5 py-0.5 rounded-md mb-4">
             Free Nootropic Stack Builder
@@ -66,11 +68,14 @@ export function HomePage() {
           </div>
         </div>
 
-        {/* Returning-user one-line strip — only when localStorage already has a stack. */}
+        {/* Returning-user one-line strip — only when localStorage already has a stack.
+            Uses the neutral surface so it doesn't compete visually with the
+            clickable "Build my stack" door card immediately below (same navy
+            tint there means "click me", same tint here would just confuse). */}
         {isReturning && (
-          <div className="max-w-3xl mx-auto mt-6">
-            <div className="rounded-md border border-primary-300 bg-primary-050 px-3 py-2 flex items-center gap-3 text-sm">
-              <Activity className="w-4 h-4 text-primary-800 shrink-0" />
+          <div className="max-w-3xl mx-auto mt-4">
+            <div className="rounded-md border border-ink-200 bg-surface-card px-3 py-2 flex items-center gap-3 text-sm">
+              <Activity className="w-4 h-4 text-ink-500 shrink-0" />
               <span className="text-ink-900 flex-1 truncate">
                 Welcome back —{' '}
                 {stackName ? (
