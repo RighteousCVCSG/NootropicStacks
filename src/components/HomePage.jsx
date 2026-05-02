@@ -50,7 +50,7 @@ export function HomePage() {
           </p>
           <Link
             to="/build"
-            className="inline-flex items-center gap-1 h-9 px-4 rounded-md text-sm font-medium bg-primary-800 hover:bg-primary-700 text-ink-on-dark transition-colors"
+            className="inline-flex items-center gap-1 text-sm font-medium text-primary-800 hover:text-primary-700 underline-offset-4 hover:underline transition-colors"
           >
             Start building <ArrowRight className="w-3.5 h-3.5" />
           </Link>

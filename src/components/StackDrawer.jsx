@@ -435,7 +435,7 @@ function DesktopDrawer({ open, onClose, children }) {
       )}
       <div
         className={`
-          fixed top-16 right-0 bottom-0 z-[1000] w-80
+          fixed top-16 right-0 bottom-0 z-[1000] w-64
           bg-surface-card border-l border-ink-200
           shadow-3
           transition-transform duration-300 ease-out

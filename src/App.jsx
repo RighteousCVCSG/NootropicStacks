@@ -203,9 +203,9 @@ function App() {
                 <NavLink to="/learn">Learn</NavLink>
                 <Link
                   to="/quiz"
-                  className="ml-2 inline-flex items-center gap-1 h-7 px-2.5 rounded-md text-xs font-medium bg-primary-800 hover:bg-primary-700 text-ink-on-dark transition-colors"
+                  className="ml-2 inline-flex items-center text-xs font-medium text-primary-800 hover:text-primary-700 transition-colors"
                 >
-                  Quiz
+                  Quiz →
                 </Link>
               </nav>
 
@@ -227,9 +227,9 @@ function App() {
               <NavLink to="/learn">Learn</NavLink>
               <Link
                 to="/quiz"
-                className="shrink-0 ml-1 inline-flex items-center h-7 px-2.5 rounded-md text-xs font-medium bg-primary-800 hover:bg-primary-700 text-ink-on-dark transition-colors"
+                className="shrink-0 ml-2 inline-flex items-center text-xs font-medium text-primary-800 hover:text-primary-700 transition-colors"
               >
-                Quiz
+                Quiz →
               </Link>
             </div>
             <div className="shrink-0 px-1.5 border-l border-ink-200">
