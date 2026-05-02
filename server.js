@@ -664,8 +664,25 @@ function findPrerenderedFile(cleanPath) {
   return null;
 }
 
+// File extensions we never want to fall through to the SPA shell — if the
+// asset is missing, return 404 instead of HTML so og-image.png and friends
+// don't masquerade as text/html when absent.
+const BINARY_EXTENSIONS = new Set([
+  '.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg', '.ico',
+  '.pdf', '.zip', '.txt', '.xml', '.json',
+  '.woff', '.woff2', '.ttf', '.otf',
+  '.mp4', '.webm', '.mp3',
+  '.css', '.js', '.map',
+]);
+
 app.get('/{*path}', (req, res) => {
   const cleanPath = req.path === '/' ? '' : req.path.replace(/\/$/, '');
+  const ext = extname(cleanPath).toLowerCase();
+
+  // For known asset extensions, never fall through to SPA shell.
+  if (ext && BINARY_EXTENSIONS.has(ext)) {
+    return res.status(404).type('text/plain').send('Not found');
+  }
 
   // Try prerendered HTML file for this path
   const prerendered = findPrerenderedFile(cleanPath);

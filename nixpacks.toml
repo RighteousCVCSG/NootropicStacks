@@ -7,7 +7,7 @@ nixLibs = []
 cmds = ["npm install -g corepack@0.24.1 && corepack enable", "pnpm install --no-frozen-lockfile"]
 
 [phases.build]
-# build:full = build + prerender via headless Chrome so JSON-LD/OG/canonical
-# ship in static HTML for non-JS-executing AI crawlers (GPTBot, ClaudeBot,
-# PerplexityBot). Chromium is provided by aptPkgs in [phases.setup].
-cmds = ["pnpm run build:full"]
+# NOTE: Railway switched to Railpack (v0.23+) — this nixpacks.toml is
+# kept for reference only and is no longer read by the build pipeline.
+# Effective build config lives in railway.toml + package.json.
+cmds = ["pnpm run build"]
