@@ -188,7 +188,7 @@ const MECHANISMS = [
 ];
 
 const getRankColor = (rank) => {
-  if (rank === 1) return 'bg-warn-100 border-yellow-300 text-yellow-800';
+  if (rank === 1) return 'bg-warn-100 border-yellow-300 text-warn-700';
   if (rank === 2) return 'bg-surface-sunk border-ink-300 text-ink-700';
   if (rank === 3) return 'bg-warn-100 border-warn-500 text-warn-700';
   return 'bg-primary-050 border-primary-300 text-primary-800';
@@ -231,10 +231,10 @@ export function NootropicsForFocusPage() {
           </p>
 
           <div className="flex flex-wrap gap-4 text-sm text-ink-500 mb-3">
-            <span className="flex items-center gap-1"><span className="text-green-500 font-semibold">✓</span> 8 supplements ranked</span>
-            <span className="flex items-center gap-1"><span className="text-green-500 font-semibold">✓</span> Clinical evidence cited</span>
-            <span className="flex items-center gap-1"><span className="text-green-500 font-semibold">✓</span> 3 curated stacks</span>
-            <span className="flex items-center gap-1"><span className="text-green-500 font-semibold">✓</span> Free stack builder</span>
+            <span className="flex items-center gap-1"><span className="text-accent-500 font-semibold">✓</span> 8 supplements ranked</span>
+            <span className="flex items-center gap-1"><span className="text-accent-500 font-semibold">✓</span> Clinical evidence cited</span>
+            <span className="flex items-center gap-1"><span className="text-accent-500 font-semibold">✓</span> 3 curated stacks</span>
+            <span className="flex items-center gap-1"><span className="text-accent-500 font-semibold">✓</span> Free stack builder</span>
           </div>
 
           <Link
@@ -416,7 +416,7 @@ export function NootropicsForFocusPage() {
           </div>
 
           <div className="mt-5 p-4 bg-warn-100 border border-amber-200 rounded-md">
-            <p className="text-sm text-amber-900 leading-relaxed">
+            <p className="text-sm text-warn-700 leading-relaxed">
               <strong>The key insight:</strong> Most nootropics only hit one mechanism. A caffeine + L-Theanine stack covers adenosine blockade and calm alertness. Add Alpha-GPC and you add acetylcholine. Add Rhodiola and you protect the dopamine and adenosine systems under stress. This is why stacking outperforms single compounds.
             </p>
           </div>
@@ -426,7 +426,7 @@ export function NootropicsForFocusPage() {
         <div className="mb-6 p-3 sm:p-4 bg-primary-700 rounded-md text-white text-center">
           <Brain className="w-9 h-9 mx-auto mb-3 opacity-90" />
           <h2 className="text-xl sm:text-2xl font-semibold mb-2">Build Your Personal Focus Stack — Free</h2>
-          <p className="text-blue-100 text-sm mb-5 max-w-md mx-auto">
+          <p className="text-primary-100 text-sm mb-5 max-w-md mx-auto">
             Use our Stack Builder to combine any of these 8 supplements, check interactions, and get a Stack Score across synergy, coverage, and efficiency. No account required.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -439,7 +439,7 @@ export function NootropicsForFocusPage() {
             </Link>
             <Link
               to="/quiz"
-              className="inline-flex items-center justify-center gap-2 bg-primary-0500 hover:bg-blue-400 text-white font-semibold px-6 py-3 rounded-md transition-colors border border-blue-400"
+              className="inline-flex items-center justify-center gap-2 bg-primary-0500 hover:bg-primary-400 text-white font-semibold px-6 py-3 rounded-md transition-colors border border-blue-400"
             >
               Take the Stack Quiz
             </Link>

@@ -138,9 +138,9 @@ const CATEGORY_TABS = [
 
 const CATEGORY_COLORS = {
   'Supplement Deep Dives': 'bg-primary/10 text-primary border-primary/20',
-  'Stack Building': 'bg-accent-0500/10 text-green-400 border-green-500/20',
-  'Science & Research': 'bg-primary-0500/10 text-blue-400 border-primary-500/20',
-  'Lifestyle': 'bg-primary-0500/10 text-purple-400 border-purple-500/20',
+  'Stack Building': 'bg-accent-0500/10 text-accent-300 border-green-500/20',
+  'Science & Research': 'bg-primary-0500/10 text-primary-500 border-primary-500/20',
+  'Lifestyle': 'bg-primary-0500/10 text-primary-500 border-purple-500/20',
 };
 
 function VideoCard({ video }) {

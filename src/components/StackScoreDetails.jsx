@@ -15,7 +15,7 @@ const INTERACTION_BADGE_COLORS = {
   synergistic: 'bg-accent-100 text-accent-700',
   complementary: 'bg-primary-100 text-primary-800',
   redundant: 'bg-warn-100 text-warn-700',
-  conflicting: 'bg-danger-100 text-red-800',
+  conflicting: 'bg-danger-100 text-danger-700',
 };
 
 const QUAL_COLORS = {
@@ -113,7 +113,7 @@ function InteractionRow({ interaction }) {
 
 function MaxedDetailCallout({ dimension, message }) {
   return (
-    <div className="flex items-start gap-2 p-3 bg-warn-100 border-l-2 border-amber-500 rounded-r-md text-xs text-amber-800">
+    <div className="flex items-start gap-2 p-3 bg-warn-100 border-l-2 border-amber-500 rounded-r-md text-xs text-warn-700">
       <span className="font-semibold text-warn-700 shrink-0">{dimension}:</span>
       <span>{message}</span>
     </div>
@@ -215,7 +215,7 @@ export function StackScoreDetails({ open, onClose, stackScore }) {
                   <span className="w-20 capitalize text-ink-700">{goal}</span>
                   <div className="flex-1 h-2 bg-ink-200 rounded-full overflow-hidden">
                     <div
-                      className={`h-full rounded-full transition-all ${value > 6 ? 'bg-accent-0500' : value > 4 ? 'bg-primary-0500' : 'bg-red-400'}`}
+                      className={`h-full rounded-full transition-all ${value > 6 ? 'bg-accent-0500' : value > 4 ? 'bg-primary-0500' : 'bg-danger-500'}`}
                       style={{ width: `${Math.min(100, (value / 9.5) * 100)}%` }}
                     />
                   </div>
@@ -233,14 +233,14 @@ export function StackScoreDetails({ open, onClose, stackScore }) {
         {/* Balance details */}
         <div className="space-y-2">
           <h3 className="text-sm font-semibold flex items-center gap-2">
-            <Scale className="w-4 h-4 text-green-500" />
+            <Scale className="w-4 h-4 text-accent-500" />
             Balance — {balance.details}
           </h3>
           {balance.penalties && balance.penalties.length > 0 ? (
             <ul className="space-y-1">
               {balance.penalties.map((penalty, i) => (
                 <li key={i} className="text-sm text-warn-700 flex items-start gap-2">
-                  <span className="text-orange-400 mt-1">-</span>
+                  <span className="text-warn-500 mt-1">-</span>
                   {penalty}
                 </li>
               ))}
@@ -268,7 +268,7 @@ export function StackScoreDetails({ open, onClose, stackScore }) {
         {/* Efficiency details */}
         <div className="space-y-2">
           <h3 className="text-sm font-semibold flex items-center gap-2">
-            <Gauge className="w-4 h-4 text-orange-500" />
+            <Gauge className="w-4 h-4 text-warn-500" />
             Efficiency — {efficiency.details}
           </h3>
           <p className="text-sm text-ink-700">

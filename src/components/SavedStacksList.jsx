@@ -112,7 +112,7 @@ export function SavedStacksList() {
                       onClick={() => handleDelete(stack.id)}
                       disabled={deleting === stack.id}
                       title="Delete this stack"
-                      className="text-red-500 hover:text-danger-700"
+                      className="text-danger-500 hover:text-danger-700"
                     >
                       {deleting === stack.id ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Trash2 className="w-3.5 h-3.5" />}
                     </Button>

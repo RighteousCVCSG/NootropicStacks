@@ -44,7 +44,7 @@ export function ContactPage() {
   if (status === 'success') {
     return (
       <div className="max-w-lg mx-auto py-8 text-center">
-        <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
+        <CheckCircle className="w-12 h-12 text-accent-500 mx-auto mb-4" />
         <h2 className="text-2xl font-semibold mb-2">Message Sent!</h2>
         <p className="text-ink-700">We'll get back to you within 24 hours.</p>
       </div>

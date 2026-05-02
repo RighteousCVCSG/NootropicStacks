@@ -8,7 +8,7 @@ import { Pill, BookOpen, Award, ChevronRight } from 'lucide-react';
 const EVIDENCE_TIER_LEGEND = [
   { tier: 'T1', label: 'Multiple human RCTs / meta-analysis', color: 'bg-accent-100 text-accent-700' },
   { tier: 'T2', label: 'Small RCTs / consistent observational', color: 'bg-primary-100 text-primary-800' },
-  { tier: 'T3', label: 'Mechanistic / animal / single small study', color: 'bg-warn-100 text-yellow-800' },
+  { tier: 'T3', label: 'Mechanistic / animal / single small study', color: 'bg-warn-100 text-warn-700' },
 ];
 
 const STACKS = [

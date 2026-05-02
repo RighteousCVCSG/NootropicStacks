@@ -169,13 +169,13 @@ function StarRating({ rating }) {
   return (
     <div className="flex items-center gap-1">
       {Array.from({ length: fullStars }).map((_, i) => (
-        <Star key={`full-${i}`} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+        <Star key={`full-${i}`} className="w-4 h-4 fill-yellow-400 text-warn-500" />
       ))}
       {hasHalf && (
         <div className="relative w-4 h-4">
           <Star className="absolute w-4 h-4 text-ink-300" />
           <div className="overflow-hidden w-2 absolute">
-            <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+            <Star className="w-4 h-4 fill-yellow-400 text-warn-500" />
           </div>
         </div>
       )}
@@ -270,7 +270,7 @@ export function ReviewsPage() {
                     <ul className="space-y-1.5">
                       {product.pros.map((pro, i) => (
                         <li key={i} className="flex items-start gap-2 text-sm text-ink-700">
-                          <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                          <CheckCircle className="w-4 h-4 text-accent-500 flex-shrink-0 mt-0.5" />
                           {pro}
                         </li>
                       ))}
@@ -281,7 +281,7 @@ export function ReviewsPage() {
                     <ul className="space-y-1.5">
                       {product.cons.map((con, i) => (
                         <li key={i} className="flex items-start gap-2 text-sm text-ink-700">
-                          <XCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+                          <XCircle className="w-4 h-4 text-danger-500 flex-shrink-0 mt-0.5" />
                           {con}
                         </li>
                       ))}
@@ -328,7 +328,7 @@ export function ReviewsPage() {
         <div className="mt-10 p-3 bg-primary-700 rounded-md text-white text-center">
           <Brain className="w-8 h-8 mx-auto mb-2 opacity-90" />
           <h2 className="text-xl font-semibold mb-2">Build Your Own Stack Instead</h2>
-          <p className="text-blue-100 text-sm mb-4">
+          <p className="text-primary-100 text-sm mb-4">
             A custom stack is almost always cheaper and more effective than a pre-formulated product. You control the doses, eliminate redundancy, and pay only for what you actually need.
           </p>
           <Link
@@ -348,23 +348,23 @@ export function ReviewsPage() {
             <div>
               <p className="text-sm font-semibold text-ink-900 mb-3">Pre-Made (like the products above)</p>
               <ul className="space-y-2 text-sm text-ink-700">
-                <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" /> One product, one order, one capsule routine</li>
-                <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" /> Good for beginners who aren't ready to research individual compounds</li>
-                <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" /> Formulated by someone who has already done the synergy thinking</li>
-                <li className="flex items-start gap-2"><XCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" /> You pay a 2–4x markup for that convenience</li>
-                <li className="flex items-start gap-2"><XCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" /> Impossible to adjust individual doses</li>
-                <li className="flex items-start gap-2"><XCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" /> You can't isolate what's working or causing issues</li>
+                <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-accent-500 flex-shrink-0 mt-0.5" /> One product, one order, one capsule routine</li>
+                <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-accent-500 flex-shrink-0 mt-0.5" /> Good for beginners who aren't ready to research individual compounds</li>
+                <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-accent-500 flex-shrink-0 mt-0.5" /> Formulated by someone who has already done the synergy thinking</li>
+                <li className="flex items-start gap-2"><XCircle className="w-4 h-4 text-danger-500 flex-shrink-0 mt-0.5" /> You pay a 2–4x markup for that convenience</li>
+                <li className="flex items-start gap-2"><XCircle className="w-4 h-4 text-danger-500 flex-shrink-0 mt-0.5" /> Impossible to adjust individual doses</li>
+                <li className="flex items-start gap-2"><XCircle className="w-4 h-4 text-danger-500 flex-shrink-0 mt-0.5" /> You can't isolate what's working or causing issues</li>
               </ul>
             </div>
             <div>
               <p className="text-sm font-semibold text-ink-900 mb-3">Custom Stack (what this site helps you build)</p>
               <ul className="space-y-2 text-sm text-ink-700">
-                <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" /> Full control over every dose and compound</li>
-                <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" /> Typically 40–60% cheaper for equivalent coverage</li>
-                <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" /> You can test, track, and optimize each variable</li>
-                <li className="flex items-start gap-2"><XCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" /> Takes more research upfront</li>
-                <li className="flex items-start gap-2"><XCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" /> More capsules to manage daily</li>
-                <li className="flex items-start gap-2"><XCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" /> Requires sourcing from multiple vendors</li>
+                <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-accent-500 flex-shrink-0 mt-0.5" /> Full control over every dose and compound</li>
+                <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-accent-500 flex-shrink-0 mt-0.5" /> Typically 40–60% cheaper for equivalent coverage</li>
+                <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-accent-500 flex-shrink-0 mt-0.5" /> You can test, track, and optimize each variable</li>
+                <li className="flex items-start gap-2"><XCircle className="w-4 h-4 text-danger-500 flex-shrink-0 mt-0.5" /> Takes more research upfront</li>
+                <li className="flex items-start gap-2"><XCircle className="w-4 h-4 text-danger-500 flex-shrink-0 mt-0.5" /> More capsules to manage daily</li>
+                <li className="flex items-start gap-2"><XCircle className="w-4 h-4 text-danger-500 flex-shrink-0 mt-0.5" /> Requires sourcing from multiple vendors</li>
               </ul>
             </div>
           </div>

@@ -28,22 +28,22 @@ export function SupplementModal({ supplement, isOpen, onClose }) {
       'nootropic': 'bg-primary-100 text-primary-800',
       'adaptogen': 'bg-accent-100 text-accent-700',
       'longevity': 'bg-primary-100 text-primary-800',
-      'vitamin': 'bg-warn-100 text-yellow-800',
+      'vitamin': 'bg-warn-100 text-warn-700',
       'mineral': 'bg-surface-sunk text-ink-900',
       'amino-acid': 'bg-pink-100 text-pink-800',
-      'antioxidant': 'bg-danger-100 text-red-800',
-      'anti-inflammatory': 'bg-primary-100 text-indigo-800',
+      'antioxidant': 'bg-danger-100 text-danger-700',
+      'anti-inflammatory': 'bg-primary-100 text-primary-800',
       'sleep': 'bg-violet-100 text-violet-800',
       'performance': 'bg-emerald-100 text-emerald-800',
       'essential': 'bg-teal-100 text-teal-800',
       'gut-health': 'bg-lime-100 text-lime-800',
       'hormone': 'bg-rose-100 text-rose-800',
-      'protein': 'bg-warn-100 text-amber-800',
+      'protein': 'bg-warn-100 text-warn-700',
       'immune': 'bg-cyan-100 text-cyan-800',
       'metabolic': 'bg-slate-100 text-slate-800',
-      'superfood': 'bg-green-200 text-accent-700',
-      'fat': 'bg-orange-200 text-orange-900',
-      'prescription': 'bg-red-200 text-red-900'
+      'superfood': 'bg-accent-300 text-accent-700',
+      'fat': 'bg-warn-100 text-warn-700',
+      'prescription': 'bg-danger-100 text-danger-700'
     };
     return colors[category] || 'bg-surface-sunk text-ink-900';
   };

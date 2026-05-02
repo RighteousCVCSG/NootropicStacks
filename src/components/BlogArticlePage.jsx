@@ -219,7 +219,7 @@ export function BlogArticlePage() {
         <div className="mt-6 p-3 bg-primary-700 rounded-md text-white text-center">
           <Beaker className="w-8 h-8 mx-auto mb-2 opacity-90" />
           <h3 className="text-xl font-semibold mb-2">Build Your Personalized Stack</h3>
-          <p className="text-blue-100 text-sm mb-4">Use our free Stack Builder to combine these supplements, check interactions, and get a Stack Score rating.</p>
+          <p className="text-primary-100 text-sm mb-4">Use our free Stack Builder to combine these supplements, check interactions, and get a Stack Score rating.</p>
           <Link to="/" className="inline-block bg-white text-primary-800 font-semibold px-6 py-2.5 rounded-md hover:bg-primary-050 transition-colors">
             Open Stack Builder →
           </Link>

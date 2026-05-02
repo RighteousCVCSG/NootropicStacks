@@ -275,11 +275,11 @@ export function StartHerePage() {
           {MYTHS.map((item) => (
             <div key={item.myth} className="p-4 bg-white border border-gray-100 rounded-md">
               <div className="flex items-start gap-2 mb-2">
-                <AlertTriangle className="w-4 h-4 text-orange-500 flex-shrink-0 mt-0.5" />
+                <AlertTriangle className="w-4 h-4 text-warn-500 flex-shrink-0 mt-0.5" />
                 <p className="text-sm font-semibold text-ink-700">{item.myth}</p>
               </div>
               <div className="flex items-start gap-2">
-                <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                <CheckCircle className="w-4 h-4 text-accent-500 flex-shrink-0 mt-0.5" />
                 <p className="text-sm text-ink-700">{item.truth}</p>
               </div>
             </div>
@@ -319,7 +319,7 @@ export function StartHerePage() {
       <section className="text-center bg-gradient-to-br from-blue-600 to-indigo-700 rounded-md p-4 text-white space-y-4">
         <Brain className="w-10 h-10 mx-auto opacity-90" />
         <h2 className="text-2xl font-semibold">Ready to Build Your Stack?</h2>
-        <p className="text-blue-100 max-w-lg mx-auto text-sm">
+        <p className="text-primary-100 max-w-lg mx-auto text-sm">
           Use the free NootropicStacker tool to browse 195 supplements, check interactions,
           and get a real-time Stack Score across synergy, coverage, balance, and efficiency.
         </p>
@@ -328,7 +328,7 @@ export function StartHerePage() {
             <Layers className="w-4 h-4" />
             Open Stack Builder
           </Link>
-          <Link to="/quiz" className="inline-flex items-center gap-2 bg-primary-0500 hover:bg-blue-400 text-white border border-blue-400 px-5 py-2.5 rounded-md font-medium transition-colors">
+          <Link to="/quiz" className="inline-flex items-center gap-2 bg-primary-0500 hover:bg-primary-400 text-white border border-blue-400 px-5 py-2.5 rounded-md font-medium transition-colors">
             <HelpCircle className="w-4 h-4" />
             Take the Quiz
           </Link>

@@ -14,8 +14,8 @@ const VARIANT_STYLES = {
   },
   save_gate: {
     wrapper: 'bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-200 rounded-md p-3',
-    headline: 'text-base font-semibold text-indigo-900',
-    subtext: 'text-xs text-indigo-600',
+    headline: 'text-base font-semibold text-primary-900',
+    subtext: 'text-xs text-primary-700',
     inputClass: 'text-sm h-9',
     buttonClass: 'h-9 shrink-0',
     successIcon: Lock,
@@ -23,7 +23,7 @@ const VARIANT_STYLES = {
   lead_magnet: {
     wrapper: 'bg-gradient-to-br from-blue-600 to-indigo-700 rounded-md p-3 sm:p-4 shadow-2',
     headline: 'text-lg font-semibold text-white',
-    subtext: 'text-xs text-blue-200',
+    subtext: 'text-xs text-primary-300',
     inputClass: 'text-sm h-9 bg-white/95',
     buttonClass: 'h-9 shrink-0 bg-white text-primary-800 hover:bg-primary-050',
     successIcon: Download,
@@ -108,7 +108,7 @@ export function EmailCaptureForm({ source = 'lead_magnet', variant = 'inline_art
           <p className={`text-sm font-medium ${variant === 'lead_magnet' ? 'text-white' : 'text-accent-700'}`}>
             {message}
           </p>
-          <p className={`text-xs mt-1 ${variant === 'lead_magnet' ? 'text-blue-200' : 'text-ink-500'}`}>
+          <p className={`text-xs mt-1 ${variant === 'lead_magnet' ? 'text-primary-300' : 'text-ink-500'}`}>
             We'll never share your email. Unsubscribe anytime.
           </p>
         </div>
@@ -129,7 +129,7 @@ export function EmailCaptureForm({ source = 'lead_magnet', variant = 'inline_art
     <div className={styles.wrapper}>
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
         <div className="flex items-center gap-2 flex-1">
-          <Mail className={`w-4 h-4 shrink-0 ${variant === 'lead_magnet' ? 'text-blue-300' : 'text-primary-700'}`} />
+          <Mail className={`w-4 h-4 shrink-0 ${variant === 'lead_magnet' ? 'text-primary-300' : 'text-primary-700'}`} />
           <div>
             <p className={styles.headline}>
               {isLeadMagnet ? 'Get the Free Guide' : 'Get the weekly nootropic research digest'}
@@ -177,7 +177,7 @@ export function EmailCaptureForm({ source = 'lead_magnet', variant = 'inline_art
           </Button>
         </form>
         {status === 'error' && (
-          <p className="text-xs text-red-400 w-full sm:w-auto">{message}</p>
+          <p className="text-xs text-danger-500 w-full sm:w-auto">{message}</p>
         )}
       </div>
     </div>

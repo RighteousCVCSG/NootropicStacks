@@ -34,8 +34,8 @@ const EFFECT_ICONS = {
 function getEffectBarColor(value) {
   if (value >= 7) return 'bg-accent-0500';
   if (value >= 4) return 'bg-primary-0500';
-  if (value >= 1) return 'bg-gray-400';
-  if (value < 0) return 'bg-red-400';
+  if (value >= 1) return 'bg-ink-400';
+  if (value < 0) return 'bg-danger-500';
   return 'bg-ink-200';
 }
 
@@ -44,9 +44,9 @@ function getCategoryColor(category) {
     nootropic: 'bg-primary-100 text-primary-800',
     adaptogen: 'bg-accent-100 text-accent-700',
     stimulant: 'bg-warn-100 text-warn-700',
-    energy: 'bg-warn-100 text-yellow-800',
+    energy: 'bg-warn-100 text-warn-700',
     mineral: 'bg-surface-sunk text-ink-900',
-    vitamin: 'bg-warn-100 text-amber-800',
+    vitamin: 'bg-warn-100 text-warn-700',
     essential: 'bg-teal-100 text-teal-800',
     longevity: 'bg-primary-100 text-primary-800',
     performance: 'bg-emerald-100 text-emerald-800',
@@ -482,7 +482,7 @@ export function ComparisonPage() {
                 <CardContent className="space-y-3">
                   {[suppA, suppB].map((s, i) => (
                     <div key={s.id} className="flex gap-3">
-                      <div className={`w-2 rounded-full flex-shrink-0 mt-1 ${i === 0 ? 'bg-blue-400' : 'bg-purple-400'}`} style={{ minHeight: 40 }} />
+                      <div className={`w-2 rounded-full flex-shrink-0 mt-1 ${i === 0 ? 'bg-primary-400' : 'bg-primary-400'}`} style={{ minHeight: 40 }} />
                       <div>
                         <div className="font-semibold text-sm text-ink-900">{s.name}</div>
                         <div className="text-xs text-ink-700">
@@ -504,7 +504,7 @@ export function ComparisonPage() {
                   {[suppA, suppB].map((s, i) => (
                     <div key={s.id}>
                       <div className="flex items-center gap-2 mb-1">
-                        <div className={`w-2 h-2 rounded-full flex-shrink-0 ${i === 0 ? 'bg-blue-400' : 'bg-purple-400'}`} />
+                        <div className={`w-2 h-2 rounded-full flex-shrink-0 ${i === 0 ? 'bg-primary-400' : 'bg-primary-400'}`} />
                         <span className="font-semibold text-sm">{s.name}</span>
                         <Badge className={`text-xs ${getCategoryColor(s.category)}`}>{s.category}</Badge>
                       </div>
@@ -522,7 +522,7 @@ export function ComparisonPage() {
               <Card>
                 <CardHeader className="pb-2">
                   <CardTitle className="text-sm text-ink-700 flex items-center gap-2">
-                    <AlertTriangle className="w-4 h-4 text-orange-400" />
+                    <AlertTriangle className="w-4 h-4 text-warn-500" />
                     Safety & Warnings
                   </CardTitle>
                 </CardHeader>
@@ -530,7 +530,7 @@ export function ComparisonPage() {
                   {[suppA, suppB].map((s, i) => (
                     <div key={s.id}>
                       <div className="flex items-center gap-2 mb-1">
-                        <div className={`w-2 h-2 rounded-full flex-shrink-0 ${i === 0 ? 'bg-blue-400' : 'bg-purple-400'}`} />
+                        <div className={`w-2 h-2 rounded-full flex-shrink-0 ${i === 0 ? 'bg-primary-400' : 'bg-primary-400'}`} />
                         <span className="font-semibold text-sm">{s.name}</span>
                         {(s.warnings?.length === 0 || (s.warnings?.length === 1 && s.warnings[0].toLowerCase().includes('well tolerated'))) && (
                           <span className="flex items-center gap-0.5 text-xs text-accent-700 font-medium">
@@ -542,7 +542,7 @@ export function ComparisonPage() {
                         <ul className="ml-4 space-y-0.5">
                           {s.warnings.map((w, wi) => (
                             <li key={wi} className="text-xs text-ink-700 flex items-start gap-1">
-                              <Minus className="w-3 h-3 text-orange-400 mt-0.5 flex-shrink-0" />
+                              <Minus className="w-3 h-3 text-warn-500 mt-0.5 flex-shrink-0" />
                               {w}
                             </li>
                           ))}
@@ -562,7 +562,7 @@ export function ComparisonPage() {
               <Card>
                 <CardHeader className="pb-2">
                   <CardTitle className="text-sm text-ink-700 flex items-center gap-2">
-                    <Layers className="w-4 h-4 text-blue-400" />
+                    <Layers className="w-4 h-4 text-primary-500" />
                     Synergies & Compatibility
                   </CardTitle>
                 </CardHeader>
@@ -578,7 +578,7 @@ export function ComparisonPage() {
                     </div>
                   ) : (
                     <div className="flex items-center gap-2 mb-3 text-sm text-accent-700">
-                      <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
+                      <CheckCircle className="w-4 h-4 text-accent-500 flex-shrink-0" />
                       No known shared interaction risks
                     </div>
                   )}
@@ -587,7 +587,7 @@ export function ComparisonPage() {
                   {[suppA, suppB].map((s, i) => (
                     <div key={s.id} className="mb-2 last:mb-0">
                       <div className="flex items-center gap-1.5 mb-1">
-                        <div className={`w-1.5 h-1.5 rounded-full ${i === 0 ? 'bg-blue-400' : 'bg-purple-400'}`} />
+                        <div className={`w-1.5 h-1.5 rounded-full ${i === 0 ? 'bg-primary-400' : 'bg-primary-400'}`} />
                         <span className="text-xs font-medium text-ink-700">{s.name}</span>
                       </div>
                       {s.interactions?.length > 0 ? (
@@ -622,7 +622,7 @@ export function ComparisonPage() {
             <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-md p-3 text-white text-center">
               <Layers className="w-8 h-8 mx-auto mb-2 opacity-90" />
               <h2 className="text-xl font-semibold mb-2">Stack These Together</h2>
-              <p className="text-blue-100 text-sm mb-4 max-w-md mx-auto">
+              <p className="text-primary-100 text-sm mb-4 max-w-md mx-auto">
                 Load both {suppA.name} and {suppB.name} into the Stack Builder to check synergies, get your Stack Score, and build a complete protocol.
               </p>
               <Link

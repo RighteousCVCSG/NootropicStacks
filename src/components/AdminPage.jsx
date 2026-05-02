@@ -92,7 +92,7 @@ export function AdminPage() {
       <div className="max-w-sm mx-auto mt-20">
         <div className="rounded-md border border-ink-200 bg-white p-4 shadow-sm">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-9 h-9 rounded-md bg-gray-900 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-md bg-ink-900 flex items-center justify-center">
               <ShieldCheck className="w-5 h-5 text-white" />
             </div>
             <div>

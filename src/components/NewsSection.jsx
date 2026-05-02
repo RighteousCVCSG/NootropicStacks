@@ -199,8 +199,8 @@ export function NewsSection() {
       'Product Launch': 'bg-accent-100 text-accent-700',
       'Innovation': 'bg-primary-100 text-primary-800',
       'Business': 'bg-warn-100 text-warn-700',
-      'Industry Trends': 'bg-warn-100 text-yellow-800',
-      'Regulation': 'bg-danger-100 text-red-800'
+      'Industry Trends': 'bg-warn-100 text-warn-700',
+      'Regulation': 'bg-danger-100 text-danger-700'
     };
     return colors[category] || 'bg-surface-sunk text-ink-900';
   };

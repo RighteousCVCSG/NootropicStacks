@@ -121,7 +121,7 @@ const TOP_NOOTROPICS = [
 ];
 
 const getRankColor = (rank) => {
-  if (rank === 1) return 'bg-warn-100 border-yellow-300 text-yellow-800';
+  if (rank === 1) return 'bg-warn-100 border-yellow-300 text-warn-700';
   if (rank === 2) return 'bg-surface-sunk border-ink-300 text-ink-700';
   if (rank === 3) return 'bg-warn-100 border-warn-500 text-warn-700';
   return 'bg-primary-050 border-primary-300 text-primary-800';
@@ -216,7 +216,7 @@ export function BestNootropicsPage() {
         <div className="mt-10 p-3 bg-primary-700 rounded-md text-white text-center">
           <Brain className="w-8 h-8 mx-auto mb-2 opacity-90" />
           <h2 className="text-xl font-semibold mb-2">Build Your Stack from These 10</h2>
-          <p className="text-blue-100 text-sm mb-4">Use our free Stack Builder to combine the supplements that match your goals, check interactions, and get a personalized Stack Score.</p>
+          <p className="text-primary-100 text-sm mb-4">Use our free Stack Builder to combine the supplements that match your goals, check interactions, and get a personalized Stack Score.</p>
           <Link to="/" className="inline-block bg-white text-primary-800 font-semibold px-6 py-2.5 rounded-md hover:bg-primary-050 transition-colors">
             Open Stack Builder →
           </Link>

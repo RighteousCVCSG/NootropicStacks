@@ -100,7 +100,7 @@ const ANXIETY_SUPPLEMENTS = [
 const EVIDENCE_BADGE = {
   Strong: 'bg-accent-100 text-accent-700 border-accent-300',
   Moderate: 'bg-primary-100 text-primary-800 border-primary-300',
-  Emerging: 'bg-warn-100 text-yellow-800 border-yellow-200',
+  Emerging: 'bg-warn-100 text-warn-700 border-yellow-200',
 };
 
 const ANXIETY_TYPES = [
@@ -213,7 +213,7 @@ export function NootropicsForAnxietyPage() {
           {/* Disclaimer */}
           <div className="flex gap-3 p-4 bg-warn-100 border border-amber-200 rounded-md mb-5">
             <AlertTriangle className="w-5 h-5 text-warn-700 flex-shrink-0 mt-0.5" />
-            <p className="text-sm text-amber-800">
+            <p className="text-sm text-warn-700">
               <strong>Not medical advice.</strong> This is research-based educational information. Supplements are not a substitute for professional mental health treatment. If you have an anxiety disorder, please consult a qualified healthcare provider before using any supplement.
             </p>
           </div>
@@ -317,8 +317,8 @@ export function NootropicsForAnxietyPage() {
           <div className="flex items-start gap-3">
             <ShieldAlert className="w-5 h-5 text-danger-500 flex-shrink-0 mt-0.5" />
             <div>
-              <h2 className="font-semibold text-red-900 mb-2">Important Safety Information</h2>
-              <div className="space-y-2 text-sm text-red-800">
+              <h2 className="font-semibold text-danger-700 mb-2">Important Safety Information</h2>
+              <div className="space-y-2 text-sm text-danger-700">
                 <p><strong>Anxiety disorders require professional care.</strong> Supplements can support anxiety management, but they are not a replacement for therapy (especially CBT), medication when clinically indicated, or medical supervision for diagnosed anxiety disorders.</p>
                 <p><strong>If you take SSRIs, SNRIs, or benzodiazepines</strong> — consult your doctor before adding any supplement. Ashwagandha and Rhodiola can affect serotonin and cortisol pathways; GABA and L-Theanine interact with GABAergic systems that benzodiazepines also target.</p>
                 <p><strong>Pregnancy and breastfeeding:</strong> Avoid all adaptogens and most supplements not explicitly cleared by your OB.</p>
@@ -349,10 +349,10 @@ export function NootropicsForAnxietyPage() {
         </div>
 
         {/* CTA to Stack Builder */}
-        <div className="mb-6 p-3 bg-indigo-600 rounded-md text-white text-center">
+        <div className="mb-6 p-3 bg-primary-700 rounded-md text-white text-center">
           <Brain className="w-8 h-8 mx-auto mb-2 opacity-90" />
           <h2 className="text-xl font-semibold mb-2">Build Your Anxiety Stack</h2>
-          <p className="text-indigo-100 text-sm mb-4 max-w-md mx-auto">
+          <p className="text-primary-100 text-sm mb-4 max-w-md mx-auto">
             Use the free Stack Builder to combine these supplements, check for interactions, and get a personalized Stack Score based on your goals.
           </p>
           <Link
@@ -366,7 +366,7 @@ export function NootropicsForAnxietyPage() {
         {/* Related Articles */}
         <div className="mb-4">
           <h2 className="text-lg font-semibold text-ink-900 mb-4 flex items-center gap-2">
-            <BookOpen className="w-5 h-5 text-indigo-600" />
+            <BookOpen className="w-5 h-5 text-primary-700" />
             Related Research & Guides
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
