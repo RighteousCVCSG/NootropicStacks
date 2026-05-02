@@ -7,6 +7,7 @@ import { buildBreadcrumbSchema } from '../lib/schema/builders.js';
 import { track } from '../lib/analytics.js';
 import {
   Layers, BookOpen, ArrowRight, Sparkles, HelpCircle, Activity,
+  Target, Moon, Heart,
 } from 'lucide-react';
 
 const BUILD_DATE = new Date().toISOString().slice(0, 10);
@@ -21,9 +22,9 @@ const FEATURED_ARTICLES = [
 ];
 
 const FEATURED_STACKS = [
-  { slug: 'focus', title: 'For Focus', desc: "L-Theanine + Caffeine + Lion's Mane", href: '/stacks?goal=focus' },
-  { slug: 'sleep', title: 'For Sleep', desc: 'Magnesium + Glycine + Apigenin', href: '/stacks?goal=sleep' },
-  { slug: 'mood', title: 'For Mood', desc: 'Ashwagandha + Rhodiola + Saffron', href: '/stacks?goal=mood' },
+  { slug: 'focus', title: 'For Focus', desc: "L-Theanine + Caffeine + Lion's Mane", href: '/stacks?goal=focus', icon: Target },
+  { slug: 'sleep', title: 'For Sleep', desc: 'Magnesium + Glycine + Apigenin',     href: '/stacks?goal=sleep', icon: Moon },
+  { slug: 'mood',  title: 'For Mood',  desc: 'Ashwagandha + Rhodiola + Saffron',   href: '/stacks?goal=mood',  icon: Heart },
 ];
 
 /**
@@ -289,10 +290,14 @@ export function HomePage() {
               key={s.slug}
               to={s.href}
               onClick={() => track('featured_stack_click', { goal: s.slug })}
-              className="block"
+              className="group rounded-md bg-surface-card border border-ink-200 hover:border-primary-500 p-3 transition-colors flex items-start gap-3 h-full"
             >
-              <div className="p-3 rounded-md bg-surface-card border border-ink-200 hover:border-primary-500 transition-colors h-full">
-                <h3 className="text-sm font-semibold text-ink-900">{s.title}</h3>
+              <s.icon className="w-4 h-4 text-primary-800 mt-0.5 shrink-0" />
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between gap-1">
+                  <h3 className="text-sm font-semibold text-ink-900">{s.title}</h3>
+                  <ArrowRight className="w-3.5 h-3.5 text-primary-800 group-hover:translate-x-1 transition-all shrink-0" />
+                </div>
                 <p className="text-xs text-ink-500 mt-0.5">{s.desc}</p>
               </div>
             </Link>
