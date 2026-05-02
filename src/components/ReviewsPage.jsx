@@ -28,7 +28,7 @@ const REVIEWS = [
     ],
     bestFor: 'Beginners wanting an all-in-one, professionals, daily use',
     badge: 'Editor\'s Pick',
-    badgeColor: 'bg-blue-100 text-blue-700',
+    badgeColor: 'bg-primary-100 text-primary-800',
     links: {
       amazon: 'https://www.amazon.com/s?k=Mind+Lab+Pro+nootropic&tag=nootropicstk-20',
       iherb: 'https://www.iherb.com/search?kw=Mind+Lab+Pro',
@@ -55,7 +55,7 @@ const REVIEWS = [
     ],
     bestFor: 'Experienced biohackers wanting maximum coverage',
     badge: 'Premium',
-    badgeColor: 'bg-purple-100 text-purple-700',
+    badgeColor: 'bg-primary-100 text-primary-800',
     links: {
       amazon: 'https://www.amazon.com/s?k=Qualia+Mind+nootropic&tag=nootropicstk-20',
     },
@@ -80,7 +80,7 @@ const REVIEWS = [
     ],
     bestFor: 'Stacking with a stimulant, afternoon/PM cognitive support',
     badge: 'Stim-Free',
-    badgeColor: 'bg-green-100 text-green-700',
+    badgeColor: 'bg-accent-100 text-accent-700',
     links: {},
   },
   {
@@ -104,7 +104,7 @@ const REVIEWS = [
     ],
     bestFor: 'People who want a guided approach and are willing to pay for curation',
     badge: 'Personalized',
-    badgeColor: 'bg-yellow-100 text-yellow-700',
+    badgeColor: 'bg-warn-100 text-warn-700',
     links: {},
   },
   {
@@ -128,7 +128,7 @@ const REVIEWS = [
     ],
     bestFor: 'Amazon Prime shoppers, people who prioritize convenience over optimization',
     badge: 'Use With Caution',
-    badgeColor: 'bg-orange-100 text-orange-700',
+    badgeColor: 'bg-warn-100 text-warn-700',
     links: {
       amazon: 'https://www.amazon.com/s?k=Onnit+Alpha+Brain&tag=nootropicstk-20',
     },
@@ -173,17 +173,17 @@ function StarRating({ rating }) {
       ))}
       {hasHalf && (
         <div className="relative w-4 h-4">
-          <Star className="absolute w-4 h-4 text-gray-300" />
+          <Star className="absolute w-4 h-4 text-ink-300" />
           <div className="overflow-hidden w-2 absolute">
             <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
           </div>
         </div>
       )}
       {Array.from({ length: emptyStars }).map((_, i) => (
-        <Star key={`empty-${i}`} className="w-4 h-4 text-gray-300" />
+        <Star key={`empty-${i}`} className="w-4 h-4 text-ink-300" />
       ))}
-      <span className="ml-1 text-sm font-semibold text-gray-700">{rating.toFixed(1)}</span>
-      <span className="text-xs text-gray-400">/5</span>
+      <span className="ml-1 text-sm font-semibold text-ink-700">{rating.toFixed(1)}</span>
+      <span className="text-xs text-ink-400">/5</span>
     </div>
   );
 }
@@ -208,13 +208,13 @@ export function ReviewsPage() {
       <div className="max-w-3xl mx-auto">
         {/* Hero */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-3">
+          <h1 className="text-3xl font-bold text-ink-900 mb-3">
             Nootropic Brand Reviews 2026 — Honest Ratings
           </h1>
-          <p className="text-gray-600 leading-relaxed mb-4">
+          <p className="text-ink-700 leading-relaxed mb-4">
             These reviews are based on ingredient analysis, dose transparency, value for money, and the published evidence behind each formula — not brand relationships or paid placement. We rate each product on what's actually in the bottle.
           </p>
-          <div className="flex flex-wrap gap-2 text-sm text-gray-500">
+          <div className="flex flex-wrap gap-2 text-sm text-ink-500">
             <span>✓ 6 products reviewed</span>
             <span>·</span>
             <span>✓ Pros AND cons — no fluff</span>
@@ -224,12 +224,12 @@ export function ReviewsPage() {
         </div>
 
         {/* Rating System */}
-        <div className="mb-8 p-5 bg-blue-50 border border-blue-100 rounded-xl">
+        <div className="mb-8 p-5 bg-primary-050 border border-blue-100 rounded-xl">
           <div className="flex items-start gap-3">
-            <ShieldCheck className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+            <ShieldCheck className="w-5 h-5 text-primary-700 flex-shrink-0 mt-0.5" />
             <div>
-              <h2 className="text-base font-semibold text-gray-900 mb-1">Our Rating Methodology</h2>
-              <p className="text-sm text-gray-600 leading-relaxed">
+              <h2 className="text-base font-semibold text-ink-900 mb-1">Our Rating Methodology</h2>
+              <p className="text-sm text-ink-700 leading-relaxed">
                 Ratings are scored across four criteria: <strong>ingredient quality</strong> (form and source), <strong>dose transparency</strong> (no proprietary blends preferred), <strong>evidence base</strong> (human trials over anecdotes), and <strong>value</strong> (cost per therapeutic dose). We are not affiliated with any brand reviewed on this page.
               </p>
             </div>
@@ -239,37 +239,37 @@ export function ReviewsPage() {
         {/* Product Cards */}
         <div className="space-y-6">
           {REVIEWS.map((product) => (
-            <Card key={product.id} className="border-gray-200 hover:shadow-md transition-shadow">
+            <Card key={product.id} className="border-ink-200 hover:shadow-md transition-shadow">
               <CardContent className="pt-6">
                 {/* Header */}
                 <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
                   <div>
                     <div className="flex flex-wrap items-center gap-2 mb-1">
-                      <h2 className="text-xl font-bold text-gray-900">{product.name}</h2>
+                      <h2 className="text-xl font-bold text-ink-900">{product.name}</h2>
                       <Badge className={`text-xs font-medium ${product.badgeColor}`} variant="outline">
                         {product.badge}
                       </Badge>
                     </div>
-                    <p className="text-sm text-gray-500">{product.tagline}</p>
+                    <p className="text-sm text-ink-500">{product.tagline}</p>
                   </div>
                   <div className="text-right">
                     <StarRating rating={product.rating} />
-                    <p className="text-sm font-medium text-gray-700 mt-1">{product.price}</p>
+                    <p className="text-sm font-medium text-ink-700 mt-1">{product.price}</p>
                   </div>
                 </div>
 
                 {/* Verdict */}
-                <p className="text-sm text-gray-700 leading-relaxed mb-4 italic border-l-2 border-blue-300 pl-3">
+                <p className="text-sm text-ink-700 leading-relaxed mb-4 italic border-l-2 border-primary-300 pl-3">
                   {product.verdict}
                 </p>
 
                 {/* Pros / Cons */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                   <div>
-                    <p className="text-xs font-semibold text-green-700 uppercase tracking-wide mb-2">Pros</p>
+                    <p className="text-xs font-semibold text-accent-700 uppercase tracking-wide mb-2">Pros</p>
                     <ul className="space-y-1.5">
                       {product.pros.map((pro, i) => (
-                        <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
+                        <li key={i} className="flex items-start gap-2 text-sm text-ink-700">
                           <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
                           {pro}
                         </li>
@@ -277,10 +277,10 @@ export function ReviewsPage() {
                     </ul>
                   </div>
                   <div>
-                    <p className="text-xs font-semibold text-red-600 uppercase tracking-wide mb-2">Cons</p>
+                    <p className="text-xs font-semibold text-danger-500 uppercase tracking-wide mb-2">Cons</p>
                     <ul className="space-y-1.5">
                       {product.cons.map((con, i) => (
-                        <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
+                        <li key={i} className="flex items-start gap-2 text-sm text-ink-700">
                           <XCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
                           {con}
                         </li>
@@ -291,8 +291,8 @@ export function ReviewsPage() {
 
                 {/* Best For + Buttons */}
                 <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-gray-100">
-                  <p className="text-xs text-gray-500">
-                    <span className="font-semibold text-gray-700">Best for:</span> {product.bestFor}
+                  <p className="text-xs text-ink-500">
+                    <span className="font-semibold text-ink-700">Best for:</span> {product.bestFor}
                   </p>
                   <div className="flex gap-2 flex-shrink-0">
                     {product.links.amazon && (
@@ -301,7 +301,7 @@ export function ReviewsPage() {
                         target="_blank"
                         rel="noopener noreferrer sponsored"
                         onClick={() => trackClick(product.name, 'amazon')}
-                        className="flex items-center gap-1.5 text-xs bg-orange-500 hover:bg-orange-600 text-white px-3 py-1.5 rounded font-medium transition-colors"
+                        className="flex items-center gap-1.5 text-xs bg-warn-1000 hover:bg-warn-700 text-white px-3 py-1.5 rounded font-medium transition-colors"
                       >
                         <ExternalLink className="w-3 h-3" /> Amazon
                       </a>
@@ -312,7 +312,7 @@ export function ReviewsPage() {
                         target="_blank"
                         rel="noopener noreferrer sponsored"
                         onClick={() => trackClick(product.name, 'iherb')}
-                        className="flex items-center gap-1.5 text-xs bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded font-medium transition-colors"
+                        className="flex items-center gap-1.5 text-xs bg-accent-600 hover:bg-accent-700 text-white px-3 py-1.5 rounded font-medium transition-colors"
                       >
                         <ExternalLink className="w-3 h-3" /> iHerb
                       </a>
@@ -325,7 +325,7 @@ export function ReviewsPage() {
         </div>
 
         {/* Build Your Own Stack CTA */}
-        <div className="mt-10 p-6 bg-blue-600 rounded-xl text-white text-center">
+        <div className="mt-10 p-6 bg-primary-700 rounded-xl text-white text-center">
           <Brain className="w-8 h-8 mx-auto mb-2 opacity-90" />
           <h2 className="text-xl font-bold mb-2">Build Your Own Stack Instead</h2>
           <p className="text-blue-100 text-sm mb-4">
@@ -333,21 +333,21 @@ export function ReviewsPage() {
           </p>
           <Link
             to="/"
-            className="inline-block bg-white text-blue-700 font-semibold px-6 py-2.5 rounded-lg hover:bg-blue-50 transition-colors"
+            className="inline-block bg-white text-primary-800 font-semibold px-6 py-2.5 rounded-lg hover:bg-primary-050 transition-colors"
           >
             Open the Free Stack Builder →
           </Link>
         </div>
 
         {/* Pre-Made vs Custom Comparison */}
-        <div className="mt-10 p-6 bg-white border border-gray-200 rounded-xl">
-          <h2 className="text-lg font-bold text-gray-900 mb-1">Pre-Made Stacks vs. Custom Stacks</h2>
-          <p className="text-sm text-gray-500 mb-5">An honest comparison — pre-made products have real advantages, but they come at a cost.</p>
+        <div className="mt-10 p-6 bg-white border border-ink-200 rounded-xl">
+          <h2 className="text-lg font-bold text-ink-900 mb-1">Pre-Made Stacks vs. Custom Stacks</h2>
+          <p className="text-sm text-ink-500 mb-5">An honest comparison — pre-made products have real advantages, but they come at a cost.</p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <p className="text-sm font-semibold text-gray-800 mb-3">Pre-Made (like the products above)</p>
-              <ul className="space-y-2 text-sm text-gray-600">
+              <p className="text-sm font-semibold text-ink-900 mb-3">Pre-Made (like the products above)</p>
+              <ul className="space-y-2 text-sm text-ink-700">
                 <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" /> One product, one order, one capsule routine</li>
                 <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" /> Good for beginners who aren't ready to research individual compounds</li>
                 <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" /> Formulated by someone who has already done the synergy thinking</li>
@@ -357,8 +357,8 @@ export function ReviewsPage() {
               </ul>
             </div>
             <div>
-              <p className="text-sm font-semibold text-gray-800 mb-3">Custom Stack (what this site helps you build)</p>
-              <ul className="space-y-2 text-sm text-gray-600">
+              <p className="text-sm font-semibold text-ink-900 mb-3">Custom Stack (what this site helps you build)</p>
+              <ul className="space-y-2 text-sm text-ink-700">
                 <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" /> Full control over every dose and compound</li>
                 <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" /> Typically 40–60% cheaper for equivalent coverage</li>
                 <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" /> You can test, track, and optimize each variable</li>
@@ -369,12 +369,12 @@ export function ReviewsPage() {
             </div>
           </div>
 
-          <p className="text-xs text-gray-500 mt-5 leading-relaxed">
+          <p className="text-xs text-ink-500 mt-5 leading-relaxed">
             <strong>Bottom line:</strong> Pre-made products make sense when you're starting out or value simplicity. Once you know what works for you, building a custom stack almost always wins on cost and precision. The Stack Builder above makes it easy — 195 compounds, real-time synergy analysis, and a Stack Score to guide your build.
           </p>
         </div>
 
-        <p className="text-xs text-gray-400 text-center mt-6">
+        <p className="text-xs text-ink-400 text-center mt-6">
           * Affiliate links — we earn a small commission at no extra cost to you. Our ratings are not influenced by these relationships.
         </p>
       </div>

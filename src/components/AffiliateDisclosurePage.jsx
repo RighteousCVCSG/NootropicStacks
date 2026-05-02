@@ -11,15 +11,15 @@ export function AffiliateDisclosurePage() {
       />
       <div className="max-w-3xl mx-auto px-4 py-12">
         <h1 className="text-3xl font-bold mb-6">Affiliate Disclosure Policy</h1>
-        <p className="text-sm text-gray-500 mb-8">Last updated: April 2026</p>
+        <p className="text-sm text-ink-500 mb-8">Last updated: April 2026</p>
 
-        <section className="space-y-6 text-gray-700 leading-relaxed">
+        <section className="space-y-6 text-ink-700 leading-relaxed">
           <p>
             NootropicStacker is committed to transparency. We want you to understand
             how we sustain our operations while maintaining editorial independence.
           </p>
 
-          <h2 className="text-xl font-semibold text-gray-900 mt-8">Affiliate Links</h2>
+          <h2 className="text-xl font-semibold text-ink-900 mt-8">Affiliate Links</h2>
           <p>
             Some links on NootropicStacker are affiliate links. If you click an affiliate
             link and make a purchase, we may earn a small commission at no extra cost to
@@ -32,7 +32,7 @@ export function AffiliateDisclosurePage() {
             banners.
           </p>
 
-          <h2 className="text-xl font-semibold text-gray-900 mt-8">Amazon Associates</h2>
+          <h2 className="text-xl font-semibold text-ink-900 mt-8">Amazon Associates</h2>
           <p>
             NootropicStacker is a participant in the Amazon Services LLC Associates
             Program, an affiliate advertising program designed to provide a means for
@@ -40,7 +40,7 @@ export function AffiliateDisclosurePage() {
             affiliated sites. As an Amazon Associate we earn from qualifying purchases.
           </p>
 
-          <h2 className="text-xl font-semibold text-gray-900 mt-8">Other Affiliate Programs</h2>
+          <h2 className="text-xl font-semibold text-ink-900 mt-8">Other Affiliate Programs</h2>
           <p>
             We also participate in affiliate programs with the following partners:
           </p>
@@ -55,7 +55,7 @@ export function AffiliateDisclosurePage() {
             <li>Onnit</li>
           </ul>
 
-          <h2 className="text-xl font-semibold text-gray-900 mt-8">Editorial Independence</h2>
+          <h2 className="text-xl font-semibold text-ink-900 mt-8">Editorial Independence</h2>
           <p>
             Affiliate relationships do not influence our editorial content. We do not
             accept payment from supplement brands in exchange for coverage, rankings, or
@@ -68,14 +68,14 @@ export function AffiliateDisclosurePage() {
             team independently determined it meets our quality and evidence standards.
           </p>
 
-          <h2 className="text-xl font-semibold text-gray-900 mt-8">Sponsored Content</h2>
+          <h2 className="text-xl font-semibold text-ink-900 mt-8">Sponsored Content</h2>
           <p>
             Occasionally we publish sponsored content or banner advertisements. All
             sponsored content is clearly labeled. Sponsored placements do not affect our
             editorial recommendations or supplement ratings.
           </p>
 
-          <h2 className="text-xl font-semibold text-gray-900 mt-8">Questions</h2>
+          <h2 className="text-xl font-semibold text-ink-900 mt-8">Questions</h2>
           <p>
             If you have any questions about our affiliate relationships or this policy,
             please contact us.

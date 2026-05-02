@@ -6,9 +6,9 @@ import { Button } from '@/components/ui/button.jsx';
 import { Pill, BookOpen, Award, ChevronRight } from 'lucide-react';
 
 const EVIDENCE_TIER_LEGEND = [
-  { tier: 'T1', label: 'Multiple human RCTs / meta-analysis', color: 'bg-green-100 text-green-800' },
-  { tier: 'T2', label: 'Small RCTs / consistent observational', color: 'bg-blue-100 text-blue-800' },
-  { tier: 'T3', label: 'Mechanistic / animal / single small study', color: 'bg-yellow-100 text-yellow-800' },
+  { tier: 'T1', label: 'Multiple human RCTs / meta-analysis', color: 'bg-accent-100 text-accent-700' },
+  { tier: 'T2', label: 'Small RCTs / consistent observational', color: 'bg-primary-100 text-primary-800' },
+  { tier: 'T3', label: 'Mechanistic / animal / single small study', color: 'bg-warn-100 text-yellow-800' },
 ];
 
 const STACKS = [
@@ -77,7 +77,7 @@ const STACKS = [
 function EvidenceBadge({ tier }) {
   const legend = EVIDENCE_TIER_LEGEND.find(l => l.tier === tier);
   return (
-    <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${legend?.color || 'bg-gray-100 text-gray-700'}`}>
+    <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${legend?.color || 'bg-surface-sunk text-ink-700'}`}>
       {tier}
     </span>
   );
@@ -95,25 +95,25 @@ export function LeadMagnetDownloadPage() {
       <div className="max-w-4xl mx-auto">
         {/* Hero */}
         <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary-100 text-primary-800 rounded-full text-xs font-medium mb-4">
             <Award className="w-3 h-3" />
             Free Guide · 10 Stacks · 12 Pages
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3 leading-tight">
+          <h1 className="text-3xl sm:text-4xl font-bold text-ink-900 mb-3 leading-tight">
             10 Evidence-Backed Nootropic Stacks
           </h1>
-          <p className="text-lg text-gray-600 mb-4 max-w-2xl mx-auto">
+          <p className="text-lg text-ink-700 mb-4 max-w-2xl mx-auto">
             A curated guide with PubMed citations, dosing protocols, and honest effect-size reporting for each stack.
           </p>
 
           {/* Author badge */}
           <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm">
+            <div className="w-10 h-10 rounded-full bg-primary-700 flex items-center justify-center text-white font-bold text-sm">
               VH
             </div>
             <div className="text-left">
-              <p className="text-sm font-medium text-gray-900">Vera Huang</p>
-              <p className="text-xs text-gray-500">MSc Neuroscience, UCSD · Former nootropic researcher</p>
+              <p className="text-sm font-medium text-ink-900">Vera Huang</p>
+              <p className="text-xs text-ink-500">MSc Neuroscience, UCSD · Former nootropic researcher</p>
             </div>
           </div>
 
@@ -122,7 +122,7 @@ export function LeadMagnetDownloadPage() {
             {EVIDENCE_TIER_LEGEND.map(({ tier, label, color }) => (
               <div key={tier} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs ${color}`}>
                 <span className="font-bold">{tier}</span>
-                <span className="text-gray-600">—</span>
+                <span className="text-ink-700">—</span>
                 <span>{label}</span>
               </div>
             ))}
@@ -140,8 +140,8 @@ export function LeadMagnetDownloadPage() {
 
         {/* Why this guide exists */}
         <div className="bg-white rounded-xl border p-6 mb-8">
-          <h2 className="text-lg font-semibold text-gray-900 mb-3">Why This Guide Exists</h2>
-          <div className="space-y-3 text-sm text-gray-600 leading-relaxed">
+          <h2 className="text-lg font-semibold text-ink-900 mb-3">Why This Guide Exists</h2>
+          <div className="space-y-3 text-sm text-ink-700 leading-relaxed">
             <p>
               Most nootropic content online falls into two buckets: affiliate-optimized roundups that cherry-pick
               studies, or scientific papers too dense to apply. This guide aims for a third path — evidence-based
@@ -153,7 +153,7 @@ export function LeadMagnetDownloadPage() {
               compound in that context, and — most importantly — the actual effect size so you can decide if the
               benefit is worth the cost and commitment.
             </p>
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-ink-400">
               Nothing in this guide constitutes medical advice. Always consult a healthcare professional before
               starting a new supplement regimen. Evidence tiers reflect the strength of the literature, not safety
               or efficacy guarantees.
@@ -163,17 +163,17 @@ export function LeadMagnetDownloadPage() {
 
         {/* Stack previews */}
         <div className="mb-10">
-          <h2 className="text-xl font-bold text-gray-900 mb-6">The 10 Stacks</h2>
+          <h2 className="text-xl font-bold text-ink-900 mb-6">The 10 Stacks</h2>
           <div className="grid gap-4">
             {STACKS.map((stack, i) => (
-              <div key={i} className="bg-white rounded-xl border p-5 hover:border-blue-200 hover:shadow-sm transition-all">
+              <div key={i} className="bg-white rounded-xl border p-5 hover:border-primary-300 hover:shadow-sm transition-all">
                 <div className="flex items-start justify-between mb-2">
                   <div>
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-xs font-medium text-gray-400">Stack {i + 1}</span>
-                      <h3 className="font-semibold text-gray-900">{stack.name}</h3>
+                      <span className="text-xs font-medium text-ink-400">Stack {i + 1}</span>
+                      <h3 className="font-semibold text-ink-900">{stack.name}</h3>
                     </div>
-                    <p className="text-xs text-gray-500 font-mono">{stack.compounds}</p>
+                    <p className="text-xs text-ink-500 font-mono">{stack.compounds}</p>
                   </div>
                   <div className="flex gap-1">
                     {stack.tiers.map((tier, j) => (
@@ -181,7 +181,7 @@ export function LeadMagnetDownloadPage() {
                     ))}
                   </div>
                 </div>
-                <p className="text-sm text-gray-600 leading-relaxed">{stack.summary}</p>
+                <p className="text-sm text-ink-700 leading-relaxed">{stack.summary}</p>
               </div>
             ))}
           </div>
@@ -189,8 +189,8 @@ export function LeadMagnetDownloadPage() {
 
         {/* CTA to stack builder */}
         <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl border border-blue-100 p-6 text-center mb-8">
-          <h2 className="text-lg font-semibold text-gray-900 mb-2">Build Your Own Stack</h2>
-          <p className="text-sm text-gray-600 mb-4">
+          <h2 className="text-lg font-semibold text-ink-900 mb-2">Build Your Own Stack</h2>
+          <p className="text-sm text-ink-700 mb-4">
             Use the free stack builder to combine any of 195 supplements, check interactions, and optimize your Stack Score.
           </p>
           <Link to="/">
@@ -204,7 +204,7 @@ export function LeadMagnetDownloadPage() {
 
         {/* FAQ */}
         <div className="mb-8">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Frequently Asked Questions</h2>
+          <h2 className="text-lg font-semibold text-ink-900 mb-4">Frequently Asked Questions</h2>
           <div className="space-y-3">
             {[
               {
@@ -224,19 +224,19 @@ export function LeadMagnetDownloadPage() {
                 a: 'No. This is a curated summary of published research for educational purposes. Supplement effects vary by individual. Always consult a qualified healthcare provider before starting any new supplement.',
               },
             ].map((faq, i) => (
-              <details key={i} className="group bg-white rounded-lg border p-4 [&[open]]:border-blue-200">
-                <summary className="text-sm font-medium text-gray-900 cursor-pointer flex items-center justify-between">
+              <details key={i} className="group bg-white rounded-lg border p-4 [&[open]]:border-primary-300">
+                <summary className="text-sm font-medium text-ink-900 cursor-pointer flex items-center justify-between">
                   {faq.q}
-                  <ChevronRight className="w-4 h-4 text-gray-400 group-open:rotate-90 transition-transform" />
+                  <ChevronRight className="w-4 h-4 text-ink-400 group-open:rotate-90 transition-transform" />
                 </summary>
-                <p className="text-sm text-gray-600 mt-2 leading-relaxed">{faq.a}</p>
+                <p className="text-sm text-ink-700 mt-2 leading-relaxed">{faq.a}</p>
               </details>
             ))}
           </div>
         </div>
 
         {/* Footer */}
-        <div className="text-center text-xs text-gray-400 pb-8">
+        <div className="text-center text-xs text-ink-400 pb-8">
           <p className="mb-1">Guide updated April 29, 2026 · Next review July 29, 2026</p>
           <p>© 2026 NootropicStacker · Affiliate Disclosure: We participate in the Amazon Services LLC Associates Program.</p>
         </div>

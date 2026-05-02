@@ -18,8 +18,8 @@ const EVIDENCE_ORDER = {
 
 const EVIDENCE_BADGE = {
   'Meta-Analysis': 'bg-emerald-100 text-emerald-800 border-emerald-300',
-  'RCT': 'bg-blue-100 text-blue-800 border-blue-300',
-  'Observational': 'bg-amber-100 text-amber-800 border-amber-300',
+  'RCT': 'bg-primary-100 text-primary-800 border-primary-300',
+  'Observational': 'bg-warn-100 text-amber-800 border-amber-300',
   'Animal': 'bg-slate-100 text-slate-600 border-slate-300',
 };
 
@@ -247,18 +247,18 @@ export function ResearchLibraryPage() {
     <div className="max-w-4xl mx-auto space-y-8">
       <div>
         <div className="flex items-center gap-2 mb-2">
-          <FlaskConical className="w-5 h-5 text-blue-600" />
+          <FlaskConical className="w-5 h-5 text-primary-700" />
           <Badge variant="outline" className="text-xs">Research Library</Badge>
         </div>
-        <h1 className="text-2xl font-bold text-gray-900">Nootropics Research Library</h1>
-        <p className="text-gray-600 mt-2">
+        <h1 className="text-2xl font-bold text-ink-900">Nootropics Research Library</h1>
+        <p className="text-ink-700 mt-2">
           Peer-reviewed studies with plain-English summaries — so you know what the evidence actually says.
         </p>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-400 pointer-events-none" />
           <Input
             placeholder="Search by supplement, keyword, or journal..."
             value={query}
@@ -290,29 +290,29 @@ export function ResearchLibraryPage() {
         </Select>
       </div>
 
-      <p className="text-xs text-gray-500">
+      <p className="text-xs text-ink-500">
         Showing {filtered.length} of {studies.length} studies
       </p>
 
       {filtered.length === 0 ? (
-        <div className="rounded-xl border border-gray-200 bg-white p-14 text-center">
-          <BookOpen className="w-10 h-10 text-gray-300 mx-auto mb-4" />
-          <p className="text-gray-600 font-medium mb-1">No studies match your filters</p>
-          <p className="text-sm text-gray-400">Try a different keyword or clear the filters.</p>
+        <div className="rounded-xl border border-ink-200 bg-white p-14 text-center">
+          <BookOpen className="w-10 h-10 text-ink-300 mx-auto mb-4" />
+          <p className="text-ink-700 font-medium mb-1">No studies match your filters</p>
+          <p className="text-sm text-ink-400">Try a different keyword or clear the filters.</p>
         </div>
       ) : (
         <div className="space-y-4">
           {filtered.map(study => (
-            <div key={study.id} className="rounded-xl border border-gray-200 bg-white overflow-hidden">
+            <div key={study.id} className="rounded-xl border border-ink-200 bg-white overflow-hidden">
               <div className="p-5 pb-3">
                 <div className="flex flex-wrap items-center gap-2 mb-2">
                   <Badge className={`text-xs border ${EVIDENCE_BADGE[study.evidenceQuality]}`}>
                     {study.evidenceQuality}
                   </Badge>
-                  <Badge variant="outline" className="text-xs text-gray-500 border-gray-300">
+                  <Badge variant="outline" className="text-xs text-ink-500 border-ink-300">
                     {study.supplement}
                   </Badge>
-                  <span className="text-xs text-gray-400 ml-auto">
+                  <span className="text-xs text-ink-400 ml-auto">
                     {study.journal} &middot; {study.year}
                   </span>
                 </div>
@@ -323,17 +323,17 @@ export function ResearchLibraryPage() {
                   rel="noopener noreferrer"
                   className="group inline-flex items-start gap-2"
                 >
-                  <h2 className="font-semibold text-gray-900 text-sm leading-snug group-hover:text-blue-700 transition-colors">
+                  <h2 className="font-semibold text-ink-900 text-sm leading-snug group-hover:text-primary-800 transition-colors">
                     {study.title}
                   </h2>
-                  <ExternalLink className="w-3.5 h-3.5 shrink-0 text-gray-400 group-hover:text-blue-600 transition-colors mt-0.5" />
+                  <ExternalLink className="w-3.5 h-3.5 shrink-0 text-ink-400 group-hover:text-primary-700 transition-colors mt-0.5" />
                 </a>
 
                 <div className="flex flex-wrap gap-1 mt-3">
                   {study.tags.map(tag => (
                     <span
                       key={tag}
-                      className="text-xs text-gray-500 bg-gray-50 border border-gray-200 px-2 py-0.5 rounded-full"
+                      className="text-xs text-ink-500 bg-surface-card border border-ink-200 px-2 py-0.5 rounded-full"
                     >
                       {tag}
                     </span>
@@ -344,27 +344,27 @@ export function ResearchLibraryPage() {
               <div className="border-t border-gray-100 px-5">
                 <Accordion type="single" collapsible>
                   <AccordionItem value="relevance">
-                    <AccordionTrigger className="text-xs font-medium text-gray-500 py-3 hover:no-underline hover:text-gray-900">
+                    <AccordionTrigger className="text-xs font-medium text-ink-500 py-3 hover:no-underline hover:text-ink-900">
                       Relevance
                     </AccordionTrigger>
                     <AccordionContent>
-                      <p className="text-sm text-gray-600 leading-relaxed">{study.relevance}</p>
+                      <p className="text-sm text-ink-700 leading-relaxed">{study.relevance}</p>
                     </AccordionContent>
                   </AccordionItem>
                   <AccordionItem value="findings">
-                    <AccordionTrigger className="text-xs font-medium text-gray-500 py-3 hover:no-underline hover:text-gray-900">
+                    <AccordionTrigger className="text-xs font-medium text-ink-500 py-3 hover:no-underline hover:text-ink-900">
                       Key Findings
                     </AccordionTrigger>
                     <AccordionContent>
-                      <p className="text-sm text-gray-600 leading-relaxed">{study.keyFindings}</p>
+                      <p className="text-sm text-ink-700 leading-relaxed">{study.keyFindings}</p>
                     </AccordionContent>
                   </AccordionItem>
                   <AccordionItem value="applicability">
-                    <AccordionTrigger className="text-xs font-medium text-gray-500 py-3 hover:no-underline hover:text-gray-900">
+                    <AccordionTrigger className="text-xs font-medium text-ink-500 py-3 hover:no-underline hover:text-ink-900">
                       Supplementation Takeaway
                     </AccordionTrigger>
                     <AccordionContent>
-                      <p className="text-sm text-gray-600 leading-relaxed">{study.applicability}</p>
+                      <p className="text-sm text-ink-700 leading-relaxed">{study.applicability}</p>
                     </AccordionContent>
                   </AccordionItem>
                 </Accordion>
@@ -374,33 +374,33 @@ export function ResearchLibraryPage() {
         </div>
       )}
 
-      <Alert className="border-amber-200 bg-amber-50">
-        <AlertTriangle className="h-4 w-4 text-amber-600" />
+      <Alert className="border-amber-200 bg-warn-100">
+        <AlertTriangle className="h-4 w-4 text-warn-700" />
         <AlertDescription className="text-amber-800 text-sm">
           <strong>Educational purposes only.</strong> Summaries are simplified interpretations for general education. Read the full studies before making any health decisions. This content does not constitute medical advice.
         </AlertDescription>
       </Alert>
 
-      <Separator className="bg-gray-200" />
+      <Separator className="bg-ink-200" />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <Link to="/start-here" className="p-6 rounded-xl border border-gray-200 bg-white text-center hover:border-blue-300 hover:shadow-sm transition-all">
-          <BookOpenCheck className="w-6 h-6 text-blue-600 mx-auto mb-3" />
-          <h2 className="font-semibold text-gray-900 mb-2">New to nootropics?</h2>
-          <p className="text-xs text-gray-500 mb-4">
+        <Link to="/start-here" className="p-6 rounded-xl border border-ink-200 bg-white text-center hover:border-primary-300 hover:shadow-sm transition-all">
+          <BookOpenCheck className="w-6 h-6 text-primary-700 mx-auto mb-3" />
+          <h2 className="font-semibold text-ink-900 mb-2">New to nootropics?</h2>
+          <p className="text-xs text-ink-500 mb-4">
             Start with our beginner's guide before diving into the research.
           </p>
-          <span className="text-sm text-blue-600 flex items-center justify-center gap-1">
+          <span className="text-sm text-primary-700 flex items-center justify-center gap-1">
             Start Here <ArrowRight className="w-3.5 h-3.5" />
           </span>
         </Link>
-        <Link to="/" className="p-6 rounded-xl border border-blue-200 bg-blue-50 text-center hover:border-blue-400 hover:shadow-sm transition-all">
-          <FlaskConical className="w-6 h-6 text-blue-600 mx-auto mb-3" />
-          <h2 className="font-semibold text-gray-900 mb-2">Build your stack</h2>
-          <p className="text-xs text-gray-500 mb-4">
+        <Link to="/" className="p-6 rounded-xl border border-primary-300 bg-primary-050 text-center hover:border-blue-400 hover:shadow-sm transition-all">
+          <FlaskConical className="w-6 h-6 text-primary-700 mx-auto mb-3" />
+          <h2 className="font-semibold text-ink-900 mb-2">Build your stack</h2>
+          <p className="text-xs text-ink-500 mb-4">
             Use the research to inform a personalized nootropic protocol.
           </p>
-          <span className="text-sm text-blue-600 flex items-center justify-center gap-1">
+          <span className="text-sm text-primary-700 flex items-center justify-center gap-1">
             Stack Builder <ArrowRight className="w-3.5 h-3.5" />
           </span>
         </Link>

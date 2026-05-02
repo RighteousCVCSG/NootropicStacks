@@ -46,7 +46,7 @@ export function ContactPage() {
       <div className="max-w-lg mx-auto py-16 text-center">
         <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
         <h2 className="text-2xl font-bold mb-2">Message Sent!</h2>
-        <p className="text-gray-600">We'll get back to you within 24 hours.</p>
+        <p className="text-ink-700">We'll get back to you within 24 hours.</p>
       </div>
     );
   }
@@ -61,9 +61,9 @@ export function ContactPage() {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex items-center gap-2 text-sm text-gray-600 p-3 bg-blue-50 rounded-lg">
-            <Mail className="w-4 h-4 text-blue-600" />
-            <span>Or email us directly: <a href="mailto:info@nootropicstacker.com" className="text-blue-600 hover:underline">info@nootropicstacker.com</a></span>
+          <div className="flex items-center gap-2 text-sm text-ink-700 p-3 bg-primary-050 rounded-lg">
+            <Mail className="w-4 h-4 text-primary-700" />
+            <span>Or email us directly: <a href="mailto:info@nootropicstacker.com" className="text-primary-700 hover:underline">info@nootropicstacker.com</a></span>
           </div>
 
           {error && (

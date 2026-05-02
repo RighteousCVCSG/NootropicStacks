@@ -45,9 +45,9 @@ function ArticleContent({ sections, showNewsletter = false, articleSlug }) {
       {sections.map((section, i) => (
         <React.Fragment key={i}>
           <div className="mb-8">
-            {section.heading && <h2 className="text-xl font-bold text-gray-900 mb-3">{section.heading}</h2>}
+            {section.heading && <h2 className="text-xl font-bold text-ink-900 mb-3">{section.heading}</h2>}
             {section.paragraphs.map((p, j) => (
-              <p key={j} className="text-gray-700 leading-relaxed mb-4">{p}</p>
+              <p key={j} className="text-ink-700 leading-relaxed mb-4">{p}</p>
             ))}
           </div>
           {showNewsletter && i === 3 && (
@@ -131,7 +131,7 @@ export function BlogArticlePage() {
 
       <div className="max-w-3xl mx-auto">
         {/* Back link */}
-        <Link to="/blog" className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-900 mb-6">
+        <Link to="/blog" className="inline-flex items-center gap-1 text-sm text-ink-500 hover:text-ink-900 mb-6">
           <ArrowLeft className="w-4 h-4" />
           Back to Blog
         </Link>
@@ -144,8 +144,8 @@ export function BlogArticlePage() {
                 <Badge key={tag} variant="outline" className="text-xs">{tag}</Badge>
               ))}
             </div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">{article.title}</h1>
-            <div className="flex items-center gap-4 text-sm text-gray-500">
+            <h1 className="text-3xl font-bold text-ink-900 mb-4">{article.title}</h1>
+            <div className="flex items-center gap-4 text-sm text-ink-500">
               <span className="flex items-center gap-1">
                 <Calendar className="w-4 h-4" />
                 {new Date(article.publishedDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
@@ -154,7 +154,7 @@ export function BlogArticlePage() {
                 <Clock className="w-4 h-4" />
                 {article.readTime} min read
               </span>
-              <button onClick={handleShare} className="flex items-center gap-1 hover:text-blue-600 transition-colors">
+              <button onClick={handleShare} className="flex items-center gap-1 hover:text-primary-700 transition-colors">
                 <Share2 className="w-4 h-4" />
                 Share
               </button>
@@ -168,22 +168,22 @@ export function BlogArticlePage() {
 
           {/* Bottom line */}
           {article.bottomLine && (
-            <Card className="bg-blue-50 border-blue-200 mt-8">
+            <Card className="bg-primary-050 border-primary-300 mt-8">
               <CardContent className="pt-6">
-                <h3 className="font-bold text-blue-900 mb-2">The Bottom Line</h3>
-                <p className="text-blue-800">{article.bottomLine}</p>
+                <h3 className="font-bold text-primary-900 mb-2">The Bottom Line</h3>
+                <p className="text-primary-800">{article.bottomLine}</p>
               </CardContent>
             </Card>
           )}
         </article>
 
         {articleSupplements.length > 0 && (
-          <div className="mt-8 p-6 bg-green-50 border border-green-200 rounded-xl">
-            <h3 className="font-bold text-green-900 mb-1 flex items-center gap-2">
+          <div className="mt-8 p-6 bg-accent-050 border border-accent-300 rounded-xl">
+            <h3 className="font-bold text-accent-700 mb-1 flex items-center gap-2">
               <ShoppingCart className="w-5 h-5" />
               Shop Supplements in This Article
             </h3>
-            <p className="text-sm text-green-700 mb-4">Quality-verified sources for the supplements discussed above.</p>
+            <p className="text-sm text-accent-700 mb-4">Quality-verified sources for the supplements discussed above.</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {articleSupplements.map(id => {
                 const links = AFFILIATE_LINKS[id];
@@ -191,19 +191,19 @@ export function BlogArticlePage() {
                 const name = id.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
                 return (
                   <div key={id} className="bg-white rounded-lg p-3 border border-green-100">
-                    <p className="font-medium text-gray-800 text-sm mb-2">{name}</p>
+                    <p className="font-medium text-ink-900 text-sm mb-2">{name}</p>
                     <div className="flex gap-2">
                       {links.amazon && (
                         <a href={withAffiliateUtms(links.amazon, { campaign: `blog-${slug}` })} target="_blank" rel="noopener noreferrer sponsored"
                            onClick={() => fetch('/api/track/click', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ supplementId: id, vendor: 'amazon', page: 'blog' }) })}
-                           className="flex items-center gap-1 text-xs bg-orange-500 hover:bg-orange-600 text-white px-3 py-1.5 rounded font-medium transition-colors">
+                           className="flex items-center gap-1 text-xs bg-warn-1000 hover:bg-warn-700 text-white px-3 py-1.5 rounded font-medium transition-colors">
                           <ExternalLink className="w-3 h-3" /> Amazon
                         </a>
                       )}
                       {links.iherb && (
                         <a href={links.iherb} target="_blank" rel="noopener noreferrer sponsored"
                            onClick={() => fetch('/api/track/click', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ supplementId: id, vendor: 'iherb', page: 'blog' }) })}
-                           className="flex items-center gap-1 text-xs bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded font-medium transition-colors">
+                           className="flex items-center gap-1 text-xs bg-accent-600 hover:bg-accent-700 text-white px-3 py-1.5 rounded font-medium transition-colors">
                           <ExternalLink className="w-3 h-3" /> iHerb
                         </a>
                       )}
@@ -212,15 +212,15 @@ export function BlogArticlePage() {
                 );
               })}
             </div>
-            <p className="text-xs text-green-600 mt-3">* Affiliate links — we earn a small commission at no extra cost to you.</p>
+            <p className="text-xs text-accent-700 mt-3">* Affiliate links — we earn a small commission at no extra cost to you.</p>
           </div>
         )}
 
-        <div className="mt-6 p-6 bg-blue-600 rounded-xl text-white text-center">
+        <div className="mt-6 p-6 bg-primary-700 rounded-xl text-white text-center">
           <Beaker className="w-8 h-8 mx-auto mb-2 opacity-90" />
           <h3 className="text-xl font-bold mb-2">Build Your Personalized Stack</h3>
           <p className="text-blue-100 text-sm mb-4">Use our free Stack Builder to combine these supplements, check interactions, and get a Stack Score rating.</p>
-          <Link to="/" className="inline-block bg-white text-blue-700 font-semibold px-6 py-2.5 rounded-lg hover:bg-blue-50 transition-colors">
+          <Link to="/" className="inline-block bg-white text-primary-800 font-semibold px-6 py-2.5 rounded-lg hover:bg-primary-050 transition-colors">
             Open Stack Builder →
           </Link>
         </div>
@@ -230,7 +230,7 @@ export function BlogArticlePage() {
         {/* Related articles */}
         {recentArticles.length > 0 && (
           <div>
-            <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <h3 className="text-lg font-bold text-ink-900 mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
               More Articles
             </h3>
@@ -239,10 +239,10 @@ export function BlogArticlePage() {
                 <Link key={a.slug} to={`/blog/${a.slug}`}>
                   <Card className="hover:shadow-md transition-shadow h-full">
                     <CardContent className="pt-4">
-                      <p className="text-xs text-gray-500 mb-1">
+                      <p className="text-xs text-ink-500 mb-1">
                         {new Date(a.publishedDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                       </p>
-                      <p className="text-sm font-medium text-gray-900 hover:text-blue-600">{a.title}</p>
+                      <p className="text-sm font-medium text-ink-900 hover:text-primary-700">{a.title}</p>
                     </CardContent>
                   </Card>
                 </Link>

@@ -205,20 +205,28 @@ function App() {
           </div>
         </header>
 
-        {/* Mobile Navigation — same text-only treatment as desktop. */}
+        {/* Mobile Navigation — same text-only treatment as desktop.
+            The scrollable strip has a right-edge gradient fade so users
+            see there's more nav off-screen on narrow viewports. */}
         <nav className="md:hidden bg-surface-page border-b border-ink-200" aria-label="Mobile navigation">
           <div className="flex items-center">
-            <div className="flex items-center gap-0.5 overflow-x-auto flex-1 min-w-0 px-3 py-1.5">
-              <NavLink to="/build">Build</NavLink>
-              <NavLink to="/supplements">Supplements</NavLink>
-              <NavLink to="/stacks">Stacks</NavLink>
-              <NavLink to="/learn">Learn</NavLink>
-              <Link
-                to="/quiz"
-                className="shrink-0 ml-2 inline-flex items-center text-xs font-medium text-primary-800 hover:text-primary-700 transition-colors"
-              >
-                Quiz →
-              </Link>
+            <div className="relative flex-1 min-w-0">
+              <div className="flex items-center gap-0.5 overflow-x-auto px-3 py-1.5">
+                <NavLink to="/build">Build</NavLink>
+                <NavLink to="/supplements">Supplements</NavLink>
+                <NavLink to="/stacks">Stacks</NavLink>
+                <NavLink to="/learn">Learn</NavLink>
+                <Link
+                  to="/quiz"
+                  className="shrink-0 ml-2 inline-flex items-center text-xs font-medium text-primary-800 hover:text-primary-700 transition-colors"
+                >
+                  Quiz →
+                </Link>
+              </div>
+              <span
+                aria-hidden
+                className="pointer-events-none absolute top-0 right-0 bottom-0 w-6 bg-gradient-to-l from-surface-page to-transparent"
+              />
             </div>
             <div className="shrink-0 px-1.5 border-l border-ink-200">
               <ThemeToggle />
@@ -315,12 +323,23 @@ function App() {
               </>
             } />
             <Route path="*" element={
-              <div className="text-center py-20">
-                <h2 className="text-4xl font-bold mb-4">404</h2>
-                <p className="text-ink-700 mb-6">Page not found. Let's get you back on track.</p>
-                <div className="flex justify-center gap-4">
-                  <Link to="/build"><Button>Stack Builder</Button></Link>
-                  <Link to="/supplements"><Button variant="outline">Supplement Library</Button></Link>
+              <div className="text-center py-20 max-w-md mx-auto">
+                <p className="text-[10px] font-semibold uppercase tracking-widest text-ink-500 mb-2">404</p>
+                <h2 className="text-2xl font-semibold text-ink-900 mb-2 tracking-tight">Page not found</h2>
+                <p className="text-sm text-ink-500 mb-5">Let's get you back on track.</p>
+                <div className="flex justify-center gap-2">
+                  <Link
+                    to="/build"
+                    className="inline-flex items-center h-7 px-2.5 rounded-md text-xs font-medium bg-primary-050 hover:bg-primary-100 text-primary-800 border border-primary-300 hover:border-primary-500 transition-colors"
+                  >
+                    Stack Builder
+                  </Link>
+                  <Link
+                    to="/supplements"
+                    className="inline-flex items-center h-7 px-2.5 rounded-md text-xs font-medium bg-surface-card hover:bg-surface-sunk text-ink-700 border border-ink-200 hover:border-primary-500 transition-colors"
+                  >
+                    Supplement Library
+                  </Link>
                 </div>
               </div>
             } />

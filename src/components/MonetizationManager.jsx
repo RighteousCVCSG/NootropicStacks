@@ -407,33 +407,33 @@ export function MonetizationManager() {
           {showEarnings ? (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="text-center">
-                <div className="text-2xl font-bold text-green-600">
+                <div className="text-2xl font-bold text-accent-700">
                   ${revenueData.totalEarnings.toFixed(2)}
                 </div>
-                <div className="text-sm text-gray-600">Total Earnings</div>
+                <div className="text-sm text-ink-700">Total Earnings</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600">
+                <div className="text-2xl font-bold text-primary-700">
                   ${revenueData.monthlyEarnings.toFixed(2)}
                 </div>
-                <div className="text-sm text-gray-600">This Month</div>
+                <div className="text-sm text-ink-700">This Month</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-purple-600">
+                <div className="text-2xl font-bold text-primary-700">
                   {revenueData.clickThroughs}
                 </div>
-                <div className="text-sm text-gray-600">Click-throughs</div>
+                <div className="text-sm text-ink-700">Click-throughs</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-orange-600">
+                <div className="text-2xl font-bold text-warn-700">
                   {revenueData.conversions}
                 </div>
-                <div className="text-sm text-gray-600">Conversions</div>
+                <div className="text-sm text-ink-700">Conversions</div>
               </div>
             </div>
           ) : (
             <div className="text-center py-4">
-              <p className="text-gray-600">Click "Show Earnings" to view revenue data</p>
+              <p className="text-ink-700">Click "Show Earnings" to view revenue data</p>
             </div>
           )}
 
@@ -441,13 +441,13 @@ export function MonetizationManager() {
           <div className="mt-4">
             <div className="flex justify-between items-center mb-2">
               <span className="text-sm font-medium">Daily Goal Progress</span>
-              <span className="text-sm text-gray-600">
+              <span className="text-sm text-ink-700">
                 ${(revenueData.dailyGoal * getDailyProgress() / 100).toFixed(2)} / ${revenueData.dailyGoal}
               </span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-2">
+            <div className="w-full bg-ink-200 rounded-full h-2">
               <div 
-                className="bg-green-500 h-2 rounded-full transition-all duration-300"
+                className="bg-accent-0500 h-2 rounded-full transition-all duration-300"
                 style={{ width: `${Math.min(getDailyProgress(), 100)}%` }}
               ></div>
             </div>
@@ -473,27 +473,27 @@ export function MonetizationManager() {
           </Alert>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="p-4 bg-green-50 rounded-lg">
-              <h4 className="font-semibold text-green-800 mb-2">Low Risk - High Frequency</h4>
-              <ul className="text-sm text-green-700 space-y-1">
+            <div className="p-4 bg-accent-050 rounded-lg">
+              <h4 className="font-semibold text-accent-700 mb-2">Low Risk - High Frequency</h4>
+              <ul className="text-sm text-accent-700 space-y-1">
                 <li>• Supplement affiliate links</li>
                 <li>• Amazon Associates</li>
                 <li>• iHerb partnerships</li>
                 <li>• Nootropics Depot</li>
               </ul>
             </div>
-            <div className="p-4 bg-blue-50 rounded-lg">
-              <h4 className="font-semibold text-blue-800 mb-2">Medium Risk - Medium Frequency</h4>
-              <ul className="text-sm text-blue-700 space-y-1">
+            <div className="p-4 bg-primary-050 rounded-lg">
+              <h4 className="font-semibold text-primary-800 mb-2">Medium Risk - Medium Frequency</h4>
+              <ul className="text-sm text-primary-800 space-y-1">
                 <li>• Google AdSense</li>
                 <li>• Health-focused ad networks</li>
                 <li>• Sponsored content</li>
                 <li>• Email newsletter ads</li>
               </ul>
             </div>
-            <div className="p-4 bg-purple-50 rounded-lg">
-              <h4 className="font-semibold text-purple-800 mb-2">Higher Risk - Lower Frequency</h4>
-              <ul className="text-sm text-purple-700 space-y-1">
+            <div className="p-4 bg-primary-050 rounded-lg">
+              <h4 className="font-semibold text-primary-800 mb-2">Higher Risk - Lower Frequency</h4>
+              <ul className="text-sm text-primary-800 space-y-1">
                 <li>• Premium stack analysis</li>
                 <li>• Personalized consultations</li>
                 <li>• Advanced features</li>
@@ -508,12 +508,12 @@ export function MonetizationManager() {
               <h4 className="font-semibold mb-2">Top Performing Supplements</h4>
               <div className="space-y-2">
                 {getTopPerformingSupplements().map(([supplementId, stats]) => (
-                  <div key={supplementId} className="flex justify-between items-center p-2 bg-gray-50 rounded">
+                  <div key={supplementId} className="flex justify-between items-center p-2 bg-surface-card rounded">
                     <span className="font-medium capitalize">{supplementId.replace('-', ' ')}</span>
                     <div className="flex gap-4 text-sm">
                       <span>{stats.clicks} clicks</span>
                       <span>{stats.conversions} conversions</span>
-                      <span className="font-bold text-green-600">${stats.earnings.toFixed(2)}</span>
+                      <span className="font-bold text-accent-700">${stats.earnings.toFixed(2)}</span>
                     </div>
                   </div>
                 ))}
@@ -529,7 +529,7 @@ export function MonetizationManager() {
           <CardTitle>Test Revenue Generation</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-ink-700">
             Simulate affiliate clicks and conversions to test the revenue tracking system:
           </p>
           <div className="flex flex-wrap gap-2">
@@ -587,8 +587,8 @@ export function AffiliateLinks({ supplementId, supplementName }) {
   };
 
   return (
-    <div className="mt-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg">
-      <h4 className="font-semibold mb-3 flex items-center gap-2 text-green-900">
+    <div className="mt-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 border border-accent-300 rounded-lg">
+      <h4 className="font-semibold mb-3 flex items-center gap-2 text-accent-700">
         <ShoppingCart className="w-4 h-4" />
         Buy {supplementName}
       </h4>
@@ -611,13 +611,13 @@ export function AffiliateLinks({ supplementId, supplementName }) {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => handleClick(vendor)}
-              className="flex items-center justify-between p-3 bg-white border border-green-200 rounded-lg hover:border-green-400 hover:shadow-sm transition-all group"
+              className="flex items-center justify-between p-3 bg-white border border-accent-300 rounded-lg hover:border-green-400 hover:shadow-sm transition-all group"
             >
               <div>
-                <div className="text-sm font-medium text-gray-800 group-hover:text-green-700">{info.label}</div>
-                {info.desc && <div className="text-xs text-gray-500">{info.desc}</div>}
+                <div className="text-sm font-medium text-ink-900 group-hover:text-accent-700">{info.label}</div>
+                {info.desc && <div className="text-xs text-ink-500">{info.desc}</div>}
               </div>
-              <ExternalLink className="w-3.5 h-3.5 text-gray-400 group-hover:text-green-600" />
+              <ExternalLink className="w-3.5 h-3.5 text-ink-400 group-hover:text-accent-700" />
             </a>
           );
         })}

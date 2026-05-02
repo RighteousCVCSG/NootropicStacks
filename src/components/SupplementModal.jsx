@@ -24,36 +24,36 @@ export function SupplementModal({ supplement, isOpen, onClose }) {
 
   const getCategoryColor = (category) => {
     const colors = {
-      'energy': 'bg-orange-100 text-orange-800',
-      'nootropic': 'bg-blue-100 text-blue-800',
-      'adaptogen': 'bg-green-100 text-green-800',
-      'longevity': 'bg-purple-100 text-purple-800',
-      'vitamin': 'bg-yellow-100 text-yellow-800',
-      'mineral': 'bg-gray-100 text-gray-800',
+      'energy': 'bg-warn-100 text-warn-700',
+      'nootropic': 'bg-primary-100 text-primary-800',
+      'adaptogen': 'bg-accent-100 text-accent-700',
+      'longevity': 'bg-primary-100 text-primary-800',
+      'vitamin': 'bg-warn-100 text-yellow-800',
+      'mineral': 'bg-surface-sunk text-ink-900',
       'amino-acid': 'bg-pink-100 text-pink-800',
-      'antioxidant': 'bg-red-100 text-red-800',
-      'anti-inflammatory': 'bg-indigo-100 text-indigo-800',
+      'antioxidant': 'bg-danger-100 text-red-800',
+      'anti-inflammatory': 'bg-primary-100 text-indigo-800',
       'sleep': 'bg-violet-100 text-violet-800',
       'performance': 'bg-emerald-100 text-emerald-800',
       'essential': 'bg-teal-100 text-teal-800',
       'gut-health': 'bg-lime-100 text-lime-800',
       'hormone': 'bg-rose-100 text-rose-800',
-      'protein': 'bg-amber-100 text-amber-800',
+      'protein': 'bg-warn-100 text-amber-800',
       'immune': 'bg-cyan-100 text-cyan-800',
       'metabolic': 'bg-slate-100 text-slate-800',
-      'superfood': 'bg-green-200 text-green-900',
+      'superfood': 'bg-green-200 text-accent-700',
       'fat': 'bg-orange-200 text-orange-900',
       'prescription': 'bg-red-200 text-red-900'
     };
-    return colors[category] || 'bg-gray-100 text-gray-800';
+    return colors[category] || 'bg-surface-sunk text-ink-900';
   };
 
   const getEffectColor = (value) => {
-    if (value >= 7) return 'text-green-600';
-    if (value >= 4) return 'text-blue-600';
-    if (value >= 1) return 'text-gray-600';
-    if (value <= -1) return 'text-red-600';
-    return 'text-gray-400';
+    if (value >= 7) return 'text-accent-700';
+    if (value >= 4) return 'text-primary-700';
+    if (value >= 1) return 'text-ink-700';
+    if (value <= -1) return 'text-danger-500';
+    return 'text-ink-400';
   };
 
   return (
@@ -82,7 +82,7 @@ export function SupplementModal({ supplement, isOpen, onClose }) {
           {/* Description */}
           <div>
             <h3 className="font-semibold mb-2">Description</h3>
-            <p className="text-gray-700">{supplement.description}</p>
+            <p className="text-ink-700">{supplement.description}</p>
           </div>
 
           {/* Benefits */}
@@ -120,21 +120,21 @@ export function SupplementModal({ supplement, isOpen, onClose }) {
 
           {/* Dosage Information */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-4 bg-blue-50 rounded-lg">
+            <div className="p-4 bg-primary-050 rounded-lg">
               <div className="flex items-center gap-2 mb-2">
-                <Pill className="w-4 h-4 text-blue-600" />
-                <h4 className="font-semibold text-blue-800">Dosage</h4>
+                <Pill className="w-4 h-4 text-primary-700" />
+                <h4 className="font-semibold text-primary-800">Dosage</h4>
               </div>
-              <p className="text-blue-700">
+              <p className="text-primary-800">
                 {supplement.dosage.min}-{supplement.dosage.max} {supplement.dosage.unit}
               </p>
             </div>
-            <div className="p-4 bg-green-50 rounded-lg">
+            <div className="p-4 bg-accent-050 rounded-lg">
               <div className="flex items-center gap-2 mb-2">
-                <Clock className="w-4 h-4 text-green-600" />
-                <h4 className="font-semibold text-green-800">Timing</h4>
+                <Clock className="w-4 h-4 text-accent-700" />
+                <h4 className="font-semibold text-accent-700">Timing</h4>
               </div>
-              <p className="text-green-700">{supplement.dosage.timing}</p>
+              <p className="text-accent-700">{supplement.dosage.timing}</p>
             </div>
           </div>
 
@@ -150,9 +150,9 @@ export function SupplementModal({ supplement, isOpen, onClose }) {
               <h3 className="font-semibold mb-2">Important Warnings</h3>
               <div className="space-y-2">
                 {supplement.warnings.map((warning, index) => (
-                  <Alert key={index} className="border-orange-200 bg-orange-50">
-                    <AlertTriangle className="h-4 w-4 text-orange-600" />
-                    <AlertDescription className="text-orange-800">
+                  <Alert key={index} className="border-warn-500 bg-warn-100">
+                    <AlertTriangle className="h-4 w-4 text-warn-700" />
+                    <AlertDescription className="text-warn-700">
                       {warning}
                     </AlertDescription>
                   </Alert>
@@ -176,9 +176,9 @@ export function SupplementModal({ supplement, isOpen, onClose }) {
           )}
 
           {/* Medical Disclaimer */}
-          <Alert className="border-gray-200 bg-gray-50">
-            <AlertTriangle className="h-4 w-4 text-gray-600" />
-            <AlertDescription className="text-gray-700">
+          <Alert className="border-ink-200 bg-surface-card">
+            <AlertTriangle className="h-4 w-4 text-ink-700" />
+            <AlertDescription className="text-ink-700">
               <strong>Medical Disclaimer:</strong> This information is for educational purposes only and is not intended as medical advice. 
               Always consult with a healthcare professional before starting any new supplement regimen, especially if you have medical conditions or take medications.
             </AlertDescription>

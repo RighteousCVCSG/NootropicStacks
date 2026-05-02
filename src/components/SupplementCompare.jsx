@@ -29,7 +29,7 @@ function EffectComparison({ effect, label, valueA, valueB, nameA, nameB }) {
       <div className="text-sm font-medium mb-2 text-center">{label}</div>
       <div className="grid grid-cols-3 gap-2 items-center">
         <div className="text-right">
-          <span className={`text-lg font-bold ${winner === 'a' ? 'text-green-600' : 'text-gray-600'}`}>
+          <span className={`text-lg font-bold ${winner === 'a' ? 'text-accent-700' : 'text-ink-700'}`}>
             {valueA}/10
           </span>
         </div>
@@ -38,7 +38,7 @@ function EffectComparison({ effect, label, valueA, valueB, nameA, nameB }) {
           <Progress value={valueB * 10} className="h-2" />
         </div>
         <div>
-          <span className={`text-lg font-bold ${winner === 'b' ? 'text-green-600' : 'text-gray-600'}`}>
+          <span className={`text-lg font-bold ${winner === 'b' ? 'text-accent-700' : 'text-ink-700'}`}>
             {valueB}/10
           </span>
         </div>
@@ -63,9 +63,9 @@ export function SupplementCompare() {
     return (
       <div className="text-center py-20">
         <h2 className="text-2xl font-bold mb-4">Comparison Not Found</h2>
-        <p className="text-gray-600 mb-6">
+        <p className="text-ink-700 mb-6">
           One or both supplements could not be found. Try comparing from the{' '}
-          <Link to="/supplements" className="text-blue-600 hover:underline">supplement library</Link>.
+          <Link to="/supplements" className="text-primary-700 hover:underline">supplement library</Link>.
         </p>
         <Link to="/supplements">
           <Button><ArrowLeft className="w-4 h-4 mr-2" /> Back to Library</Button>
@@ -107,18 +107,18 @@ export function SupplementCompare() {
 
       <div className="space-y-6">
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-sm text-gray-600">
-          <Link to="/" className="hover:text-gray-900">Home</Link>
+        <nav className="flex items-center gap-2 text-sm text-ink-700">
+          <Link to="/" className="hover:text-ink-900">Home</Link>
           <span>/</span>
-          <Link to="/supplements" className="hover:text-gray-900">Supplements</Link>
+          <Link to="/supplements" className="hover:text-ink-900">Supplements</Link>
           <span>/</span>
-          <span className="text-gray-900 font-medium">{supplementA.name} vs {supplementB.name}</span>
+          <span className="text-ink-900 font-medium">{supplementA.name} vs {supplementB.name}</span>
         </nav>
 
         <h1 className="text-3xl font-bold">
           {supplementA.name} vs {supplementB.name}
         </h1>
-        <p className="text-gray-600">
+        <p className="text-ink-700">
           A detailed side-by-side comparison to help you choose the right supplement for your goals.
         </p>
 
@@ -126,22 +126,22 @@ export function SupplementCompare() {
         <div className="grid grid-cols-3 gap-4">
           <Card className="text-center">
             <CardContent className="pt-6">
-              <Link to={`/supplements/${supplementA.id}`} className="hover:text-blue-600">
+              <Link to={`/supplements/${supplementA.id}`} className="hover:text-primary-700">
                 <h3 className="font-bold text-lg">{supplementA.name}</h3>
               </Link>
               <Badge className="mt-2">{supplementA.category.replace('-', ' ')}</Badge>
-              <div className="mt-3 text-3xl font-bold text-blue-600">{totalA}</div>
-              <div className="text-sm text-gray-500">Total Score</div>
+              <div className="mt-3 text-3xl font-bold text-primary-700">{totalA}</div>
+              <div className="text-sm text-ink-500">Total Score</div>
               <div className="text-sm font-medium mt-1">Wins {winsA} categories</div>
             </CardContent>
           </Card>
 
-          <Card className="text-center bg-gray-50 flex items-center justify-center">
+          <Card className="text-center bg-surface-card flex items-center justify-center">
             <CardContent className="pt-6">
-              <div className="text-4xl font-bold text-gray-400">VS</div>
+              <div className="text-4xl font-bold text-ink-400">VS</div>
               {totalA !== totalB && (
                 <div className="mt-2 flex items-center justify-center gap-1">
-                  <Trophy className="w-4 h-4 text-yellow-500" />
+                  <Trophy className="w-4 h-4 text-warn-500" />
                   <span className="text-sm font-medium">
                     {totalA > totalB ? supplementA.name : supplementB.name} leads
                   </span>
@@ -152,12 +152,12 @@ export function SupplementCompare() {
 
           <Card className="text-center">
             <CardContent className="pt-6">
-              <Link to={`/supplements/${supplementB.id}`} className="hover:text-blue-600">
+              <Link to={`/supplements/${supplementB.id}`} className="hover:text-primary-700">
                 <h3 className="font-bold text-lg">{supplementB.name}</h3>
               </Link>
               <Badge className="mt-2">{supplementB.category.replace('-', ' ')}</Badge>
-              <div className="mt-3 text-3xl font-bold text-blue-600">{totalB}</div>
-              <div className="text-sm text-gray-500">Total Score</div>
+              <div className="mt-3 text-3xl font-bold text-primary-700">{totalB}</div>
+              <div className="text-sm text-ink-500">Total Score</div>
               <div className="text-sm font-medium mt-1">Wins {winsB} categories</div>
             </CardContent>
           </Card>
@@ -167,7 +167,7 @@ export function SupplementCompare() {
         <Card>
           <CardHeader>
             <CardTitle>Effects Comparison</CardTitle>
-            <div className="grid grid-cols-3 text-sm text-gray-500 mt-2">
+            <div className="grid grid-cols-3 text-sm text-ink-500 mt-2">
               <div className="text-right pr-4">{supplementA.name}</div>
               <div className="text-center">Effect</div>
               <div className="pl-4">{supplementB.name}</div>
@@ -195,13 +195,13 @@ export function SupplementCompare() {
               <CardTitle>{supplementA.name} — Dosage</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              <div className="p-3 bg-blue-50 rounded-lg">
-                <div className="font-bold text-blue-800">
+              <div className="p-3 bg-primary-050 rounded-lg">
+                <div className="font-bold text-primary-800">
                   {supplementA.dosage.min}-{supplementA.dosage.max} {supplementA.dosage.unit}
                 </div>
-                <div className="text-sm text-blue-600">{supplementA.dosage.timing}</div>
+                <div className="text-sm text-primary-700">{supplementA.dosage.timing}</div>
               </div>
-              <p className="text-sm text-gray-700">{supplementA.description}</p>
+              <p className="text-sm text-ink-700">{supplementA.description}</p>
               <Button
                 size="sm"
                 onClick={() => addSupplement(supplementA)}
@@ -219,13 +219,13 @@ export function SupplementCompare() {
               <CardTitle>{supplementB.name} — Dosage</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              <div className="p-3 bg-blue-50 rounded-lg">
-                <div className="font-bold text-blue-800">
+              <div className="p-3 bg-primary-050 rounded-lg">
+                <div className="font-bold text-primary-800">
                   {supplementB.dosage.min}-{supplementB.dosage.max} {supplementB.dosage.unit}
                 </div>
-                <div className="text-sm text-blue-600">{supplementB.dosage.timing}</div>
+                <div className="text-sm text-primary-700">{supplementB.dosage.timing}</div>
               </div>
-              <p className="text-sm text-gray-700">{supplementB.description}</p>
+              <p className="text-sm text-ink-700">{supplementB.description}</p>
               <Button
                 size="sm"
                 onClick={() => addSupplement(supplementB)}
@@ -246,18 +246,18 @@ export function SupplementCompare() {
         </div>
 
         {/* Why Not Both? */}
-        <Card className="bg-green-50 border-green-200">
+        <Card className="bg-accent-050 border-accent-300">
           <CardHeader>
-            <CardTitle className="text-green-800">Why Not Stack Both?</CardTitle>
+            <CardTitle className="text-accent-700">Why Not Stack Both?</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-green-700 mb-4">
+            <p className="text-accent-700 mb-4">
               {supplementA.name} and {supplementB.name} can often be combined in a stack for complementary effects.
               Use our <Link to="/" className="font-semibold underline">Stack Builder</Link> to check for interactions
               and optimize your dosages.
             </p>
             <Link to="/">
-              <Button variant="outline" className="border-green-600 text-green-700 hover:bg-green-100">
+              <Button variant="outline" className="border-green-600 text-accent-700 hover:bg-accent-100">
                 Open Stack Builder
               </Button>
             </Link>
@@ -279,10 +279,10 @@ export function SupplementCompare() {
                   <Link
                     key={`${a}-${b}`}
                     to={`/compare/${a}-vs-${b}`}
-                    className="block p-3 rounded-lg border hover:bg-gray-50 transition-colors text-center"
+                    className="block p-3 rounded-lg border hover:bg-surface-card transition-colors text-center"
                   >
                     <span className="text-sm font-medium">{sA.name}</span>
-                    <span className="text-xs text-gray-400 mx-1">vs</span>
+                    <span className="text-xs text-ink-400 mx-1">vs</span>
                     <span className="text-sm font-medium">{sB.name}</span>
                   </Link>
                 );
@@ -292,9 +292,9 @@ export function SupplementCompare() {
         </Card>
 
         {/* Disclaimer */}
-        <Alert className="border-gray-200 bg-gray-50">
-          <AlertTriangle className="h-4 w-4 text-gray-600" />
-          <AlertDescription className="text-gray-700">
+        <Alert className="border-ink-200 bg-surface-card">
+          <AlertTriangle className="h-4 w-4 text-ink-700" />
+          <AlertDescription className="text-ink-700">
             <strong>Disclaimer:</strong> This comparison is for educational purposes. Individual results vary.
             Consult a healthcare professional before starting any supplement.
           </AlertDescription>

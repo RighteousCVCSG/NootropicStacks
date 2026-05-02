@@ -55,27 +55,27 @@ export function ExitIntentPopup({ articleSlug }) {
       <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 sm:p-8 animate-in fade-in zoom-in-95 duration-200">
         <button
           onClick={handleDismiss}
-          className="absolute top-3 right-3 p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+          className="absolute top-3 right-3 p-1.5 rounded-lg text-ink-400 hover:text-ink-700 hover:bg-surface-sunk transition-colors"
           aria-label="Close"
         >
           <X className="w-5 h-5" />
         </button>
 
         <div className="flex flex-col items-center text-center mb-6">
-          <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mb-4">
-            <Mail className="w-6 h-6 text-blue-600" />
+          <div className="w-12 h-12 rounded-full bg-primary-100 flex items-center justify-center mb-4">
+            <Mail className="w-6 h-6 text-primary-700" />
           </div>
-          <h2 className="text-xl font-bold text-gray-900 mb-1">
+          <h2 className="text-xl font-bold text-ink-900 mb-1">
             Don't Miss the Research
           </h2>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-ink-500">
             Get the nootropic weekly — stack guides, research summaries, and our free Starter Stack PDF.
           </p>
         </div>
 
         <EmailCaptureForm source="exit_intent" variant="inline_article" articleSlug={articleSlug} />
 
-        <p className="text-xs text-gray-400 text-center mt-4">
+        <p className="text-xs text-ink-400 text-center mt-4">
           No spam, ever. Unsubscribe in one click.
         </p>
       </div>

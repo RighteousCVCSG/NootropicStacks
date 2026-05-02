@@ -15,10 +15,10 @@ async function apiAdmin(path, options = {}) {
 
 function StatCard({ icon: Icon, label, value, color = 'blue' }) {
   const colors = {
-    blue: 'bg-blue-50 text-blue-600 border-blue-100',
-    green: 'bg-green-50 text-green-600 border-green-100',
-    purple: 'bg-purple-50 text-purple-600 border-purple-100',
-    orange: 'bg-orange-50 text-orange-600 border-orange-100',
+    blue: 'bg-primary-050 text-primary-700 border-blue-100',
+    green: 'bg-accent-050 text-accent-700 border-green-100',
+    purple: 'bg-primary-050 text-primary-700 border-purple-100',
+    orange: 'bg-warn-100 text-warn-700 border-orange-100',
   };
   return (
     <div className={`rounded-xl border p-5 flex items-center gap-4 ${colors[color]}`}>
@@ -84,25 +84,25 @@ export function AdminPage() {
   }
 
   if (authed === null) {
-    return <div className="flex justify-center py-20 text-gray-400 text-sm">Checking session…</div>;
+    return <div className="flex justify-center py-20 text-ink-400 text-sm">Checking session…</div>;
   }
 
   if (!authed) {
     return (
       <div className="max-w-sm mx-auto mt-20">
-        <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
+        <div className="rounded-2xl border border-ink-200 bg-white p-8 shadow-sm">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-9 h-9 rounded-lg bg-gray-900 flex items-center justify-center">
               <ShieldCheck className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h1 className="text-lg font-bold text-gray-900">Admin Access</h1>
-              <p className="text-xs text-gray-500">NootropicStacker dashboard</p>
+              <h1 className="text-lg font-bold text-ink-900">Admin Access</h1>
+              <p className="text-xs text-ink-500">NootropicStacker dashboard</p>
             </div>
           </div>
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
-              <label className="text-xs font-medium text-gray-600 mb-1.5 block">Admin Secret</label>
+              <label className="text-xs font-medium text-ink-700 mb-1.5 block">Admin Secret</label>
               <Input
                 type="password"
                 value={secret}
@@ -111,7 +111,7 @@ export function AdminPage() {
                 autoFocus
               />
             </div>
-            {loginErr && <p className="text-xs text-red-600">{loginErr}</p>}
+            {loginErr && <p className="text-xs text-danger-500">{loginErr}</p>}
             <Button type="submit" className="w-full">Sign in</Button>
           </form>
         </div>
@@ -123,8 +123,8 @@ export function AdminPage() {
     <div className="max-w-5xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <ShieldCheck className="w-5 h-5 text-gray-700" />
-          <h1 className="text-xl font-bold text-gray-900">Admin Dashboard</h1>
+          <ShieldCheck className="w-5 h-5 text-ink-700" />
+          <h1 className="text-xl font-bold text-ink-900">Admin Dashboard</h1>
         </div>
         <Button variant="outline" size="sm" onClick={handleLogout}>
           <LogOut className="w-4 h-4 mr-1.5" />
@@ -151,7 +151,7 @@ export function AdminPage() {
         <TabsContent value="leads">
           <div className="rounded-xl border bg-white overflow-hidden">
             <table className="w-full text-sm">
-              <thead className="bg-gray-50 text-xs text-gray-500 uppercase">
+              <thead className="bg-surface-card text-xs text-ink-500 uppercase">
                 <tr>
                   <th className="px-4 py-3 text-left">Email</th>
                   <th className="px-4 py-3 text-left">Source</th>
@@ -160,13 +160,13 @@ export function AdminPage() {
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {leads.length === 0 && (
-                  <tr><td colSpan={3} className="px-4 py-8 text-center text-gray-400">No subscribers yet</td></tr>
+                  <tr><td colSpan={3} className="px-4 py-8 text-center text-ink-400">No subscribers yet</td></tr>
                 )}
                 {leads.map(l => (
-                  <tr key={l.id} className="hover:bg-gray-50">
+                  <tr key={l.id} className="hover:bg-surface-card">
                     <td className="px-4 py-2.5 font-medium">{l.email}</td>
-                    <td className="px-4 py-2.5 text-gray-500">{l.source}</td>
-                    <td className="px-4 py-2.5 text-gray-400">{fmt(l.created_at)}</td>
+                    <td className="px-4 py-2.5 text-ink-500">{l.source}</td>
+                    <td className="px-4 py-2.5 text-ink-400">{fmt(l.created_at)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -177,7 +177,7 @@ export function AdminPage() {
         <TabsContent value="users">
           <div className="rounded-xl border bg-white overflow-hidden">
             <table className="w-full text-sm">
-              <thead className="bg-gray-50 text-xs text-gray-500 uppercase">
+              <thead className="bg-surface-card text-xs text-ink-500 uppercase">
                 <tr>
                   <th className="px-4 py-3 text-left">Email</th>
                   <th className="px-4 py-3 text-left">Name</th>
@@ -187,14 +187,14 @@ export function AdminPage() {
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {users.length === 0 && (
-                  <tr><td colSpan={4} className="px-4 py-8 text-center text-gray-400">No users yet</td></tr>
+                  <tr><td colSpan={4} className="px-4 py-8 text-center text-ink-400">No users yet</td></tr>
                 )}
                 {users.map(u => (
-                  <tr key={u.id} className="hover:bg-gray-50">
+                  <tr key={u.id} className="hover:bg-surface-card">
                     <td className="px-4 py-2.5 font-medium">{u.email}</td>
-                    <td className="px-4 py-2.5 text-gray-500">{u.name || '—'}</td>
-                    <td className="px-4 py-2.5">{u.is_premium ? <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Yes</span> : '—'}</td>
-                    <td className="px-4 py-2.5 text-gray-400">{fmt(u.created_at)}</td>
+                    <td className="px-4 py-2.5 text-ink-500">{u.name || '—'}</td>
+                    <td className="px-4 py-2.5">{u.is_premium ? <span className="text-xs bg-accent-100 text-accent-700 px-2 py-0.5 rounded-full">Yes</span> : '—'}</td>
+                    <td className="px-4 py-2.5 text-ink-400">{fmt(u.created_at)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -205,7 +205,7 @@ export function AdminPage() {
         <TabsContent value="clicks">
           <div className="rounded-xl border bg-white overflow-hidden">
             <table className="w-full text-sm">
-              <thead className="bg-gray-50 text-xs text-gray-500 uppercase">
+              <thead className="bg-surface-card text-xs text-ink-500 uppercase">
                 <tr>
                   <th className="px-4 py-3 text-left">Supplement</th>
                   <th className="px-4 py-3 text-left">Vendor</th>
@@ -215,13 +215,13 @@ export function AdminPage() {
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {clicks.length === 0 && (
-                  <tr><td colSpan={4} className="px-4 py-8 text-center text-gray-400">No clicks recorded yet</td></tr>
+                  <tr><td colSpan={4} className="px-4 py-8 text-center text-ink-400">No clicks recorded yet</td></tr>
                 )}
                 {clicks.map((c, i) => (
-                  <tr key={i} className="hover:bg-gray-50">
+                  <tr key={i} className="hover:bg-surface-card">
                     <td className="px-4 py-2.5 font-medium">{c.supplement_id}</td>
-                    <td className="px-4 py-2.5 text-gray-500">{c.vendor}</td>
-                    <td className="px-4 py-2.5 text-gray-500">{c.page}</td>
+                    <td className="px-4 py-2.5 text-ink-500">{c.vendor}</td>
+                    <td className="px-4 py-2.5 text-ink-500">{c.page}</td>
                     <td className="px-4 py-2.5 text-right font-semibold">{c.count}</td>
                   </tr>
                 ))}

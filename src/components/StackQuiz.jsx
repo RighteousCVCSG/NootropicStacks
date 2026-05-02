@@ -234,9 +234,9 @@ export function StackQuiz() {
         />
         <div className="max-w-3xl mx-auto space-y-6">
           <div className="text-center">
-            <Sparkles className="w-12 h-12 text-blue-600 mx-auto mb-4" />
+            <Sparkles className="w-12 h-12 text-primary-700 mx-auto mb-4" />
             <h2 className="text-3xl font-bold mb-2">Your Personalized Stack</h2>
-            <p className="text-gray-600">
+            <p className="text-ink-700">
               Based on your answers, here's our recommended starting stack.
             </p>
           </div>
@@ -249,14 +249,14 @@ export function StackQuiz() {
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
                         <Badge variant="outline" className="text-xs">{index + 1}</Badge>
-                        <Link to={`/supplements/${rec.id}`} className="text-lg font-bold hover:text-blue-600">
+                        <Link to={`/supplements/${rec.id}`} className="text-lg font-bold hover:text-primary-700">
                           {rec.supplement.name}
                         </Link>
                         <Badge className="text-xs">{rec.supplement.category.replace('-', ' ')}</Badge>
                       </div>
-                      <p className="text-sm text-green-700 font-medium mb-1">{rec.reason}</p>
-                      <p className="text-sm text-gray-600">{rec.supplement.description}</p>
-                      <div className="mt-2 text-xs text-gray-500">
+                      <p className="text-sm text-accent-700 font-medium mb-1">{rec.reason}</p>
+                      <p className="text-sm text-ink-700">{rec.supplement.description}</p>
+                      <div className="mt-2 text-xs text-ink-500">
                         Dosage: {rec.supplement.dosage.min}-{rec.supplement.dosage.max} {rec.supplement.dosage.unit} • {rec.supplement.dosage.timing}
                       </div>
                     </div>
@@ -273,7 +273,7 @@ export function StackQuiz() {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="text-green-700 border-green-300"
+                          className="text-accent-700 border-green-300"
                           onClick={() => {
                             const links = AFFILIATE_LINKS[rec.id];
                             const url = links.nootropicsdepot || (
@@ -295,18 +295,18 @@ export function StackQuiz() {
             ))}
           </div>
 
-          <Alert className="border-blue-200 bg-blue-50">
-            <Sparkles className="h-4 w-4 text-blue-600" />
-            <AlertDescription className="text-blue-800">
+          <Alert className="border-primary-300 bg-primary-050">
+            <Sparkles className="h-4 w-4 text-primary-700" />
+            <AlertDescription className="text-primary-800">
               <strong>Next step:</strong> Add these supplements to your stack using the buttons above,
               then visit the <Link to="/" className="font-semibold underline">Stack Builder</Link> to
               see real-time effects, interaction warnings, and fine-tune your dosages.
             </AlertDescription>
           </Alert>
 
-          <Alert className="border-gray-200 bg-gray-50">
-            <AlertTriangle className="h-4 w-4 text-gray-600" />
-            <AlertDescription className="text-gray-700">
+          <Alert className="border-ink-200 bg-surface-card">
+            <AlertTriangle className="h-4 w-4 text-ink-700" />
+            <AlertDescription className="text-ink-700">
               <strong>Disclaimer:</strong> These recommendations are for educational purposes only.
               Always consult a healthcare professional before starting any supplement regimen.
             </AlertDescription>
@@ -338,7 +338,7 @@ export function StackQuiz() {
       <div className="max-w-2xl mx-auto space-y-6">
         {/* Progress */}
         <div>
-          <div className="flex justify-between text-sm text-gray-500 mb-2">
+          <div className="flex justify-between text-sm text-ink-500 mb-2">
             <span>Question {step + 1} of {QUESTIONS.length}</span>
             <span>{Math.round(progress)}% complete</span>
           </div>
@@ -349,7 +349,7 @@ export function StackQuiz() {
         <Card>
           <CardHeader>
             <CardTitle className="text-2xl">{currentQuestion.title}</CardTitle>
-            <p className="text-gray-600">{currentQuestion.subtitle}</p>
+            <p className="text-ink-700">{currentQuestion.subtitle}</p>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -361,15 +361,15 @@ export function StackQuiz() {
                     onClick={() => handleAnswer(option.value)}
                     className={`p-4 rounded-lg border-2 text-left transition-all hover:shadow-md ${
                       isSelected(option.value)
-                        ? 'border-blue-500 bg-blue-50'
-                        : 'border-gray-200 hover:border-gray-300'
+                        ? 'border-primary-500 bg-primary-050'
+                        : 'border-ink-200 hover:border-ink-300'
                     }`}
                   >
                     <div className="flex items-center gap-2 mb-1">
-                      {Icon && <Icon className="w-5 h-5 text-blue-600" />}
+                      {Icon && <Icon className="w-5 h-5 text-primary-700" />}
                       <span className="font-semibold">{option.label}</span>
                     </div>
-                    <p className="text-sm text-gray-600">{option.description}</p>
+                    <p className="text-sm text-ink-700">{option.description}</p>
                   </button>
                 );
               })}
@@ -397,7 +397,7 @@ export function StackQuiz() {
           >
             <ArrowLeft className="w-4 h-4 mr-1" /> Back
           </Button>
-          <Link to="/" className="text-sm text-gray-500 hover:text-gray-700 flex items-center">
+          <Link to="/" className="text-sm text-ink-500 hover:text-ink-700 flex items-center">
             Skip quiz → use Stack Builder
           </Link>
         </div>

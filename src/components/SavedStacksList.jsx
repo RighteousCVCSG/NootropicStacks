@@ -75,18 +75,18 @@ export function SavedStacksList() {
       <CollapsibleContent className="mt-2 space-y-2">
         {loading ? (
           <div className="flex items-center justify-center py-4">
-            <Loader2 className="w-4 h-4 animate-spin text-gray-400" />
+            <Loader2 className="w-4 h-4 animate-spin text-ink-400" />
           </div>
         ) : stacks.length === 0 ? (
-          <p className="text-sm text-gray-500 text-center py-3">No saved stacks yet.</p>
+          <p className="text-sm text-ink-500 text-center py-3">No saved stacks yet.</p>
         ) : (
           stacks.map(stack => (
-            <Card key={stack.id} className="bg-gray-50">
+            <Card key={stack.id} className="bg-surface-card">
               <CardContent className="py-3 px-4">
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
-                    <p className="text-sm font-medium text-gray-900 truncate">{stack.name}</p>
-                    <p className="text-xs text-gray-500 mt-0.5">
+                    <p className="text-sm font-medium text-ink-900 truncate">{stack.name}</p>
+                    <p className="text-xs text-ink-500 mt-0.5">
                       {stack.supplements.length} supplement{stack.supplements.length !== 1 ? 's' : ''}
                       {' '}&middot;{' '}
                       {new Date(stack.createdAt).toLocaleDateString()}
@@ -112,7 +112,7 @@ export function SavedStacksList() {
                       onClick={() => handleDelete(stack.id)}
                       disabled={deleting === stack.id}
                       title="Delete this stack"
-                      className="text-red-500 hover:text-red-700"
+                      className="text-red-500 hover:text-danger-700"
                     >
                       {deleting === stack.id ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Trash2 className="w-3.5 h-3.5" />}
                     </Button>

@@ -5,9 +5,9 @@ import { Mail, CheckCircle, Download, Lock, ArrowRight } from 'lucide-react';
 
 const VARIANT_STYLES = {
   inline_article: {
-    wrapper: 'bg-blue-50 border border-blue-200 rounded-lg p-4',
-    headline: 'text-sm font-semibold text-blue-900',
-    subtext: 'text-xs text-blue-700',
+    wrapper: 'bg-primary-050 border border-primary-300 rounded-lg p-4',
+    headline: 'text-sm font-semibold text-primary-900',
+    subtext: 'text-xs text-primary-800',
     inputClass: 'text-sm h-8',
     buttonClass: 'h-8 shrink-0',
     successIcon: CheckCircle,
@@ -25,7 +25,7 @@ const VARIANT_STYLES = {
     headline: 'text-lg font-bold text-white',
     subtext: 'text-xs text-blue-200',
     inputClass: 'text-sm h-9 bg-white/95',
-    buttonClass: 'h-9 shrink-0 bg-white text-blue-700 hover:bg-blue-50',
+    buttonClass: 'h-9 shrink-0 bg-white text-primary-800 hover:bg-primary-050',
     successIcon: Download,
   },
 };
@@ -103,19 +103,19 @@ export function EmailCaptureForm({ source = 'lead_magnet', variant = 'inline_art
   if (status === 'success') {
     return (
       <div className={`flex flex-col items-center justify-center gap-3 py-6 text-center ${styles.wrapper}`}>
-        <SuccessIcon className={`w-8 h-8 ${variant === 'lead_magnet' ? 'text-white' : 'text-green-600'}`} />
+        <SuccessIcon className={`w-8 h-8 ${variant === 'lead_magnet' ? 'text-white' : 'text-accent-700'}`} />
         <div>
-          <p className={`text-sm font-medium ${variant === 'lead_magnet' ? 'text-white' : 'text-green-800'}`}>
+          <p className={`text-sm font-medium ${variant === 'lead_magnet' ? 'text-white' : 'text-accent-700'}`}>
             {message}
           </p>
-          <p className={`text-xs mt-1 ${variant === 'lead_magnet' ? 'text-blue-200' : 'text-gray-500'}`}>
+          <p className={`text-xs mt-1 ${variant === 'lead_magnet' ? 'text-blue-200' : 'text-ink-500'}`}>
             We'll never share your email. Unsubscribe anytime.
           </p>
         </div>
         {downloadUrl && (
           <a
             href={downloadUrl}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-white text-blue-700 rounded-lg text-sm font-medium hover:bg-blue-50 transition-colors shadow-sm"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-white text-primary-800 rounded-lg text-sm font-medium hover:bg-primary-050 transition-colors shadow-sm"
           >
             <Download className="w-4 h-4" />
             Download Your Guide
@@ -129,7 +129,7 @@ export function EmailCaptureForm({ source = 'lead_magnet', variant = 'inline_art
     <div className={styles.wrapper}>
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
         <div className="flex items-center gap-2 flex-1">
-          <Mail className={`w-4 h-4 shrink-0 ${variant === 'lead_magnet' ? 'text-blue-300' : 'text-blue-600'}`} />
+          <Mail className={`w-4 h-4 shrink-0 ${variant === 'lead_magnet' ? 'text-blue-300' : 'text-primary-700'}`} />
           <div>
             <p className={styles.headline}>
               {isLeadMagnet ? 'Get the Free Guide' : 'Get the weekly nootropic research digest'}

@@ -1,6 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.jsx';
-import { Badge } from '@/components/ui/badge.jsx';
 import { Clock, Sun, Coffee, Moon } from 'lucide-react';
 import { useStack } from '../contexts/StackContext.jsx';
 import { supplements } from '../data/supplements.js';
@@ -95,10 +95,18 @@ export function StackProtocolBuilder() {
               </div>
               <div className="flex flex-wrap gap-1.5">
                 {protocol[timing].map(sup => (
-                  <Badge key={sup.id} variant="outline" className="text-xs bg-surface-card">
-                    {sup.name}
-                    {sup.dosage && <span className="ml-1 text-ink-500">{sup.dosage.min}{sup.dosage.unit}</span>}
-                  </Badge>
+                  <Link
+                    key={sup.id}
+                    to={`/supplements/${sup.id}`}
+                    className="inline-flex items-center gap-1 h-6 px-2 rounded-md text-[11px] font-medium bg-surface-card border border-ink-200 text-ink-700 hover:border-primary-500 hover:text-primary-800 transition-colors"
+                  >
+                    <span>{sup.name}</span>
+                    {sup.dosage && (
+                      <span className="text-ink-500 font-mono">
+                        {sup.dosage.min}{sup.dosage.unit}
+                      </span>
+                    )}
+                  </Link>
                 ))}
               </div>
             </div>

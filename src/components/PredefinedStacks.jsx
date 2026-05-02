@@ -22,11 +22,11 @@ export function PredefinedStacks() {
   const getLevelIcon = (level) => {
     switch (level) {
       case 'basic':
-        return <Star className="w-4 h-4 text-green-600" />;
+        return <Star className="w-4 h-4 text-accent-700" />;
       case 'intermediate':
-        return <Zap className="w-4 h-4 text-blue-600" />;
+        return <Zap className="w-4 h-4 text-primary-700" />;
       case 'advanced':
-        return <Brain className="w-4 h-4 text-purple-600" />;
+        return <Brain className="w-4 h-4 text-primary-700" />;
       default:
         return <Target className="w-4 h-4" />;
     }
@@ -35,13 +35,13 @@ export function PredefinedStacks() {
   const getLevelColor = (level) => {
     switch (level) {
       case 'basic':
-        return 'bg-green-100 text-green-800 border-green-200';
+        return 'bg-accent-100 text-accent-700 border-accent-300';
       case 'intermediate':
-        return 'bg-blue-100 text-blue-800 border-blue-200';
+        return 'bg-primary-100 text-primary-800 border-primary-300';
       case 'advanced':
-        return 'bg-purple-100 text-purple-800 border-purple-200';
+        return 'bg-primary-100 text-primary-800 border-primary-300';
       default:
-        return 'bg-gray-100 text-gray-800 border-gray-200';
+        return 'bg-surface-sunk text-ink-900 border-ink-200';
     }
   };
 
@@ -108,7 +108,7 @@ export function PredefinedStacks() {
               </Badge>
             </div>
           </div>
-          <p className="text-sm text-gray-600">{stackData.description}</p>
+          <p className="text-sm text-ink-700">{stackData.description}</p>
         </CardHeader>
         
         <CardContent className="space-y-4">
@@ -179,8 +179,8 @@ export function PredefinedStacks() {
             <span className="text-sm font-medium">Safety Score</span>
             <div className="flex items-center gap-2">
               <div className={`w-2 h-2 rounded-full ${
-                analysis.safetyScore >= 80 ? 'bg-green-500' : 
-                analysis.safetyScore >= 60 ? 'bg-yellow-500' : 'bg-red-500'
+                analysis.safetyScore >= 80 ? 'bg-accent-0500' : 
+                analysis.safetyScore >= 60 ? 'bg-warn-1000' : 'bg-danger-1000'
               }`} />
               <span className="text-sm">{analysis.safetyScore}/100</span>
             </div>
@@ -188,9 +188,9 @@ export function PredefinedStacks() {
 
           {/* Warnings */}
           {hasWarnings && (
-            <Alert className="border-orange-200 bg-orange-50">
-              <AlertTriangle className="h-4 w-4 text-orange-600" />
-              <AlertDescription className="text-orange-800 text-xs">
+            <Alert className="border-warn-500 bg-warn-100">
+              <AlertTriangle className="h-4 w-4 text-warn-700" />
+              <AlertDescription className="text-warn-700 text-xs">
                 {analysis.warnings.length} warning(s) - Click "View Details" for more info
               </AlertDescription>
             </Alert>
@@ -240,7 +240,7 @@ export function PredefinedStacks() {
               {/* Description */}
               <div>
                 <h3 className="font-semibold mb-2">Description</h3>
-                <p className="text-gray-700">{stackData.description}</p>
+                <p className="text-ink-700">{stackData.description}</p>
               </div>
 
               {/* Level and Goals */}
@@ -273,15 +273,15 @@ export function PredefinedStacks() {
                     const supplement = supplements.find(s => s.id === item.id);
                     const hasAffiliate = AFFILIATE_LINKS[item.id];
                     return (
-                      <div key={item.id} className="p-3 bg-gray-50 rounded-lg">
+                      <div key={item.id} className="p-3 bg-surface-card rounded-lg">
                         <div className="flex justify-between items-start mb-2">
-                          <Link to={`/supplements/${item.id}`} className="font-medium hover:text-blue-600">
+                          <Link to={`/supplements/${item.id}`} className="font-medium hover:text-primary-700">
                             {supplement?.name || item.id}
                           </Link>
-                          <span className="text-sm text-gray-600">{item.dosage}mg</span>
+                          <span className="text-sm text-ink-700">{item.dosage}mg</span>
                         </div>
                         {supplement && (
-                          <p className="text-sm text-gray-600">{supplement.description}</p>
+                          <p className="text-sm text-ink-700">{supplement.description}</p>
                         )}
                         {hasAffiliate && (() => {
                           const links = AFFILIATE_LINKS[item.id];
@@ -297,14 +297,14 @@ export function PredefinedStacks() {
                               {links.amazon && (
                                 <a href={withAffiliateUtms(links.amazon, { campaign: `stack-${stackData.id}` })} target="_blank" rel="noopener noreferrer sponsored"
                                    onClick={() => trackClick('amazon')}
-                                   className="flex items-center gap-1 text-xs bg-orange-500 hover:bg-orange-600 text-white px-3 py-1.5 rounded font-medium transition-colors">
+                                   className="flex items-center gap-1 text-xs bg-warn-1000 hover:bg-warn-700 text-white px-3 py-1.5 rounded font-medium transition-colors">
                                   <ShoppingCart className="w-3 h-3" /> Amazon
                                 </a>
                               )}
                               {links.iherb && (
                                 <a href={links.iherb} target="_blank" rel="noopener noreferrer sponsored"
                                    onClick={() => trackClick('iherb')}
-                                   className="flex items-center gap-1 text-xs bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded font-medium transition-colors">
+                                   className="flex items-center gap-1 text-xs bg-accent-600 hover:bg-accent-700 text-white px-3 py-1.5 rounded font-medium transition-colors">
                                   <ShoppingCart className="w-3 h-3" /> iHerb
                                 </a>
                               )}
@@ -321,12 +321,12 @@ export function PredefinedStacks() {
               <div>
                 <h3 className="font-semibold mb-3">Safety Analysis</h3>
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <div className="flex items-center justify-between p-3 bg-surface-card rounded-lg">
                     <span className="font-medium">Overall Safety Score</span>
                     <div className="flex items-center gap-2">
                       <div className={`w-3 h-3 rounded-full ${
-                        analysis.safetyScore >= 80 ? 'bg-green-500' : 
-                        analysis.safetyScore >= 60 ? 'bg-yellow-500' : 'bg-red-500'
+                        analysis.safetyScore >= 80 ? 'bg-accent-0500' : 
+                        analysis.safetyScore >= 60 ? 'bg-warn-1000' : 'bg-danger-1000'
                       }`} />
                       <span className="font-bold">{analysis.safetyScore}/100</span>
                     </div>
@@ -337,9 +337,9 @@ export function PredefinedStacks() {
                       <h4 className="font-medium mb-2">Warnings & Considerations</h4>
                       <div className="space-y-2">
                         {analysis.warnings.map((warning, index) => (
-                          <Alert key={index} className="border-orange-200 bg-orange-50">
-                            <AlertTriangle className="h-4 w-4 text-orange-600" />
-                            <AlertDescription className="text-orange-800">
+                          <Alert key={index} className="border-warn-500 bg-warn-100">
+                            <AlertTriangle className="h-4 w-4 text-warn-700" />
+                            <AlertDescription className="text-warn-700">
                               <strong>{warning.severity.toUpperCase()}:</strong> {warning.message}
                             </AlertDescription>
                           </Alert>
@@ -356,8 +356,8 @@ export function PredefinedStacks() {
                         <div key={effect} className="flex justify-between text-sm">
                           <span className="capitalize">{effect}</span>
                           <span className={`font-medium ${
-                            value >= 7 ? 'text-green-600' : 
-                            value >= 4 ? 'text-blue-600' : 'text-gray-500'
+                            value >= 7 ? 'text-accent-700' : 
+                            value >= 4 ? 'text-primary-700' : 'text-ink-500'
                           }`}>
                             {value.toFixed(1)}/9.5
                           </span>
@@ -404,7 +404,7 @@ export function PredefinedStacks() {
       />
       <div>
         <h2 className="text-2xl font-bold mb-2">Pre-Built Supplement Stacks</h2>
-        <p className="text-gray-600">
+        <p className="text-ink-700">
           Expertly curated supplement combinations for specific goals and experience levels.
         </p>
       </div>
@@ -442,9 +442,9 @@ export function PredefinedStacks() {
         </TabsContent>
 
         <TabsContent value="advanced" className="space-y-4">
-          <Alert className="border-orange-200 bg-orange-50">
-            <AlertTriangle className="h-4 w-4 text-orange-600" />
-            <AlertDescription className="text-orange-800">
+          <Alert className="border-warn-500 bg-warn-100">
+            <AlertTriangle className="h-4 w-4 text-warn-700" />
+            <AlertDescription className="text-warn-700">
               <strong>Advanced Stacks:</strong> These combinations are for experienced users only. 
               Some may contain prescription substances or require medical supervision.
             </AlertDescription>

@@ -68,7 +68,7 @@ export function SaveStackDialog({ open, onOpenChange, onSaved }) {
               autoFocus
             />
           </div>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-ink-500">
             {stack.length} supplement{stack.length !== 1 ? 's' : ''} &middot; {userGoals.length} goal{userGoals.length !== 1 ? 's' : ''}
           </p>
           <Button type="submit" className="w-full" disabled={saving || stack.length === 0}>

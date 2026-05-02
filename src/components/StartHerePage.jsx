@@ -47,7 +47,7 @@ const STEPS = [
     title: 'Define Your Goal',
     description: 'Nootropics work best when you have a specific target: focus, memory, energy, mood, or sleep quality. Trying to optimize everything at once dilutes results and makes it hard to know what\'s working.',
     icon: Target,
-    color: 'bg-blue-100 text-blue-700',
+    color: 'bg-primary-100 text-primary-800',
     action: { label: 'Take the Stack Quiz →', to: '/quiz' }
   },
   {
@@ -55,7 +55,7 @@ const STEPS = [
     title: 'Start With One Stack',
     description: 'Resist the urge to stack 8 things on day one. Start with 2–3 proven compounds. Give them 4–8 weeks. Track effects. Then add or adjust. More isn\'t better — targeted is better.',
     icon: Layers,
-    color: 'bg-purple-100 text-purple-700',
+    color: 'bg-primary-100 text-primary-800',
     action: { label: 'Open Stack Builder →', to: '/' }
   },
   {
@@ -63,7 +63,7 @@ const STEPS = [
     title: 'Research Each Supplement',
     description: 'Understand what you\'re taking: mechanism of action, dosage range, timing, potential interactions. Our supplement database covers 195 compounds with complete profiles.',
     icon: BookOpen,
-    color: 'bg-green-100 text-green-700',
+    color: 'bg-accent-100 text-accent-700',
     action: { label: 'Browse 195 Supplements →', to: '/supplements' }
   },
   {
@@ -71,7 +71,7 @@ const STEPS = [
     title: 'Check for Interactions',
     description: 'Some combinations are synergistic (caffeine + L-theanine). Others are redundant (two cholinergics at high doses) or potentially conflicting (stimulants + sleep aids). The Stack Score flags these automatically.',
     icon: Shield,
-    color: 'bg-orange-100 text-orange-700',
+    color: 'bg-warn-100 text-warn-700',
     action: { label: 'View Safety Guide →', to: '/blog/stacking-nootropics-safely-interaction-guide' }
   },
   {
@@ -159,25 +159,25 @@ export function StartHerePage() {
 
       {/* Hero */}
       <div className="text-center space-y-4">
-        <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-medium">
+        <div className="inline-flex items-center gap-2 bg-primary-050 text-primary-800 px-4 py-2 rounded-full text-sm font-medium">
           <Brain className="w-4 h-4" />
           Start Here — Beginner's Guide
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">
+        <h1 className="text-3xl sm:text-4xl font-bold text-ink-900 leading-tight">
           Your First Nootropic Stack:<br />
-          <span className="text-blue-600">A Practical Starter Guide</span>
+          <span className="text-primary-700">A Practical Starter Guide</span>
         </h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        <p className="text-lg text-ink-700 max-w-2xl mx-auto">
           The nootropics space is full of hype, overpriced stacks, and bad advice.
           This guide cuts through it — with evidence-backed recommendations, real dosages, and a
           free tool to build and score your first stack.
         </p>
         <div className="flex flex-wrap gap-3 justify-center pt-2">
-          <Link to="/quiz" className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg font-medium transition-colors">
+          <Link to="/quiz" className="inline-flex items-center gap-2 bg-primary-700 hover:bg-primary-800 text-white px-5 py-2.5 rounded-lg font-medium transition-colors">
             <HelpCircle className="w-4 h-4" />
             Take the Quiz
           </Link>
-          <Link to="/" className="inline-flex items-center gap-2 bg-white border border-gray-200 hover:border-blue-300 text-gray-700 px-5 py-2.5 rounded-lg font-medium transition-colors">
+          <Link to="/" className="inline-flex items-center gap-2 bg-white border border-ink-200 hover:border-primary-300 text-ink-700 px-5 py-2.5 rounded-lg font-medium transition-colors">
             <Layers className="w-4 h-4" />
             Open Stack Builder
           </Link>
@@ -186,8 +186,8 @@ export function StartHerePage() {
 
       {/* 5 Steps */}
       <section>
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">The 5-Step Framework</h2>
-        <p className="text-gray-600 mb-8">Every successful nootropic protocol follows these steps, whether you're a first-timer or a veteran biohacker.</p>
+        <h2 className="text-2xl font-bold text-ink-900 mb-2">The 5-Step Framework</h2>
+        <p className="text-ink-700 mb-8">Every successful nootropic protocol follows these steps, whether you're a first-timer or a veteran biohacker.</p>
         <div className="space-y-4">
           {STEPS.map((step) => {
             const Icon = step.icon;
@@ -198,11 +198,11 @@ export function StartHerePage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-wrap items-center gap-2 mb-1">
-                    <span className="text-xs font-mono text-gray-400">{step.number}</span>
-                    <h3 className="font-semibold text-gray-900">{step.title}</h3>
+                    <span className="text-xs font-mono text-ink-400">{step.number}</span>
+                    <h3 className="font-semibold text-ink-900">{step.title}</h3>
                   </div>
-                  <p className="text-sm text-gray-600 mb-2">{step.description}</p>
-                  <Link to={step.action.to} className="text-sm text-blue-600 hover:text-blue-700 font-medium inline-flex items-center gap-1">
+                  <p className="text-sm text-ink-700 mb-2">{step.description}</p>
+                  <Link to={step.action.to} className="text-sm text-primary-700 hover:text-primary-800 font-medium inline-flex items-center gap-1">
                     {step.action.label}
                   </Link>
                 </div>
@@ -214,30 +214,30 @@ export function StartHerePage() {
 
       {/* Beginner Stacks */}
       <section>
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">3 Proven Starter Stacks</h2>
-        <p className="text-gray-600 mb-6">These combinations are well-researched, beginner-safe, and cover the three most common goals. Pick one and run it for 30 days before adding anything.</p>
+        <h2 className="text-2xl font-bold text-ink-900 mb-2">3 Proven Starter Stacks</h2>
+        <p className="text-ink-700 mb-6">These combinations are well-researched, beginner-safe, and cover the three most common goals. Pick one and run it for 30 days before adding anything.</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {BEGINNER_STACKS.map((stack) => (
-            <Card key={stack.name} className="border-gray-200 hover:border-blue-200 transition-colors">
+            <Card key={stack.name} className="border-ink-200 hover:border-primary-300 transition-colors">
               <CardContent className="p-5 space-y-3">
                 <div>
-                  <h3 className="font-bold text-gray-900">{stack.name}</h3>
-                  <p className="text-xs text-gray-500 mt-0.5">{stack.cost} · {stack.difficulty}</p>
+                  <h3 className="font-bold text-ink-900">{stack.name}</h3>
+                  <p className="text-xs text-ink-500 mt-0.5">{stack.cost} · {stack.difficulty}</p>
                 </div>
-                <p className="text-sm text-gray-600">{stack.description}</p>
+                <p className="text-sm text-ink-700">{stack.description}</p>
                 <div className="flex flex-wrap gap-1">
                   {stack.goals.map(g => (
-                    <span key={g} className="text-xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full">{g}</span>
+                    <span key={g} className="text-xs bg-primary-050 text-primary-800 px-2 py-0.5 rounded-full">{g}</span>
                   ))}
                 </div>
-                <div className="text-xs text-gray-500">
+                <div className="text-xs text-ink-500">
                   <span className="font-medium">Supplements: </span>
                   {stack.supplements.join(' + ')}
                 </div>
-                <p className="text-xs text-gray-600 border-l-2 border-blue-200 pl-2">{stack.why}</p>
+                <p className="text-xs text-ink-700 border-l-2 border-primary-300 pl-2">{stack.why}</p>
                 <Link
                   to={stack.stackUrl}
-                  className="block text-center text-sm bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium transition-colors"
+                  className="block text-center text-sm bg-primary-700 hover:bg-primary-800 text-white py-2 rounded-lg font-medium transition-colors"
                 >
                   Build This Stack →
                 </Link>
@@ -249,20 +249,20 @@ export function StartHerePage() {
 
       {/* Categories */}
       <section>
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Nootropic Categories Explained</h2>
-        <p className="text-gray-600 mb-6">Every nootropic belongs to a mechanism family. Understanding these helps you build non-redundant stacks.</p>
+        <h2 className="text-2xl font-bold text-ink-900 mb-2">Nootropic Categories Explained</h2>
+        <p className="text-ink-700 mb-6">Every nootropic belongs to a mechanism family. Understanding these helps you build non-redundant stacks.</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {CATEGORIES.map((cat) => (
-            <Link key={cat.name} to={cat.link} className="flex gap-3 p-4 bg-white border border-gray-100 rounded-xl hover:border-blue-200 hover:shadow-sm transition-all group">
+            <Link key={cat.name} to={cat.link} className="flex gap-3 p-4 bg-white border border-gray-100 rounded-xl hover:border-primary-300 hover:shadow-sm transition-all group">
               <span className="text-2xl flex-shrink-0">{cat.icon}</span>
               <div className="min-w-0">
                 <div className="flex items-center gap-2 mb-0.5">
-                  <span className="font-semibold text-gray-900 group-hover:text-blue-700 transition-colors">{cat.name}</span>
-                  <span className="text-xs text-gray-400">{cat.level}</span>
+                  <span className="font-semibold text-ink-900 group-hover:text-primary-800 transition-colors">{cat.name}</span>
+                  <span className="text-xs text-ink-400">{cat.level}</span>
                 </div>
-                <p className="text-sm text-gray-600">{cat.description}</p>
+                <p className="text-sm text-ink-700">{cat.description}</p>
               </div>
-              <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-blue-500 transition-colors flex-shrink-0 self-center" />
+              <ChevronRight className="w-4 h-4 text-ink-300 group-hover:text-primary-500 transition-colors flex-shrink-0 self-center" />
             </Link>
           ))}
         </div>
@@ -270,17 +270,17 @@ export function StartHerePage() {
 
       {/* Myths */}
       <section>
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">4 Common Myths (Debunked)</h2>
+        <h2 className="text-2xl font-bold text-ink-900 mb-6">4 Common Myths (Debunked)</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {MYTHS.map((item) => (
             <div key={item.myth} className="p-4 bg-white border border-gray-100 rounded-xl">
               <div className="flex items-start gap-2 mb-2">
                 <AlertTriangle className="w-4 h-4 text-orange-500 flex-shrink-0 mt-0.5" />
-                <p className="text-sm font-semibold text-gray-700">{item.myth}</p>
+                <p className="text-sm font-semibold text-ink-700">{item.myth}</p>
               </div>
               <div className="flex items-start gap-2">
                 <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
-                <p className="text-sm text-gray-600">{item.truth}</p>
+                <p className="text-sm text-ink-700">{item.truth}</p>
               </div>
             </div>
           ))}
@@ -288,9 +288,9 @@ export function StartHerePage() {
       </section>
 
       {/* Popular reads */}
-      <section className="bg-gray-50 rounded-xl p-6">
-        <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-          <Star className="w-5 h-5 text-yellow-500" />
+      <section className="bg-surface-card rounded-xl p-6">
+        <h2 className="text-xl font-bold text-ink-900 mb-4 flex items-center gap-2">
+          <Star className="w-5 h-5 text-warn-500" />
           Most Popular Guides
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -302,14 +302,14 @@ export function StartHerePage() {
             { label: 'Nootropics for ADHD Adults: Complete Guide 2026', to: '/blog/nootropics-for-adhd-adults-complete-guide-2026' },
             { label: 'How to Cycle Nootropics (Prevent Tolerance)', to: '/blog/how-to-cycle-nootropics-prevent-tolerance-and-burnout' },
           ].map((item) => (
-            <Link key={item.to} to={item.to} className="flex items-center gap-2 text-sm text-gray-700 hover:text-blue-700 group p-2 rounded-lg hover:bg-white transition-all">
-              <ArrowRight className="w-3.5 h-3.5 text-blue-500 flex-shrink-0" />
+            <Link key={item.to} to={item.to} className="flex items-center gap-2 text-sm text-ink-700 hover:text-primary-800 group p-2 rounded-lg hover:bg-white transition-all">
+              <ArrowRight className="w-3.5 h-3.5 text-primary-500 flex-shrink-0" />
               <span className="group-hover:underline">{item.label}</span>
             </Link>
           ))}
         </div>
-        <div className="mt-4 pt-4 border-t border-gray-200">
-          <Link to="/blog" className="text-sm text-blue-600 hover:text-blue-700 font-medium inline-flex items-center gap-1">
+        <div className="mt-4 pt-4 border-t border-ink-200">
+          <Link to="/blog" className="text-sm text-primary-700 hover:text-primary-800 font-medium inline-flex items-center gap-1">
             View all 83 articles <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
@@ -324,11 +324,11 @@ export function StartHerePage() {
           and get a real-time Stack Score across synergy, coverage, balance, and efficiency.
         </p>
         <div className="flex flex-wrap gap-3 justify-center">
-          <Link to="/" className="inline-flex items-center gap-2 bg-white text-blue-700 hover:bg-blue-50 px-5 py-2.5 rounded-lg font-semibold transition-colors">
+          <Link to="/" className="inline-flex items-center gap-2 bg-white text-primary-800 hover:bg-primary-050 px-5 py-2.5 rounded-lg font-semibold transition-colors">
             <Layers className="w-4 h-4" />
             Open Stack Builder
           </Link>
-          <Link to="/quiz" className="inline-flex items-center gap-2 bg-blue-500 hover:bg-blue-400 text-white border border-blue-400 px-5 py-2.5 rounded-lg font-medium transition-colors">
+          <Link to="/quiz" className="inline-flex items-center gap-2 bg-primary-0500 hover:bg-blue-400 text-white border border-blue-400 px-5 py-2.5 rounded-lg font-medium transition-colors">
             <HelpCircle className="w-4 h-4" />
             Take the Quiz
           </Link>

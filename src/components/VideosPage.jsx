@@ -138,9 +138,9 @@ const CATEGORY_TABS = [
 
 const CATEGORY_COLORS = {
   'Supplement Deep Dives': 'bg-primary/10 text-primary border-primary/20',
-  'Stack Building': 'bg-green-500/10 text-green-400 border-green-500/20',
-  'Science & Research': 'bg-blue-500/10 text-blue-400 border-blue-500/20',
-  'Lifestyle': 'bg-purple-500/10 text-purple-400 border-purple-500/20',
+  'Stack Building': 'bg-accent-0500/10 text-green-400 border-green-500/20',
+  'Science & Research': 'bg-primary-0500/10 text-blue-400 border-primary-500/20',
+  'Lifestyle': 'bg-primary-0500/10 text-purple-400 border-purple-500/20',
 };
 
 function VideoCard({ video }) {
@@ -212,12 +212,12 @@ function VideoCard({ video }) {
           <Badge className={`text-xs ${CATEGORY_COLORS[video.category]}`}>
             {video.category}
           </Badge>
-          <span className="text-xs text-muted-foreground">{video.channel}</span>
+          <span className="text-xs text-ink-500">{video.channel}</span>
         </div>
         <h3 className="font-semibold text-foreground text-sm leading-snug">
           {video.title}
         </h3>
-        <p className="text-xs text-muted-foreground leading-relaxed flex-1">
+        <p className="text-xs text-ink-500 leading-relaxed flex-1">
           {video.description}
         </p>
         <a
@@ -248,7 +248,7 @@ export default function VideosPage() {
           <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4 leading-tight">
             Nootropics Video Library
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-ink-500 max-w-2xl mx-auto leading-relaxed">
             Curated educational videos on supplements, stacking strategies, and the neuroscience behind cognitive enhancement — from top researchers and educators.
           </p>
         </div>
@@ -284,7 +284,7 @@ export default function VideosPage() {
           <h2 className="font-display text-2xl font-bold text-foreground mb-2">
             Ready to apply what you've learned?
           </h2>
-          <p className="text-muted-foreground text-sm mb-6 max-w-md mx-auto">
+          <p className="text-ink-500 text-sm mb-6 max-w-md mx-auto">
             Use the Stack Builder to combine the supplements you've researched into a personalized, interaction-checked protocol.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">

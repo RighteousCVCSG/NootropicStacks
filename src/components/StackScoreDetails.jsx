@@ -12,17 +12,17 @@ function getSupplementName(id) {
 }
 
 const INTERACTION_BADGE_COLORS = {
-  synergistic: 'bg-green-100 text-green-800',
-  complementary: 'bg-blue-100 text-blue-800',
-  redundant: 'bg-orange-100 text-orange-800',
-  conflicting: 'bg-red-100 text-red-800',
+  synergistic: 'bg-accent-100 text-accent-700',
+  complementary: 'bg-primary-100 text-primary-800',
+  redundant: 'bg-warn-100 text-warn-700',
+  conflicting: 'bg-danger-100 text-red-800',
 };
 
 const QUAL_COLORS = {
-  Low: 'bg-gray-100 text-gray-600 border-gray-200',
-  Moderate: 'bg-blue-50 text-blue-700 border-blue-200',
-  Strong: 'bg-green-50 text-green-700 border-green-200',
-  Maxed: 'bg-amber-50 text-amber-700 border-amber-300',
+  Low: 'bg-surface-sunk text-ink-700 border-ink-200',
+  Moderate: 'bg-primary-050 text-primary-800 border-primary-300',
+  Strong: 'bg-accent-050 text-accent-700 border-accent-300',
+  Maxed: 'bg-warn-100 text-warn-700 border-amber-300',
 };
 
 // Brand-token-driven dimension colors (Cognitive Lab palette).
@@ -101,7 +101,7 @@ function InteractionRow({ interaction }) {
     <div className="flex items-center justify-between py-2 text-sm">
       <div className="flex items-center gap-2 min-w-0">
         <span className="truncate">{getSupplementName(interaction.supplements[0])}</span>
-        <ArrowRight className="w-3 h-3 text-gray-400 shrink-0" />
+        <ArrowRight className="w-3 h-3 text-ink-400 shrink-0" />
         <span className="truncate">{getSupplementName(interaction.supplements[1])}</span>
       </div>
       <Badge variant="outline" className={`shrink-0 ml-2 text-xs ${INTERACTION_BADGE_COLORS[interaction.type] || ''}`}>
@@ -113,8 +113,8 @@ function InteractionRow({ interaction }) {
 
 function MaxedDetailCallout({ dimension, message }) {
   return (
-    <div className="flex items-start gap-2 p-3 bg-amber-50 border-l-2 border-amber-500 rounded-r-md text-xs text-amber-800">
-      <span className="font-semibold text-amber-700 shrink-0">{dimension}:</span>
+    <div className="flex items-start gap-2 p-3 bg-warn-100 border-l-2 border-amber-500 rounded-r-md text-xs text-amber-800">
+      <span className="font-semibold text-warn-700 shrink-0">{dimension}:</span>
       <span>{message}</span>
     </div>
   );
@@ -134,8 +134,8 @@ export function StackScoreDetails({ open, onClose, stackScore }) {
           <DialogTitle className="flex items-center justify-between">
             <span>Stack Score Breakdown</span>
             <span className="flex items-center gap-2">
-              <span className="text-2xl font-bold text-gray-800">{overall.toFixed(1)}</span>
-              <span className="text-sm font-medium text-gray-500">{dimensionQuals.overall.label}</span>
+              <span className="text-2xl font-bold text-ink-900">{overall.toFixed(1)}</span>
+              <span className="text-sm font-medium text-ink-500">{dimensionQuals.overall.label}</span>
             </span>
           </DialogTitle>
         </DialogHeader>
@@ -186,7 +186,7 @@ export function StackScoreDetails({ open, onClose, stackScore }) {
         {/* Synergy details */}
         <div className="space-y-2">
           <h3 className="text-sm font-semibold flex items-center gap-2">
-            <ZapIcon className="w-4 h-4 text-purple-500" />
+            <ZapIcon className="w-4 h-4 text-primary-500" />
             Synergy — {synergy.details}
           </h3>
           {synergy.interactions && synergy.interactions.length > 0 ? (
@@ -196,7 +196,7 @@ export function StackScoreDetails({ open, onClose, stackScore }) {
               ))}
             </div>
           ) : (
-            <p className="text-sm text-gray-500">No known interactions in your current stack.</p>
+            <p className="text-sm text-ink-500">No known interactions in your current stack.</p>
           )}
         </div>
 
@@ -205,26 +205,26 @@ export function StackScoreDetails({ open, onClose, stackScore }) {
         {/* Coverage details */}
         <div className="space-y-2">
           <h3 className="text-sm font-semibold flex items-center gap-2">
-            <Target className="w-4 h-4 text-blue-500" />
+            <Target className="w-4 h-4 text-primary-500" />
             Coverage — {coverage.details}
           </h3>
           {coverage.goalCoverage && Object.entries(coverage.goalCoverage).length > 0 ? (
             <div className="space-y-1.5">
               {Object.entries(coverage.goalCoverage).map(([goal, value]) => (
                 <div key={goal} className="flex items-center gap-2 text-sm">
-                  <span className="w-20 capitalize text-gray-600">{goal}</span>
-                  <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                  <span className="w-20 capitalize text-ink-700">{goal}</span>
+                  <div className="flex-1 h-2 bg-ink-200 rounded-full overflow-hidden">
                     <div
-                      className={`h-full rounded-full transition-all ${value > 6 ? 'bg-green-500' : value > 4 ? 'bg-blue-500' : 'bg-red-400'}`}
+                      className={`h-full rounded-full transition-all ${value > 6 ? 'bg-accent-0500' : value > 4 ? 'bg-primary-0500' : 'bg-red-400'}`}
                       style={{ width: `${Math.min(100, (value / 9.5) * 100)}%` }}
                     />
                   </div>
-                  <span className="w-8 text-right text-xs text-gray-500">{value.toFixed(1)}</span>
+                  <span className="w-8 text-right text-xs text-ink-500">{value.toFixed(1)}</span>
                 </div>
               ))}
             </div>
           ) : (
-            <p className="text-sm text-gray-500">Set goals to see coverage analysis.</p>
+            <p className="text-sm text-ink-500">Set goals to see coverage analysis.</p>
           )}
         </div>
 
@@ -239,14 +239,14 @@ export function StackScoreDetails({ open, onClose, stackScore }) {
           {balance.penalties && balance.penalties.length > 0 ? (
             <ul className="space-y-1">
               {balance.penalties.map((penalty, i) => (
-                <li key={i} className="text-sm text-orange-700 flex items-start gap-2">
+                <li key={i} className="text-sm text-warn-700 flex items-start gap-2">
                   <span className="text-orange-400 mt-1">-</span>
                   {penalty}
                 </li>
               ))}
             </ul>
           ) : (
-            <p className="text-sm text-green-600">No balance issues detected.</p>
+            <p className="text-sm text-accent-700">No balance issues detected.</p>
           )}
           {balance.groupCounts && Object.keys(balance.groupCounts).length > 0 && (
             <div className="flex flex-wrap gap-1.5 mt-1">
@@ -254,7 +254,7 @@ export function StackScoreDetails({ open, onClose, stackScore }) {
                 <Badge
                   key={groupId}
                   variant="outline"
-                  className={`text-xs ${count >= 3 ? 'border-orange-300 text-orange-700' : 'border-gray-300 text-gray-600'}`}
+                  className={`text-xs ${count >= 3 ? 'border-orange-300 text-warn-700' : 'border-ink-300 text-ink-700'}`}
                 >
                   {label}: {count}
                 </Badge>
@@ -271,10 +271,10 @@ export function StackScoreDetails({ open, onClose, stackScore }) {
             <Gauge className="w-4 h-4 text-orange-500" />
             Efficiency — {efficiency.details}
           </h3>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-ink-700">
             {efficiency.supplementCount} supplement{efficiency.supplementCount !== 1 ? 's' : ''} in stack
             {efficiency.deadWeight > 0 && (
-              <span className="text-orange-600">
+              <span className="text-warn-700">
                 {' '}({efficiency.deadWeight} not aligned with goals)
               </span>
             )}

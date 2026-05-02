@@ -135,9 +135,9 @@ const CURATED_STACKS = [
 ];
 
 const difficultyColor = {
-  Beginner: 'bg-green-100 text-green-700',
-  Intermediate: 'bg-yellow-100 text-yellow-700',
-  Advanced: 'bg-red-100 text-red-700',
+  Beginner: 'bg-accent-100 text-accent-700',
+  Intermediate: 'bg-warn-100 text-warn-700',
+  Advanced: 'bg-danger-100 text-danger-700',
 };
 
 export function BestStacksPage() {
@@ -174,11 +174,11 @@ export function BestStacksPage() {
 
       <div className="max-w-3xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-3">Best Nootropic Stacks 2026</h1>
-          <p className="text-gray-600 leading-relaxed mb-4">
+          <h1 className="text-3xl font-bold text-ink-900 mb-3">Best Nootropic Stacks 2026</h1>
+          <p className="text-ink-700 leading-relaxed mb-4">
             Individual supplements are powerful. Combined correctly, they're transformative. These 8 stacks are curated by goal — each one built around proven synergies, evidence-ranked ingredients, and real-world cost. Find your stack, build it yourself, or use the Stack Builder to customize further.
           </p>
-          <div className="flex flex-wrap gap-2 text-sm text-gray-500">
+          <div className="flex flex-wrap gap-2 text-sm text-ink-500">
             <span>✓ 8 curated stacks</span>
             <span>·</span>
             <span>✓ Synergy-optimized</span>
@@ -196,22 +196,22 @@ export function BestStacksPage() {
               .join(',');
 
             return (
-              <Card key={stack.id} className="border-gray-200 hover:shadow-md transition-shadow">
+              <Card key={stack.id} className="border-ink-200 hover:shadow-md transition-shadow">
                 <CardContent className="pt-6">
                   {/* Stack header */}
                   <div className="flex items-start gap-4 mb-4">
-                    <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
-                      <StackIcon className="w-5 h-5 text-blue-600" />
+                    <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center">
+                      <StackIcon className="w-5 h-5 text-primary-700" />
                     </div>
                     <div className="flex-1">
                       <div className="flex flex-wrap items-center gap-2 mb-1">
-                        <h2 className="text-xl font-bold text-gray-900">{stack.name}</h2>
+                        <h2 className="text-xl font-bold text-ink-900">{stack.name}</h2>
                         <Badge className={`text-xs font-medium ${difficultyColor[stack.difficulty]}`} variant="outline">
                           {stack.difficulty}
                         </Badge>
                       </div>
-                      <p className="text-sm font-medium text-blue-700 mb-1">{stack.goal} · {stack.monthlyEstimate}</p>
-                      <p className="text-gray-600 text-sm">{stack.description}</p>
+                      <p className="text-sm font-medium text-primary-800 mb-1">{stack.goal} · {stack.monthlyEstimate}</p>
+                      <p className="text-ink-700 text-sm">{stack.description}</p>
                     </div>
                   </div>
 
@@ -220,13 +220,13 @@ export function BestStacksPage() {
                     {stack.supplements.map((supp) => {
                       const links = supp.id ? AFFILIATE_LINKS[supp.id] : null;
                       return (
-                        <div key={supp.name} className="flex flex-col sm:flex-row sm:items-start gap-2 p-3 bg-gray-50 rounded-lg">
+                        <div key={supp.name} className="flex flex-col sm:flex-row sm:items-start gap-2 p-3 bg-surface-card rounded-lg">
                           <div className="flex-1">
                             <div className="flex items-center gap-2 mb-0.5">
-                              <span className="font-semibold text-sm text-gray-900">{supp.name}</span>
-                              <span className="text-xs text-gray-500 bg-white border border-gray-200 px-2 py-0.5 rounded">{supp.dose}</span>
+                              <span className="font-semibold text-sm text-ink-900">{supp.name}</span>
+                              <span className="text-xs text-ink-500 bg-white border border-ink-200 px-2 py-0.5 rounded">{supp.dose}</span>
                             </div>
-                            <p className="text-xs text-gray-500">{supp.why}</p>
+                            <p className="text-xs text-ink-500">{supp.why}</p>
                           </div>
                           {links && (
                             <div className="flex gap-2 flex-shrink-0">
@@ -236,7 +236,7 @@ export function BestStacksPage() {
                                   target="_blank"
                                   rel="noopener noreferrer sponsored"
                                   onClick={() => trackClick(supp.id, 'amazon')}
-                                  className="flex items-center gap-1 text-xs bg-orange-500 hover:bg-orange-600 text-white px-2.5 py-1 rounded font-medium transition-colors"
+                                  className="flex items-center gap-1 text-xs bg-warn-1000 hover:bg-warn-700 text-white px-2.5 py-1 rounded font-medium transition-colors"
                                 >
                                   <ExternalLink className="w-3 h-3" /> Amazon
                                 </a>
@@ -247,7 +247,7 @@ export function BestStacksPage() {
                                   target="_blank"
                                   rel="noopener noreferrer sponsored"
                                   onClick={() => trackClick(supp.id, 'iherb')}
-                                  className="flex items-center gap-1 text-xs bg-green-600 hover:bg-green-700 text-white px-2.5 py-1 rounded font-medium transition-colors"
+                                  className="flex items-center gap-1 text-xs bg-accent-600 hover:bg-accent-700 text-white px-2.5 py-1 rounded font-medium transition-colors"
                                 >
                                   <ExternalLink className="w-3 h-3" /> iHerb
                                 </a>
@@ -263,7 +263,7 @@ export function BestStacksPage() {
                   {stackIds && (
                     <Link
                       to={`/?stack=${stackIds}`}
-                      className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
+                      className="inline-flex items-center gap-2 bg-primary-700 hover:bg-primary-800 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
                     >
                       <Brain className="w-4 h-4" />
                       Build This Stack in the Stack Builder →
@@ -275,16 +275,16 @@ export function BestStacksPage() {
           })}
         </div>
 
-        <div className="mt-10 p-6 bg-blue-600 rounded-xl text-white text-center">
+        <div className="mt-10 p-6 bg-primary-700 rounded-xl text-white text-center">
           <Brain className="w-8 h-8 mx-auto mb-2 opacity-90" />
           <h2 className="text-xl font-bold mb-2">Customize Any Stack</h2>
           <p className="text-blue-100 text-sm mb-4">Use the free Stack Builder to swap supplements, check interactions, adjust doses, and get a personalized Stack Score.</p>
-          <Link to="/" className="inline-block bg-white text-blue-700 font-semibold px-6 py-2.5 rounded-lg hover:bg-blue-50 transition-colors">
+          <Link to="/" className="inline-block bg-white text-primary-800 font-semibold px-6 py-2.5 rounded-lg hover:bg-primary-050 transition-colors">
             Open Stack Builder →
           </Link>
         </div>
 
-        <p className="text-xs text-gray-400 text-center mt-6">* Affiliate links — we earn a small commission at no extra cost to you. We only link to quality-tested sources.</p>
+        <p className="text-xs text-ink-400 text-center mt-6">* Affiliate links — we earn a small commission at no extra cost to you. We only link to quality-tested sources.</p>
       </div>
     </>
   );

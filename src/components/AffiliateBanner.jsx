@@ -32,7 +32,7 @@ export default function AffiliateBanner({ banner, compact = false }) {
           />
           <div>
             <p className="text-sm font-semibold">{banner.title}</p>
-            <p className="text-xs text-muted-foreground">{banner.description}</p>
+            <p className="text-xs text-ink-500">{banner.description}</p>
           </div>
         </div>
         <Button size="sm" variant="outline" className="shrink-0 ml-4">
@@ -72,10 +72,10 @@ export default function AffiliateBanner({ banner, compact = false }) {
               >
                 {banner.badge}
               </Badge>
-              <span className="text-xs text-muted-foreground">Sponsored</span>
+              <span className="text-xs text-ink-500">Sponsored</span>
             </div>
             <h3 className="font-semibold text-base mb-1">{banner.title}</h3>
-            <p className="text-sm text-muted-foreground">{banner.description}</p>
+            <p className="text-sm text-ink-500">{banner.description}</p>
           </div>
         </div>
         <Button

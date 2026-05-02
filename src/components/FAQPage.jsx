@@ -158,11 +158,11 @@ export function FAQPage() {
       <JsonLd data={buildFAQSchema(flatFaqs)} />
 
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-ink-900 flex items-center gap-2">
           <HelpCircle className="w-6 h-6" />
           Frequently Asked Questions
         </h1>
-        <p className="text-gray-600 mt-2">Everything you need to know about nootropic stacking and using NootropicStacker.</p>
+        <p className="text-ink-700 mt-2">Everything you need to know about nootropic stacking and using NootropicStacker.</p>
       </div>
 
       {faqData.map((category, i) => (
@@ -177,7 +177,7 @@ export function FAQPage() {
                   <AccordionTrigger className="text-left text-sm font-medium">
                     {item.q}
                   </AccordionTrigger>
-                  <AccordionContent className="text-sm text-gray-600 leading-relaxed">
+                  <AccordionContent className="text-sm text-ink-700 leading-relaxed">
                     {item.a}
                   </AccordionContent>
                 </AccordionItem>

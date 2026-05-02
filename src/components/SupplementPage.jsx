@@ -248,7 +248,7 @@ export function SupplementPage() {
                       <Link
                         key={related.id}
                         to={`/supplements/${related.id}`}
-                        className="block p-3 rounded-lg border hover:bg-gray-50 transition-colors"
+                        className="block p-3 rounded-lg border hover:bg-surface-card transition-colors"
                       >
                         <div className="font-medium">{related.name}</div>
                         <div className="text-sm text-ink-500 line-clamp-1">{related.description}</div>
@@ -262,7 +262,7 @@ export function SupplementPage() {
         </div>
 
         {/* Medical Disclaimer */}
-        <Alert className="border-gray-200 bg-gray-50">
+        <Alert className="border-ink-200 bg-surface-card">
           <AlertTriangle className="h-4 w-4 text-ink-500" />
           <AlertDescription className="text-ink-700">
             <strong>Medical Disclaimer:</strong> This information is for educational purposes only and is not intended as medical advice.

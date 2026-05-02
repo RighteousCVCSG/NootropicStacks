@@ -195,14 +195,14 @@ export function NewsSection() {
 
   const getCategoryColor = (category) => {
     const colors = {
-      'Research': 'bg-blue-100 text-blue-800',
-      'Product Launch': 'bg-green-100 text-green-800',
-      'Innovation': 'bg-purple-100 text-purple-800',
-      'Business': 'bg-orange-100 text-orange-800',
-      'Industry Trends': 'bg-yellow-100 text-yellow-800',
-      'Regulation': 'bg-red-100 text-red-800'
+      'Research': 'bg-primary-100 text-primary-800',
+      'Product Launch': 'bg-accent-100 text-accent-700',
+      'Innovation': 'bg-primary-100 text-primary-800',
+      'Business': 'bg-warn-100 text-warn-700',
+      'Industry Trends': 'bg-warn-100 text-yellow-800',
+      'Regulation': 'bg-danger-100 text-red-800'
     };
-    return colors[category] || 'bg-gray-100 text-gray-800';
+    return colors[category] || 'bg-surface-sunk text-ink-900';
   };
 
   const NewsCard = ({ article, showTrending = true }) => (
@@ -215,7 +215,7 @@ export function NewsSection() {
                 {article.category}
               </Badge>
               {showTrending && article.trending && (
-                <Badge variant="outline" className="text-orange-600 border-orange-300">
+                <Badge variant="outline" className="text-warn-700 border-orange-300">
                   <TrendingUp className="w-3 h-3 mr-1" />
                   Trending
                 </Badge>
@@ -226,9 +226,9 @@ export function NewsSection() {
         </div>
       </CardHeader>
       <CardContent>
-        <p className="text-gray-600 mb-4 line-clamp-3">{article.summary}</p>
+        <p className="text-ink-700 mb-4 line-clamp-3">{article.summary}</p>
         <div className="flex items-center justify-between">
-          <div className="flex items-center text-sm text-gray-500">
+          <div className="flex items-center text-sm text-ink-500">
             <Calendar className="w-4 h-4 mr-1" />
             {formatDate(article.date)}
             <span className="mx-2">•</span>
@@ -247,7 +247,7 @@ export function NewsSection() {
     <div className="space-y-6">
       <div className="text-center">
         <h2 className="text-3xl font-bold mb-2">Nootropics & Supplement News</h2>
-        <p className="text-gray-600">Stay updated with the latest research, trends, and developments</p>
+        <p className="text-ink-700">Stay updated with the latest research, trends, and developments</p>
       </div>
 
       {/* Controls */}
@@ -256,7 +256,7 @@ export function NewsSection() {
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-ink-400 w-4 h-4" />
                 <Input
                   placeholder="Search news articles..."
                   value={searchTerm}
@@ -266,7 +266,7 @@ export function NewsSection() {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <Filter className="w-4 h-4 text-gray-500" />
+              <Filter className="w-4 h-4 text-ink-500" />
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
@@ -284,7 +284,7 @@ export function NewsSection() {
               Refresh
             </Button>
           </div>
-          <div className="mt-4 text-sm text-gray-500">
+          <div className="mt-4 text-sm text-ink-500">
             Last updated: {lastUpdated.toLocaleString()}
           </div>
         </CardContent>
@@ -303,7 +303,7 @@ export function NewsSection() {
         </TabsList>
 
         <TabsContent value="recent" className="space-y-6">
-          <div className="text-sm text-gray-600 mb-4">
+          <div className="text-sm text-ink-700 mb-4">
             <Clock className="w-4 h-4 inline mr-1" />
             Showing news from the last 4 weeks
           </div>
@@ -311,7 +311,7 @@ export function NewsSection() {
           {filteredRecentNews.length === 0 ? (
             <Card>
               <CardContent className="text-center py-8">
-                <p className="text-gray-500">No recent news found matching your criteria.</p>
+                <p className="text-ink-500">No recent news found matching your criteria.</p>
               </CardContent>
             </Card>
           ) : (
@@ -324,7 +324,7 @@ export function NewsSection() {
         </TabsContent>
 
         <TabsContent value="archived" className="space-y-6">
-          <div className="text-sm text-gray-600 mb-4">
+          <div className="text-sm text-ink-700 mb-4">
             <Archive className="w-4 h-4 inline mr-1" />
             Showing archived news older than 4 weeks
           </div>
@@ -332,7 +332,7 @@ export function NewsSection() {
           {filteredArchivedNews.length === 0 ? (
             <Card>
               <CardContent className="text-center py-8">
-                <p className="text-gray-500">No archived news found matching your criteria.</p>
+                <p className="text-ink-500">No archived news found matching your criteria.</p>
               </CardContent>
             </Card>
           ) : (
@@ -354,19 +354,19 @@ export function NewsSection() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
             <div className="text-center p-3 border rounded-lg">
               <div className="font-medium">Research Journals</div>
-              <div className="text-gray-600">Nature, Science, NCBI</div>
+              <div className="text-ink-700">Nature, Science, NCBI</div>
             </div>
             <div className="text-center p-3 border rounded-lg">
               <div className="font-medium">Industry News</div>
-              <div className="text-gray-600">Nutritional Outlook, SupplySide</div>
+              <div className="text-ink-700">Nutritional Outlook, SupplySide</div>
             </div>
             <div className="text-center p-3 border rounded-lg">
               <div className="font-medium">Health Media</div>
-              <div className="text-gray-600">Healthline, WebMD, Forbes</div>
+              <div className="text-ink-700">Healthline, WebMD, Forbes</div>
             </div>
             <div className="text-center p-3 border rounded-lg">
               <div className="font-medium">Business News</div>
-              <div className="text-gray-600">TechCrunch, Business Insider</div>
+              <div className="text-ink-700">TechCrunch, Business Insider</div>
             </div>
           </div>
         </CardContent>

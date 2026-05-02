@@ -70,7 +70,7 @@ export function SupplementLibrary({ onViewDetails }) {
         <div className="space-y-4">
           {/* Search */}
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-ink-400 w-4 h-4" />
             <Input
               placeholder="Search supplements, benefits, or categories..."
               value={searchTerm}
@@ -126,8 +126,8 @@ export function SupplementLibrary({ onViewDetails }) {
         {/* Results */}
         {filteredAndSortedSupplements.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-500 mb-2">No supplements found</p>
-            <p className="text-sm text-gray-400">
+            <p className="text-ink-500 mb-2">No supplements found</p>
+            <p className="text-sm text-ink-400">
               Try adjusting your search terms or filters
             </p>
           </div>

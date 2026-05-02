@@ -28,24 +28,24 @@ export function SupplementFamilyGuide() {
   const familySupplements = supplements.filter(s => family.supplements.includes(s.id));
 
   const getSafetyColor = (profile) => {
-    if (profile.includes('Very safe')) return 'text-green-600';
-    if (profile.includes('Generally safe')) return 'text-blue-600';
-    if (profile.includes('Moderate risk')) return 'text-orange-600';
-    return 'text-red-600';
+    if (profile.includes('Very safe')) return 'text-accent-700';
+    if (profile.includes('Generally safe')) return 'text-primary-700';
+    if (profile.includes('Moderate risk')) return 'text-warn-700';
+    return 'text-danger-500';
   };
 
   const getResearchColor = (level) => {
-    if (level.includes('Very High')) return 'text-green-600';
-    if (level.includes('High')) return 'text-blue-600';
-    if (level.includes('Moderate')) return 'text-orange-600';
-    return 'text-red-600';
+    if (level.includes('Very High')) return 'text-accent-700';
+    if (level.includes('High')) return 'text-primary-700';
+    if (level.includes('Moderate')) return 'text-warn-700';
+    return 'text-danger-500';
   };
 
   return (
     <div className="space-y-6">
       <div className="text-center">
         <h2 className="text-3xl font-bold mb-2">Supplement Family Guide</h2>
-        <p className="text-gray-600">Comprehensive guides to supplement families, mechanisms, and usage</p>
+        <p className="text-ink-700">Comprehensive guides to supplement families, mechanisms, and usage</p>
       </div>
 
       {/* Family Selection */}
@@ -69,7 +69,7 @@ export function SupplementFamilyGuide() {
             <Brain className="w-6 h-6" />
             {family.name}
           </CardTitle>
-          <p className="text-gray-600">{family.description}</p>
+          <p className="text-ink-700">{family.description}</p>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="overview" className="w-full">
@@ -91,7 +91,7 @@ export function SupplementFamilyGuide() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-700">{family.summary}</p>
+                    <p className="text-ink-700">{family.summary}</p>
                   </CardContent>
                 </Card>
 
@@ -103,7 +103,7 @@ export function SupplementFamilyGuide() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-700">{family.typicalUsage}</p>
+                    <p className="text-ink-700">{family.typicalUsage}</p>
                   </CardContent>
                 </Card>
               </div>
@@ -136,7 +136,7 @@ export function SupplementFamilyGuide() {
                     <CardTitle className="text-lg">Legal Status</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-700">{family.legalStatus}</p>
+                    <p className="text-ink-700">{family.legalStatus}</p>
                   </CardContent>
                 </Card>
               </div>
@@ -152,7 +152,7 @@ export function SupplementFamilyGuide() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-700">{family.methodOfAction}</p>
+                    <p className="text-ink-700">{family.methodOfAction}</p>
                   </CardContent>
                 </Card>
 
@@ -164,7 +164,7 @@ export function SupplementFamilyGuide() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-700">{family.neurologicalImpact}</p>
+                    <p className="text-ink-700">{family.neurologicalImpact}</p>
                   </CardContent>
                 </Card>
               </div>
@@ -175,7 +175,7 @@ export function SupplementFamilyGuide() {
                     <CardTitle>Direct Mechanism</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-700">{family.directMechanism}</p>
+                    <p className="text-ink-700">{family.directMechanism}</p>
                   </CardContent>
                 </Card>
 
@@ -184,7 +184,7 @@ export function SupplementFamilyGuide() {
                     <CardTitle>Indirect Mechanism</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-700">{family.indirectMechanism}</p>
+                    <p className="text-ink-700">{family.indirectMechanism}</p>
                   </CardContent>
                 </Card>
               </div>
@@ -207,7 +207,7 @@ export function SupplementFamilyGuide() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-700">{family.cautions}</p>
+                  <p className="text-ink-700">{family.cautions}</p>
                 </CardContent>
               </Card>
 
@@ -220,7 +220,7 @@ export function SupplementFamilyGuide() {
                     {recommendations.map((rec, index) => (
                       <div key={index} className="p-3 border rounded-lg">
                         <h4 className="font-semibold">{rec.name}</h4>
-                        <p className="text-sm text-gray-600 mb-2">{rec.description}</p>
+                        <p className="text-sm text-ink-700 mb-2">{rec.description}</p>
                         <div className="flex flex-wrap gap-1">
                           {rec.supplements.map((suppId) => {
                             const supp = supplements.find(s => s.id === suppId);
@@ -242,7 +242,7 @@ export function SupplementFamilyGuide() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <Card>
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-green-600">
+                    <CardTitle className="flex items-center gap-2 text-accent-700">
                       <CheckCircle className="w-5 h-5" />
                       Positive Interactions
                     </CardTitle>
@@ -250,7 +250,7 @@ export function SupplementFamilyGuide() {
                   <CardContent>
                     <div className="space-y-1">
                       {family.interactions.positive.map((interaction, index) => (
-                        <Badge key={index} variant="outline" className="text-green-700 border-green-300">
+                        <Badge key={index} variant="outline" className="text-accent-700 border-green-300">
                           {interaction}
                         </Badge>
                       ))}
@@ -260,7 +260,7 @@ export function SupplementFamilyGuide() {
 
                 <Card>
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-red-600">
+                    <CardTitle className="flex items-center gap-2 text-danger-500">
                       <XCircle className="w-5 h-5" />
                       Negative Interactions
                     </CardTitle>
@@ -268,7 +268,7 @@ export function SupplementFamilyGuide() {
                   <CardContent>
                     <div className="space-y-1">
                       {family.interactions.negative.map((interaction, index) => (
-                        <Badge key={index} variant="outline" className="text-red-700 border-red-300">
+                        <Badge key={index} variant="outline" className="text-danger-700 border-red-300">
                           {interaction}
                         </Badge>
                       ))}
@@ -278,7 +278,7 @@ export function SupplementFamilyGuide() {
 
                 <Card>
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-gray-600">
+                    <CardTitle className="flex items-center gap-2 text-ink-700">
                       <Info className="w-5 h-5" />
                       Neutral Interactions
                     </CardTitle>
@@ -286,7 +286,7 @@ export function SupplementFamilyGuide() {
                   <CardContent>
                     <div className="space-y-1">
                       {family.interactions.neutral.map((interaction, index) => (
-                        <Badge key={index} variant="outline" className="text-gray-700 border-gray-300">
+                        <Badge key={index} variant="outline" className="text-ink-700 border-ink-300">
                           {interaction}
                         </Badge>
                       ))}
@@ -295,9 +295,9 @@ export function SupplementFamilyGuide() {
                 </Card>
               </div>
 
-              <Alert className="border-orange-200 bg-orange-50">
-                <AlertTriangle className="h-4 w-4 text-orange-600" />
-                <AlertDescription className="text-orange-800">
+              <Alert className="border-warn-500 bg-warn-100">
+                <AlertTriangle className="h-4 w-4 text-warn-700" />
+                <AlertDescription className="text-warn-700">
                   <strong>Safety Reminder:</strong> Individual responses to supplements can vary significantly. 
                   Start with lower doses, monitor your response, and consult healthcare professionals, 
                   especially if you have medical conditions or take medications.
@@ -316,7 +316,7 @@ export function SupplementFamilyGuide() {
                       </Badge>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-sm text-gray-600 mb-3">{supplement.description}</p>
+                      <p className="text-sm text-ink-700 mb-3">{supplement.description}</p>
                       <div className="space-y-2">
                         <div className="flex justify-between text-sm">
                           <span>Dosage:</span>

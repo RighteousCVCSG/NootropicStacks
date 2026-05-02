@@ -134,7 +134,7 @@ export function AuthDialog({ open, onOpenChange }) {
           </TabsContent>
         </Tabs>
 
-        <p className="text-xs text-gray-500 text-center mt-2">
+        <p className="text-xs text-ink-500 text-center mt-2">
           Sign in to save your stacks and pick up where you left off.
         </p>
       </DialogContent>

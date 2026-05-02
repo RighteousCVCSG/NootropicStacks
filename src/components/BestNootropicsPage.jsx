@@ -121,10 +121,10 @@ const TOP_NOOTROPICS = [
 ];
 
 const getRankColor = (rank) => {
-  if (rank === 1) return 'bg-yellow-100 border-yellow-300 text-yellow-800';
-  if (rank === 2) return 'bg-gray-100 border-gray-300 text-gray-700';
-  if (rank === 3) return 'bg-orange-100 border-orange-200 text-orange-700';
-  return 'bg-blue-50 border-blue-200 text-blue-700';
+  if (rank === 1) return 'bg-warn-100 border-yellow-300 text-yellow-800';
+  if (rank === 2) return 'bg-surface-sunk border-ink-300 text-ink-700';
+  if (rank === 3) return 'bg-warn-100 border-warn-500 text-warn-700';
+  return 'bg-primary-050 border-primary-300 text-primary-800';
 };
 
 export function BestNootropicsPage() {
@@ -146,11 +146,11 @@ export function BestNootropicsPage() {
 
       <div className="max-w-3xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-3">Best Nootropics 2026</h1>
-          <p className="text-gray-600 leading-relaxed mb-4">
+          <h1 className="text-3xl font-bold text-ink-900 mb-3">Best Nootropics 2026</h1>
+          <p className="text-ink-700 leading-relaxed mb-4">
             We evaluated 195 nootropic compounds across clinical evidence quality, safety profile, dose-response consistency, and real-world results. These 10 earn a place in any serious cognitive enhancement protocol — whether you're a beginner or an experienced biohacker.
           </p>
-          <div className="flex flex-wrap gap-2 text-sm text-gray-500">
+          <div className="flex flex-wrap gap-2 text-sm text-ink-500">
             <span>✓ Evidence-ranked</span>
             <span>·</span>
             <span>✓ 195 supplements evaluated</span>
@@ -163,7 +163,7 @@ export function BestNootropicsPage() {
           {TOP_NOOTROPICS.map((nootropic) => {
             const links = AFFILIATE_LINKS[nootropic.id];
             return (
-              <Card key={nootropic.id} className="border-gray-200 hover:shadow-md transition-shadow">
+              <Card key={nootropic.id} className="border-ink-200 hover:shadow-md transition-shadow">
                 <CardContent className="pt-6">
                   <div className="flex items-start gap-4">
                     <div className={`flex-shrink-0 w-10 h-10 rounded-full border-2 flex items-center justify-center font-bold text-sm ${getRankColor(nootropic.rank)}`}>
@@ -171,36 +171,36 @@ export function BestNootropicsPage() {
                     </div>
                     <div className="flex-1">
                       <div className="flex flex-wrap items-center gap-2 mb-1">
-                        <h2 className="text-lg font-bold text-gray-900">{nootropic.name}</h2>
-                        <div className="flex items-center gap-1 text-yellow-500 text-sm">
+                        <h2 className="text-lg font-bold text-ink-900">{nootropic.name}</h2>
+                        <div className="flex items-center gap-1 text-warn-500 text-sm">
                           <Star className="w-4 h-4 fill-current" />
-                          <span className="font-medium text-gray-700">{nootropic.rating}/10</span>
+                          <span className="font-medium text-ink-700">{nootropic.rating}/10</span>
                         </div>
                       </div>
-                      <p className="text-sm font-medium text-blue-700 mb-2">{nootropic.tagline}</p>
-                      <p className="text-gray-600 text-sm mb-3">{nootropic.why}</p>
+                      <p className="text-sm font-medium text-primary-800 mb-2">{nootropic.tagline}</p>
+                      <p className="text-ink-700 text-sm mb-3">{nootropic.why}</p>
 
-                      <div className="flex flex-wrap gap-4 text-xs text-gray-500 mb-3">
+                      <div className="flex flex-wrap gap-4 text-xs text-ink-500 mb-3">
                         <span><strong>Best for:</strong> {nootropic.bestFor.join(', ')}</span>
                         <span><strong>Dose:</strong> {nootropic.dose}</span>
                         <span><strong>Effect timeline:</strong> {nootropic.timeToEffect}</span>
                       </div>
 
                       <div className="flex flex-wrap items-center gap-2">
-                        <Link to={`/supplements/${nootropic.id}`} className="text-xs text-blue-600 hover:underline">
+                        <Link to={`/supplements/${nootropic.id}`} className="text-xs text-primary-700 hover:underline">
                           View full profile →
                         </Link>
                         {links?.amazon && (
                           <a href={withAffiliateUtms(links.amazon, { campaign: `nootropic-${nootropic.id}` })} target="_blank" rel="noopener noreferrer sponsored"
                              onClick={() => trackClick(nootropic.id, 'amazon')}
-                             className="flex items-center gap-1 text-xs bg-orange-500 hover:bg-orange-600 text-white px-3 py-1.5 rounded font-medium transition-colors">
+                             className="flex items-center gap-1 text-xs bg-warn-1000 hover:bg-warn-700 text-white px-3 py-1.5 rounded font-medium transition-colors">
                             <ExternalLink className="w-3 h-3" /> Amazon
                           </a>
                         )}
                         {links?.iherb && (
                           <a href={links.iherb} target="_blank" rel="noopener noreferrer sponsored"
                              onClick={() => trackClick(nootropic.id, 'iherb')}
-                             className="flex items-center gap-1 text-xs bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded font-medium transition-colors">
+                             className="flex items-center gap-1 text-xs bg-accent-600 hover:bg-accent-700 text-white px-3 py-1.5 rounded font-medium transition-colors">
                             <ExternalLink className="w-3 h-3" /> iHerb
                           </a>
                         )}
@@ -213,16 +213,16 @@ export function BestNootropicsPage() {
           })}
         </div>
 
-        <div className="mt-10 p-6 bg-blue-600 rounded-xl text-white text-center">
+        <div className="mt-10 p-6 bg-primary-700 rounded-xl text-white text-center">
           <Brain className="w-8 h-8 mx-auto mb-2 opacity-90" />
           <h2 className="text-xl font-bold mb-2">Build Your Stack from These 10</h2>
           <p className="text-blue-100 text-sm mb-4">Use our free Stack Builder to combine the supplements that match your goals, check interactions, and get a personalized Stack Score.</p>
-          <Link to="/" className="inline-block bg-white text-blue-700 font-semibold px-6 py-2.5 rounded-lg hover:bg-blue-50 transition-colors">
+          <Link to="/" className="inline-block bg-white text-primary-800 font-semibold px-6 py-2.5 rounded-lg hover:bg-primary-050 transition-colors">
             Open Stack Builder →
           </Link>
         </div>
 
-        <p className="text-xs text-gray-400 text-center mt-6">* Affiliate links — we earn a small commission at no extra cost to you. We only link to quality-tested sources.</p>
+        <p className="text-xs text-ink-400 text-center mt-6">* Affiliate links — we earn a small commission at no extra cost to you. We only link to quality-tested sources.</p>
       </div>
     </>
   );

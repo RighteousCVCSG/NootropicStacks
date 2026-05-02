@@ -146,15 +146,15 @@ export function GlossaryPage() {
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-ink-900 flex items-center gap-2">
           <BookOpen className="w-6 h-6" />
           Nootropics Glossary
         </h1>
-        <p className="text-gray-600 mt-2">Key terms, compounds, and concepts in nootropic stacking — explained plainly.</p>
+        <p className="text-ink-700 mt-2">Key terms, compounds, and concepts in nootropic stacking — explained plainly.</p>
       </div>
 
       <div className="relative max-w-md">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-ink-400" />
         <Input
           placeholder="Search terms..."
           value={search}
@@ -169,7 +169,7 @@ export function GlossaryPage() {
           <a
             key={letter}
             href={`#glossary-${letter}`}
-            className="w-8 h-8 flex items-center justify-center rounded text-sm font-medium bg-gray-100 hover:bg-blue-100 hover:text-blue-700 transition-colors"
+            className="w-8 h-8 flex items-center justify-center rounded text-sm font-medium bg-surface-sunk hover:bg-primary-100 hover:text-primary-800 transition-colors"
           >
             {letter}
           </a>
@@ -179,15 +179,15 @@ export function GlossaryPage() {
       {/* Terms */}
       {letters.map(letter => (
         <div key={letter} id={`glossary-${letter}`}>
-          <h2 className="text-lg font-bold text-gray-400 mb-2 border-b pb-1">{letter}</h2>
+          <h2 className="text-lg font-bold text-ink-400 mb-2 border-b pb-1">{letter}</h2>
           <div className="space-y-3">
             {grouped[letter].map(item => (
               <Card key={item.term} className="hover:shadow-sm transition-shadow">
                 <CardContent className="pt-4 pb-3">
                   <div className="flex items-start justify-between gap-2">
                     <div>
-                      <h3 className="font-semibold text-gray-900">{item.term}</h3>
-                      <p className="text-sm text-gray-600 mt-1 leading-relaxed">{item.definition}</p>
+                      <h3 className="font-semibold text-ink-900">{item.term}</h3>
+                      <p className="text-sm text-ink-700 mt-1 leading-relaxed">{item.definition}</p>
                     </div>
                     <div className="flex gap-1 shrink-0">
                       {item.tags.map(tag => (
@@ -203,7 +203,7 @@ export function GlossaryPage() {
       ))}
 
       {filtered.length === 0 && (
-        <p className="text-center text-gray-500 py-8">No terms match your search.</p>
+        <p className="text-center text-ink-500 py-8">No terms match your search.</p>
       )}
     </div>
   );

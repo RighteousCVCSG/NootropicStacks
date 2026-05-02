@@ -32,27 +32,27 @@ const EFFECT_ICONS = {
 };
 
 function getEffectBarColor(value) {
-  if (value >= 7) return 'bg-green-500';
-  if (value >= 4) return 'bg-blue-500';
+  if (value >= 7) return 'bg-accent-0500';
+  if (value >= 4) return 'bg-primary-0500';
   if (value >= 1) return 'bg-gray-400';
   if (value < 0) return 'bg-red-400';
-  return 'bg-gray-200';
+  return 'bg-ink-200';
 }
 
 function getCategoryColor(category) {
   const colors = {
-    nootropic: 'bg-blue-100 text-blue-800',
-    adaptogen: 'bg-green-100 text-green-800',
-    stimulant: 'bg-orange-100 text-orange-800',
-    energy: 'bg-yellow-100 text-yellow-800',
-    mineral: 'bg-gray-100 text-gray-800',
-    vitamin: 'bg-amber-100 text-amber-800',
+    nootropic: 'bg-primary-100 text-primary-800',
+    adaptogen: 'bg-accent-100 text-accent-700',
+    stimulant: 'bg-warn-100 text-warn-700',
+    energy: 'bg-warn-100 text-yellow-800',
+    mineral: 'bg-surface-sunk text-ink-900',
+    vitamin: 'bg-warn-100 text-amber-800',
     essential: 'bg-teal-100 text-teal-800',
-    longevity: 'bg-purple-100 text-purple-800',
+    longevity: 'bg-primary-100 text-primary-800',
     performance: 'bg-emerald-100 text-emerald-800',
     sleep: 'bg-violet-100 text-violet-800',
   };
-  return colors[category] || 'bg-gray-100 text-gray-800';
+  return colors[category] || 'bg-surface-sunk text-ink-900';
 }
 
 function trackClick(name, vendor) {
@@ -77,7 +77,7 @@ function AffiliateButtons({ supplement }) {
           target="_blank"
           rel="noopener noreferrer sponsored"
           onClick={() => trackClick(supplement.name, 'amazon')}
-          className="flex items-center gap-1.5 text-xs bg-orange-500 hover:bg-orange-600 text-white px-3 py-2 rounded-md font-medium transition-colors"
+          className="flex items-center gap-1.5 text-xs bg-warn-1000 hover:bg-warn-700 text-white px-3 py-2 rounded-md font-medium transition-colors"
         >
           <ShoppingCart className="w-3 h-3" />
           Amazon
@@ -87,7 +87,7 @@ function AffiliateButtons({ supplement }) {
           target="_blank"
           rel="noopener noreferrer sponsored"
           onClick={() => trackClick(supplement.name, 'iherb')}
-          className="flex items-center gap-1.5 text-xs bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-md font-medium transition-colors"
+          className="flex items-center gap-1.5 text-xs bg-accent-600 hover:bg-accent-700 text-white px-3 py-2 rounded-md font-medium transition-colors"
         >
           <ExternalLink className="w-3 h-3" />
           iHerb
@@ -118,24 +118,24 @@ function SupplementSelect({ label, selected, onChange, exclude }) {
 
   return (
     <div className="relative">
-      <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+      <label className="block text-xs font-semibold text-ink-500 uppercase tracking-wide mb-1.5">
         {label}
       </label>
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="w-full text-left flex items-center justify-between gap-2 px-3 py-2.5 border border-gray-300 rounded-lg bg-white hover:border-blue-400 focus:outline-none focus:border-blue-500 transition-colors"
+        className="w-full text-left flex items-center justify-between gap-2 px-3 py-2.5 border border-ink-300 rounded-lg bg-white hover:border-blue-400 focus:outline-none focus:border-primary-500 transition-colors"
       >
-        <span className={selected ? 'text-gray-900 font-medium' : 'text-gray-400'}>
+        <span className={selected ? 'text-ink-900 font-medium' : 'text-ink-400'}>
           {selected ? selected.name : 'Search supplements…'}
         </span>
-        <svg className={`w-4 h-4 text-gray-400 transition-transform ${open ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className={`w-4 h-4 text-ink-400 transition-transform ${open ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
       </button>
 
       {open && (
-        <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-xl">
+        <div className="absolute z-50 w-full mt-1 bg-white border border-ink-200 rounded-lg shadow-xl">
           <div className="p-2 border-b">
             <input
               autoFocus
@@ -143,21 +143,21 @@ function SupplementSelect({ label, selected, onChange, exclude }) {
               value={query}
               onChange={e => setQuery(e.target.value)}
               placeholder="Type to search…"
-              className="w-full px-2 py-1.5 text-sm border border-gray-200 rounded focus:outline-none focus:border-blue-400"
+              className="w-full px-2 py-1.5 text-sm border border-ink-200 rounded focus:outline-none focus:border-blue-400"
             />
           </div>
           <ul className="max-h-52 overflow-y-auto">
             {filtered.length === 0 && (
-              <li className="px-3 py-2 text-sm text-gray-400">No results</li>
+              <li className="px-3 py-2 text-sm text-ink-400">No results</li>
             )}
             {filtered.map(s => (
               <li key={s.id}>
                 <button
                   type="button"
                   onClick={() => handleSelect(s)}
-                  className="w-full text-left px-3 py-2 text-sm hover:bg-blue-50 flex items-center justify-between gap-2"
+                  className="w-full text-left px-3 py-2 text-sm hover:bg-primary-050 flex items-center justify-between gap-2"
                 >
-                  <span className="font-medium text-gray-900">{s.name}</span>
+                  <span className="font-medium text-ink-900">{s.name}</span>
                   <Badge className={`text-xs ${getCategoryColor(s.category)}`}>
                     {s.category}
                   </Badge>
@@ -184,12 +184,12 @@ function EffectRow({ effectKey, label, icon, valA, valB }) {
       {/* Left supplement bar */}
       <div className="space-y-1">
         <div className="flex items-center justify-between gap-1">
-          <span className={`text-xs font-bold ${valA >= 7 ? 'text-green-600' : valA >= 4 ? 'text-blue-600' : 'text-gray-500'}`}>
+          <span className={`text-xs font-bold ${valA >= 7 ? 'text-accent-700' : valA >= 4 ? 'text-primary-700' : 'text-ink-500'}`}>
             {valA > 0 ? '+' : ''}{valA}
           </span>
-          {winner === 'a' && <span className="text-xs text-green-600 font-semibold">✓</span>}
+          {winner === 'a' && <span className="text-xs text-accent-700 font-semibold">✓</span>}
         </div>
-        <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+        <div className="h-2 bg-surface-sunk rounded-full overflow-hidden">
           <div
             className={`h-full rounded-full transition-all ${getEffectBarColor(valA)}`}
             style={{ width: `${aPercent}%` }}
@@ -200,18 +200,18 @@ function EffectRow({ effectKey, label, icon, valA, valB }) {
       {/* Center label */}
       <div className="text-center w-28 flex-shrink-0">
         <div className="text-base mb-0.5">{icon}</div>
-        <div className="text-xs font-medium text-gray-600 leading-tight">{label}</div>
+        <div className="text-xs font-medium text-ink-700 leading-tight">{label}</div>
       </div>
 
       {/* Right supplement bar */}
       <div className="space-y-1">
         <div className="flex items-center justify-between gap-1">
-          {winner === 'b' && <span className="text-xs text-green-600 font-semibold">✓</span>}
-          <span className={`text-xs font-bold ml-auto ${valB >= 7 ? 'text-green-600' : valB >= 4 ? 'text-blue-600' : 'text-gray-500'}`}>
+          {winner === 'b' && <span className="text-xs text-accent-700 font-semibold">✓</span>}
+          <span className={`text-xs font-bold ml-auto ${valB >= 7 ? 'text-accent-700' : valB >= 4 ? 'text-primary-700' : 'text-ink-500'}`}>
             {valB > 0 ? '+' : ''}{valB}
           </span>
         </div>
-        <div className="h-2 bg-gray-100 rounded-full overflow-hidden flex justify-end">
+        <div className="h-2 bg-surface-sunk rounded-full overflow-hidden flex justify-end">
           <div
             className={`h-full rounded-full transition-all ${getEffectBarColor(valB)}`}
             style={{ width: `${bPercent}%` }}
@@ -281,13 +281,13 @@ function VerdictSection({ suppA, suppB }) {
   ];
 
   return (
-    <Card className="border-blue-200 bg-blue-50">
+    <Card className="border-primary-300 bg-primary-050">
       <CardHeader className="pb-3">
-        <CardTitle className="flex items-center gap-2 text-blue-900">
+        <CardTitle className="flex items-center gap-2 text-primary-900">
           <TrendingUp className="w-5 h-5" />
           Head-to-Head Verdict
         </CardTitle>
-        <p className="text-sm text-blue-700">Based on effects data analysis</p>
+        <p className="text-sm text-primary-800">Based on effects data analysis</p>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -295,10 +295,10 @@ function VerdictSection({ suppA, suppB }) {
             <div key={v.label} className="bg-white rounded-lg p-3 border border-blue-100">
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-lg">{v.icon}</span>
-                <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{v.label}</span>
+                <span className="text-xs font-semibold text-ink-500 uppercase tracking-wide">{v.label}</span>
               </div>
-              <div className="font-bold text-gray-900 text-sm mb-1">{v.winner.name}</div>
-              <p className="text-xs text-gray-500 leading-relaxed">{v.reason}</p>
+              <div className="font-bold text-ink-900 text-sm mb-1">{v.winner.name}</div>
+              <p className="text-xs text-ink-500 leading-relaxed">{v.reason}</p>
             </div>
           ))}
         </div>
@@ -317,7 +317,7 @@ function KeyDifferences({ suppA, effA, suppB, effB }) {
 
   if (diffs.length === 0) {
     return (
-      <div className="text-sm text-gray-500 text-center py-4">
+      <div className="text-sm text-ink-500 text-center py-4">
         These supplements have very similar effect profiles.
       </div>
     );
@@ -331,7 +331,7 @@ function KeyDifferences({ suppA, effA, suppB, effB }) {
         return (
           <li key={d.key} className="flex items-start gap-2 text-sm">
             <span className="text-base leading-tight">{EFFECT_ICONS[d.key]}</span>
-            <span className="text-gray-700">
+            <span className="text-ink-700">
               <strong>{winner.name}</strong> is notably stronger on <strong>{d.label}</strong> (
               +{Math.abs(d.diff)} pts ahead of {loser.name})
             </span>
@@ -386,16 +386,16 @@ export function ComparisonPage() {
         {/* Header */}
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-2">
-            <GitCompare className="w-6 h-6 text-blue-600" />
-            <h1 className="text-3xl font-bold text-gray-900">Nootropic Comparison</h1>
+            <GitCompare className="w-6 h-6 text-primary-700" />
+            <h1 className="text-3xl font-bold text-ink-900">Nootropic Comparison</h1>
           </div>
-          <p className="text-gray-500 text-sm">
+          <p className="text-ink-500 text-sm">
             Select two supplements to compare their effects, dosage, safety profile, and synergies side-by-side. Get a data-driven verdict on which is right for your goals.
           </p>
         </div>
 
         {/* Supplement selectors */}
-        <Card className="border-gray-200">
+        <Card className="border-ink-200">
           <CardContent className="pt-5">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <SupplementSelect
@@ -413,7 +413,7 @@ export function ComparisonPage() {
             </div>
 
             {!bothSelected && (
-              <div className="mt-4 text-center text-sm text-gray-400">
+              <div className="mt-4 text-center text-sm text-ink-400">
                 Select two supplements above to start comparing
               </div>
             )}
@@ -425,20 +425,20 @@ export function ComparisonPage() {
             {/* Supplement headers with buy buttons */}
             <div className="grid grid-cols-2 gap-4">
               {[suppA, suppB].map((s, i) => (
-                <Card key={s.id} className={`border-2 ${i === 0 ? 'border-blue-200' : 'border-purple-200'}`}>
+                <Card key={s.id} className={`border-2 ${i === 0 ? 'border-primary-300' : 'border-primary-300'}`}>
                   <CardContent className="pt-4 pb-4">
                     <div className="space-y-2">
                       <Badge className={getCategoryColor(s.category)}>{s.category}</Badge>
-                      <h2 className="font-bold text-gray-900 text-base leading-snug">{s.name}</h2>
-                      <p className="text-xs text-gray-500 leading-relaxed line-clamp-2">{s.description}</p>
-                      <div className="flex items-center gap-1 text-xs text-gray-500">
+                      <h2 className="font-bold text-ink-900 text-base leading-snug">{s.name}</h2>
+                      <p className="text-xs text-ink-500 leading-relaxed line-clamp-2">{s.description}</p>
+                      <div className="flex items-center gap-1 text-xs text-ink-500">
                         <span className="font-medium">Dose:</span>
                         <span>{s.dosage.min}–{s.dosage.max}{s.dosage.unit}</span>
                       </div>
                       <AffiliateButtons supplement={s} />
                       <Link
                         to={`/supplements/${s.id}`}
-                        className="inline-flex items-center gap-1 text-xs text-blue-600 hover:underline mt-1"
+                        className="inline-flex items-center gap-1 text-xs text-primary-700 hover:underline mt-1"
                       >
                         Full profile <ArrowRight className="w-3 h-3" />
                       </Link>
@@ -452,10 +452,10 @@ export function ComparisonPage() {
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-base">Effects Profile Comparison</CardTitle>
-                <div className="grid grid-cols-[1fr_auto_1fr] text-xs font-semibold text-gray-400 mt-1 px-0 gap-3">
-                  <span className="text-blue-700 truncate">{suppA.name}</span>
+                <div className="grid grid-cols-[1fr_auto_1fr] text-xs font-semibold text-ink-400 mt-1 px-0 gap-3">
+                  <span className="text-primary-800 truncate">{suppA.name}</span>
                   <span className="w-28 text-center">Dimension</span>
-                  <span className="text-purple-700 text-right truncate">{suppB.name}</span>
+                  <span className="text-primary-800 text-right truncate">{suppB.name}</span>
                 </div>
               </CardHeader>
               <CardContent className="pt-0">
@@ -477,18 +477,18 @@ export function ComparisonPage() {
               {/* Dosage */}
               <Card>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm text-gray-700">Dosage & Timing</CardTitle>
+                  <CardTitle className="text-sm text-ink-700">Dosage & Timing</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   {[suppA, suppB].map((s, i) => (
                     <div key={s.id} className="flex gap-3">
                       <div className={`w-2 rounded-full flex-shrink-0 mt-1 ${i === 0 ? 'bg-blue-400' : 'bg-purple-400'}`} style={{ minHeight: 40 }} />
                       <div>
-                        <div className="font-semibold text-sm text-gray-900">{s.name}</div>
-                        <div className="text-xs text-gray-600">
+                        <div className="font-semibold text-sm text-ink-900">{s.name}</div>
+                        <div className="text-xs text-ink-700">
                           {s.dosage.min}–{s.dosage.max} {s.dosage.unit}
                         </div>
-                        <div className="text-xs text-gray-400">{s.dosage.timing}</div>
+                        <div className="text-xs text-ink-400">{s.dosage.timing}</div>
                       </div>
                     </div>
                   ))}
@@ -498,7 +498,7 @@ export function ComparisonPage() {
               {/* Category & Benefits */}
               <Card>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm text-gray-700">Category & Key Benefits</CardTitle>
+                  <CardTitle className="text-sm text-ink-700">Category & Key Benefits</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   {[suppA, suppB].map((s, i) => (
@@ -510,7 +510,7 @@ export function ComparisonPage() {
                       </div>
                       <div className="flex flex-wrap gap-1 ml-4">
                         {(s.benefits || []).slice(0, 3).map(b => (
-                          <span key={b} className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded">{b}</span>
+                          <span key={b} className="text-xs bg-surface-sunk text-ink-700 px-2 py-0.5 rounded">{b}</span>
                         ))}
                       </div>
                     </div>
@@ -521,7 +521,7 @@ export function ComparisonPage() {
               {/* Safety */}
               <Card>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm text-gray-700 flex items-center gap-2">
+                  <CardTitle className="text-sm text-ink-700 flex items-center gap-2">
                     <AlertTriangle className="w-4 h-4 text-orange-400" />
                     Safety & Warnings
                   </CardTitle>
@@ -533,7 +533,7 @@ export function ComparisonPage() {
                         <div className={`w-2 h-2 rounded-full flex-shrink-0 ${i === 0 ? 'bg-blue-400' : 'bg-purple-400'}`} />
                         <span className="font-semibold text-sm">{s.name}</span>
                         {(s.warnings?.length === 0 || (s.warnings?.length === 1 && s.warnings[0].toLowerCase().includes('well tolerated'))) && (
-                          <span className="flex items-center gap-0.5 text-xs text-green-600 font-medium">
+                          <span className="flex items-center gap-0.5 text-xs text-accent-700 font-medium">
                             <CheckCircle className="w-3 h-3" /> Generally safe
                           </span>
                         )}
@@ -541,7 +541,7 @@ export function ComparisonPage() {
                       {s.warnings?.length > 0 && (
                         <ul className="ml-4 space-y-0.5">
                           {s.warnings.map((w, wi) => (
-                            <li key={wi} className="text-xs text-gray-600 flex items-start gap-1">
+                            <li key={wi} className="text-xs text-ink-700 flex items-start gap-1">
                               <Minus className="w-3 h-3 text-orange-400 mt-0.5 flex-shrink-0" />
                               {w}
                             </li>
@@ -549,7 +549,7 @@ export function ComparisonPage() {
                         </ul>
                       )}
                       {s.interactions?.length > 0 && (
-                        <div className="ml-4 mt-1 text-xs text-gray-400">
+                        <div className="ml-4 mt-1 text-xs text-ink-400">
                           Interactions: {s.interactions.join(', ')}
                         </div>
                       )}
@@ -561,7 +561,7 @@ export function ComparisonPage() {
               {/* Synergies / Interactions */}
               <Card>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm text-gray-700 flex items-center gap-2">
+                  <CardTitle className="text-sm text-ink-700 flex items-center gap-2">
                     <Layers className="w-4 h-4 text-blue-400" />
                     Synergies & Compatibility
                   </CardTitle>
@@ -569,35 +569,35 @@ export function ComparisonPage() {
                 <CardContent>
                   {sharedInteractions.length > 0 ? (
                     <div className="mb-3">
-                      <p className="text-xs font-semibold text-orange-700 mb-1">Shared interactions — use caution:</p>
+                      <p className="text-xs font-semibold text-warn-700 mb-1">Shared interactions — use caution:</p>
                       <div className="flex flex-wrap gap-1">
                         {sharedInteractions.map(i => (
-                          <span key={i} className="text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded">{i}</span>
+                          <span key={i} className="text-xs bg-warn-100 text-warn-700 px-2 py-0.5 rounded">{i}</span>
                         ))}
                       </div>
                     </div>
                   ) : (
-                    <div className="flex items-center gap-2 mb-3 text-sm text-green-700">
+                    <div className="flex items-center gap-2 mb-3 text-sm text-accent-700">
                       <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
                       No known shared interaction risks
                     </div>
                   )}
 
-                  <p className="text-xs text-gray-500 mb-2">Supplements commonly paired with each:</p>
+                  <p className="text-xs text-ink-500 mb-2">Supplements commonly paired with each:</p>
                   {[suppA, suppB].map((s, i) => (
                     <div key={s.id} className="mb-2 last:mb-0">
                       <div className="flex items-center gap-1.5 mb-1">
                         <div className={`w-1.5 h-1.5 rounded-full ${i === 0 ? 'bg-blue-400' : 'bg-purple-400'}`} />
-                        <span className="text-xs font-medium text-gray-700">{s.name}</span>
+                        <span className="text-xs font-medium text-ink-700">{s.name}</span>
                       </div>
                       {s.interactions?.length > 0 ? (
                         <div className="ml-3 flex flex-wrap gap-1">
                           {s.interactions.slice(0, 3).map(int => (
-                            <span key={int} className="text-xs bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded">{int}</span>
+                            <span key={int} className="text-xs bg-primary-050 text-primary-800 px-1.5 py-0.5 rounded">{int}</span>
                           ))}
                         </div>
                       ) : (
-                        <span className="ml-3 text-xs text-gray-400">No listed interactions</span>
+                        <span className="ml-3 text-xs text-ink-400">No listed interactions</span>
                       )}
                     </div>
                   ))}
@@ -627,7 +627,7 @@ export function ComparisonPage() {
               </p>
               <Link
                 to={stackUrl}
-                className="inline-flex items-center gap-2 bg-white text-blue-700 font-semibold px-6 py-2.5 rounded-lg hover:bg-blue-50 transition-colors"
+                className="inline-flex items-center gap-2 bg-white text-primary-800 font-semibold px-6 py-2.5 rounded-lg hover:bg-primary-050 transition-colors"
               >
                 <Layers className="w-4 h-4" />
                 Open in Stack Builder
@@ -641,7 +641,7 @@ export function ComparisonPage() {
         {/* Suggested comparisons when nothing selected */}
         {!bothSelected && (
           <div className="mt-4">
-            <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Popular Comparisons</h2>
+            <h2 className="text-sm font-semibold text-ink-500 uppercase tracking-wide mb-3">Popular Comparisons</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {[
                 { a: 'caffeine', b: 'l-theanine', label: 'Caffeine vs L-Theanine' },
@@ -657,10 +657,10 @@ export function ComparisonPage() {
                     key={`${a}-${b}`}
                     type="button"
                     onClick={() => { setSuppA(sA); setSuppB(sB); }}
-                    className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all text-left group"
+                    className="flex items-center justify-between p-3 border border-ink-200 rounded-lg hover:border-primary-300 hover:bg-primary-050 transition-all text-left group"
                   >
-                    <span className="text-sm font-medium text-gray-800 group-hover:text-blue-700">{label}</span>
-                    <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-blue-500" />
+                    <span className="text-sm font-medium text-ink-900 group-hover:text-primary-800">{label}</span>
+                    <ArrowRight className="w-4 h-4 text-ink-400 group-hover:text-primary-500" />
                   </button>
                 );
               })}

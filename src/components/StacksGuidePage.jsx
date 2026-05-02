@@ -61,33 +61,33 @@ export function StacksGuidePage() {
       />
 
       {status === 'success' && (
-        <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-xl">
-          <div className="flex items-center gap-2 text-green-800 font-semibold mb-2">
+        <div className="mb-6 p-4 bg-accent-050 border border-accent-300 rounded-xl">
+          <div className="flex items-center gap-2 text-accent-700 font-semibold mb-2">
             <CheckCircle className="w-5 h-5" />
             {message}
           </div>
           <a
             href="/lead-magnet-v2.pdf"
             download
-            className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white px-6 py-3 rounded-lg font-medium transition-colors text-base"
+            className="inline-flex items-center gap-2 bg-accent-600 hover:bg-accent-0500 text-white px-6 py-3 rounded-lg font-medium transition-colors text-base"
           >
             <Download className="w-5 h-5" />
             Download the PDF
           </a>
-          <p className="text-xs text-green-700 mt-2">28 PubMed citations · 13 pages · 10 stacks</p>
+          <p className="text-xs text-accent-700 mt-2">28 PubMed citations · 13 pages · 10 stacks</p>
         </div>
       )}
 
       <div className="max-w-4xl mx-auto">
         <div className="mb-8">
-          <div className="flex items-center gap-2 text-sm text-blue-600 font-semibold mb-3">
+          <div className="flex items-center gap-2 text-sm text-primary-700 font-semibold mb-3">
             <FileText className="w-4 h-4" />
             Free PDF · Edition 01
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3 leading-tight">
+          <h1 className="text-3xl sm:text-4xl font-bold text-ink-900 mb-3 leading-tight">
             10 Evidence-Backed Nootropic Stacks
           </h1>
-          <p className="text-lg text-gray-600 mb-6 max-w-2xl">
+          <p className="text-lg text-ink-700 mb-6 max-w-2xl">
             Ten combinations the literature actually supports — each graded by trial design,
             replication, and population. 28 PubMed citations, 13 pages, no hype.
           </p>
@@ -95,18 +95,18 @@ export function StacksGuidePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8">
           {STACK_PREVIEWS.map((stack, i) => (
-            <div key={i} className="flex items-center gap-3 p-3 bg-white rounded-lg border border-gray-200">
-              <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-xs font-bold shrink-0">
+            <div key={i} className="flex items-center gap-3 p-3 bg-white rounded-lg border border-ink-200">
+              <div className="w-8 h-8 rounded-full bg-primary-100 text-primary-800 flex items-center justify-center text-xs font-bold shrink-0">
                 {String(i + 1).padStart(2, '0')}
               </div>
               <div className="flex-1 min-w-0">
-                <div className="text-sm font-medium text-gray-900 truncate">{stack.name}</div>
-                <div className="text-xs text-gray-500">{stack.target}</div>
+                <div className="text-sm font-medium text-ink-900 truncate">{stack.name}</div>
+                <div className="text-xs text-ink-500">{stack.target}</div>
               </div>
               <span className={`text-xs font-semibold px-2 py-0.5 rounded shrink-0 ${
-                stack.tier === 'Tier 1' ? 'bg-green-100 text-green-700' :
-                stack.tier === 'Tier 2' ? 'bg-yellow-100 text-yellow-700' :
-                'bg-gray-100 text-gray-600'
+                stack.tier === 'Tier 1' ? 'bg-accent-100 text-accent-700' :
+                stack.tier === 'Tier 2' ? 'bg-warn-100 text-warn-700' :
+                'bg-surface-sunk text-ink-700'
               }`}>
                 {stack.tier}
               </span>
@@ -114,12 +114,12 @@ export function StacksGuidePage() {
           ))}
         </div>
 
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-8">
-          <h2 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
-            <Mail className="w-5 h-5 text-blue-600" />
+        <div className="bg-primary-050 border border-primary-300 rounded-xl p-6 mb-8">
+          <h2 className="text-lg font-semibold text-ink-900 mb-3 flex items-center gap-2">
+            <Mail className="w-5 h-5 text-primary-700" />
             Get the full guide
           </h2>
-          <p className="text-sm text-gray-600 mb-4">
+          <p className="text-sm text-ink-700 mb-4">
             Enter your email and we'll send you the download link. You'll also get our
             weekly nootropic research digest — new studies, stack tips, and what's working.
             No spam, unsubscribe anytime.
@@ -145,7 +145,7 @@ export function StacksGuidePage() {
             </Button>
           </form>
           {status === 'error' && (
-            <p className="text-xs text-red-600 mt-2">{message}</p>
+            <p className="text-xs text-danger-500 mt-2">{message}</p>
           )}
         </div>
 
@@ -155,10 +155,10 @@ export function StacksGuidePage() {
             { icon: Layers, label: '10 stacks', desc: 'Dosed and evidence-graded' },
             { icon: Star, label: 'Tier ratings', desc: 'Tier 1–3 by study quality' },
           ].map((item, i) => (
-            <div key={i} className="text-center p-4 bg-white rounded-lg border border-gray-200">
-              <item.icon className="w-6 h-6 text-blue-600 mx-auto mb-2" />
-              <div className="text-sm font-semibold text-gray-900">{item.label}</div>
-              <div className="text-xs text-gray-500">{item.desc}</div>
+            <div key={i} className="text-center p-4 bg-white rounded-lg border border-ink-200">
+              <item.icon className="w-6 h-6 text-primary-700 mx-auto mb-2" />
+              <div className="text-sm font-semibold text-ink-900">{item.label}</div>
+              <div className="text-xs text-ink-500">{item.desc}</div>
             </div>
           ))}
         </div>
