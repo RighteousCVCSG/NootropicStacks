@@ -1,23 +1,43 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button.jsx';
 import { Badge } from '@/components/ui/badge.jsx';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card.jsx';
-import { Plus, Info, ShoppingCart } from 'lucide-react';
+import { Plus, Info, ShoppingCart, TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import { useStack } from '../contexts/StackContext.jsx';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
 import { withAffiliateUtms } from '@/lib/affiliate.js';
 import { AffiliateDisclosureInline } from './AffiliateDisclosure.jsx';
+import { TierBadge } from './TierBadge.jsx';
+import { calculateStackScore } from '../utils/stackAnalyzer.js';
 
 export function SupplementCard({ supplement, onViewDetails }) {
-  const { addSupplement, stack } = useStack();
-  
+  const { addSupplement, stack, userGoals, stackScore } = useStack();
+
   const isInStack = stack.some(item => item.supplementId === supplement.id);
-  
+
+  // What-if simulator: precompute the score delta if this candidate were
+  // added to the current stack. Cheap enough to run on every render of a
+  // visible card; useMemo keys on stack/userGoals/supplement so the work
+  // only happens when something actually changes.
+  const whatIf = useMemo(() => {
+    if (isInStack) return null;
+    const candidate = {
+      supplementId: supplement.id,
+      dosage: (supplement.dosage.min + supplement.dosage.max) / 2,
+      timing: supplement.dosage.timing,
+    };
+    const nextStack = [...stack, candidate];
+    const nextScore = calculateStackScore(nextStack, userGoals)?.headlineScores?.overall;
+    const cur = stackScore?.headlineScores?.overall;
+    if (cur == null || nextScore == null) return null;
+    const delta = nextScore - cur;
+    return { current: cur, next: nextScore, delta };
+  }, [isInStack, supplement.id, supplement.dosage.min, supplement.dosage.max, supplement.dosage.timing, stack, userGoals, stackScore]);
+
   const handleAddToStack = () => {
     const success = addSupplement(supplement);
     if (!success) {
-      // Could show a toast notification here
       console.log('Supplement already in stack');
     }
   };
@@ -63,14 +83,17 @@ export function SupplementCard({ supplement, onViewDetails }) {
   return (
     <Card className="h-full flex flex-col hover:shadow-lg transition-shadow duration-200">
       <CardHeader className="pb-3">
-        <div className="flex items-start justify-between">
-          <div className="flex-1">
+        <div className="flex items-start justify-between gap-2">
+          <div className="flex-1 min-w-0">
             <CardTitle className="text-lg font-semibold leading-tight mb-2">
               {supplement.name}
             </CardTitle>
-            <Badge className={`${getCategoryColor(supplement.category)} text-xs`}>
-              {supplement.category.replace('-', ' ')}
-            </Badge>
+            <div className="flex items-center gap-1.5 flex-wrap">
+              <TierBadge supplementId={supplement.id} />
+              <Badge variant="outline" className="text-xs capitalize">
+                {supplement.category.replace('-', ' ')}
+              </Badge>
+            </div>
           </div>
         </div>
       </CardHeader>
@@ -98,6 +121,38 @@ export function SupplementCard({ supplement, onViewDetails }) {
         <div className="mt-3 text-xs text-gray-500">
           Dosage: {supplement.dosage.min}-{supplement.dosage.max} {supplement.dosage.unit}
         </div>
+
+        {whatIf && stack.length > 0 && (
+          <div
+            className="mt-3 flex items-center gap-2 text-xs px-2 py-1.5 rounded-md bg-surface-sunk border border-ink-200"
+            title={`Adding ${supplement.name} would move your Stack Score from ${whatIf.current.toFixed(1)} to ${whatIf.next.toFixed(1)}`}
+          >
+            {whatIf.delta > 0.05 ? (
+              <TrendingUp className="w-3.5 h-3.5 text-accent-700 shrink-0" />
+            ) : whatIf.delta < -0.05 ? (
+              <TrendingDown className="w-3.5 h-3.5 text-danger-500 shrink-0" />
+            ) : (
+              <Minus className="w-3.5 h-3.5 text-ink-500 shrink-0" />
+            )}
+            <span className="text-ink-700">
+              Adds → Score{' '}
+              <span className="font-semibold text-ink-900">
+                {whatIf.current.toFixed(1)} → {whatIf.next.toFixed(1)}
+              </span>
+              {Math.abs(whatIf.delta) >= 0.05 && (
+                <span
+                  className={
+                    whatIf.delta > 0
+                      ? 'ml-1 text-accent-700 font-semibold'
+                      : 'ml-1 text-danger-500 font-semibold'
+                  }
+                >
+                  ({whatIf.delta > 0 ? '+' : ''}{whatIf.delta.toFixed(1)})
+                </span>
+              )}
+            </span>
+          </div>
+        )}
       </CardContent>
       
       <CardFooter className="pt-3 flex flex-col gap-2">
