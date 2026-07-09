@@ -4,7 +4,7 @@ import { ArrowRight, ArrowLeft, Sparkles, Brain, Zap, Heart, Moon, Shield, Plus,
 import { supplements } from '../data/supplements.js';
 import { useStack } from '../contexts/StackContext.jsx';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
-import { withAffiliateUtms } from '@/lib/affiliate.js';
+import { withAffiliateUtms, withIherbRef } from '@/lib/affiliate.js';
 import { SEOOptimizer } from './SEOOptimizer.jsx';
 import { track } from '../lib/analytics.js';
 
@@ -291,7 +291,7 @@ export function StackQuiz() {
                           const links = AFFILIATE_LINKS[rec.id];
                           const url = links.nootropicsdepot || (
                             links.amazon ? withAffiliateUtms(links.amazon, { campaign: `quiz-${rec.id}` }) : (
-                              links.iherb || Object.values(links).find(v => typeof v === 'string')
+                              (links.iherb && withIherbRef(links.iherb)) || Object.values(links).find(v => typeof v === 'string')
                             )
                           );
                           if (url) window.open(url, '_blank', 'noopener,noreferrer');

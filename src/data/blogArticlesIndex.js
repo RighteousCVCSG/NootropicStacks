@@ -248,7 +248,7 @@ export const blogArticlesIndex = [
   {
     "slug": "natural-nootropics-for-adhd-focus-without-prescription",
     "title": "Natural Nootropics for ADHD: Focus Support Without a Prescription",
-    "excerpt": "",
+    "excerpt": "Explore the neurochemistry of ADHD and which natural nootropics — L-tyrosine, Rhodiola, Lion's Mane, Bacopa, and more — can realistically support focus without a prescription.",
     "publishedDate": "2026-04-28",
     "readTime": "11 min read",
     "tags": [
@@ -262,7 +262,7 @@ export const blogArticlesIndex = [
   {
     "slug": "nmn-nad-plus-complete-guide-longevity-nootropic",
     "title": "NMN and NAD+: The Complete Guide to the Longevity Nootropic",
-    "excerpt": "",
+    "excerpt": "A thorough breakdown of NAD+, why it declines with age, the NMN vs NR debate, optimal dosing and timing, stacking strategies, and honest assessment of cognitive vs anti-aging claims.",
     "publishedDate": "2026-04-28",
     "readTime": "12 min read",
     "tags": [
@@ -277,7 +277,7 @@ export const blogArticlesIndex = [
   {
     "slug": "nootropics-vs-adderall-natural-alternatives-compared",
     "title": "Nootropics vs Adderall: What Natural Alternatives Actually Deliver",
-    "excerpt": "",
+    "excerpt": "An honest, no-hype comparison of Adderall and natural nootropic alternatives — what each actually delivers, who should not substitute, and how to build the closest natural stack.",
     "publishedDate": "2026-04-28",
     "readTime": "11 min read",
     "tags": [
@@ -292,7 +292,7 @@ export const blogArticlesIndex = [
   {
     "slug": "complete-racetam-guide-piracetam-aniracetam-oxiracetam",
     "title": "The Complete Racetam Guide: Piracetam, Aniracetam, Oxiracetam and More",
-    "excerpt": "",
+    "excerpt": "Everything you need to know about racetams — history, mechanisms, individual compound profiles, the choline requirement, cycling protocols, and what the research actually shows.",
     "publishedDate": "2026-04-28",
     "readTime": "13 min read",
     "tags": [
@@ -307,7 +307,7 @@ export const blogArticlesIndex = [
   {
     "slug": "best-nootropics-for-sleep-recovery-and-next-day-performance",
     "title": "Best Nootropics for Sleep, Recovery, and Next-Day Cognitive Performance",
-    "excerpt": "",
+    "excerpt": "Why sleep is the most powerful nootropic available, what disrupts it, and a complete evening protocol with Magnesium Glycinate, L-Theanine, Ashwagandha, Apigenin, and low-dose Melatonin.",
     "publishedDate": "2026-04-28",
     "readTime": "12 min read",
     "tags": [
@@ -322,7 +322,7 @@ export const blogArticlesIndex = [
   {
     "slug": "alpha-brain-review-2026-does-it-actually-work",
     "title": "Alpha Brain Review 2026: Does It Actually Work?",
-    "excerpt": "",
+    "excerpt": "An honest review of Onnit Alpha Brain in 2026 — ingredient breakdown, the proprietary blend problem, what the clinical trial actually showed, and whether it's worth $80/month.",
     "publishedDate": "2026-04-28",
     "readTime": "11 min read",
     "tags": [
@@ -337,7 +337,7 @@ export const blogArticlesIndex = [
   {
     "slug": "qualia-mind-review-2026-premium-nootropic-worth-the-price",
     "title": "Qualia Mind Review 2026: Is This Premium Nootropic Worth $139?",
-    "excerpt": "",
+    "excerpt": "A deep-dive review of Qualia Mind by Neurohacker Collective — 28 ingredients, $139/month, and the honest question of whether premium complexity beats targeted simplicity.",
     "publishedDate": "2026-04-28",
     "readTime": "12 min read",
     "tags": [
@@ -352,7 +352,7 @@ export const blogArticlesIndex = [
   {
     "slug": "mind-lab-pro-vs-alpha-brain-which-is-better",
     "title": "Mind Lab Pro vs Alpha Brain: Which Nootropic Stack Wins in 2026?",
-    "excerpt": "",
+    "excerpt": "A head-to-head comparison of Mind Lab Pro and Alpha Brain — ingredients, doses, transparency, price, and which stack is actually better for memory, focus, and mood.",
     "publishedDate": "2026-04-28",
     "readTime": "10 min read",
     "tags": [
@@ -367,7 +367,7 @@ export const blogArticlesIndex = [
   {
     "slug": "lions-mane-vs-bacopa-which-is-better-for-memory",
     "title": "Lion's Mane vs Bacopa: Which Is Better for Memory and Learning?",
-    "excerpt": "",
+    "excerpt": "Lion's Mane and Bacopa both improve memory, but through completely different mechanisms on different timescales. Here's how to choose, dose, and combine them.",
     "publishedDate": "2026-04-28",
     "readTime": "9 min read",
     "tags": [
@@ -382,7 +382,7 @@ export const blogArticlesIndex = [
   {
     "slug": "ashwagandha-vs-rhodiola-which-adaptogen-is-right-for-you",
     "title": "Ashwagandha vs Rhodiola: Which Adaptogen Is Right for You?",
-    "excerpt": "",
+    "excerpt": "Ashwagandha calms and rebuilds; Rhodiola energizes and sharpens. A complete comparison of mechanisms, research, timing, dosing, and who should take which adaptogen.",
     "publishedDate": "2026-04-28",
     "readTime": "10 min read",
     "tags": [
@@ -398,7 +398,7 @@ export const blogArticlesIndex = [
   {
     "slug": "nootropics-for-anxiety-what-actually-works",
     "title": "Nootropics for Anxiety: What Actually Works (and What Doesn't)",
-    "excerpt": "",
+    "excerpt": "L-Theanine, Ashwagandha, Magnesium, and a few others have real evidence for anxiety reduction. Here's what works, what's overhyped, what to avoid, and how to build a stack.",
     "publishedDate": "2026-04-28",
     "readTime": "11 min read",
     "tags": [

@@ -1,12 +1,14 @@
 import express from 'express';
 import { fileURLToPath } from 'url';
 import { basename, dirname, extname, join, resolve } from 'path';
-import { existsSync, statSync } from 'fs';
+import { existsSync, statSync, readFileSync, mkdirSync } from 'fs';
+import { appendFile as appendFileAsync } from 'fs/promises';
 import mysql from 'mysql2/promise';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
 import crypto from 'crypto';
+import { supplements } from './src/data/supplements.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -22,6 +24,405 @@ export function resolveStaticDir(baseDir) {
 }
 
 const staticDir = resolveStaticDir(__dirname);
+
+// ============================================================
+// PER-ROUTE SEO META INJECTION
+// ============================================================
+// Railway's Chromium prerender step no-ops in production, so every route
+// was serving the homepage's title/description/canonical/JSON-LD verbatim
+// to non-JS clients (search + AI crawlers). This section loads dist/index.html
+// once as a template, splits it around the static JSON-LD block, and
+// generates a route-specific head for every request based on a static
+// route table plus dynamic lookups for /supplements/:id and /blog/:slug.
+const SITE_URL = 'https://nootropicstacker.com';
+const JSONLD_MARKER = '<!-- Static JSON-LD fallback for non-JS crawlers.';
+
+let INDEX_TEMPLATE = '';
+try {
+  INDEX_TEMPLATE = readFileSync(join(staticDir, 'index.html'), 'utf-8');
+} catch (err) {
+  console.error('Could not read index.html template for SEO injection:', err.message);
+}
+
+let TEMPLATE_HEAD_PREFIX = INDEX_TEMPLATE;
+let TEMPLATE_AFTER_HEAD = '';
+{
+  const headEndIdx = INDEX_TEMPLATE.indexOf('</head>');
+  if (headEndIdx !== -1) {
+    const jsonLdIdx = INDEX_TEMPLATE.indexOf(JSONLD_MARKER);
+    const splitIdx = jsonLdIdx !== -1 && jsonLdIdx < headEndIdx ? jsonLdIdx : headEndIdx;
+    TEMPLATE_HEAD_PREFIX = INDEX_TEMPLATE.slice(0, splitIdx);
+    TEMPLATE_AFTER_HEAD = INDEX_TEMPLATE.slice(headEndIdx);
+  }
+}
+
+function escapeHtml(str) {
+  return String(str ?? '').replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  }[c]));
+}
+
+// Swaps title/description/canonical/OG/Twitter tags in the pre-JSON-LD head
+// slice. Every tag it targets exists exactly once in the template, so a
+// single regex replace per tag is safe and cheap.
+function injectHead(headHtml, { title, description, canonical, ogType, robots }) {
+  let out = headHtml;
+  const safeTitle = escapeHtml(title);
+  const safeDesc = escapeHtml(description);
+
+  out = out.replace(/<title>[\s\S]*?<\/title>/, `<title>${safeTitle}</title>`);
+  out = out.replace(/<meta name="description" content="[^"]*" \/>/, `<meta name="description" content="${safeDesc}" />`);
+
+  if (canonical) {
+    const safeCanonical = escapeHtml(canonical);
+    out = out.replace(/<link rel="canonical" href="[^"]*" \/>/, `<link rel="canonical" href="${safeCanonical}" />`);
+    out = out.replace(/<meta property="og:url" content="[^"]*" \/>/, `<meta property="og:url" content="${safeCanonical}" />`);
+  } else {
+    out = out.replace(/\s*<link rel="canonical" href="[^"]*" \/>\n?/, '\n');
+  }
+
+  out = out.replace(/<meta property="og:title" content="[^"]*" \/>/, `<meta property="og:title" content="${safeTitle}" />`);
+  out = out.replace(/<meta property="og:description" content="[^"]*" \/>/, `<meta property="og:description" content="${safeDesc}" />`);
+  out = out.replace(/<meta name="twitter:title" content="[^"]*" \/>/, `<meta name="twitter:title" content="${safeTitle}" />`);
+  out = out.replace(/<meta name="twitter:description" content="[^"]*" \/>/, `<meta name="twitter:description" content="${safeDesc}" />`);
+
+  if (ogType) {
+    out = out.replace(/<meta property="og:type" content="[^"]*" \/>/, `<meta property="og:type" content="${escapeHtml(ogType)}" />`);
+  }
+  out = out.replace(/<meta name="robots" content="[^"]*" \/>/, `<meta name="robots" content="${escapeHtml(robots || 'index, follow')}" />`);
+
+  return out;
+}
+
+function renderPage({ title, description, canonical, ogType, robots, jsonLd }) {
+  if (!TEMPLATE_AFTER_HEAD) return INDEX_TEMPLATE; // template failed to load; fall back untouched
+  const head = injectHead(TEMPLATE_HEAD_PREFIX, { title, description, canonical, ogType, robots });
+  const scripts = (jsonLd || [])
+    .filter(Boolean)
+    .map((obj) => `    <script type="application/ld+json">\n    ${JSON.stringify(obj)}\n    </script>`)
+    .join('\n');
+  return `${head}${scripts ? scripts + '\n' : ''}  ${TEMPLATE_AFTER_HEAD}`;
+}
+
+const ORGANIZATION_JSONLD = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'NootropicStacker',
+  url: `${SITE_URL}/`,
+  logo: `${SITE_URL}/favicon.svg`,
+  sameAs: ['https://twitter.com/nootropicstacker'],
+};
+
+function buildBreadcrumbJsonLd(crumbs) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: crumbs.map((c, idx) => ({
+      '@type': 'ListItem',
+      position: idx + 1,
+      name: c.name,
+      item: c.url,
+    })),
+  };
+}
+
+// Mirrors SEOOptimizer.jsx's generateSupplementStructuredData so server- and
+// client-rendered schema for the same supplement stay in sync.
+function buildSupplementJsonLd(supplement) {
+  const slug = supplement.id;
+  const url = `${SITE_URL}/supplements/${encodeURIComponent(slug)}`;
+  const productSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: supplement.name,
+    description: supplement.description,
+    category: supplement.category,
+    brand: { '@type': 'Brand', name: 'Various Manufacturers' },
+    offers: {
+      '@type': 'AggregateOffer',
+      priceCurrency: 'USD',
+      lowPrice: '10',
+      highPrice: '200',
+      availability: 'https://schema.org/InStock',
+    },
+    additionalProperty: [
+      { '@type': 'PropertyValue', name: 'Dosage Range', value: `${supplement.dosage.min}-${supplement.dosage.max} ${supplement.dosage.unit}` },
+      { '@type': 'PropertyValue', name: 'Timing', value: supplement.dosage.timing },
+    ],
+  };
+  const medicalWebPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'MedicalWebPage',
+    name: `${supplement.name} — Effects, Dosage & Safety`,
+    description: supplement.description,
+    url,
+    about: {
+      '@type': 'DietarySupplement',
+      name: supplement.name,
+      description: supplement.description,
+      maximumIntake: `${supplement.dosage.max} ${supplement.dosage.unit}`,
+      recommendedIntake: {
+        '@type': 'RecommendedDoseSchedule',
+        doseUnit: supplement.dosage.unit,
+        doseValue: `${supplement.dosage.min}-${supplement.dosage.max}`,
+      },
+    },
+    publisher: { '@type': 'Organization', name: 'NootropicStacker', url: SITE_URL },
+    breadcrumb: buildBreadcrumbJsonLd([
+      { name: 'Home', url: `${SITE_URL}/` },
+      { name: 'Supplements', url: `${SITE_URL}/supplements` },
+      { name: supplement.name, url },
+    ]),
+  };
+  return [ORGANIZATION_JSONLD, productSchema, medicalWebPageSchema];
+}
+
+// Mirrors lib/schema/builders.js buildArticleSchema/buildBreadcrumbSchema
+// (used client-side in BlogArticlePage.jsx) without importing that module,
+// since it pulls in priceTable/evidenceTier data server.js doesn't need.
+function buildArticleJsonLd(article) {
+  const url = `${SITE_URL}/blog/${article.slug}`;
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.title,
+    description: article.excerpt || article.description || '',
+    image: `${SITE_URL}/og-image.png`,
+    datePublished: article.publishedDate,
+    dateModified: article.dateModified || article.publishedDate,
+    author: { '@type': 'Organization', name: 'NootropicStacker' },
+    publisher: {
+      '@type': 'Organization',
+      name: 'NootropicStacker',
+      logo: { '@type': 'ImageObject', url: `${SITE_URL}/og-image.png` },
+    },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+  };
+  const breadcrumbSchema = buildBreadcrumbJsonLd([
+    { name: 'Home', url: `${SITE_URL}/` },
+    { name: 'Blog', url: `${SITE_URL}/blog` },
+    { name: article.title, url },
+  ]);
+  return [ORGANIZATION_JSONLD, articleSchema, breadcrumbSchema];
+}
+
+// Hand-written per-route titles/descriptions mirroring the strings each page
+// sets client-side via <SEOOptimizer customTitle=.../> (see src/App.jsx and
+// each page component) — kept in sync manually since there's no shared
+// source of truth between the SPA and this server-rendered head.
+const STATIC_ROUTES = {
+  '/build': {
+    title: 'Stack Builder — Pick Goals, Add Supplements, Score the Stack',
+    description: 'Free interactive nootropic stack builder. Choose goals, browse 195 supplements, get a Stack Score across four 0–25 dimensions, and see interaction warnings live.',
+  },
+  '/quiz': {
+    title: 'Stack Quiz — Get a Personalized Nootropic Starting Point',
+    description: 'Five quick questions and you get a starter nootropic stack matched to your goals — focus, sleep, energy, mood, or memory.',
+  },
+  '/supplements': {
+    title: 'Supplement Library — 195 Nootropics with Effects & Dosages',
+    description: 'Search 195 nootropic and biohacking supplements by goal, evidence tier, or category. Effect profiles, dosage ranges, interaction warnings, every claim cited.',
+  },
+  '/stacks': {
+    title: 'Predefined Nootropic Stacks — Ready-Made Combinations | NootropicStacker',
+    description: 'Browse ready-made nootropic stacks for focus, memory, energy, and more — from beginner to advanced, with full supplement lists and dosing.',
+  },
+  '/best-stacks': {
+    title: 'Best Nootropic Stacks 2026: 8 Expert-Curated Combinations | NootropicStacker',
+    description: 'The 8 best nootropic stacks in 2026, curated by goal: focus, memory, energy, stress, sleep, longevity, and budget. Includes exact dosing, cost, and buy links.',
+  },
+  '/best-nootropics': {
+    title: 'Best Nootropics 2026: Top 10 Ranked by Evidence | NootropicStacker',
+    description: 'The 10 best nootropics in 2026, ranked by clinical evidence, safety, and real-world results. Includes dosing, timing, and where to buy quality-tested supplements.',
+  },
+  '/compare-supplements': {
+    title: 'Compare Nootropics Side-by-Side | NootropicStacker',
+    description: 'Compare any two nootropics side-by-side. Effects, dosage, safety, synergies, and a data-driven verdict.',
+  },
+  '/blog': {
+    title: 'Nootropic Blog — Research, Stacks & Trends | NootropicStacker',
+    description: "Deep dives into nootropic research, stack guides, and what's trending in the biohacking world.",
+  },
+  '/start-here': {
+    title: 'Nootropics Guide for Beginners 2026 — How to Start Safely | NootropicStacker',
+    description: "Complete beginner's guide to nootropics: how to start, which supplements to choose, safe stacking principles, and the 5 steps to your first stack. Free stack builder included.",
+  },
+  '/learn': {
+    title: 'Learn — NootropicStacker',
+    description: "Your hub for nootropic learning: blog, research library, glossary, family guides, FAQ, news, videos, reviews, and a beginner's start-here guide.",
+  },
+  '/faq': {
+    title: 'FAQ — Nootropic Stacking Questions Answered | NootropicStacker',
+    description: 'Answers to common questions about nootropic stacking, supplement safety, cycling, and how to use NootropicStacker.',
+  },
+  '/contact': {
+    title: 'Contact NootropicStacker',
+    description: 'Get in touch with the NootropicStacker team.',
+  },
+  '/nootropics-for-focus': {
+    title: 'Best Nootropics for Focus 2026 — Ranked by Evidence | NootropicStacker',
+    description: 'The 8 best nootropics for focus in 2026, ranked by clinical evidence. Includes dosage ranges (100mg–3000mg), timing, mechanisms, and a free focus stack builder. Find your optimal focus supplement stack.',
+  },
+  '/nootropics-for-anxiety': {
+    title: 'Best Nootropics for Anxiety 2026 — Evidence-Based Guide | NootropicStacker',
+    description: 'The 8 best natural supplements for anxiety in 2026, ranked by clinical evidence. Includes mechanisms, dosing, anxiety type matching, and safety guidance.',
+  },
+  '/reviews': {
+    title: 'Best Nootropic Supplements Reviewed 2026 — Mind Lab Pro, Alpha Brain & More | NootropicStacker',
+    description: 'Honest reviews of the best nootropic supplements in 2026. Mind Lab Pro, Alpha Brain, Qualia Mind compared on ingredients, dosing, and value.',
+  },
+  '/families': {
+    title: 'Supplement Family Guides | NootropicStacker',
+    description: 'Learn about supplement families including racetams, cholinergics, adaptogens, stimulants, and vitamins.',
+  },
+  '/news': {
+    title: 'Nootropic News & Research | NootropicStacker',
+    description: 'Latest nootropic supplement news, research updates, and industry trends.',
+  },
+  '/research-library': {
+    title: 'Nootropics Research Library — Peer-Reviewed Studies | NootropicStacker',
+    description: 'Plain-English summaries of peer-reviewed nootropic research. Every study includes PubMed links, evidence quality ratings, and actionable supplementation takeaways.',
+  },
+  '/glossary': {
+    title: 'Nootropics Glossary — Key Terms & Concepts | NootropicStacker',
+    description: 'Plain-English definitions of nootropic terms, compounds, and concepts. From acetylcholine to withanolides.',
+  },
+  '/downloads/10-stacks': {
+    title: '10 Evidence-Backed Nootropic Stacks — Free PDF | NootropicStacker',
+    description: 'Download a free PDF guide to 10 nootropic stacks. Every claim cites PubMed. Written by Vera Huang, CMO.',
+  },
+  '/celebrity-stacks': {
+    title: 'Celebrity Supplement Stacks — What Experts Actually Take | NootropicStacker',
+    description: 'We traced every supplement Huberman, Bryan Johnson, Peter Attia, Rhonda Patrick, and 4 others actually take back to the exact podcast episode or book page.',
+  },
+  '/videos': {
+    title: 'Nootropics Video Library — Curated Educational Videos | NootropicStacker',
+    description: 'Curated educational videos on supplements, stacking strategies, and the neuroscience behind cognitive enhancement — from top researchers and educators.',
+  },
+  '/affiliate-disclosure': {
+    title: 'Affiliate Disclosure Policy | NootropicStacker',
+    description: 'Learn about how NootropicStacker earns commissions through affiliate partnerships while maintaining editorial independence.',
+  },
+  '/admin': {
+    title: 'Admin | NootropicStacker',
+    description: 'NootropicStacker admin console.',
+    robots: 'noindex, nofollow',
+  },
+  '/brand-kit': {
+    title: 'Brand Kit | NootropicStacker',
+    description: 'Internal brand kit smoke test page.',
+    robots: 'noindex, nofollow',
+  },
+};
+
+// Cache rendered HTML per path — the route table + supplement/article data
+// are static for the life of the process, so there's no reason to
+// re-run the regex replacements on every request.
+const renderCache = new Map();
+
+function renderStaticRoute(pathname) {
+  if (renderCache.has(pathname)) return renderCache.get(pathname);
+  const entry = STATIC_ROUTES[pathname];
+  if (!entry) return null;
+  const canonical = `${SITE_URL}${pathname}`;
+  const label = entry.title.split(/ — | \| /)[0];
+  const html = renderPage({
+    title: entry.title,
+    description: entry.description,
+    canonical: entry.robots?.startsWith('noindex') ? null : canonical,
+    robots: entry.robots,
+    jsonLd: [ORGANIZATION_JSONLD, buildBreadcrumbJsonLd([
+      { name: 'Home', url: `${SITE_URL}/` },
+      { name: label, url: canonical },
+    ])],
+  });
+  renderCache.set(pathname, html);
+  return html;
+}
+
+const supplementById = new Map(supplements.map((s) => [s.id, s]));
+
+function renderSupplementRoute(id) {
+  const cacheKey = `/supplements/${id}`;
+  if (renderCache.has(cacheKey)) return renderCache.get(cacheKey);
+  const supplement = supplementById.get(id);
+  if (!supplement) return null;
+  const canonical = `${SITE_URL}/supplements/${encodeURIComponent(supplement.id)}`;
+  const description = (supplement.description || '').slice(0, 155);
+  const html = renderPage({
+    title: `${supplement.name} — Effects, Dosage & Safety | NootropicStacker`,
+    description,
+    canonical,
+    jsonLd: buildSupplementJsonLd(supplement),
+  });
+  renderCache.set(cacheKey, html);
+  return html;
+}
+
+const articleJsonCache = new Map();
+
+function loadArticle(slug) {
+  if (articleJsonCache.has(slug)) return articleJsonCache.get(slug);
+  let article = null;
+  try {
+    const raw = readFileSync(join(staticDir, 'articles', `${slug}.json`), 'utf-8');
+    article = JSON.parse(raw);
+  } catch {
+    article = null;
+  }
+  articleJsonCache.set(slug, article);
+  return article;
+}
+
+function renderBlogRoute(slug) {
+  const cacheKey = `/blog/${slug}`;
+  if (renderCache.has(cacheKey)) return renderCache.get(cacheKey);
+  const article = loadArticle(slug);
+  if (!article) return null;
+  const canonical = `${SITE_URL}/blog/${encodeURIComponent(article.slug)}`;
+  const description = (article.excerpt || article.description || '').slice(0, 155);
+  const html = renderPage({
+    title: `${article.title} | NootropicStacker`,
+    description,
+    canonical,
+    ogType: 'article',
+    jsonLd: buildArticleJsonLd(article),
+  });
+  renderCache.set(cacheKey, html);
+  return html;
+}
+
+function renderNotFound() {
+  if (renderCache.has('__404__')) return renderCache.get('__404__');
+  const html = renderPage({
+    title: 'Page Not Found | NootropicStacker',
+    description: "The page you're looking for doesn't exist. Explore the stack builder, supplement library, or blog instead.",
+    canonical: null,
+    robots: 'noindex, follow',
+    jsonLd: [ORGANIZATION_JSONLD],
+  });
+  renderCache.set('__404__', html);
+  return html;
+}
+
+// Routes that render dynamically but aren't worth per-slug titles yet
+// (comparison pairs, legacy guide redirects) — still get a self-referencing
+// canonical instead of silently inheriting the homepage's.
+const GENERIC_DYNAMIC_PREFIXES = {
+  '/compare/': { title: 'Compare Nootropics Side-by-Side | NootropicStacker', description: 'Compare any two nootropics side-by-side. Effects, dosage, safety, synergies, and a data-driven verdict.' },
+};
+
+function renderGenericDynamicRoute(pathname, meta) {
+  if (renderCache.has(pathname)) return renderCache.get(pathname);
+  const html = renderPage({
+    title: meta.title,
+    description: meta.description,
+    canonical: `${SITE_URL}${pathname}`,
+    jsonLd: [ORGANIZATION_JSONLD],
+  });
+  renderCache.set(pathname, html);
+  return html;
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -142,10 +543,33 @@ function setCookieAndRespond(res, userId, user) {
   res.json({ user: { id: user.id, email: user.email, name: user.name } });
 }
 
+// Homepage — registered ahead of express.static so it always wins the
+// route match, rather than depending on serve-static's index/directory
+// fallthrough behavior (which does not reliably skip "/" even with
+// `index: false` — it emits a 'directory' redirect event whose outcome
+// depends on send/serve-static internals). The template already ships
+// correct meta + full JSON-LD for home, so it's served unmodified aside
+// from the shared HTML cache header.
+app.get('/', (req, res) => {
+  res.set('Cache-Control', 'public, max-age=300');
+  res.type('html').send(INDEX_TEMPLATE);
+});
+
 // --- Serve static files ---
+// Content-hashed build assets can cache forever; everything else (favicon,
+// robots.txt, downloads, etc.) keeps the previous 1-day default.
+app.use('/assets', express.static(join(staticDir, 'assets'), {
+  maxAge: '1y',
+  immutable: true,
+  etag: true,
+}));
 app.use(express.static(staticDir, {
   maxAge: '1d',
-  etag: true
+  etag: true,
+  // Don't auto-serve dist/index.html for directory-style requests (i.e. "/")
+  // — that would bypass the catch-all below and its per-route meta
+  // injection + Cache-Control override for HTML responses.
+  index: false,
 }));
 
 // ============================================================
@@ -206,10 +630,26 @@ app.post('/api/auth/logout', (req, res) => {
   res.json({ ok: true });
 });
 
-// Get current user
-app.get('/api/auth/me', verifyToken, async (req, res) => {
+// Get current user. Anonymous visitors (no session cookie) are NOT an error
+// condition — this fires on every page load, so it returns 200 {user:null}
+// instead of 401 to avoid a console error on every anonymous pageview.
+// 401 is reserved for a present-but-invalid/expired token.
+app.get('/api/auth/me', async (req, res) => {
+  const token = req.cookies[COOKIE_NAME];
+  if (!token) return res.json({ user: null });
+
+  let decoded;
   try {
-    const [rows] = await pool.execute('SELECT id, email, name, is_premium, created_at FROM users WHERE id = ?', [req.userId]);
+    decoded = jwt.verify(token, JWT_SECRET);
+  } catch {
+    res.clearCookie(COOKIE_NAME);
+    return res.status(401).json({ error: 'Invalid session' });
+  }
+
+  if (!pool) return res.json({ user: null });
+
+  try {
+    const [rows] = await pool.execute('SELECT id, email, name, is_premium, created_at FROM users WHERE id = ?', [decoded.userId]);
     if (rows.length === 0) return res.status(401).json({ error: 'User not found' });
     const user = rows[0];
     res.json({ user: { id: user.id, email: user.email, name: user.name, isPremium: !!user.is_premium } });
@@ -342,6 +782,32 @@ if (BEEHIIV_API_KEY && BEEHIIV_PUBLICATION_ID) {
   console.log(`Beehiiv configured (pub: ${BEEHIIV_PUBLICATION_ID}, double-opt-in: ${BEEHIIV_DOUBLE_OPT_IN})`);
 } else {
   console.warn('Beehiiv NOT configured — set BEEHIIV_API_KEY and BEEHIIV_PUBLICATION_ID for email capture.');
+}
+
+// Local JSONL lead queue — a last-resort backstop so subscribers are never
+// silently dropped when neither Beehiiv nor MySQL is configured (e.g. local
+// dev, or a misconfigured deploy). One JSON object per line.
+const LEADS_DIR = join(__dirname, 'data');
+const LEADS_JSONL_PATH = join(LEADS_DIR, 'subscribers.jsonl');
+try {
+  mkdirSync(LEADS_DIR, { recursive: true });
+} catch (err) {
+  console.error('Could not create data/ dir for lead queue:', err.message);
+}
+
+async function queueLeadToJsonl({ email, source, leadMagnet, articleSlug }) {
+  const line = JSON.stringify({
+    email: email.toLowerCase().trim(),
+    source: source || 'website',
+    leadMagnet: leadMagnet || null,
+    articleSlug: articleSlug || null,
+    capturedAt: new Date().toISOString(),
+  });
+  try {
+    await appendFileAsync(LEADS_JSONL_PATH, line + '\n', 'utf-8');
+  } catch (err) {
+    console.error('Lead JSONL queue error:', err.message);
+  }
 }
 
 // Simple in-memory rate limiter (per IP)
@@ -477,6 +943,12 @@ app.post('/api/email/subscribe', async (req, res) => {
     } catch (err) {
       console.error('Email subscribe MySQL error:', err.message);
     }
+  }
+
+  // Neither Beehiiv nor MySQL configured — queue to disk so the lead isn't
+  // silently dropped server-side.
+  if (!BEEHIIV_API_KEY && !pool) {
+    await queueLeadToJsonl({ email, source, leadMagnet, articleSlug });
   }
 
   res.json({
@@ -675,6 +1147,8 @@ const BINARY_EXTENSIONS = new Set([
   '.css', '.js', '.map',
 ]);
 
+const HTML_CACHE_CONTROL = 'public, max-age=300';
+
 app.get('/{*path}', (req, res) => {
   const cleanPath = req.path === '/' ? '' : req.path.replace(/\/$/, '');
   const ext = extname(cleanPath).toLowerCase();
@@ -684,14 +1158,63 @@ app.get('/{*path}', (req, res) => {
     return res.status(404).type('text/plain').send('Not found');
   }
 
-  // Try prerendered HTML file for this path
+  // Try prerendered HTML file for this path (legacy path; prerender no-ops
+  // in production today, but this stays as a no-cost fallback in case a
+  // future build produces real per-route files again).
   const prerendered = findPrerenderedFile(cleanPath);
   if (prerendered) {
     return res.sendFile(prerendered);
   }
 
-  // Fall back to SPA shell
-  res.sendFile(join(staticDir, 'index.html'));
+  const pathname = req.path === '' ? '/' : req.path;
+  res.set('Cache-Control', HTML_CACHE_CONTROL);
+
+  // Homepage — template already ships correct meta + full JSON-LD, serve as-is.
+  if (pathname === '/') {
+    return res.type('html').send(INDEX_TEMPLATE);
+  }
+
+  // Static route table.
+  const staticHtml = renderStaticRoute(pathname);
+  if (staticHtml) {
+    return res.type('html').send(staticHtml);
+  }
+
+  // /supplements/:id
+  const supplementMatch = pathname.match(/^\/supplements\/([^/]+)$/);
+  if (supplementMatch) {
+    const html = renderSupplementRoute(decodeURIComponent(supplementMatch[1]));
+    if (html) return res.type('html').send(html);
+    return res.status(404).type('html').send(renderNotFound());
+  }
+
+  // /blog/:slug
+  const blogMatch = pathname.match(/^\/blog\/([^/]+)$/);
+  if (blogMatch) {
+    const html = renderBlogRoute(decodeURIComponent(blogMatch[1]));
+    if (html) return res.type('html').send(html);
+    return res.status(404).type('html').send(renderNotFound());
+  }
+
+  // /guides/:slug is a legacy alias the client redirects to /blog/:slug via
+  // <Navigate> — do that server-side too so non-JS crawlers get a real 301
+  // instead of an empty SPA shell.
+  const guideMatch = pathname.match(/^\/guides\/([^/]+)$/);
+  if (guideMatch) {
+    return res.redirect(301, `/blog/${encodeURIComponent(guideMatch[1])}`);
+  }
+
+  // Generic dynamic routes (compare pairs, legacy guide redirects) — real
+  // content but not worth per-slug titles yet; still get a self-canonical.
+  for (const [prefix, meta] of Object.entries(GENERIC_DYNAMIC_PREFIXES)) {
+    if (pathname.startsWith(prefix) && pathname.length > prefix.length) {
+      return res.type('html').send(renderGenericDynamicRoute(pathname, meta));
+    }
+  }
+
+  // Unknown route — 404 status, SPA shell so the client can render its own
+  // not-found UI, generic not-found meta, no canonical.
+  res.status(404).type('html').send(renderNotFound());
 });
 
 if (isDirectRun) {

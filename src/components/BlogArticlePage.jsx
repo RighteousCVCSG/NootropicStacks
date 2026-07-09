@@ -10,7 +10,7 @@ import { SEOOptimizer } from './SEOOptimizer.jsx';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
 import { JsonLd } from './JsonLd.jsx';
 import { buildArticleSchema, buildBreadcrumbSchema } from '../lib/schema/builders.js';
-import { withAffiliateUtms } from '@/lib/affiliate.js';
+import { withAffiliateUtms, withIherbRef } from '@/lib/affiliate.js';
 import { EmailCaptureForm } from './EmailCaptureForm.jsx';
 import { ExitIntentPopup } from './ExitIntentPopup.jsx';
 
@@ -201,7 +201,7 @@ export function BlogArticlePage() {
                         </a>
                       )}
                       {links.iherb && (
-                        <a href={links.iherb} target="_blank" rel="noopener noreferrer sponsored"
+                        <a href={withIherbRef(links.iherb)} target="_blank" rel="noopener noreferrer sponsored"
                            
                            className="flex items-center gap-1 text-xs bg-accent-600 hover:bg-accent-700 text-white px-3 py-1.5 rounded font-medium transition-colors">
                           <ExternalLink className="w-3 h-3" /> iHerb

@@ -1,8 +1,10 @@
 import { blogArticles } from '../src/data/blogArticles.js';
 import { writeFileSync, mkdirSync } from 'fs';
 
-const index = blogArticles.map(({ slug, title, excerpt, publishedDate, readTime, tags, category, bottomLine }) => ({
-  slug, title, excerpt: excerpt || '', publishedDate, readTime, tags: tags || [], category: category || '', bottomLine: bottomLine || ''
+const index = blogArticles.map(({ slug, title, excerpt, description, publishedDate, readTime, tags, category, bottomLine }) => ({
+  // Some articles were authored with `description` instead of `excerpt` — fall back so
+  // every card always has summary text to show.
+  slug, title, excerpt: excerpt || description || '', publishedDate, readTime, tags: tags || [], category: category || '', bottomLine: bottomLine || ''
 }));
 
 const content = `export const blogArticlesIndex = ${JSON.stringify(index, null, 2)};

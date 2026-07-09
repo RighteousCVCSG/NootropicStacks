@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Clock, Sun, Coffee, Moon } from 'lucide-react';
+import { Clock, Sun, Coffee, Moon, ShoppingCart } from 'lucide-react';
 import { useStack } from '../contexts/StackContext.jsx';
 import { supplements } from '../data/supplements.js';
+import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
+import { resolveBuyUrl } from '@/lib/affiliate.js';
+import { getCheapestVendor } from '../data/priceTable.js';
 
 // Timing buckets. The resolver below returns the FIRST matching bucket
 // for a supplement (bedtime → prework → evening → morning), so each
@@ -85,20 +88,39 @@ export function StackProtocolBuilder() {
                 <span className="text-[11px] text-ink-500">{config.subtitle}</span>
               </div>
               <div className="flex flex-wrap gap-1.5">
-                {protocol[timing].map(sup => (
-                  <Link
-                    key={sup.id}
-                    to={`/supplements/${sup.id}`}
-                    className="inline-flex items-center gap-1 h-6 px-2 rounded-md text-[11px] font-medium bg-surface-card border border-ink-200 text-ink-700 hover:border-primary-500 hover:text-primary-800 transition-colors"
-                  >
-                    <span>{sup.name}</span>
-                    {sup.dosage && (
-                      <span className="text-ink-500 font-mono">
-                        {sup.dosage.min}{sup.dosage.unit}
-                      </span>
-                    )}
-                  </Link>
-                ))}
+                {protocol[timing].map(sup => {
+                  const buyUrl = resolveBuyUrl(sup.id, sup.name, AFFILIATE_LINKS[sup.id], {
+                    campaign: `protocol-${sup.id}`,
+                    getCheapest: getCheapestVendor,
+                  });
+                  return (
+                    <span
+                      key={sup.id}
+                      className="inline-flex items-stretch rounded-md border border-ink-200 bg-surface-card overflow-hidden"
+                    >
+                      <Link
+                        to={`/supplements/${sup.id}`}
+                        className="inline-flex items-center gap-1 h-6 pl-2 pr-1.5 text-[11px] font-medium text-ink-700 hover:text-primary-800 transition-colors"
+                      >
+                        <span>{sup.name}</span>
+                        {sup.dosage && (
+                          <span className="text-ink-500 font-mono">
+                            {sup.dosage.min}{sup.dosage.unit}
+                          </span>
+                        )}
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={() => window.open(buyUrl, '_blank', 'noopener,noreferrer')}
+                        title={`Buy ${sup.name}`}
+                        aria-label={`Buy ${sup.name}`}
+                        className="inline-flex items-center justify-center w-6 h-6 border-l border-ink-200 text-accent-700 hover:bg-accent-050 transition-colors shrink-0"
+                      >
+                        <ShoppingCart className="w-3 h-3" />
+                      </button>
+                    </span>
+                  );
+                })}
               </div>
             </div>
           );

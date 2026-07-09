@@ -4,7 +4,7 @@ import { ExternalLink, Star, Brain, CheckCircle, XCircle, ShieldCheck } from 'lu
 import { Card, CardContent } from '@/components/ui/card.jsx';
 import { Badge } from '@/components/ui/badge.jsx';
 import { SEOOptimizer } from './SEOOptimizer.jsx';
-import { withAffiliateUtms } from '@/lib/affiliate.js';
+import { withAffiliateUtms, withIherbRef } from '@/lib/affiliate.js';
 
 const REVIEWS = [
   {
@@ -308,7 +308,7 @@ export function ReviewsPage() {
                     )}
                     {product.links.iherb && (
                       <a
-                        href={product.links.iherb}
+                        href={withIherbRef(product.links.iherb)}
                         target="_blank"
                         rel="noopener noreferrer sponsored"
                         onClick={() => trackClick(product.name, 'iherb')}

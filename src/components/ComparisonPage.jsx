@@ -638,34 +638,46 @@ export function ComparisonPage() {
           </>
         )}
 
-        {/* Suggested comparisons when nothing selected */}
+        {/* Suggested comparisons when nothing selected — fills the empty state
+            below the pickers instead of leaving a bare page. Pairs reused from
+            SupplementCompare.jsx's popularComparisons list. */}
         {!bothSelected && (
-          <div className="mt-4">
-            <h2 className="text-sm font-semibold text-ink-500 uppercase tracking-wide mb-3">Popular Comparisons</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {[
-                { a: 'caffeine', b: 'l-theanine', label: 'Caffeine vs L-Theanine' },
-                { a: 'ashwagandha', b: 'rhodiola', label: 'Ashwagandha vs Rhodiola' },
-                { a: 'lions-mane', b: 'bacopa', label: "Lion's Mane vs Bacopa" },
-                { a: 'creatine', b: 'omega3', label: 'Creatine vs Omega-3' },
-              ].map(({ a, b, label }) => {
-                const sA = supplements.find(s => s.id === a);
-                const sB = supplements.find(s => s.id === b);
-                if (!sA || !sB) return null;
-                return (
-                  <button
-                    key={`${a}-${b}`}
-                    type="button"
-                    onClick={() => { setSuppA(sA); setSuppB(sB); }}
-                    className="flex items-center justify-between p-3 border border-ink-200 rounded-md hover:border-primary-300 hover:bg-primary-050 transition-all text-left group"
-                  >
-                    <span className="text-sm font-medium text-ink-900 group-hover:text-primary-800">{label}</span>
-                    <ArrowRight className="w-4 h-4 text-ink-400 group-hover:text-primary-500" />
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+          <Card className="border-ink-200 bg-surface-card">
+            <CardHeader className="pb-2">
+              <CardTitle className="flex items-center gap-2 text-base">
+                <GitCompare className="w-5 h-5 text-primary-700" />
+                Popular Comparisons
+              </CardTitle>
+              <p className="text-sm text-ink-500">Jump straight into one of these frequently compared matchups.</p>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                {[
+                  ['caffeine', 'l-theanine'],
+                  ['ashwagandha', 'rhodiola'],
+                  ['lions-mane', 'bacopa'],
+                  ['piracetam', 'noopept'],
+                  ['alpha-gpc', 'citicoline'],
+                  ['creatine', 'tyrosine'],
+                ].map(([a, b]) => {
+                  const sA = supplements.find(s => s.id === a);
+                  const sB = supplements.find(s => s.id === b);
+                  if (!sA || !sB) return null;
+                  return (
+                    <button
+                      key={`${a}-${b}`}
+                      type="button"
+                      onClick={() => { setSuppA(sA); setSuppB(sB); }}
+                      className="flex items-center justify-between p-3 border border-ink-200 rounded-md bg-white hover:border-primary-300 hover:bg-primary-050 transition-all text-left group"
+                    >
+                      <span className="text-sm font-medium text-ink-900 group-hover:text-primary-800">{sA.name} vs {sB.name}</span>
+                      <ArrowRight className="w-4 h-4 text-ink-400 group-hover:text-primary-500 flex-shrink-0 ml-2" />
+                    </button>
+                  );
+                })}
+              </div>
+            </CardContent>
+          </Card>
         )}
       </div>
     </>

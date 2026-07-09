@@ -64,27 +64,50 @@ export function EmailCaptureForm({ source = 'lead_magnet', variant = 'inline_art
     setStatus('loading');
     trackEvent('email_capture_attempt', source, 0);
 
-    // Backend isn't wired yet — capture locally and surface a real success
-    // state so the user gets immediate feedback instead of a broken form.
-    // Captured leads are stored under "ns_pending_subscribers" and can be
-    // exported by the operator later.
     try {
-      const stored = JSON.parse(localStorage.getItem('ns_pending_subscribers') || '[]');
-      stored.push({ email, source, leadMagnet, articleSlug, capturedAt: new Date().toISOString() });
-      localStorage.setItem('ns_pending_subscribers', JSON.stringify(stored));
-    } catch {
-      // localStorage may be disabled — still treat as success client-side.
-    }
+      const res = await fetch('/api/email/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, source, leadMagnet, articleSlug }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setStatus('error');
+        setMessage(data.error || 'Something went wrong. Please try again.');
+        return;
+      }
 
-    setStatus('success');
-    const messages = {
-      inline_article: "You're in. We'll send the PDF as soon as the next digest goes out.",
-      save_gate: 'Saved. Email queued — we\'ll send confirmation in the next digest.',
-      lead_magnet: "You're on the list. The download link goes out with the next digest.",
-    };
-    setMessage(messages[variant] || 'Subscribed!');
-    setDownloadUrl(null);
-    trackEvent('email_capture_success', source, 0);
+      setStatus('success');
+      const messages = {
+        inline_article: "You're in. We'll send the PDF as soon as the next digest goes out.",
+        save_gate: 'Saved. Email queued — we\'ll send confirmation in the next digest.',
+        lead_magnet: "You're on the list. The download link goes out with the next digest.",
+      };
+      setMessage(data.message || messages[variant] || 'Subscribed!');
+      setDownloadUrl(data.downloadUrl || null);
+      trackEvent('email_capture_success', source, 0);
+    } catch {
+      // Network failure (offline, backend down) — fall back to local
+      // capture so the user still gets a success state, and the lead isn't
+      // lost outright. Stored under "ns_pending_subscribers" for later export.
+      try {
+        const stored = JSON.parse(localStorage.getItem('ns_pending_subscribers') || '[]');
+        stored.push({ email, source, leadMagnet, articleSlug, capturedAt: new Date().toISOString() });
+        localStorage.setItem('ns_pending_subscribers', JSON.stringify(stored));
+      } catch {
+        // localStorage may be disabled — still treat as success client-side.
+      }
+
+      setStatus('success');
+      const messages = {
+        inline_article: "You're in. We'll send the PDF as soon as the next digest goes out.",
+        save_gate: 'Saved. Email queued — we\'ll send confirmation in the next digest.',
+        lead_magnet: "You're on the list. The download link goes out with the next digest.",
+      };
+      setMessage(messages[variant] || 'Subscribed!');
+      setDownloadUrl(null);
+      trackEvent('email_capture_success', source, 0);
+    }
   };
 
   if (status === 'success') {

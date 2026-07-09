@@ -432,12 +432,16 @@
 /* ---------- Footer: .footer ----------
  * Background matches the page surface (was --surface-ink, the modal
  * overlay color, which made the bottom of the page brighter than the
- * body — inverted contrast on dark mode). Now sits on the same canvas
- * as the page with a single ink-200 top border for separation. */
+ * body — inverted contrast on dark mode). Sits on the same canvas
+ * as the page with a single ink-200 top border for separation.
+ * Foreground uses theme-aware ink tokens (ink-900/700/500), NOT
+ * --color-ink-on-dark — that token is hard-coded #FFFFFF in both
+ * themes and was making the footer render white-on-white in light
+ * mode. */
 .footer {
   background: var(--color-surface-page);
   border-top: 1px solid var(--color-ink-200);
-  color: var(--color-ink-on-dark);
+  color: var(--color-ink-700);
   padding: var(--space-7) var(--gutter-page);
   font-size: var(--text-sm);
   line-height: var(--text-sm-lh);
@@ -456,29 +460,29 @@
   font-family: var(--font-display);
   font-size: var(--text-lg);
   font-weight: var(--weight-semibold);
-  color: var(--color-ink-on-dark);
+  color: var(--color-ink-900);
 }
 .footer__col h4 {
   font-family: var(--font-body);
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
-  color: var(--color-ink-300);
+  color: var(--color-ink-500);
   margin: 0 0 var(--space-3);
 }
 .footer__col a {
-  color: var(--color-ink-on-dark);
+  color: var(--color-ink-700);
   text-decoration: none;
   display: block;
   padding: var(--space-1) 0;
 }
-.footer__col a:hover { color: var(--color-primary-300); }
+.footer__col a:hover { color: var(--color-primary-600); }
 .footer__legal {
   max-width: var(--measure-wide);
   margin: var(--space-6) auto 0;
   padding-top: var(--space-5);
-  border-top: 1px solid rgba(250, 247, 242, 0.12);
-  color: var(--color-ink-300);
+  border-top: 1px solid var(--color-ink-200);
+  color: var(--color-ink-500);
   font-size: var(--text-xs);
   display: flex;
   flex-wrap: wrap;

@@ -51,11 +51,16 @@ export function RecommendationPanel() {
                 </span>
 
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-baseline gap-2 flex-wrap">
-                    <h3 className="text-sm font-semibold text-ink-900 truncate">
+                  <div className="flex items-baseline gap-2">
+                    {/* min-w-0 is required here — without it, a flex child
+                        with `truncate` can't shrink below its own text
+                        width and instead overflows the row (real overflow,
+                        clipped at the card's right edge) rather than
+                        actually ellipsizing. */}
+                    <h3 className="text-sm font-semibold text-ink-900 truncate min-w-0 flex-1">
                       {supplement.name}
                     </h3>
-                    <span className="text-[10px] font-mono text-ink-500">
+                    <span className="text-[10px] font-mono text-ink-500 shrink-0">
                       {supplement.dosage.min}–{supplement.dosage.max} {supplement.dosage.unit}
                     </span>
                   </div>

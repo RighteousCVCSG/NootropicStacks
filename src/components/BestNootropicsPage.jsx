@@ -4,7 +4,7 @@ import { ExternalLink, Star, Award, Zap, Brain, Heart, ShoppingCart } from 'luci
 import { Card, CardContent } from '@/components/ui/card.jsx';
 import { Badge } from '@/components/ui/badge.jsx';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
-import { withAffiliateUtms } from '@/lib/affiliate.js';
+import { withAffiliateUtms, withIherbRef } from '@/lib/affiliate.js';
 import { SEOOptimizer } from './SEOOptimizer.jsx';
 
 const TOP_NOOTROPICS = [
@@ -198,7 +198,7 @@ export function BestNootropicsPage() {
                           </a>
                         )}
                         {links?.iherb && (
-                          <a href={links.iherb} target="_blank" rel="noopener noreferrer sponsored"
+                          <a href={withIherbRef(links.iherb)} target="_blank" rel="noopener noreferrer sponsored"
                              onClick={() => trackClick(nootropic.id, 'iherb')}
                              className="flex items-center gap-1 text-xs bg-accent-600 hover:bg-accent-700 text-white px-3 py-1.5 rounded font-medium transition-colors">
                             <ExternalLink className="w-3 h-3" /> iHerb

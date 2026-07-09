@@ -6,7 +6,8 @@ import { supplements } from '../data/supplements.js';
 import { calculateItemContribution } from '../utils/stackAnalyzer.js';
 import { SaveStackDialog } from './SaveStackDialog.jsx';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
-import { withAffiliateUtms, withAffiliateLink } from '@/lib/affiliate.js';
+import { resolveBuyUrl } from '@/lib/affiliate.js';
+import { getCheapestVendor } from '../data/priceTable.js';
 import { AffiliateDisclosureInline } from './AffiliateDisclosure.jsx';
 import { track } from '../lib/analytics.js';
 import { Button } from '@/components/ui/button.jsx';
@@ -261,8 +262,7 @@ function StackWarnings({ safetyAnalysis }) {
 }
 
 function StackShopLinks({ stack }) {
-  const stackWithLinks = stack.filter(item => AFFILIATE_LINKS[item.supplementId]);
-  if (stackWithLinks.length === 0) return null;
+  if (stack.length === 0) return null;
   return (
     <div>
       <h4 className="text-xs font-semibold uppercase tracking-wider text-ink-500 mb-2 flex items-center gap-2">
@@ -271,15 +271,15 @@ function StackShopLinks({ stack }) {
         <AffiliateDisclosureInline />
       </h4>
       <div className="space-y-1">
-        {stackWithLinks.map(item => {
+        {stack.map(item => {
           const links = AFFILIATE_LINKS[item.supplementId];
           const supplement = supplements.find(s => s.id === item.supplementId);
-          const rawUrl = links.nootropicsdepot ||
-            links.amazon ||
-            links.iherb ||
-            Object.values(links).find(v => typeof v === 'string');
-          const buyUrl = withAffiliateLink(rawUrl, { campaign: `stack-${item.supplementId}` });
-          if (!supplement || !buyUrl) return null;
+          if (!supplement) return null;
+          const buyUrl = resolveBuyUrl(item.supplementId, supplement.name, links, {
+            campaign: `stack-${item.supplementId}`,
+            getCheapest: getCheapestVendor,
+          });
+          if (!buyUrl) return null;
           return (
             <a
               key={item.supplementId}
@@ -616,8 +616,11 @@ export function StackDrawer() {
         {stack.length > 0 && (
           <Drawer open={drawerOpen} onOpenChange={(open) => open ? openDrawer() : closeDrawer()}>
             <DrawerTrigger asChild>
+              {/* bottom-24, not bottom-4 — clears the StackScoreWidget's
+                  mobile sticky score bar (measured ~81px tall) that now
+                  spans the viewport bottom on the same routes. */}
               <button
-                className="fixed bottom-4 left-4 z-50 flex items-center gap-1.5 px-3 py-2 rounded-full bg-surface-card border border-primary-300 text-primary-800 shadow-2 text-xs font-medium hover:border-primary-500 hover:bg-primary-050 transition-colors"
+                className="fixed bottom-24 left-4 z-50 flex items-center gap-1.5 px-3 py-2 rounded-full bg-surface-card border border-primary-300 text-primary-800 shadow-2 text-xs font-medium hover:border-primary-500 hover:bg-primary-050 transition-colors"
                 aria-label="Toggle stack drawer"
               >
                 <Layers className="w-4 h-4" />

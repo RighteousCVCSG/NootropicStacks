@@ -4,7 +4,7 @@ import { ExternalLink, Brain, Zap, Heart, BookOpen, Moon, Target } from 'lucide-
 import { Card, CardContent } from '@/components/ui/card.jsx';
 import { Badge } from '@/components/ui/badge.jsx';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
-import { withAffiliateUtms } from '@/lib/affiliate.js';
+import { withAffiliateUtms, withIherbRef } from '@/lib/affiliate.js';
 import { SEOOptimizer } from './SEOOptimizer.jsx';
 import { JsonLd } from './JsonLd.jsx';
 import { buildItemListSchema } from '@/lib/schema/builders.js';
@@ -243,7 +243,7 @@ export function BestStacksPage() {
                               )}
                               {links.iherb && (
                                 <a
-                                  href={links.iherb}
+                                  href={withIherbRef(links.iherb)}
                                   target="_blank"
                                   rel="noopener noreferrer sponsored"
                                   onClick={() => trackClick(supp.id, 'iherb')}

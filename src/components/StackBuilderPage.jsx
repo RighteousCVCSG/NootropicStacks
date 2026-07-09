@@ -8,9 +8,10 @@ import { SupplementModal } from './SupplementModal.jsx';
 import { SEOOptimizer } from './SEOOptimizer.jsx';
 import { StackProtocolBuilder } from './StackProtocolBuilder.jsx';
 import { PredefinedStacks } from './PredefinedStacks.jsx';
+import { ShipBuildSheet } from './ShipBuildSheet.jsx';
 import { supplements } from '../data/supplements.js';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.jsx';
-import { Layers, Library, Activity } from 'lucide-react';
+import { Layers, Library, Activity, ShoppingCart } from 'lucide-react';
 
 /**
  * Dedicated stack-builder page at /build. The homepage is now the marketing
@@ -26,6 +27,7 @@ import { Layers, Library, Activity } from 'lucide-react';
 export function StackBuilderPage() {
   const [selectedSupplement, setSelectedSupplement] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [shipOpen, setShipOpen] = useState(false);
   const { stack, stackScore, stackName, loadStack, openDrawer, setStackName } = useStack();
   const overall = stackScore?.headlineScores?.overall;
   const overallLabel = stackScore?.headlineScores?.dimensionQuals?.overall?.label;
@@ -85,9 +87,9 @@ export function StackBuilderPage() {
 
       {/* Returning-user status (single line, only when stack exists) */}
       {stack.length > 0 && (
-        <div className="mb-3 rounded-md border border-primary-300 bg-primary-050 px-3 py-2 flex items-center gap-3 text-sm">
+        <div className="mb-3 rounded-md border border-primary-300 bg-primary-050 px-3 py-2 flex items-center gap-3 text-sm flex-wrap">
           <Activity className="w-4 h-4 text-primary-800 shrink-0" />
-          <span className="text-ink-900 flex-1 truncate">
+          <span className="text-ink-900 flex-1 min-w-0 truncate">
             {stackName ? (
               <>
                 <span className="font-semibold">{stackName}</span>
@@ -113,13 +115,27 @@ export function StackBuilderPage() {
           </span>
           <button
             type="button"
+            onClick={() => setShipOpen(true)}
+            className="inline-flex items-center gap-1 h-7 px-2.5 rounded-md text-xs font-medium bg-primary-700 hover:bg-primary-800 text-white transition-colors shrink-0"
+          >
+            <ShoppingCart className="w-3.5 h-3.5" />
+            Buy this stack
+          </button>
+          {/* Hidden below sm — the mobile sticky score bar + floating
+              drawer pill already cover this entry point there, and
+              dropping it gives the status text room instead of
+              truncating to "1 supple...". */}
+          <button
+            type="button"
             onClick={openDrawer}
-            className="text-xs font-medium text-primary-800 hover:text-primary-700 shrink-0"
+            className="hidden sm:inline text-xs font-medium text-primary-800 hover:text-primary-700 shrink-0"
           >
             Open drawer →
           </button>
         </div>
       )}
+
+      <ShipBuildSheet open={shipOpen} onOpenChange={setShipOpen} stack={stack} />
 
       {/* Working grid — 1/3 goals · 2/3 recommendations + library */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-10 items-start">

@@ -13,17 +13,35 @@ export function NewsletterCapture({ source = 'footer' }) {
     if (!email) return;
     if (honeypotRef.current?.value) return;
     setStatus('loading');
-    // Backend isn't wired — capture locally so the form succeeds
-    // immediately. Operator can export from localStorage key
-    // "ns_pending_subscribers" until the digest backend ships.
+
     try {
-      const stored = JSON.parse(localStorage.getItem('ns_pending_subscribers') || '[]');
-      stored.push({ email, source, articleSlug: '', capturedAt: new Date().toISOString() });
-      localStorage.setItem('ns_pending_subscribers', JSON.stringify(stored));
-    } catch { /* ignore */ }
-    setStatus('success');
-    setMessage('You\'re in. The next digest goes out within the week.');
-    track('email_signup', { source });
+      const res = await fetch('/api/email/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, source }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setStatus('error');
+        setMessage(data.error || 'Something went wrong. Please try again.');
+        return;
+      }
+      setStatus('success');
+      setMessage(data.message || 'You\'re in. The next digest goes out within the week.');
+      track('email_signup', { source });
+    } catch {
+      // Network failure — fall back to local capture so the form still
+      // succeeds for the user. Operator can export from localStorage key
+      // "ns_pending_subscribers".
+      try {
+        const stored = JSON.parse(localStorage.getItem('ns_pending_subscribers') || '[]');
+        stored.push({ email, source, articleSlug: '', capturedAt: new Date().toISOString() });
+        localStorage.setItem('ns_pending_subscribers', JSON.stringify(stored));
+      } catch { /* ignore */ }
+      setStatus('success');
+      setMessage('You\'re in. The next digest goes out within the week.');
+      track('email_signup', { source });
+    }
   };
 
   if (status === 'success') {

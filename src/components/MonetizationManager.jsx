@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.j
 import { Button } from '@/components/ui/button.jsx';
 import { Badge } from '@/components/ui/badge.jsx';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
-import { ExternalLink, DollarSign, TrendingUp, Users, Eye, ShoppingCart } from 'lucide-react';
+import { ExternalLink, DollarSign, TrendingUp, Users, Eye, ShoppingCart, Leaf, FlaskConical, Droplet, Pill } from 'lucide-react';
 import { useAffiliateCampaign, withAffiliateUtms, withAffiliateLink } from '@/lib/affiliate.js';
 import { AffiliateDisclosureInline } from './AffiliateDisclosure.jsx';
 
@@ -596,13 +596,13 @@ export function AffiliateLinks({ supplementId, supplementName }) {
         {Object.entries(links).map(([vendor, url]) => {
           if (vendor === 'commission') return null;
           const vendorLabels = {
-            amazon: { label: '🛒 Amazon', desc: 'Fast shipping' },
-            iherb: { label: '🌿 iHerb', desc: 'Often cheapest' },
-            nootropicsdepot: { label: '🔬 Nootropics Depot', desc: 'Lab tested' },
-            nordicnaturals: { label: '🐟 Nordic Naturals', desc: 'Premium quality' },
-            buymodafinilonline: { label: '💊 Buy Modafinil Online', desc: 'Trusted vendor' },
+            amazon: { label: 'Amazon', desc: 'Fast shipping', Icon: ShoppingCart },
+            iherb: { label: 'iHerb', desc: 'Often cheapest', Icon: Leaf },
+            nootropicsdepot: { label: 'Nootropics Depot', desc: 'Lab tested', Icon: FlaskConical },
+            nordicnaturals: { label: 'Nordic Naturals', desc: 'Premium quality', Icon: Droplet },
+            buymodafinilonline: { label: 'Buy Modafinil Online', desc: 'Trusted vendor', Icon: Pill },
           };
-          const info = vendorLabels[vendor] || { label: vendor, desc: '' };
+          const info = vendorLabels[vendor] || { label: vendor, desc: '', Icon: ShoppingCart };
           const href = withAffiliateLink(url, { campaign });
           return (
             <a
@@ -613,9 +613,12 @@ export function AffiliateLinks({ supplementId, supplementName }) {
               onClick={() => handleClick(vendor)}
               className="flex items-center justify-between p-3 bg-white border border-accent-300 rounded-md hover:border-green-400 hover:shadow-sm transition-all group"
             >
-              <div>
-                <div className="text-sm font-medium text-ink-900 group-hover:text-accent-700">{info.label}</div>
-                {info.desc && <div className="text-xs text-ink-500">{info.desc}</div>}
+              <div className="flex items-center gap-2">
+                <info.Icon className="w-4 h-4 text-accent-700 shrink-0" />
+                <div>
+                  <div className="text-sm font-medium text-ink-900 group-hover:text-accent-700">{info.label}</div>
+                  {info.desc && <div className="text-xs text-ink-500">{info.desc}</div>}
+                </div>
               </div>
               <ExternalLink className="w-3.5 h-3.5 text-ink-400 group-hover:text-accent-700" />
             </a>

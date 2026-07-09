@@ -4,7 +4,7 @@ import { Badge } from '@/components/ui/badge.jsx';
 import { Plus, Info, ShoppingCart } from 'lucide-react';
 import { useStack } from '../contexts/StackContext.jsx';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
-import { withAffiliateLink, pickPreferredVendor, VENDOR_LABEL_SHORT } from '@/lib/affiliate.js';
+import { resolveBuyUrl, pickPreferredVendor, VENDOR_LABEL_SHORT } from '@/lib/affiliate.js';
 import { TierBadge } from './TierBadge.jsx';
 import { getCheapestVendor } from '../data/priceTable.js';
 
@@ -39,20 +39,23 @@ export function SupplementCard({ supplement }) {
 
   const preferredVendor = pickPreferredVendor(supplement.id, links, getCheapestVendor);
   const cheapest = getCheapestVendor(supplement.id);
-  const vendorShort = preferredVendor ? (VENDOR_LABEL_SHORT[preferredVendor] || preferredVendor) : '';
+  // 148 of 195 supplements have no curated AFFILIATE_LINKS entry — those
+  // fall back to a monetized Amazon search so the button is never dead.
+  const vendorShort = preferredVendor ? (VENDOR_LABEL_SHORT[preferredVendor] || preferredVendor) : 'Amazon';
   // Vendor-first label keeps the price anchor visible without reading as a
-  // price-tag-first storefront on a YMYL site. Falls back to vendor-only when
-  // we don't have tracked-price data so cards never show stale numbers.
-  const buyLabel = preferredVendor
-    ? (cheapest && cheapest.vendor === preferredVendor
-        ? `${vendorShort} · $${cheapest.price.toFixed(2)}`
-        : vendorShort)
-    : 'Buy';
+  // price-tag-first storefront on a YMYL site. No middot separator and no
+  // trailing "supplement" — keeps the label short enough to fit the button
+  // at 5-column grid widths without truncating.
+  const buyLabel = preferredVendor && cheapest && cheapest.vendor === preferredVendor
+    ? `${vendorShort} $${cheapest.price.toFixed(2)}`
+    : vendorShort;
 
   const handleBuy = () => {
-    if (!links || !preferredVendor) return;
-    const rawUrl = links[preferredVendor];
-    const url = withAffiliateLink(rawUrl, { campaign: `card-${supplement.id}` });
+    const url = resolveBuyUrl(supplement.id, supplement.name, links, {
+      vendor: preferredVendor,
+      campaign: `card-${supplement.id}`,
+      getCheapest: getCheapestVendor,
+    });
     if (url) window.open(url, '_blank', 'noopener,noreferrer');
   };
 
@@ -94,8 +97,15 @@ export function SupplementCard({ supplement }) {
 
       {/* Footer hierarchy: Add primary, Buy secondary outline, Details
           is the tiny ghost icon. Custom anchors at h-7 to match the
-          MeasureBoard density we use everywhere else. */}
-      <div className="px-2 pb-2 flex items-stretch gap-1">
+          MeasureBoard density we use everywhere else.
+          flex-wrap + Buy's min-width: when this card renders in a
+          narrower host (e.g. the /build page's 2/3-width column, which
+          leaves ~150px for the whole footer), Info+Add alone can eat
+          most of that row — Buy can't be squeezed into the last ~20px
+          without truncating mid-digit. Letting Buy wrap to its own full
+          row there (instead of fighting for a sliver of space) is what
+          actually guarantees the price renders in full. */}
+      <div className="px-2 pb-2 flex flex-wrap items-stretch gap-1">
         <Link
           to={`/supplements/${supplement.id}`}
           aria-label={`View details for ${supplement.name}`}
@@ -108,17 +118,16 @@ export function SupplementCard({ supplement }) {
           type="button"
           onClick={handleAdd}
           disabled={isInStack}
-          className="inline-flex items-center justify-center gap-1 h-7 px-2 rounded-md text-[11px] font-medium bg-primary-050 hover:bg-primary-100 text-primary-800 border border-primary-300 hover:border-primary-500 transition-colors flex-1 min-w-0 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex items-center justify-center gap-1 h-7 px-2 rounded-md text-[11px] font-medium bg-primary-050 hover:bg-primary-100 text-primary-800 border border-primary-300 hover:border-primary-500 transition-colors shrink-0 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <Plus className="w-3 h-3 shrink-0" />
-          <span className="truncate">{isInStack ? 'Added' : 'Add'}</span>
+          <span>{isInStack ? 'Added' : 'Add'}</span>
         </button>
         <button
           type="button"
           onClick={handleBuy}
-          disabled={!links}
-          title={links ? buyLabel : 'Vendor links not yet available'}
-          className="inline-flex items-center justify-center gap-1 h-7 px-2 rounded-md text-[11px] font-medium border border-accent-500 text-accent-700 hover:bg-accent-050 transition-colors flex-1 min-w-0 disabled:opacity-40 disabled:cursor-not-allowed"
+          title={buyLabel}
+          className="inline-flex items-center justify-center gap-1 h-7 px-2 rounded-md text-[11px] font-medium border border-accent-500 text-accent-700 hover:bg-accent-050 transition-colors flex-1 min-w-[92px]"
         >
           <ShoppingCart className="w-3 h-3 shrink-0" />
           <span className="truncate">{buyLabel}</span>

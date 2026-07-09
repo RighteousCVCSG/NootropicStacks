@@ -197,3 +197,17 @@ export function buildAmazonSearchLink(searchTerm, options = {}) {
   url.searchParams.set('tag', AMAZON_TAG);
   return withAffiliateUtms(url.toString(), options);
 }
+
+// Resolves the URL for any "Buy" affordance site-wide. Prefers a curated
+// vendor link (routed through the cheapest-tracked-price / preference-order
+// logic in pickPreferredVendor); falls back to a monetized Amazon search so
+// no buy surface ever goes dead just because a supplement lacks a curated
+// AFFILIATE_LINKS entry (currently 148 of 195 supplements).
+export function resolveBuyUrl(supplementId, supplementName, links, options = {}) {
+  const { vendor, campaign, getCheapest } = options;
+  if (links) {
+    const v = vendor || pickPreferredVendor(supplementId, links, getCheapest);
+    if (v && links[v]) return withAffiliateLink(links[v], { campaign });
+  }
+  return buildAmazonSearchLink(`${supplementName} supplement`, { campaign });
+}

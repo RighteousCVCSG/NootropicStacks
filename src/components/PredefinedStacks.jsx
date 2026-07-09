@@ -5,13 +5,13 @@ import { Button } from '@/components/ui/button.jsx';
 import { Badge } from '@/components/ui/badge.jsx';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.jsx';
-import { Star, Zap, Brain, Heart, Target, AlertTriangle, Plus, ShoppingCart } from 'lucide-react';
+import { Star, Zap, Brain, Heart, Target, AlertTriangle, Plus, ShoppingCart, ArrowRight } from 'lucide-react';
 import { predefinedStacks } from '../data/predefinedStacks.js';
 import { supplements } from '../data/supplements.js';
 import { useStack } from '../contexts/StackContext.jsx';
 import { analyzeStackSafety, calculateItemContribution } from '../utils/stackAnalyzer.js';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
-import { withAffiliateUtms } from '@/lib/affiliate.js';
+import { withAffiliateUtms, withIherbRef } from '@/lib/affiliate.js';
 import { JsonLd } from './JsonLd.jsx';
 import { buildItemListSchema } from '../lib/schema/builders.js';
 
@@ -302,7 +302,7 @@ export function PredefinedStacks() {
                                 </a>
                               )}
                               {links.iherb && (
-                                <a href={links.iherb} target="_blank" rel="noopener noreferrer sponsored"
+                                <a href={withIherbRef(links.iherb)} target="_blank" rel="noopener noreferrer sponsored"
                                    onClick={() => trackClick('iherb')}
                                    className="flex items-center gap-1 text-xs bg-accent-600 hover:bg-accent-700 text-white px-3 py-1.5 rounded font-medium transition-colors">
                                   <ShoppingCart className="w-3 h-3" /> iHerb
@@ -408,6 +408,18 @@ export function PredefinedStacks() {
           Expertly curated supplement combinations for specific goals and experience levels.
         </p>
       </div>
+
+      {/* Points to the fuller, fully-monetized stack collection — this tab
+          only carries a handful of legacy stacks with partial buy links. */}
+      <Link
+        to="/best-stacks"
+        className="flex items-center justify-between gap-2 p-3 rounded-md border border-primary-300 bg-primary-050 hover:bg-primary-100 transition-colors group"
+      >
+        <span className="text-sm font-medium text-primary-800">
+          See our 8 expert-curated stacks with full buy links →
+        </span>
+        <ArrowRight className="w-4 h-4 text-primary-800 shrink-0 group-hover:translate-x-0.5 transition-transform" />
+      </Link>
 
       <Tabs defaultValue="basic" className="w-full">
         <TabsList className="grid w-full grid-cols-3">

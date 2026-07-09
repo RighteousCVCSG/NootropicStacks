@@ -1,12 +1,13 @@
 import React, { useMemo, useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog.jsx';
 import { Button } from '@/components/ui/button.jsx';
-import { ShoppingCart, ExternalLink, AlertCircle, Truck } from 'lucide-react';
+import { ShoppingCart, ExternalLink, Truck } from 'lucide-react';
 import { supplements } from '../data/supplements.js';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
 import {
   withAffiliateLink,
   pickPreferredVendor as pickPreferredVendorShared,
+  buildAmazonSearchLink,
   VENDOR_LABEL,
 } from '@/lib/affiliate.js';
 import { AffiliateDisclosureInline } from './AffiliateDisclosure.jsx';
@@ -41,7 +42,13 @@ function pickPreferredVendor(supplementId, links) {
   return pickPreferredVendorShared(supplementId, links, getCheapestVendor);
 }
 
-function vendorUrl(supplementId, vendor, links) {
+// 'amazon-search' is a synthetic vendor key for supplements with no
+// curated AFFILIATE_LINKS entry — routes to a monetized Amazon search
+// instead of leaving the row dead.
+function vendorUrl(supplementId, vendor, links, supplementName) {
+  if (vendor === 'amazon-search') {
+    return buildAmazonSearchLink(`${supplementName} supplement`, { campaign: `ship-${supplementId}` });
+  }
   const url = links?.[vendor];
   if (!url) return null;
   return withAffiliateLink(url, { campaign: `ship-${supplementId}` });
@@ -82,8 +89,8 @@ function ShipRow({ item, supplement, vendor, links, onVendorChange }) {
           )}
         </div>
       ) : (
-        <span className="text-xs text-ink-500 inline-flex items-center gap-1 shrink-0">
-          <AlertCircle className="w-3 h-3" /> No link
+        <span className="text-xs text-ink-500 shrink-0" title="No curated link yet — opens an Amazon search">
+          Amazon (search)
         </span>
       )}
     </div>
@@ -99,7 +106,9 @@ export function ShipBuildSheet({ open, onOpenChange, stack }) {
       const supplement = supplements.find((s) => s.id === item.supplementId);
       const links = AFFILIATE_LINKS[item.supplementId];
       const defaultVendor = pickPreferredVendor(item.supplementId, links);
-      const vendor = overrides[item.supplementId] || defaultVendor;
+      // No curated link at all — fall back to a monetized Amazon search
+      // instead of leaving the row dead.
+      const vendor = overrides[item.supplementId] || defaultVendor || (supplement ? 'amazon-search' : null);
       return { item, supplement, links, vendor };
     }).filter((r) => r.supplement);
   }, [stack, overrides]);
@@ -109,8 +118,8 @@ export function ShipBuildSheet({ open, onOpenChange, stack }) {
     0
   );
 
-  const shippableRows = rows.filter((r) => r.vendor && r.links);
-  const noLinkCount = rows.length - shippableRows.length;
+  const shippableRows = rows.filter((r) => r.vendor);
+  const fallbackCount = rows.filter((r) => r.vendor === 'amazon-search').length;
 
   const handleVendorChange = (id, vendor) => {
     setOverrides((prev) => ({ ...prev, [id]: vendor }));
@@ -123,8 +132,8 @@ export function ShipBuildSheet({ open, onOpenChange, stack }) {
     });
     // Open in user gesture; spread tabs out very slightly so popup blockers
     // are less likely to choke. Browsers tolerate ~2-3 window.opens per click.
-    shippableRows.forEach(({ item, vendor, links }, idx) => {
-      const url = vendorUrl(item.supplementId, vendor, links);
+    shippableRows.forEach(({ item, vendor, links, supplement }, idx) => {
+      const url = vendorUrl(item.supplementId, vendor, links, supplement.name);
       if (!url) return;
       // Stagger by zero — synchronous in a click handler is the only reliable
       // way to open multiple tabs. Per-tab tracking is fire-and-forget.
@@ -175,11 +184,12 @@ export function ShipBuildSheet({ open, onOpenChange, stack }) {
               <div className="text-lg font-semibold text-ink-900">${totalMonthly}/mo</div>
             </div>
             <div className="text-right text-xs text-ink-500">
-              {shippableRows.length} ready ·{' '}
-              {noLinkCount > 0 ? (
-                <span className="text-warn-700">{noLinkCount} no link</span>
-              ) : (
-                <span>0 missing</span>
+              {shippableRows.length} ready
+              {fallbackCount > 0 && (
+                <>
+                  {' · '}
+                  <span className="text-warn-700">{fallbackCount} via Amazon search</span>
+                </>
               )}
             </div>
           </div>

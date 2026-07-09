@@ -152,7 +152,7 @@ function App() {
               <nav className="hidden md:flex items-center gap-0.5" aria-label="Main navigation">
                 <NavLink to="/build">Build</NavLink>
                 <NavLink to="/supplements">Supplements</NavLink>
-                <NavLink to="/stacks">Stacks</NavLink>
+                <NavLink to="/best-stacks">Stacks</NavLink>
                 <NavLink to="/learn">Learn</NavLink>
                 <Link
                   to="/quiz"
@@ -172,30 +172,27 @@ function App() {
 
         {/* Mobile Navigation — same text-only treatment as desktop.
             The scrollable strip has a right-edge gradient fade so users
-            see there's more nav off-screen on narrow viewports. */}
+            see there's more nav off-screen on narrow viewports. The dark-
+            mode toggle lives only in the logo bar above — it was
+            duplicated here, showing two toggles on mobile at once. */}
         <nav className="md:hidden bg-surface-page border-b border-ink-200" aria-label="Mobile navigation">
-          <div className="flex items-center">
-            <div className="relative flex-1 min-w-0">
-              <div className="flex items-center gap-0.5 overflow-x-auto px-3 py-1.5">
-                <NavLink to="/build">Build</NavLink>
-                <NavLink to="/supplements">Supplements</NavLink>
-                <NavLink to="/stacks">Stacks</NavLink>
-                <NavLink to="/learn">Learn</NavLink>
-                <Link
-                  to="/quiz"
-                  className="shrink-0 ml-2 inline-flex items-center text-xs font-medium text-primary-800 hover:text-primary-700 transition-colors"
-                >
-                  Quiz →
-                </Link>
-              </div>
-              <span
-                aria-hidden
-                className="pointer-events-none absolute top-0 right-0 bottom-0 w-6 bg-gradient-to-l from-surface-page to-transparent"
-              />
+          <div className="relative">
+            <div className="flex items-center gap-0.5 overflow-x-auto px-3 py-1.5">
+              <NavLink to="/build">Build</NavLink>
+              <NavLink to="/supplements">Supplements</NavLink>
+              <NavLink to="/best-stacks">Stacks</NavLink>
+              <NavLink to="/learn">Learn</NavLink>
+              <Link
+                to="/quiz"
+                className="shrink-0 ml-2 inline-flex items-center text-xs font-medium text-primary-800 hover:text-primary-700 transition-colors"
+              >
+                Quiz →
+              </Link>
             </div>
-            <div className="shrink-0 px-1.5 border-l border-ink-200">
-              <ThemeToggle />
-            </div>
+            <span
+              aria-hidden
+              className="pointer-events-none absolute top-0 right-0 bottom-0 w-6 bg-gradient-to-l from-surface-page to-transparent"
+            />
           </div>
         </nav>
 
@@ -206,7 +203,7 @@ function App() {
 
           {/* Routes */}
           <ErrorBoundary>
-          <Suspense fallback={<div className="flex items-center justify-center min-h-[60vh]"><div className="text-ink-500 text-sm">Loading…</div></div>}>
+          <Suspense fallback={<div className="flex items-center justify-center py-16"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-800"></div></div>}>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/build" element={<StackBuilderPage />} />
@@ -214,7 +211,12 @@ function App() {
             <Route path="/supplements" element={<LibraryPage />} />
             <Route path="/supplements/:id" element={<SupplementPage />} />
             <Route path="/compare/:slugs" element={<SupplementCompare />} />
-            <Route path="/stacks" element={<PredefinedStacks />} />
+            <Route path="/stacks" element={
+              <>
+                <SEOOptimizer page="home" customTitle="Pre-Built Nootropic Stacks | NootropicStacker" customDescription="Browse pre-built nootropic supplement stacks by experience level, or head to our 8 expert-curated stacks with full buy links." />
+                <PredefinedStacks />
+              </>
+            } />
             <Route path="/families" element={
               <>
                 <SEOOptimizer page="home" customTitle="Supplement Family Guides | NootropicStacker" customDescription="Learn about supplement families including racetams, cholinergics, adaptogens, stimulants, and vitamins." />
