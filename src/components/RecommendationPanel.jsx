@@ -89,8 +89,8 @@ export function RecommendationPanel() {
                         style={{ width: `${matchPct}%` }}
                       />
                     </div>
-                    <span className="text-[10px] font-mono font-semibold text-ink-700 w-8 text-right">
-                      {matchPct}%
+                    <span className="text-[10px] font-mono font-semibold text-ink-700 shrink-0" title="How closely this supplement matches your selected goals">
+                      {matchPct}% match
                     </span>
                   </div>
                 </div>

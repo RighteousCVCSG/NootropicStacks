@@ -5,7 +5,8 @@ import { Input } from '@/components/ui/input.jsx';
 import { Label } from '@/components/ui/label.jsx';
 import { Textarea } from '@/components/ui/textarea.jsx';
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx';
-import { Mail, MessageSquare, CheckCircle } from 'lucide-react';
+import { Mail, MessageSquare, CheckCircle, Clock, ShieldCheck, HelpCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
@@ -42,7 +43,7 @@ export function ContactPage() {
   }
 
   return (
-    <div className="max-w-lg mx-auto py-4">
+    <div className="max-w-4xl mx-auto py-4 grid gap-6 md:grid-cols-[1fr_320px] items-start">
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -81,6 +82,41 @@ export function ContactPage() {
           </form>
         </CardContent>
       </Card>
+
+      <div className="space-y-4">
+        <Card>
+          <CardContent className="pt-6 space-y-4 text-sm text-ink-700">
+            <div className="flex items-start gap-3">
+              <Clock className="w-4 h-4 mt-0.5 text-primary-700 shrink-0" />
+              <div>
+                <div className="font-medium text-ink-900">Response time</div>
+                We reply within 24 hours, usually sooner.
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <HelpCircle className="w-4 h-4 mt-0.5 text-primary-700 shrink-0" />
+              <div>
+                <div className="font-medium text-ink-900">Common questions</div>
+                Dosage, stacking, and safety questions are usually already answered in the{' '}
+                <Link to="/faq" className="text-primary-700 hover:underline">FAQ</Link> or the{' '}
+                <Link to="/start-here" className="text-primary-700 hover:underline">beginner's guide</Link>.
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <ShieldCheck className="w-4 h-4 mt-0.5 text-primary-700 shrink-0" />
+              <div>
+                <div className="font-medium text-ink-900">A note on advice</div>
+                NootropicStacker is educational — we can't give personal medical advice. For anything
+                health-specific, talk to your doctor or pharmacist.
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        <p className="text-xs text-ink-500 px-1">
+          Found wrong data on a supplement page? Include the page link in your message — corrections
+          ship fast.
+        </p>
+      </div>
     </div>
   );
 }

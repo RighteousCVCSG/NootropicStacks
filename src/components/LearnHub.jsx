@@ -1,33 +1,37 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { SEOOptimizer } from './SEOOptimizer.jsx';
+import {
+  BookOpen, FlaskConical, BookMarked, Network, HelpCircle,
+  Newspaper, PlayCircle, Star, Compass,
+} from 'lucide-react';
 
 const GROUPS = [
   {
     title: 'Editorial',
     description: 'Long-form research and stack guides.',
     cards: [
-      { to: '/blog', title: 'Blog', desc: 'Deep dives into nootropic research, stacks, and trends.' },
-      { to: '/research-library', title: 'Research Library', desc: 'Plain-English summaries of peer-reviewed studies.' },
+      { to: '/blog', title: 'Blog', icon: BookOpen, desc: 'Deep dives into nootropic research, stacks, and trends.' },
+      { to: '/research-library', title: 'Research Library', icon: FlaskConical, desc: 'Plain-English summaries of peer-reviewed studies.' },
     ],
   },
   {
     title: 'Reference',
     description: 'Quick lookups and structured knowledge.',
     cards: [
-      { to: '/glossary', title: 'Glossary', desc: 'Definitions of nootropic terms, compounds, and concepts.' },
-      { to: '/families', title: 'Families', desc: 'Racetams, adaptogens, cholinergics, and other supplement groups.' },
-      { to: '/faq', title: 'FAQ', desc: 'Common questions about stacking, safety, and cycling.' },
+      { to: '/glossary', title: 'Glossary', icon: BookMarked, desc: 'Definitions of nootropic terms, compounds, and concepts.' },
+      { to: '/families', title: 'Families', icon: Network, desc: 'Racetams, adaptogens, cholinergics, and other supplement groups.' },
+      { to: '/faq', title: 'FAQ', icon: HelpCircle, desc: 'Common questions about stacking, safety, and cycling.' },
     ],
   },
   {
     title: 'Updates',
     description: 'What’s new and where to start.',
     cards: [
-      { to: '/news', title: 'News', desc: 'Latest supplement news and industry updates.' },
-      { to: '/videos', title: 'Videos', desc: 'Curated educational videos from top researchers.' },
-      { to: '/reviews', title: 'Reviews', desc: 'Honest reviews of supplements and brands.' },
-      { to: '/start-here', title: 'Start Here', desc: 'New to nootropics? Begin with this orientation.' },
+      { to: '/news', title: 'News', icon: Newspaper, desc: 'Latest supplement news and industry updates.' },
+      { to: '/videos', title: 'Videos', icon: PlayCircle, desc: 'Curated educational videos from top researchers.' },
+      { to: '/reviews', title: 'Reviews', icon: Star, desc: 'Honest reviews of supplements and brands.' },
+      { to: '/start-here', title: 'Start Here', icon: Compass, desc: 'New to nootropics? Begin with this orientation.' },
     ],
   },
 ];
@@ -63,7 +67,10 @@ export function LearnHub() {
                     to={card.to}
                     className="block p-5 rounded-md bg-surface-card border border-ink-200 hover:border-primary-300 transition-colors"
                   >
-                    <h3 className="text-base font-semibold text-ink-900 mb-1">{card.title}</h3>
+                    <h3 className="flex items-center gap-2 text-base font-semibold text-ink-900 mb-1">
+                      {card.icon && <card.icon className="w-4 h-4 text-primary-700 shrink-0" />}
+                      {card.title}
+                    </h3>
                     <p className="text-sm text-ink-500">{card.desc}</p>
                   </Link>
                 ))}

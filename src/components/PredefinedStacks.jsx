@@ -11,7 +11,7 @@ import { supplements } from '../data/supplements.js';
 import { useStack } from '../contexts/StackContext.jsx';
 import { analyzeStackSafety, calculateItemContribution } from '../utils/stackAnalyzer.js';
 import { AFFILIATE_LINKS } from './MonetizationManager.jsx';
-import { withAffiliateUtms, withIherbRef } from '@/lib/affiliate.js';
+import { resolveVendorUrls } from '@/lib/affiliate.js';
 import { JsonLd } from './JsonLd.jsx';
 import { buildItemListSchema } from '../lib/schema/builders.js';
 
@@ -283,8 +283,7 @@ export function PredefinedStacks() {
                         {supplement && (
                           <p className="text-sm text-ink-700">{supplement.description}</p>
                         )}
-                        {hasAffiliate && (() => {
-                          const links = AFFILIATE_LINKS[item.id];
+                        {(() => {
                           const trackClick = (vendor) => {
                             fetch('/api/track/click', {
                               method: 'POST',
@@ -292,22 +291,21 @@ export function PredefinedStacks() {
                               body: JSON.stringify({ supplementId: item.id, vendor, page: 'stacks' })
                             }).catch(() => {});
                           };
+                          const vendorClasses = {
+                            amazon: 'bg-warn-700 hover:bg-warn-800',
+                            iherb: 'bg-accent-600 hover:bg-accent-700',
+                          };
+                          const options = resolveVendorUrls(item.id, supplement?.name || item.id, hasAffiliate, { campaign: `stack-${stackData.id}` })
+                            .filter(o => vendorClasses[o.vendor]);
                           return (
                             <div className="flex gap-2 mt-2">
-                              {links.amazon && (
-                                <a href={withAffiliateUtms(links.amazon, { campaign: `stack-${stackData.id}` })} target="_blank" rel="noopener noreferrer sponsored"
-                                   onClick={() => trackClick('amazon')}
-                                   className="flex items-center gap-1 text-xs bg-warn-700 hover:bg-warn-800 text-white px-3 py-1.5 rounded font-medium transition-colors">
-                                  <ShoppingCart className="w-3 h-3" /> Amazon
+                              {options.map(o => (
+                                <a key={o.vendor} href={o.url} target="_blank" rel="noopener noreferrer sponsored"
+                                   onClick={() => trackClick(o.vendor)}
+                                   className={`flex items-center gap-1 text-xs ${vendorClasses[o.vendor]} text-white px-3 py-1.5 rounded font-medium transition-colors`}>
+                                  <ShoppingCart className="w-3 h-3" /> {o.vendor === 'amazon' ? 'Amazon' : 'iHerb'}{o.curated ? '' : ' (search)'}
                                 </a>
-                              )}
-                              {links.iherb && (
-                                <a href={withIherbRef(links.iherb)} target="_blank" rel="noopener noreferrer sponsored"
-                                   onClick={() => trackClick('iherb')}
-                                   className="flex items-center gap-1 text-xs bg-accent-600 hover:bg-accent-700 text-white px-3 py-1.5 rounded font-medium transition-colors">
-                                  <ShoppingCart className="w-3 h-3" /> iHerb
-                                </a>
-                              )}
+                              ))}
                             </div>
                           );
                         })()}

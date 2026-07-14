@@ -198,6 +198,15 @@ export function buildAmazonSearchLink(searchTerm, options = {}) {
   return withAffiliateUtms(url.toString(), options);
 }
 
+// Builds an iHerb search URL routed through withIherbRef so the rcode rides
+// along once VITE_IHERB_RCODE is set. Passes through unmonetized (but still
+// functional) until then — same graceful behavior as withIherbRef itself.
+export function buildIherbSearchLink(searchTerm) {
+  const url = new URL('https://www.iherb.com/search');
+  url.searchParams.set('kw', String(searchTerm).trim());
+  return withIherbRef(url.toString());
+}
+
 // Resolves the URL for any "Buy" affordance site-wide. Prefers a curated
 // vendor link (routed through the cheapest-tracked-price / preference-order
 // logic in pickPreferredVendor); falls back to a monetized Amazon search so
@@ -210,4 +219,25 @@ export function resolveBuyUrl(supplementId, supplementName, links, options = {})
     if (v && links[v]) return withAffiliateLink(links[v], { campaign });
   }
   return buildAmazonSearchLink(`${supplementName} supplement`, { campaign });
+}
+
+// Resolves the full ordered vendor option list for multi-button surfaces
+// (stack modals, ship sheet, vendor rows). Curated links come first; when a
+// supplement lacks curated Amazon/iHerb links, monetized search fallbacks
+// fill in (marked `curated: false` so callers can label them "(search)").
+export function resolveVendorUrls(supplementId, supplementName, links, options = {}) {
+  const { campaign } = options;
+  const out = [];
+  for (const v of VENDOR_PREF_ORDER) {
+    if (links?.[v]) {
+      out.push({ vendor: v, url: withAffiliateLink(links[v], { campaign }), curated: true });
+    }
+  }
+  if (!links?.amazon) {
+    out.push({ vendor: 'amazon', url: buildAmazonSearchLink(`${supplementName} supplement`, { campaign }), curated: false });
+  }
+  if (!links?.iherb) {
+    out.push({ vendor: 'iherb', url: buildIherbSearchLink(supplementName), curated: false });
+  }
+  return out;
 }
